@@ -1,0 +1,933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="urn:schemas-jetbrains-com:css-xml">
+
+  <!-- CSS propepries -->
+  <property id="row-span" declared-in="2.0" initial="1" applies="cell elements" inherited="no" media="visual" url="http://www.w3.org/TR/1998/WD-css2-19980128/tables.html#propdef-row-span">
+    <group type="or">
+      <integer tooltip="Specifies the number of rows spanned by a cell." />
+      <name value="inherit" />
+    </group>
+  </property>
+  <property id="column-span" declared-in="2.0" initial="1" applies="cell, column, and column-group elements" inherited="no" media="visual" url="http://www.w3.org/TR/1998/WD-css2-19980128/tables.html#propdef-column-span">
+    <group type="or">
+      <integer tooltip="Specifies the number of grid columns spanned by a cell, column, or column group." />
+      <name value="inherit" />
+    </group>
+  </property>
+  <property id="font-size-adjust" declared-in="2.0" browsers="FF2+,IE10+" initial="none" applies="all elements" inherited="yes" media="visual" url="http://www.w3.org/TR/2008/REC-CSS2-20080411/fonts.html#propdef-font-size-adjust">
+    <group type="or">
+      <number tooltip="Specifies the aspect value. The number refers to the aspect value of the first choice font." />
+      <name value="none" tooltip="Do not preserve the font's x-height." />
+      <name value="inherit" />
+    </group>
+  </property>
+  <property id="speak-date" declared-in="2.0" applies="all elements" inherited="yes" media="aural" url="http://www.w3.org/TR/1998/WD-css2-19980128/aural.html#propdef-speak-date">
+    <group type="or">
+      <name value="mdy" tooltip="Month-Day-Year (common in the United States)."/>
+      <name value="dmy" tooltip="Day-Month-Year (common in Europe)."/>
+      <name value="ymd" tooltip="Year-Month-Day."/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="speak-time" declared-in="2.0" applies="all elements" inherited="yes" media="aural" url="http://www.w3.org/TR/1998/WD-css2-19980128/aural.html#propdef-speak-time">
+    <group type="or">
+      <text value="24" tooltip="Use the 24-hour time system."/>
+      <text value="12" tooltip="Use the 12-hour am/pm time system."/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="page" declared-in="2.0" browsers="none" initial="auto" applies="block-level elements" inherited="yes" media="paged" url="http://www.w3.org/TR/css3-page/#page">
+    <group type="or">
+      <name value="auto"/>
+      <name/>
+    </group>
+  </property>
+  <property id="marker-offset" declared-in="2.0" obsolete-in="3.0" obsolete-tooltip="It is replaced by the 'margin-end' property." initial="auto" applies="elements with 'display: marker'" inherited="no" media="visual" url="http://www.w3.org/TR/1998/REC-CSS2-19980512/generate.html#propdef-marker-offset">
+    <group type="or">
+      <length />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/fonts.html#propdef-font" initial="see individual properties" applies="all" inherited="yes" percentage="see individual properties" media="visual">
+    <group type="or">
+      <group>
+        <group type="any" min="0" max="1">
+          <property id="font-style" />
+          <property id="font-variant" />
+          <property id="font-weight" />
+        </group>
+        <property id="font-size" />
+        <group min="0" max="1">
+          <text value="/"/>
+          <property id="line-height" />
+        </group>
+        <property id="font-family" />
+      </group>
+      <name value="caption"/>
+      <name value="icon"/>
+      <name value="menu"/>
+      <name value="message-box"/>
+      <name value="small-caption"/>
+      <name value="smallcaption"/>
+      <name value="status-bar"/>
+      <name value="statusbar"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="azimuth" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-azimuth" initial="center" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <angle/>
+      <group type="any">
+        <group type="or">
+          <name value="left-side"/>
+          <name value="far-left"/>
+          <name value="left"/>
+          <name value="center-left"/>
+          <name value="center"/>
+          <name value="center-right"/>
+          <name value="right"/>
+          <name value="far-right"/>
+          <name value="right-side"/>
+        </group>
+        <name value="behind"/>
+      </group>
+      <name value="leftwards"/>
+      <name value="rightwards"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background-attachment" declared-in="2.0" browsers="all" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background-attachment" initial="scroll" applies="all" media="visual">
+    <group type="or">
+      <name value="scroll"/>
+      <name value="fixed"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background-color" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background-color" initial="transparent" applies="all" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="transparent"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background-image" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background-image" tooltip="This property sets the background image of an element." initial="none" applies="all" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background-position" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background-position" initial="0% 0%" applies="all" percentage="refer to the size of the box itself" media="visual">
+    <group type="or">
+      <group>
+        <group type="or">
+          <percentage />
+          <length />
+          <name value="left"/>
+          <name value="center"/>
+          <name value="right"/>
+        </group>
+        <group type="or" min="0" max="1">
+          <percentage />
+          <length />
+          <name value="top"/>
+          <name value="center"/>
+          <name value="bottom"/>
+        </group>
+      </group>
+      <group type="any">
+        <group type="or">
+          <name value="left"/>
+          <name value="center"/>
+          <name value="right"/>
+        </group>
+        <group type="or">
+          <name value="top"/>
+          <name value="center"/>
+          <name value="bottom"/>
+        </group>
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background-repeat" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background-repeat" initial="repeat" applies="all" media="visual">
+    <group type="or">
+      <name value="repeat"/>
+      <name value="repeat-x"/>
+      <name value="repeat-y"/>
+      <name value="no-repeat"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background" initial="see individual properties" applies="all" percentage="allowed on 'background-position'" media="visual">
+    <description>The background property is a shorthand property for setting the individual background properties (i.e., '<see cref="P:background-color"/>', '<see cref="P:background-image"/>', '<see cref="P:background-repeat"/>', '<see cref="P:background-attachment"/>' and '<see cref="P:background-position"/>') at the same place in the style sheet.</description>
+    <group type="or">
+      <group type="any">
+        <property id="background-color" />
+        <property id="background-image" />
+        <property id="background-repeat" />
+        <property id="background-attachment" />
+        <property id="background-position" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="any">
+        <inline id="border-width" />
+        <inline id="border-style" />
+        <property id="border-top-color" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-color" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border-color" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="or" min="1" max="4">
+        <inline id="color" />
+        <name value="transparent"/>
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-spacing" declared-in="2.0" browsers="C,FF,IE8+,O7+,S1.2+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/tables.html#propdef-border-spacing" initial="0" applies="'table' and 'inline-table' elements" inherited="yes" media="visual">
+    <group type="or">
+      <length min="1" max="2"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-top" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="any">
+        <inline id="border-width" />
+        <inline id="border-style" />
+        <property id="border-top-color" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-right" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-right" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="any">
+        <inline id="border-width" />
+        <inline id="border-style" />
+        <property id="border-top-color" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-left" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border-left" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="any">
+        <inline id="border-width" />
+        <inline id="border-style" />
+        <property id="border-top-color" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-bottom" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border-bottom" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="any">
+        <inline id="border-width" />
+        <inline id="border-style" />
+        <property id="border-top-color" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-style" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-style" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-style" min="1" max="4" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-top-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-width" initial="medium" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-right-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-width" initial="medium" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-bottom-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border-bottom-width" initial="medium" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-left-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-width" initial="medium" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-collapse" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/tables.html#propdef-border-collapse" initial="separate" applies="'table' and 'inline-table' elements" inherited="yes" media="visual">
+    <group type="or">
+      <name value="collapsed" completion="no" />
+      <name value="collapse"/>
+      <name value="separate"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-top-color" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-color" initial="the value of the 'color' property" applies="all" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="transparent"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-right-color" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-color" initial="the value of the 'color' property" applies="all" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="transparent"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-bottom-color" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border-bottom-color" initial="the value of the 'color' property" applies="all" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="transparent"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-left-color" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-color" initial="the value of the 'color' property" applies="all" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="transparent"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-top-style" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-style" initial="none" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-style" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-right-style" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-style" initial="none" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-style" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-bottom-style" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-border-bottom-style" initial="none" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-style" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-left-style" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-style" initial="none" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-style" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-width" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-width" min="1" max="4" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="bottom" declared-in="2.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-bottom" initial="auto" applies="positioned elements" percentage="refer to height of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="caption-side" declared-in="2.0" browsers="C,FF,IE8+,O,S" url="http://www.w3.org/TR/CSS21/tables.html#propdef-caption-side" initial="top" applies="'table-caption' elements" inherited="yes" media="visual">
+    <group type="or">
+      <name value="top"/>
+      <name value="bottom"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="clip" declared-in="2.0" browsers="all" url="http://www.w3.org/TR/CSS21/visufx.html#propdef-clip" initial="auto" applies="absolutely positioned elements" media="visual">
+    <group type="or">
+      <inline id="shape" />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="content" declared-in="2.0" browsers="C,FF,IE8+,O4+,S" rules="noname,@keyframes,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/generate.html#propdef-content" initial="normal" applies=":before and :after pseudo-elements" media="1.0,2.0,2.1,3.0">
+    <group type="or">
+      <name value="none"/>
+      <name value="normal"/>
+      <name value="inherit"/>
+      <group type="or" min="1" max="-1">
+        <string />
+        <invoke id="url" />
+        <inline id="counter" />
+        <invoke id="attr" />
+        <name value="open-quote"/>
+        <name value="close-quote"/>
+        <name value="no-open-quote"/>
+        <name value="no-close-quote"/>
+      </group>
+    </group>
+  </property>
+  <property id="counter-increment" declared-in="2.0" browsers="C,FF1.5+,IE8+,O10.5+,S3+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/generate.html#propdef-counter-increment" initial="none" applies="all" media="1.0,2.0,2.1,3.0">
+    <group type="or">
+      <name value="none"/>
+      <name value="inherit"/>
+      <group min="1" max="-1">
+        <name />
+        <integer min="0" max="1" />
+      </group>
+    </group>
+  </property>
+  <property id="counter-reset" declared-in="2.0" browsers="C,FF1.5+,IE8+,O10.5+,S3+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/generate.html#propdef-counter-reset" initial="none" applies="all" media="1.0,2.0,2.1,3.0">
+    <group type="or">
+      <name value="none"/>
+      <name value="inherit"/>
+      <group min="1" max="-1">
+        <name />
+        <integer min="0" max="1" />
+      </group>
+    </group>
+  </property>
+  <property id="cue-after" declared-in="2.0" url="http://www.w3.org/TR/CSS21/aural.html#propdef-cue-after" initial="none" applies="all" media="aural">
+    <group type="or">
+      <name value="none"/>
+      <name value="inherit"/>
+      <invoke id="url" />
+    </group>
+  </property>
+  <property id="cue-before" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-cue-before" initial="none" applies="all" media="aural">
+    <group type="or">
+      <name value="none"/>
+      <name value="inherit"/>
+      <invoke id="url" />
+    </group>
+  </property>
+  <property id="cue" declared-in="2.0" url="http://www.w3.org/TR/CSS21/aural.html#propdef-cue" initial="see individual properties" applies="all" media="aural">
+    <group type="or">
+      <group type="any">
+        <property id="cue-before" />
+        <property id="cue-after" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="cursor" declared-in="2.0" url="http://www.w3.org/TR/CSS21/ui.html#propdef-cursor" initial="auto" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <group>
+        <group min="0" max="-1">
+          <invoke id="url" />
+        </group>
+        <group type="or">
+          <name value="auto"/>
+          <name value="crosshair"/>
+          <name value="default"/>
+          <name value="pointer"/>
+          <name value="move"/>
+          <name value="e-resize"/>
+          <name value="ne-resize"/>
+          <name value="nw-resize"/>
+          <name value="n-resize"/>
+          <name value="se-resize"/>
+          <name value="sw-resize"/>
+          <name value="s-resize"/>
+          <name value="w-resize"/>
+          <name value="text"/>
+          <name value="wait"/>
+          <name value="help"/>
+          <name value="progress"/>
+          <name value="hand" completion="no" />
+          <string value="Arrow" completion="no" />
+        </group>
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="direction" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-direction" initial="ltr" applies="all elements, but see prose" inherited="yes" media="visual">
+    <group type="or">
+      <name value="ltr"/>
+      <name value="rtl"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="elevation" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-elevation" initial="level" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <angle/>
+      <name value="below"/>
+      <name value="level"/>
+      <name value="above"/>
+      <name value="higher"/>
+      <name value="lower"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="empty-cells" declared-in="2.0" browsers="C,FF,IE7+,O4+,S1.2+" url="http://www.w3.org/TR/CSS21/tables.html#propdef-empty-cells" initial="show" applies="'table-cell' elements" inherited="yes" media="visual">
+    <group type="or">
+      <name value="show"/>
+      <name value="hide"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="left" declared-in="2.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-left" initial="auto" applies="positioned elements" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="marks" declared-in="2.0" obsolete-in="2.1" initial="none" inherited="no" applies="page context" media="visual">
+    <group type="or">
+        <group type="any">
+            <name value="crop"/>
+            <name value="cross"/>
+        </group>
+        <name value="none"/>
+    </group>
+  </property>
+  <property id="text-shadow" declared-in="2.0" obsolete-in="2.1" url="http://www.w3.org/TR/css3-text/#text-shadow" applies="all elements and generated content" initial="none" inherited="yes" media="visual">
+      <group type="or">
+        <name value="none"/>
+        <group>
+          <inline id="txt-shadow" />
+          <group min="0" max="-1">
+            <text value=","/>
+            <inline id="txt-shadow" />
+          </group>
+        </group>
+      </group>
+    </property>
+  <property id="max-height" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-max-height" initial="none" applies="all elements except non-replaced inline elements and table elements" percentage="see prose" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="max-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-max-width" initial="none" applies="all elements except non-replaced inline elements and table elements" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="min-height" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-min-height" initial="0" applies="all elements except non-replaced inline elements and table elements" percentage="see prose" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="min-width" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-min-width" initial="0" applies="all elements except non-replaced inline elements and table elements" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="orphans" declared-in="2.0" browsers="C,IE8+,O7+,S1.3+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/page.html#propdef-orphans" initial="2" applies="block-level elements" inherited="yes" media="visual">
+    <group type="or">
+      <integer />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="outline-color" declared-in="2.0" browsers="C,FF1.5+,IE8+,O8+,S1.2+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/ui.html#propdef-outline-color" initial="invert" applies="all" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="invert"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="outline-style" declared-in="2.0" browsers="C,FF1.5+,IE8+,O8+,S1.2+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/ui.html#propdef-outline-style" initial="none" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-style" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="outline-width" declared-in="2.0" browsers="C,FF1.5+,IE8+,O8+,S1.2+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/ui.html#propdef-outline-width" initial="medium" applies="all" media="visual">
+    <group type="or">
+      <inline id="border-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="outline" declared-in="2.0" browsers="C,FF1.5+,IE8+,O8+,S1.2+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/ui.html#propdef-outline" initial="see individual properties" applies="all" media="visual">
+    <group type="or">
+      <group type="any">
+        <property id="outline-color" />
+        <property id="outline-style" />
+        <property id="outline-width" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="overflow" declared-in="2.0" rules="noname,@keyframes,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visufx.html#propdef-overflow" initial="visible" applies="block-level and replaced elements, table cells, inline blocks" media="visual">
+    <group type="or">
+      <inline id="overflow" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-top" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-padding-top" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-right" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-padding-right" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-bottom" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-padding-bottom" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-left" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#propdef-padding-left" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding" declared-in="2.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS2/box.html#padding-properties" inherited="no" initial="not defined for shorthand properties" applies="all elements" percentage="refer to width of closest block-level ancestor" media="visual">
+    <group type="or">
+      <name value="inherit"/>
+      <inline id="padding-width" name="all" tooltip="padding for all sides" />
+      <group>
+        <inline id="padding-width" name="top and bottom" tooltip="padding for top and bottom" />
+        <inline id="padding-width" name="right and left" tooltip="padding for right and left" />
+      </group>
+      <group>
+        <inline id="padding-width" name="top" tooltip="padding for top" />
+        <inline id="padding-width" name="right and left" tooltip="padding for right and left" />
+        <inline id="padding-width" name="bottom" tooltip="padding for bottom" />
+      </group>
+      <group>
+        <inline id="padding-width" name="top" tooltip="padding for top" />
+        <inline id="padding-width" name="rigth" tooltip="padding for right" />
+        <inline id="padding-width" name="bottom" tooltip="padding for bottom" />
+        <inline id="padding-width" name="left" tooltip="padding for left" />
+      </group>
+    </group>
+  </property>
+  <property id="page-break-after" declared-in="2.0" browsers="all" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/page.html#propdef-page-break-after" initial="auto" applies="block-level elements" media="visual">
+    <group type="or">
+      <name value="auto"/>
+      <name value="always"/>
+      <name value="avoid"/>
+      <name value="left"/>
+      <name value="right"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="page-break-before" declared-in="2.0" browsers="all" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/page.html#propdef-page-break-before" initial="auto" applies="block-level elements" media="visual">
+    <group type="or">
+      <name value="auto"/>
+      <name value="always"/>
+      <name value="avoid"/>
+      <name value="left"/>
+      <name value="right"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="page-break-inside" declared-in="2.0" browsers="C,IE8+,O7+,S1.3+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/page.html#propdef-page-break-inside" initial="auto" applies="block-level elements" inherited="yes" media="visual">
+    <group type="or">
+      <name value="avoid"/>
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="pause-after" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-pause-after" initial="0" applies="all" percentage="see prose" media="aural">
+    <group type="or">
+      <time />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="pause-before" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-pause-before" initial="0" applies="all" percentage="see prose" media="aural">
+    <group type="or">
+      <time />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="pause" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-pause" initial="see individual properties" applies="all" percentage="see descriptions of 'pause-before' and 'pause-after'" media="aural">
+    <group type="or">
+      <group type="or" min="1" max="2">
+        <time />
+        <percentage />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="pitch-range" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-pitch-range" initial="50" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <number />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="pitch" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-pitch" initial="medium" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <frequency />
+      <name value="x-low"/>
+      <name value="low"/>
+      <name value="medium"/>
+      <name value="high"/>
+      <name value="x-high"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="play-during" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-play-during" initial="auto" applies="all" media="aural">
+    <group type="or">
+      <invoke id="url" />
+      <group type="any" min="0" max="1">
+        <name value="mix"/>
+        <name value="repeat"/>
+      </group>
+      <name value="auto"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="position" declared-in="2.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-position" initial="static" applies="all" media="visual">
+    <group type="or">
+      <name value="static"/>
+      <name value="relative"/>
+      <name value="absolute"/>
+      <name value="fixed"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="quotes" declared-in="2.0" browsers="C,FF1.5+,IE8+,O8+,S5.1+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/generate.html#propdef-quotes" initial="depends on user agent" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <group min="1" max="-1">
+        <string />
+        <string />
+      </group>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="richness" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-richness" initial="50" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <number />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="right" declared-in="2.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-right" initial="auto" applies="positioned elements" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="size" declared-in="2.0" rules="noname,@keyframes,@page" obsolete-in="2.1" url="http://www.w3.org/TR/css3-page/#page-size-prop" initial="auto" inherited="no" applies="paged context" media="paged">
+    <group type="or">
+      <length min="1" max="2"/>
+      <name value="auto"/>
+      <group type="any">
+        <inline id="page-size"/>
+        <group type="or">
+          <name value="portrait"/>
+          <name value="landscape"/>
+        </group>
+      </group>
+    </group>
+  </property>
+  <property id="speak-header" declared-in="2.0" url="http://www.w3.org/TR/CSS21/aural.html#propdef-speak-header" initial="once" applies="elements that have table header information" inherited="yes" media="aural">
+    <group type="or">
+      <name value="once"/>
+      <name value="always"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="speak-numeral" declared-in="2.0" url="http://www.w3.org/TR/CSS21/aural.html#propdef-speak-numeral" initial="continuous" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <name value="digits"/>
+      <name value="continuous"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="speak-punctuation" declared-in="2.0" url="http://www.w3.org/TR/CSS21/aural.html#propdef-speak-punctuation" initial="none" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <name value="code"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="speak" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-speak" initial="normal" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <name value="normal"/>
+      <name value="none"/>
+      <name value="spell-out"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="speech-rate" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-speech-rate" initial="medium" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <number />
+      <name value="x-slow"/>
+      <name value="slow"/>
+      <name value="medium"/>
+      <name value="fast"/>
+      <name value="x-fast"/>
+      <name value="faster"/>
+      <name value="slower"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="stress" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-stress" initial="50" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <number />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="table-layout" declared-in="2.0" browsers="all" url="http://www.w3.org/TR/CSS21/tables.html#propdef-table-layout" initial="auto" applies="'table' and 'inline-table' elements" media="visual">
+    <group type="or">
+      <name value="auto"/>
+      <name value="fixed"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="top" declared-in="2.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-top" initial="auto" applies="positioned elements" percentage="refer to height of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="unicode-bidi" declared-in="2.0" rules="noname,@keyframes,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-unicode-bidi" initial="normal" applies="all elements, but see prose" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <name value="embed"/>
+      <name value="bidi-override"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="visibility" declared-in="2.0" browsers="C,FF,IE4+,O4+,S" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visufx.html#propdef-visibility" initial="visible" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="visible"/>
+      <name value="hidden"/>
+      <name value="collapse"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="voice-family" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-voice-family" initial="depends on user agent" applies="all" inherited="yes" media="aural">
+    <group type="or">
+      <group>
+        <group type="or">
+          <inline id="generic-voice" />
+          <inline id="specific-voice" />
+        </group>
+        <group min="0" max="-1">
+          <text value=","/>
+          <group type="or">
+            <inline id="generic-voice" />
+            <inline id="specific-voice" />
+          </group>
+        </group>
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="volume" declared-in="2.0" browsers="none" url="http://www.w3.org/TR/CSS21/aural.html#propdef-volume" initial="medium" applies="all" inherited="yes" percentage="refer to inherited value" media="aural">
+    <group type="or">
+      <number />
+      <percentage />
+      <name value="silent"/>
+      <name value="x-soft"/>
+      <name value="soft"/>
+      <name value="medium"/>
+      <name value="loud"/>
+      <name value="x-loud"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="widows" declared-in="2.0" browsers="C,IE8+,O9.5+,S" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/page.html#propdef-widows" initial="2" applies="block-level elements" inherited="yes" media="visual">
+    <group type="or">
+      <integer />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="z-index" declared-in="2.0" rules="noname,@keyframes,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-z-index" initial="auto" applies="positioned elements" media="visual">
+    <group type="or">
+      <name value="auto"/>
+      <integer />
+      <name value="inherit"/>
+    </group>
+  </property>
+
+  <!-- CSS functions -->
+  <function id="counter" declared-in="2.0" url="http://www.w3.org/TR/CSS21/syndata.html#value-def-counter">
+    <group>
+      <name />
+      <group min="0">
+        <text value="," />
+        <property id="list-style-type" />
+      </group>
+    </group>
+  </function>
+  <function id="counters" declared-in="2.0" url="http://www.w3.org/TR/CSS21/syndata.html#value-def-counter">
+    <group>
+      <name />
+      <text value="," />
+      <string />
+      <group min="0">
+        <text value="," />
+        <property id="list-style-type" />
+      </group>
+    </group>
+  </function>
+  <function id="attr" declared-in="2.0" tooltip="This function returns as a string the value of attribute X for the subject of the selector.">
+    <name name="X" />
+  </function>
+
+  <!-- CSS pseudo functions : -->
+  <pseudo-function id="lang" declared-in="2.0" browsers="C,FF,IE8+,O8+,S3+" url="http://www.w3.org/TR/CSS21/selector.html#lang">
+    <inline id="language"/>
+  </pseudo-function>
+
+  <!-- CSS pseudo classes : -->
+  <pseudo-element id="first-letter" declared-in="2.0" url="http://www.w3.org/TR/CSS21/selector.html#first-letter" />
+  <pseudo-element id="first-line" declared-in="2.0" url="http://www.w3.org/TR/CSS21/selector.html#first-line-pseudo" />
+  <pseudo-element id="before" declared-in="2.0" browsers="C,FF,IE8+,O8+,S" url="http://www.w3.org/TR/CSS21/selector.html#before-and-after" />
+  <pseudo-element id="after" declared-in="2.0" browsers="C,FF,IE8+,O8+,S" url="http://www.w3.org/TR/CSS21/selector.html#before-and-after" />
+  <pseudo-class id="hover" declared-in="2.0" />
+  <pseudo-class id="focus" declared-in="2.0" />
+  <pseudo-class id="first-child" declared-in="2.0" browsers="C,FF3+,IE7+,O9.5+,S3.1+" />
+
+  <!-- CSS named values-->
+  <named-value id="language" declared-in="2.0" url="http://www.w3.org/TR/CSS21/selector.html#lang">
+    <name />
+  </named-value>
+  <named-value id="txt-shadow" declared-in="2.0" obsolete-in="2.1">
+    <group type="and">
+      <length min="2" max="4" />
+      <inline id="color" min="0" />
+    </group>
+  </named-value>
+  <named-value id="page-size" declared-in="2.0" obsolete-in="2.1" url="http://www.w3.org/TR/css3-page/#page-size-prop">
+    <group type="or">
+      <name value="A5" tooltip="The page box should be set to the size of ISO A5 media: 148mm wide and 210 mm high." />
+      <name value="A4" tooltip="The page box should be set to the size of IS0 A4 media: 210 mm wide and 297 mm high." />
+      <name value="A3" tooltip="The page box should be set to the size of ISO A3 media: 297mm wide and 420mm high." />
+      <name value="B5" tooltip="The page box should be set to the size of ISO B3 media: 176mm wide by 250mm high." />
+      <name value="B4" tooltip="The page box should be set to the size of ISO B4 media: 250mm wide by 353mm high." />
+      <name value="letter" tooltip="The page box should be set to the size of North American letter media: 8.5 inches wide and 11 inches high" />
+      <name value="legal" tooltip="The page box should be set to the size of North American legal: 8.5 inches wide by 14 inches high." />
+      <name value="ledger" tooltip="The page box should be set to the size of North American ledger: 11 inches wide by 17 inches high." />
+    </group>
+  </named-value>
+
+
+</definitions>

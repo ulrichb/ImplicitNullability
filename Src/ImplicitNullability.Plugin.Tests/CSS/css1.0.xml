@@ -1,0 +1,852 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="urn:schemas-jetbrains-com:css-xml">
+
+  <!-- CSS propepries -->
+  <property id="background-attachment" declared-in="1.0" browsers="all" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#background-attachment" initial="scroll" applies="all" media="visual">
+    <group type="or">
+      <name value="scroll"/>
+      <name value="fixed"/>
+    </group>
+  </property>
+  <property id="background-color" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#background-color" initial="transparent" applies="all" media="visual">
+    <group type="or">
+      <inline id="color"/>
+      <name value="transparent"/>
+    </group>
+  </property>
+  <property id="background-image" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#background-image" initial="none" applies="all" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="none"/>
+    </group>
+  </property>
+  <property id="background-position" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#background-position" initial="0% 0%" applies="all" percentage="refer to the size of the box itself" media="visual">
+    <group type="or">
+      <group min="1" max="2">
+        <percentage/>
+        <length/>
+      </group>
+      <group type="any">
+        <group type="or">
+          <name value="top"/>
+          <name value="center"/>
+          <name value="bottom"/>
+        </group>
+        <group type="or">
+          <name value="left"/>
+          <name value="center"/>
+          <name value="right"/>
+        </group>
+      </group>
+    </group>
+  </property>
+  <property id="background-repeat" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background-repeat" initial="repeat" applies="all" media="visual">
+    <group type="or">
+      <name value="repeat"/>
+      <name value="repeat-x"/>
+      <name value="repeat-y"/>
+      <name value="no-repeat"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="background" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/colors.html#propdef-background" initial="see individual properties" applies="all" percentage="allowed on 'background-position'" media="visual">
+    <group type="or">
+      <group type="any">
+        <property id="background-color" />
+        <property id="background-image" />
+        <property id="background-repeat" />
+        <property id="background-attachment" />
+        <property id="background-position" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-color" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-color" initial="see individual properties" applies="all" media="visual">
+    <inline id="color" min="1" max="4"/>
+  </property>
+  <property id="border-spacing" declared-in="1.0" browsers="C,FF,IE8+,O7+,S1.2+" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/tables.html#propdef-border-spacing" initial="0" applies="'table' and 'inline-table' elements" inherited="yes" media="visual">
+    <group type="or">
+      <length min="1" max="2"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="border-style" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-style" initial="see individual properties" applies="all" media="visual">
+    <inline id="border-style" min="1" max="4" />
+  </property>
+  <property id="border-top" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-top" initial="see individual properties" applies="all" media="visual">
+    <group type="any">
+      <inline id="border-width" />
+      <inline id="border-style" />
+      <inline id="color" />
+    </group>
+  </property>
+  <property id="border-right" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-right" initial="see individual properties" applies="all" media="visual">
+    <group type="any">
+      <inline id="border-width" />
+      <inline id="border-style" />
+      <inline id="color" />
+    </group>
+  </property>
+  <property id="border-bottom" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-bottom" initial="see individual properties" applies="all" media="visual">
+    <group type="any">
+      <inline id="border-width" />
+      <inline id="border-style" />
+      <inline id="color" />
+    </group>
+  </property>
+  <property id="border-left" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-left" initial="see individual properties" applies="all" media="visual">
+    <group type="any">
+      <inline id="border-width" />
+      <inline id="border-style" />
+      <inline id="color" />
+    </group>
+  </property>
+  <property id="border-width" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-width" inherited="no" initial="see individual properties" applies="all elements" media="visual">
+    <inline id="border-width" min="1" max="4" />
+  </property>
+  <property id="border-top-width" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-top-width" initial="medium" applies="all" media="visual">
+    <inline id="border-width" />
+  </property>
+  <property id="border-right-width" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-width" initial="medium" applies="all" media="visual">
+    <inline id="border-width" />
+  </property>
+  <property id="border-bottom-width" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border-bottom-width" initial="medium" applies="all" media="visual">
+    <inline id="border-width" />
+  </property>
+  <property id="border-left-width" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-width" initial="medium" applies="all" media="visual">
+    <inline id="border-width" />
+  </property>
+  <property id="border" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#border" initial="see individual properties" applies="all" media="visual">
+    <group type="any">
+      <inline id="border-width" />
+      <inline id="border-style" />
+      <inline id="color" />
+    </group>
+  </property>
+  <property id="clear" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-clear" initial="none" applies="block-level elements" media="visual">
+    <group type="or">
+      <name value="none"/>
+      <name value="left"/>
+      <name value="right"/>
+      <name value="both"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="color" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/2003/CR-css3-color-20030514/#color" initial="depends on user agent" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <inline id="color" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="display" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-display" initial="inline" applies="all" media="visual">
+    <group type="or">
+      <name value="inline"/>
+      <name value="block"/>
+      <name value="list-item"/>
+      <name value="run-in"/>
+      <name value="inline-block"/>
+      <name value="table"/>
+      <name value="inline-table"/>
+      <name value="table-row-group"/>
+      <name value="table-header-group"/>
+      <name value="table-footer-group"/>
+      <name value="table-row"/>
+      <name value="table-column-group"/>
+      <name value="table-column"/>
+      <name value="table-cell"/>
+      <name value="table-caption"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="float" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visuren.html#propdef-float" initial="none" applies="all, but see" media="visual">
+    <group type="or">
+      <name value="left"/>
+      <name value="right"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font-family" declared-in="1.0" rules="noname,@keyframes,@font-face,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/fonts.html#propdef-font-family" initial="depends on user agent" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <group>
+        <group type="or">
+          <inline id="font-family" />
+          <inline id="generic-font-family" />
+        </group>
+        <group min="0" max="-1">
+          <text value=","/>
+          <group type="or">
+            <inline id="font-family" />
+            <inline id="generic-font-family" />
+          </group>
+        </group>
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font-size" declared-in="1.0" rules="noname,@keyframes,@font-face,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/fonts.html#propdef-font-size" initial="medium" applies="all" inherited="yes" percentage="refer to parent element's font size" media="visual">
+    <group type="or">
+      <inline id="absolute-size" />
+      <inline id="relative-size" />
+      <length />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font-style" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/fonts.html#propdef-font-style" initial="normal" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <name value="italic"/>
+      <name value="oblique"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font-variant" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/fonts.html#propdef-font-variant" initial="normal" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <name value="small-caps"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font-weight" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/fonts.html#propdef-font-weight" initial="normal" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <name value="bold"/>
+      <name value="bolder"/>
+      <name value="lighter"/>
+      <text value="100"/>
+      <text value="200"/>
+      <text value="300"/>
+      <text value="400"/>
+      <text value="500"/>
+      <text value="600"/>
+      <text value="700"/>
+      <text value="800"/>
+      <text value="900"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="font" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#font" initial="not defined for shorthand properties" applies="all" inherited="yes" percentage="see individual properties" media="visual">
+    <group>
+      <group type="any" min="0" max="1">
+        <property id="font-style" />
+        <property id="font-variant" />
+        <property id="font-weight" />
+      </group>
+      <property id="font-size" />
+      <group min="0" max="1">
+        <text value="/"/>
+        <property id="line-height" />
+      </group>
+      <property id="font-family" />
+    </group>
+  </property>
+  <property id="height" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-height" initial="auto" applies="all elements but non-replaced inline elements, table columns, and column groups" percentage="see prose" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="letter-spacing" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-letter-spacing" initial="normal" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <length />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="line-height" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-line-height" initial="normal" applies="all" inherited="yes" percentage="refer to the font size of the element itself" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <number />
+      <length />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="list-style-image" declared-in="1.0" url="http://www.w3.org/TR/CSS21/generate.html#propdef-list-style-image" initial="none" applies="elements with 'display: list-item'" inherited="yes" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="list-style-position" declared-in="1.0" url="http://www.w3.org/TR/CSS21/generate.html#propdef-list-style-position" initial="outside" applies="elements with 'display: list-item'" inherited="yes" media="visual">
+    <group type="or">
+      <name value="inside"/>
+      <name value="outside"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="list-style-type" declared-in="1.0" browsers="all" url="http://www.w3.org/TR/CSS21/generate.html#propdef-list-style-type" initial="disc" applies="elements with 'display: list-item'" inherited="yes" media="visual">
+    <group type="or">
+      <name value="disc"/>
+      <name value="circle"/>
+      <name value="square"/>
+      <name value="decimal"/>
+      <name value="decimal-leading-zero"/>
+      <name value="lower-roman"/>
+      <name value="upper-roman"/>
+      <name value="lower-greek"/>
+      <name value="lower-latin"/>
+      <name value="upper-latin"/>
+      <name value="lower-alpha"/>
+      <name value="upper-alpha"/>
+      <name value="armenian"/>
+      <name value="georgian"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="list-style" declared-in="1.0" url="http://www.w3.org/TR/CSS21/generate.html#propdef-list-style" initial="see individual properties" applies="elements with 'display: list-item'" inherited="yes" media="visual">
+    <group type="or">
+      <group type="any">
+        <property id="list-style-type" />
+        <property id="list-style-position" />
+        <property id="list-style-image" />
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="margin-right" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-margin-right" initial="0" applies="all elements except elements with table display     types other than table and inline-table" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="margin-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="margin-left" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-margin-right" initial="0" applies="all elements except elements with table display     types other than table and inline-table" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="margin-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="margin-top" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-margin-top" initial="0" applies="all elements except elements with table display     types other than table and inline-table" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="margin-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="margin-bottom" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-margin-top" initial="0" applies="all elements except elements with table display     types other than table and inline-table" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="margin-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="margin" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/box.html#propdef-margin" initial="see individual properties" applies="all elements except elements with table display     types other than table and inline-table" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="margin-width" min="1" max="4" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-top" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#padding-top" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-right" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#padding-right" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-bottom" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#padding-bottom" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding-left" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#padding-left" initial="0" applies="all elements except elements with table display types other than table, inline-table, and table-cell" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <inline id="padding-width" />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="padding" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS1/#padding" tooltip="The 'padding' property is a shorthand property for setting 'padding-top', 'padding-right', 'padding-bottom' and 'padding-left' at the same place in the style sheet." inherited="no" initial="not defined for shorthand properties" applies="all elements" percentage="refer to width of closest block-level ancestor" media="visual">
+    <group type="or">
+      <name value="inherit"/>
+      <inline id="padding-width" name="all" tooltip="padding for all sides" />
+      <group>
+        <inline id="padding-width" name="top and bottom" tooltip="padding for top and bottom" />
+        <inline id="padding-width" name="right and left" tooltip="padding for right and left" />
+      </group>
+      <group>
+        <inline id="padding-width" name="top" tooltip="padding for top" />
+        <inline id="padding-width" name="right and left" tooltip="padding for right and left" />
+        <inline id="padding-width" name="bottom" tooltip="padding for bottom" />
+      </group>
+      <group>
+        <inline id="padding-width" name="top" tooltip="padding for top" />
+        <inline id="padding-width" name="rigth" tooltip="padding for right" />
+        <inline id="padding-width" name="bottom" tooltip="padding for bottom" />
+        <inline id="padding-width" name="left" tooltip="padding for left" />
+      </group>
+    </group>
+  </property>
+  <property id="text-align" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-text-align" tooltip="This property describes how inline content of a block is aligned." initial="'left' if 'direction' is 'ltr'; 'right' if 'direction' is 'rtl'" applies="block-level elements, table cells and inline blocks" inherited="yes" media="visual">
+    <description>
+      <remarks>A block of text is a stack of line boxes. In the case of <b>left</b>, <b>right</b> and <b>center</b>, this property specifies how the inline boxes within each line box align with respect to the line box's left and right sides; alignment is not with respect to the viewport. In the case of <b>justify</b>, this property specifies that the inline boxes are to be made flush with both sides of the block.</remarks>
+      <note>The actual justification algorithm used depends on the user-agent and the language/script of the text.</note>
+    </description>
+    <group type="or">
+      <name value="left"/>
+      <name value="right"/>
+      <name value="center"/>
+      <name value="justify"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="text-decoration" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-text-decoration" initial="none" applies="all" media="visual">
+    <group type="or">
+      <name value="none"/>
+      <group type="any">
+        <name value="underline"/>
+        <name value="overline"/>
+        <name value="line-through"/>
+        <name value="blink"/>
+      </group>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="text-indent" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-text-indent" initial="0" applies="block-level elements, table cells and inline blocks" inherited="yes" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="text-transform" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-text-transform" initial="none" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="capitalize"/>
+      <name value="uppercase"/>
+      <name value="lowercase"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="vertical-align" declared-in="1.0" rules="noname,@keyframes,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-vertical-align" initial="baseline" applies="inline-level and 'table-cell' elements" percentage="refer to the 'line-height' of the element itself" media="visual">
+    <group type="or">
+      <name value="baseline"/>
+      <name value="sub"/>
+      <name value="super"/>
+      <name value="top"/>
+      <name value="text-top"/>
+      <name value="middle"/>
+      <name value="bottom"/>
+      <name value="text-bottom"/>
+      <percentage />
+      <length />
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="white-space" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-white-space" initial="normal" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <name value="pre"/>
+      <name value="nowrap"/>
+      <name value="pre-wrap"/>
+      <name value="pre-line"/>
+      <name value="inherit"/>
+      <integer completion="no"/>
+    </group>
+  </property>
+  <property id="width" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/visudet.html#propdef-width" initial="auto" applies="all elements but non-replaced inline elements, table rows, and row groups" percentage="refer to width of containing block" media="visual">
+    <group type="or">
+      <length />
+      <percentage />
+      <name value="auto"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="word-spacing" declared-in="1.0" rules="noname,@keyframes,@page,@top-left-corner,@top-left,@top-center,@top-right,@top-right-corner,@bottom-left-corner,@bottom-left,@bottom-center,@bottom-right,@bottom-right-corner,@left-top,@left-middle,@left-bottom,@right-top,@right-middle,@right-bottom" url="http://www.w3.org/TR/CSS21/text.html#propdef-word-spacing" initial="normal" applies="all" inherited="yes" media="visual">
+    <group type="or">
+      <name value="normal"/>
+      <length />
+      <name value="inherit"/>
+    </group>
+  </property>
+
+  <!-- CSS functions -->
+  <function id="rect" declared-in="1.0">
+    <group>
+      <separator>
+        <text value="," min="0"/>
+      </separator>
+      <inline id="top" />
+      <inline id="right" />
+      <inline id="bottom" />
+      <inline id="left" />
+    </group>
+  </function>
+  <function id="inset-rect" declared-in="1.0">
+    <group>
+      <separator>
+        <text value="," min="0"/>
+      </separator>
+      <inline id="top" />
+      <inline id="right" />
+      <inline id="bottom" />
+      <inline id="left" />
+    </group>
+  </function>
+  <function id="url" declared-in="1.0">
+    <group type="or">
+      <uri />
+      <string />
+    </group>
+  </function>
+  <function id="rgb" declared-in="1.0">
+    <group>
+      <separator>
+        <text value="," min="0"/>
+      </separator>
+      <group type="or" name="&lt;red&gt;" tooltip="red value of color">
+        <integer />
+        <percentage />
+      </group>
+      <group type="or" name="&lt;green&gt;" tooltip="green value of color">
+        <integer />
+        <percentage />
+      </group>
+      <group type="or" name="&lt;blue&gt;" tooltip="blue value of color">
+        <integer />
+        <percentage />
+      </group>
+    </group>
+  </function>
+
+  <!-- CSS pseudo classes : -->
+  <pseudo-class id="link" declared-in="1.0" />
+  <pseudo-class id="visited" declared-in="1.0" />
+  <pseudo-class id="active" declared-in="1.0" />
+
+  <!-- CSS named values-->
+  <named-value id="uri" declared-in="1.0">
+    <group type="or">
+      <string/>
+      <invoke id="url"/>
+    </group>
+  </named-value>
+  <named-value id="specific-voice" declared-in="1.0">
+    <group type="or">
+      <name min="1" max="-1">
+        <exclusion>
+          <inline id="generic-voice" />
+        </exclusion>
+      </name>
+      <string />
+    </group>
+  </named-value>
+  <named-value id="generic-voice" declared-in="1.0">
+    <group type="or">
+      <name value="male"/>
+      <name value="female"/>
+      <name value="child"/>
+    </group>
+  </named-value>
+  <named-value id="counter" declared-in="1.0" url="http://www.w3.org/TR/CSS21/syndata.html#value-def-counter">
+    <group type="or">
+      <invoke id="counter" />
+      <invoke id="counters" />
+    </group>
+  </named-value>
+  <named-value id="top" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visufx.html#value-def-top">
+    <group type="or">
+      <length />
+      <name value="auto"/>
+    </group>
+  </named-value>
+  <named-value id="right" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visufx.html#value-def-right">
+    <group type="or">
+      <length />
+      <name value="auto"/>
+    </group>
+  </named-value>
+  <named-value id="bottom" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visufx.html#value-def-bottom">
+    <group type="or">
+      <length />
+      <name value="auto"/>
+    </group>
+  </named-value>
+  <named-value id="left" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visufx.html#value-def-left">
+    <group type="or">
+      <length />
+      <name value="auto"/>
+    </group>
+  </named-value>
+  <named-value id="named-color" declared-in="1.0">
+    <group type="or">
+      <name value="aliceblue" tooltip="#F0F8FF" />
+      <name value="antiquewhite" tooltip="#FAEBD7" />
+      <name value="aqua" tooltip="#00FFFF" />
+      <name value="aquamarine" tooltip="#7FFFD4" />
+      <name value="azure" tooltip="#F0FFFF" />
+      <name value="beige" tooltip="#F5F5DC" />
+      <name value="bisque" tooltip="#FFE4C4" />
+      <name value="black" tooltip="#000000" />
+      <name value="blanchedalmond" tooltip="#FFEBCD" />
+      <name value="blue" tooltip="#0000FF" />
+      <name value="blueviolet" tooltip="#8A2BE2" />
+      <name value="brown" tooltip="#A52A2A" />
+      <name value="burlywood" tooltip="#DEB887" />
+      <name value="cadetblue" tooltip="#5F9EA0" />
+      <name value="chartreuse" tooltip="#7FFF00" />
+      <name value="chocolate" tooltip="#D2691E" />
+      <name value="coral" tooltip="#FF7F50" />
+      <name value="cornflowerblue" tooltip="#6495ED" />
+      <name value="cornsilk" tooltip="#FFF8DC" />
+      <name value="crimson" tooltip="#DC143C" />
+      <name value="cyan" tooltip="#00FFFF" />
+      <name value="darkblue" tooltip="#00008B" />
+      <name value="darkcyan" tooltip="#008B8B" />
+      <name value="darkgoldenrod" tooltip="#B8860B" />
+      <name value="darkgray" tooltip="#A9A9A9" />
+      <name value="darkgreen" tooltip="#006400" />
+      <name value="darkgrey" tooltip="#A9A9A9" />
+      <name value="darkkhaki" tooltip="#BDB76B" />
+      <name value="darkmagenta" tooltip="#8B008B" />
+      <name value="darkolivegreen" tooltip="#556B2F" />
+      <name value="darkorange" tooltip="#FF8C00" />
+      <name value="darkorchid" tooltip="#9932CC" />
+      <name value="darkred" tooltip="#8B0000" />
+      <name value="darksalmon" tooltip="#E9967A" />
+      <name value="darkseagreen" tooltip="#8FBC8F" />
+      <name value="darkslateblue" tooltip="#483D8B" />
+      <name value="darkslategray" tooltip="#2F4F4F" />
+      <name value="darkslategrey" tooltip="#2F4F4F" />
+      <name value="darkturquoise" tooltip="#00CED1" />
+      <name value="darkviolet" tooltip="#9400D3" />
+      <name value="deeppink" tooltip="#FF1493" />
+      <name value="deepskyblue" tooltip="#00BFFF" />
+      <name value="dimgray" tooltip="#696969" />
+      <name value="dimgrey" tooltip="#696969" />
+      <name value="dodgerblue" tooltip="#1E90FF" />
+      <name value="firebrick" tooltip="#B22222" />
+      <name value="floralwhite" tooltip="#FFFAF0" />
+      <name value="forestgreen" tooltip="#228B22" />
+      <name value="fuchsia" tooltip="#FF00FF" />
+      <name value="gainsboro" tooltip="#DCDCDC" />
+      <name value="ghostwhite" tooltip="#F8F8FF" />
+      <name value="gold" tooltip="#FFD700" />
+      <name value="goldenrod" tooltip="#DAA520" />
+      <name value="gray" tooltip="#808080" />
+      <name value="green" tooltip="#008000" />
+      <name value="greenyellow" tooltip="#ADFF2F" />
+      <name value="grey" tooltip="#808080" />
+      <name value="honeydew" tooltip="#F0FFF0" />
+      <name value="hotpink" tooltip="#FF69B4" />
+      <name value="indianred" tooltip="#CD5C5C" />
+      <name value="indigo" tooltip="#4B0082" />
+      <name value="ivory" tooltip="#FFFFF0" />
+      <name value="khaki" tooltip="#F0E68C" />
+      <name value="lavender" tooltip="#E6E6FA" />
+      <name value="lavenderblush" tooltip="#FFF0F5" />
+      <name value="lawngreen" tooltip="#7CFC00" />
+      <name value="lemonchiffon" tooltip="#FFFACD" />
+      <name value="lightblue" tooltip="#ADD8E6" />
+      <name value="lightcoral" tooltip="#F08080" />
+      <name value="lightcyan" tooltip="#E0FFFF" />
+      <name value="lightgoldenrodyellow" tooltip="#FAFAD2" />
+      <name value="lightgray" tooltip="#D3D3D3" />
+      <name value="lightgreen" tooltip="#90EE90" />
+      <name value="lightgrey" tooltip="#D3D3D3" />
+      <name value="lightpink" tooltip="#FFB6C1" />
+      <name value="lightsalmon" tooltip="#FFA07A" />
+      <name value="lightseagreen" tooltip="#20B2AA" />
+      <name value="lightskyblue" tooltip="#87CEFA" />
+      <name value="lightslategray" tooltip="#778899" />
+      <name value="lightslategrey" tooltip="#778899" />
+      <name value="lightsteelblue" tooltip="#B0C4DE" />
+      <name value="lightyellow" tooltip="#FFFFE0" />
+      <name value="lime" tooltip="#00FF00" />
+      <name value="limegreen" tooltip="#32CD32" />
+      <name value="linen" tooltip="#FAF0E6" />
+      <name value="magenta" tooltip="#FF00FF" />
+      <name value="maroon" tooltip="#800000" />
+      <name value="mediumaquamarine" tooltip="#66CDAA" />
+      <name value="mediumblue" tooltip="#0000CD" />
+      <name value="mediumorchid" tooltip="#BA55D3" />
+      <name value="mediumpurple" tooltip="#9370DB" />
+      <name value="mediumseagreen" tooltip="#3CB371" />
+      <name value="mediumslateblue" tooltip="#7B68EE" />
+      <name value="mediumspringgreen" tooltip="#00FA9A" />
+      <name value="mediumturquoise" tooltip="#48D1CC" />
+      <name value="mediumvioletred" tooltip="#C71585" />
+      <name value="midnightblue" tooltip="#191970" />
+      <name value="mintcream" tooltip="#F5FFFA" />
+      <name value="mistyrose" tooltip="#FFE4E1" />
+      <name value="moccasin" tooltip="#FFE4B5" />
+      <name value="navajowhite" tooltip="#FFDEAD" />
+      <name value="navy" tooltip="#000080" />
+      <name value="oldlace" tooltip="#FDF5E6" />
+      <name value="olive" tooltip="#808000" />
+      <name value="olivedrab" tooltip="#6B8E23" />
+      <name value="orange" tooltip="#FFA500" />
+      <name value="orangered" tooltip="#FF4500" />
+      <name value="orchid" tooltip="#DA70D6" />
+      <name value="palegoldenrod" tooltip="#EEE8AA" />
+      <name value="palegreen" tooltip="#98FB98" />
+      <name value="paleturquoise" tooltip="#AFEEEE" />
+      <name value="palevioletred" tooltip="#DB7093" />
+      <name value="papayawhip" tooltip="#FFEFD5" />
+      <name value="peachpuff" tooltip="#FFDAB9" />
+      <name value="peru" tooltip="#CD853F" />
+      <name value="pink" tooltip="#FFC0CB" />
+      <name value="plum" tooltip="#DDA0DD" />
+      <name value="powderblue" tooltip="#B0E0E6" />
+      <name value="purple" tooltip="#800080" />
+      <name value="red" tooltip="#FF0000" />
+      <name value="rosybrown" tooltip="#BC8F8F" />
+      <name value="royalblue" tooltip="#4169E1" />
+      <name value="saddlebrown" tooltip="#8B4513" />
+      <name value="salmon" tooltip="#FA8072" />
+      <name value="sandybrown" tooltip="#F4A460" />
+      <name value="seagreen" tooltip="#2E8B57" />
+      <name value="seashell" tooltip="#FFF5EE" />
+      <name value="sienna" tooltip="#A0522D" />
+      <name value="silver" tooltip="#C0C0C0" />
+      <name value="skyblue" tooltip="#87CEEB" />
+      <name value="slateblue" tooltip="#6A5ACD" />
+      <name value="slategray" tooltip="#708090" />
+      <name value="slategrey" tooltip="#708090" />
+      <name value="snow" tooltip="#FFFAFA" />
+      <name value="springgreen" tooltip="#00FF7F" />
+      <name value="steelblue" tooltip="#4682B4" />
+      <name value="tan" tooltip="#D2B48C" />
+      <name value="teal" tooltip="#008080" />
+      <name value="thistle" tooltip="#D8BFD8" />
+      <name value="tomato" tooltip="#FF6347" />
+      <name value="turquoise" tooltip="#40E0D0" />
+      <name value="violet" tooltip="#EE82EE" />
+      <name value="wheat" tooltip="#F5DEB3" />
+      <name value="white" tooltip="#FFFFFF" />
+      <name value="whitesmoke" tooltip="#F5F5F5" />
+      <name value="yellow" tooltip="#FFFF00" />
+      <name value="yellowgreen" tooltip="#9ACD32" />
+    </group>
+  </named-value>
+  <named-value id="system-color" declared-in="1.0" url="http://www.w3.org/TR/CSS2/ui.html#system-colors">
+    <group type="or">
+      <name value="ActiveCaption" tooltip="Active window caption." />
+      <name value="ActiveBorder" tooltip="Active window border." />
+      <name value="AppWorkspace" tooltip="Background color of multiple document interface." />
+      <name value="Background" tooltip="Desktop background." />
+      <name value="ButtonFace" tooltip="Face color for three-dimensional display elements." />
+      <name value="ButtonHighlight" tooltip="Highlight color for three-dimensional display elements (for edges facing away from the light source)." />
+      <name value="ButtonShadow" tooltip="Shadow color for three-dimensional display elements." />
+      <name value="ButtonText" tooltip="Text on push buttons." />
+      <name value="CaptionText" tooltip="Text in caption, size box, and scrollbar arrow box." />
+      <name value="GrayText" tooltip="Grayed (disabled) text. This color is set to #000 if the current display driver does not support a solid gray color." />
+      <name value="Highlight" tooltip="Item(s) selected in a control." />
+      <name value="HighlightText" tooltip="Text of item(s) selected in a control." />
+      <name value="InactiveBorder" tooltip="Inactive window border." />
+      <name value="InactiveCaption" tooltip="Inactive window caption." />
+      <name value="InactiveCaptionText" tooltip="Color of text in an inactive caption." />
+      <name value="InfoBackground" tooltip="Background color for tool-tip controls." />
+      <name value="InfoText" tooltip="Text color for tool-tip controls." />
+      <name value="Menu" tooltip="Menu background." />
+      <name value="MenuText" tooltip="Text in menus." />
+      <name value="Scrollbar" tooltip="Scroll bar gray area." />
+      <name value="ThreeDDarkShadow" tooltip="Dark shadow for three-dimensional display elements." />
+      <name value="ThreeDFace" tooltip="Face color for three-dimensional display elements." />
+      <name value="ThreeDHighlight" tooltip="Highlight color for three-dimensional display elements." />
+      <name value="ThreeDLightShadow" tooltip="Light color for three-dimensional display elements (for edges facing the light source)." />
+      <name value="ThreeDShadow" tooltip="Dark shadow for three-dimensional display elements." />
+      <name value="Window" tooltip="Window background." />
+      <name value="WindowFrame" tooltip="Window frame." />
+      <name value="WindowText" tooltip="Text in windows." />
+    </group>
+  </named-value>
+  <named-value id="color" declared-in="1.0">
+    <group type="or">
+      <color />
+      <inline id="named-color" />
+      <inline id="system-color" />
+      <invoke id="rgb" />
+    </group>
+  </named-value>
+  <named-value id="shape" declared-in="1.0">
+    <group type="or">
+      <invoke id="rect" />
+      <invoke id="inset-rect" />
+    </group>
+  </named-value>
+  <named-value id="font-family" declared-in="1.0" url="http://www.w3.org/TR/CSS21/fonts.html#value-def-family-name">
+    <group type="or">
+      <name min="1" max="-1" />
+      <string />
+    </group>
+  </named-value>
+  <named-value id="generic-font-family" declared-in="1.0" url="http://www.w3.org/TR/CSS21/fonts.html#value-def-generic-family">
+    <group type="or">
+      <name value="serif"/>
+      <name value="sans-serif"/>
+      <name value="cursive"/>
+      <name value="fantasy"/>
+      <name value="monospace"/>
+    </group>
+  </named-value>
+  <named-value id="absolute-size" declared-in="1.0" url="http://www.w3.org/TR/CSS21/fonts.html#value-def-absolute-size">
+    <group type="or">
+      <name value="xx-small"/>
+      <name value="x-small"/>
+      <name value="small"/>
+      <name value="medium"/>
+      <name value="large"/>
+      <name value="x-large"/>
+      <name value="xx-large"/>
+    </group>
+  </named-value>
+  <named-value id="relative-size" declared-in="1.0" url="http://www.w3.org/TR/CSS21/fonts.html#value-def-relative-size">
+    <group type="or">
+      <name value="larger"/>
+      <name value="smaller"/>
+    </group>
+  </named-value>
+  <named-value id="margin-width" declared-in="1.0" url="http://www.w3.org/TR/CSS21/box.html#value-def-margin-width">
+    <group type="or">
+      <length />
+      <percentage />
+    </group>
+  </named-value>
+  <named-value id="padding-width" declared-in="1.0" url="http://www.w3.org/TR/CSS21/box.html#value-def-padding-width">
+    <group type="or">
+      <length />
+      <percentage />
+    </group>
+  </named-value>
+  <named-value id="overflow" declared-in="1.0" url="http://www.w3.org/TR/CSS21/visufx.html#propdef-overflow">
+    <group type="or">
+      <name value="visible"/>
+      <name value="hidden"/>
+      <name value="scroll"/>
+      <name value="auto"/>
+      <name value="no-display"/>
+      <name value="no-content"/>
+    </group>
+  </named-value>
+  <named-value id="border-width" declared-in="1.0" url="http://www.w3.org/TR/CSS21/box.html#value-def-border-width">
+    <group type="or">
+      <name value="thin"/>
+      <name value="medium"/>
+      <name value="thick"/>
+      <length />
+    </group>
+  </named-value>
+  <named-value id="border-style" declared-in="1.0" url="http://www.w3.org/TR/CSS21/box.html#value-def-border-style">
+    <group type="or">
+      <name value="none"/>
+      <name value="hidden"/>
+      <name value="dotted"/>
+      <name value="dashed"/>
+      <name value="solid"/>
+      <name value="double"/>
+      <name value="groove"/>
+      <name value="ridge"/>
+      <name value="inset"/>
+      <name value="outset"/>
+    </group>
+  </named-value>
+</definitions>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ReSharper.ImplicitNullability</id>
+    <version>$Version$</version>
+    <title>Implicit Nullability</title>
+    <authors>ulrichb</authors>
+    <projectUrl>https://github.com/ulrichb/ImplicitNullability#readme</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Extends ReSharper's static nullability analysis by implicit [NotNull]/[CanBeNull] annotations for specific syntax elements.</description>
+    <tags>implicit nullability analysis</tags>
+    <dependencies>
+      <dependency id="$DependencyId$" version="$DependencyVer$" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ImplicitNullability.Plugin\$BinDirInclude$\$Configuration$\ImplicitNullability.Plugin.*" target="$TargetDir$" />
+  </files>
+</package>

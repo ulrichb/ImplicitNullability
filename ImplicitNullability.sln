@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R82", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R82.csproj", "{71478F9F-1AAA-40DA-9C0C-6043C972558C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample", "Src\ImplicitNullability.Sample\ImplicitNullability.Sample.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.Tests", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Sample.Tests.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R82", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R82.csproj", "{3C27B37B-9889-48E9-A61D-D129CB14D527}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4998CFBC-6ECF-4D29-954C-CF020091308E}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.ExternalCode", "Src\ImplicitNullability.Sample.ExternalCode\ImplicitNullability.Sample.ExternalCode.csproj", "{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71E8A124-D55F-464E-AAB2-82C8C02D9A38}"
+	ProjectSection(SolutionItems) = preProject
+		Build-NugetPackages.ps1 = Build-NugetPackages.ps1
+		DEVELOPING.md = DEVELOPING.md
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R91", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R91.csproj", "{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{67859B65-179D-40D0-80DB-003011824913}"
+	ProjectSection(SolutionItems) = preProject
+		Src\ImplicitNullability.nuspec = Src\ImplicitNullability.nuspec
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R91", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R91.csproj", "{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71478F9F-1AAA-40DA-9C0C-6043C972558C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71478F9F-1AAA-40DA-9C0C-6043C972558C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71478F9F-1AAA-40DA-9C0C-6043C972558C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71478F9F-1AAA-40DA-9C0C-6043C972558C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456A6456-5F34-4B64-9751-135686CE3A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456A6456-5F34-4B64-9751-135686CE3A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456A6456-5F34-4B64-9751-135686CE3A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456A6456-5F34-4B64-9751-135686CE3A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C27B37B-9889-48E9-A61D-D129CB14D527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C27B37B-9889-48E9-A61D-D129CB14D527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C27B37B-9889-48E9-A61D-D129CB14D527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C27B37B-9889-48E9-A61D-D129CB14D527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{71478F9F-1AAA-40DA-9C0C-6043C972558C} = {67859B65-179D-40D0-80DB-003011824913}
+		{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392} = {67859B65-179D-40D0-80DB-003011824913}
+		{456A6456-5F34-4B64-9751-135686CE3A8F} = {67859B65-179D-40D0-80DB-003011824913}
+		{3C27B37B-9889-48E9-A61D-D129CB14D527} = {67859B65-179D-40D0-80DB-003011824913}
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {67859B65-179D-40D0-80DB-003011824913}
+		{CDB42CAA-C42A-4343-9067-C9B766CAEFA6} = {67859B65-179D-40D0-80DB-003011824913}
+		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC} = {67859B65-179D-40D0-80DB-003011824913}
+	EndGlobalSection
+EndGlobal

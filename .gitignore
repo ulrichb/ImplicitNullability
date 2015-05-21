@@ -1,0 +1,21 @@
+*.tmp
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# NuGet Packages
+packages/*
+*.nupkg
+
+# custom ignores
+
+bin.R??/
+obj.R??/
+
+/Src/ImplicitNullability.Plugin.Tests/Packages/

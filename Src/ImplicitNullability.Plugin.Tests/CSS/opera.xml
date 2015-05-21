@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="urn:schemas-jetbrains-com:css-xml">
+
+  <!-- CSS propepries -->
+  <property id="-o-box-shadow" declared-in="3.0" url="http://www.w3.org/TR/2005/WD-css3-background-20050216/#box-shadow" applies="block-level and replaced elements" initial="visible" media="visual">
+    <property id="box-shadow" />
+  </property>
+  <property id="-o-background-size" declared-in="1.0" url="http://www.w3.org/TR/css3-background/#background-size" applies="all elements" initial="auto" percentage="see text" media="visual">
+    <group type="or">
+      <group type="or" min="1" max="2">
+        <length />
+        <percentage />
+        <name value="auto"/>
+      </group>
+      <name value="cover"/>
+      <name value="contain"/>
+    </group>
+  </property>
+  <property id="-o-transform" declared-in="3.0">
+    <group type="or">
+      <name value="none" />
+      <inline id="transform-function" min="1" max="-1" />
+    </group>
+  </property>
+
+  <property id="-o-animation" declared-in="3.0">
+    <property id="animation" />
+  </property>
+  <property id="-o-animation-name" declared-in="3.0">
+    <property id="animation-name" />
+  </property>
+  <property id="-o-animation-duration" declared-in="3.0">
+    <property id="animation-duration" />
+  </property>
+  <property id="-o-animation-timing-function" declared-in="3.0">
+    <property id="animation-timing-function" />
+  </property>
+  <property id="-o-animation-delay" declared-in="3.0">
+    <property id="animation-delay" />
+  </property>
+  <property id="-o-animation-iteration-count" declared-in="3.0">
+    <property id="animation-iteration-count" />
+  </property>
+  <property id="-o-animation-direction" declared-in="3.0">
+    <property id="animation-direction" />
+  </property>
+  <property id="-o-animation-fill-mode" declared-in="3.0">
+    <property id="animation-fill-mode" />
+  </property>
+
+</definitions>

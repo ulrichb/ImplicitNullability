@@ -1,0 +1,31 @@
+﻿@using System
+@using ImplicitNullability.Sample
+@using JetBrains.Annotations
+
+@functions{
+
+  [CanBeNull]
+  private readonly string _nullString = null;
+
+  private readonly int? _nullableInt = null;
+
+  private string TestMethod (string a)
+  {
+    ReSharper.TestValueAnalysis (a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+    return "";
+  }
+
+  private string TestNullableParametersMethod ([CanBeNull] string a, int? b, string c = null)
+  {
+    return "";
+  }
+
+}
+
+@* Write method *@
+@null
+@_nullString
+@_nullableInt
+
+@TestMethod(null /*Expect:AssignNullToNotNullAttribute*/)
+@TestNullableParametersMethod(null, null, null)

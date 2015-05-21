@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="urn:schemas-jetbrains-com:css-xml">
+
+  <!-- CSS propepries -->
+  <property id="-webkit-font-smoothing" declared-in="1.0" media="visual">
+    <group type="or">
+      <name value="none"/>
+      <name value="antialiased"/>
+      <name value="subpixel-antialiased"/>
+    </group>
+  </property>
+  <property id="-webkit-border-radius" declared-in="3.0" url="http://www.w3.org/TR/2005/WD-css3-background-20050216/#border-radius" initial="0" applies="all elements, except table element when 'border-collapse' is 'collapse'" media="visual">
+    <property id="border-radius"/>
+  </property>
+  <property id="-webkit-border-top-right-radius" declared-in="3.0" url="http://www.w3.org/TR/2005/WD-css3-background-20050216/#border-radius" initial="0" applies="all elements, except table element when 'border-collapse' is 'collapse'" media="visual">
+    <property id="border-top-right-radius"/>
+  </property>
+  <property id="-webkit-border-top-left-radius" declared-in="3.0" url="http://www.w3.org/TR/2005/WD-css3-background-20050216/#border-radius" initial="0" applies="all elements, except table element when 'border-collapse' is 'collapse'" media="visual">
+    <property id="border-top-left-radius"/>
+  </property>
+  <property id="-webkit-border-bottom-right-radius" declared-in="3.0" url="http://www.w3.org/TR/2005/WD-css3-background-20050216/#border-radius" initial="0" applies="all elements, except table element when 'border-collapse' is 'collapse'" media="visual">
+    <property id="border-bottom-right-radius"/>
+  </property>
+  <property id="-webkit-border-bottom-left-radius" declared-in="3.0" url="http://www.w3.org/TR/2005/WD-css3-background-20050216/#border-radius" initial="0" applies="all elements, except table element when 'border-collapse' is 'collapse'" media="visual">
+    <property id="border-bottom-left-radius"/>
+  </property>
+  <property id="-webkit-box-sizing" declared-in="1.0" url="http://www.w3.org/TR/css3-ui/#box-sizing" applies="all elements that accept width or height " inherited="yes" initial="content-box" media="visual">
+    <group type="or">
+      <name value="content-box"/>
+      <name value="border-box"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="-webkit-background-size" declared-in="1.0" url="http://www.w3.org/TR/css3-background/#background-size" applies="all elements" initial="auto" percentage="see text" media="visual">
+    <group type="or">
+      <group type="or" min="1" max="2">
+        <length />
+        <percentage />
+        <name value="auto"/>
+      </group>
+      <name value="cover"/>
+      <name value="contain"/>
+    </group>
+  </property>
+  <property id="-webkit-background-origin" declared-in="1.0" url="http://www.w3.org/TR/css3-background/#background-origin" applies="all elements" initial="padding-box" media="visual">
+    <group type="or">
+      <name value="border-box"/>
+      <name value="padding-box"/>
+      <name value="content-box"/>
+    </group>
+  </property>
+  <property id="-webkit-border-top-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="none" media="visual">
+    <group type="or">
+      <invoke id="url" min="1" max="3" />
+      <name value="inherit"/>
+      <name value="none"/>
+    </group>
+  </property>
+  <property id="-webkit-border-left-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="none" media="visual">
+    <group type="or">
+      <invoke id="url" min="1" max="3" />
+      <name value="inherit"/>
+      <name value="none"/>
+    </group>
+  </property>
+  <property id="-webkit-border-right-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="none" media="visual">
+    <group type="or">
+      <invoke id="url" min="1" max="3" />
+      <name value="inherit"/>
+      <name value="none"/>
+    </group>
+  </property>
+  <property id="-webkit-border-bottom-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="none" media="visual">
+    <group type="or">
+      <invoke id="url" min="1" max="3" />
+      <name value="inherit"/>
+      <name value="none"/>
+    </group>
+  </property>
+  <property id="-webkit-border-corner-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="continue" media="visual">
+    <group type="or">
+      <group type="or" min="1" max="4">
+        <name value="continue"/>
+        <invoke id="url" />
+      </group>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="-webkit-border-top-left-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="continue" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="continue"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="-webkit-border-bottom-left-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="continue" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="continue"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="-webkit-border-top-right-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="continue" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="continue"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="-webkit-border-bottom-right-image" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#the-border-image-uri" applies="all elements" initial="continue" media="visual">
+    <group type="or">
+      <invoke id="url" />
+      <name value="continue"/>
+      <name value="none"/>
+      <name value="inherit"/>
+    </group>
+  </property>
+  <property id="-webkit-border-break" declared-in="3.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#border-break" applies="elements with a border" initial="none" inherited="yes" media="visual">
+    <inline id="border-style" />
+  </property>
+  <property id="-webkit-border-corner-image-transform" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#border-image-transform" applies="all elements" media="visual" initial="none">
+    <group type="or">
+      <name value="none"/>
+      <name value="rotate"/>
+      <name value="reflect"/>
+    </group>
+  </property>
+  <property id="-webkit-border-image-transform" declared-in="1.0" url="http://www.w3.org/TR/2002/WD-css3-border-20021107/#border-image-transform" applies="all elements" media="visual" initial="none">
+    <group type="or">
+      <name value="none"/>
+      <name value="rotate"/>
+      <name value="reflect-xy"/>
+      <name value="reflect-right"/>
+      <name value="reflect-left"/>
+    </group>
+  </property>
+  <property id="-webkit-box-shadow" declared-in="3.0" initial="visible" applies="block-level and replaced elements" media="visual">
+    <property id="box-shadow" />
+  </property>
+  <property id="-webkit-transform" declared-in="3.0">
+    <group type="or">
+      <name value="none" />
+      <inline id="transform-function" min="1" max="-1" />
+    </group>
+  </property>
+  <property id="-webkit-text-size-adjust" declared-in="1.0" url="http://css-infos.net/property/-webkit-text-size-adjust">
+    <group type="or">
+      <name value="none"/>
+      <name value="auto"/>
+      <percentage />
+    </group>
+  </property>
+  <property id="-webkit-tap-highlight-color" declared-in="3.0" url="http://css-infos.net/property/-webkit-tap-highlight-color">
+    <inline id="color" />
+  </property>
+
+  <property id="-webkit-animation" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/Web/CSS/animation">
+    <property id="animation" />
+  </property>
+  <property id="-webkit-animation-name" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-name">
+    <property id="animation-name" />
+  </property>
+  <property id="-webkit-animation-duration" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-duration">
+    <property id="animation-duration" />
+  </property>
+  <property id="-webkit-animation-timing-function" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-timing-function">
+    <property id="animation-timing-function" />
+  </property>
+  <property id="-webkit-animation-delay" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-delay">
+    <property id="animation-delay" />
+  </property>
+  <property id="-webkit-animation-iteration-count" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-iteration-count">
+    <property id="animation-iteration-count" />
+  </property>
+  <property id="-webkit-animation-direction" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-direction">
+    <property id="animation-direction" />
+  </property>
+  <property id="-webkit-animation-fill-mode" declared-in="3.0" url="https://developer.mozilla.org/en-US/docs/CSS/animation-fill-mode">
+    <property id="animation-fill-mode" />
+  </property>
+
+  <!-- CSS functions -->
+  <function id="color-stop" declared-in="3.0">
+    <any min="0" max="-1"/>
+  </function>
+  <function id="from" declared-in="3.0">
+    <any min="0" max="-1"/>
+  </function>
+  <function id="to" declared-in="3.0">
+    <any min="0" max="-1"/>
+  </function>
+
+
+</definitions>
