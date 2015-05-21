@@ -1,5 +1,7 @@
 # Implicit Nullability ReSharper Extension
 
+[![Build status](https://ci.appveyor.com/api/projects/status/qldjrfvj090h8b0q/branch/master?svg=true)](https://ci.appveyor.com/project/ulrichb/implicitnullability/branch/master)
+
 ## Idea
 The basic idea of this plugin is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]`/`[CanBeNull]` attribute.
 
