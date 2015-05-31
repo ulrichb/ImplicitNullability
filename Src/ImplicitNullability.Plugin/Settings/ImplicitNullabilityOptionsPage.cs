@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Forms;
 using JetBrains.Application.Settings;
 using JetBrains.DataFlow;
 using JetBrains.UI.Application;
@@ -53,6 +54,11 @@ namespace ImplicitNullability.Plugin.Settings
                     "\u2022 Nullable value type parameters and optional parameters with null default value \u2192 implicitly CanBeNull\n" +
                     "\u2022 Reference type parameters (without null default value) \u2192 implicitly NotNull",
                     JetBrains.UI.Options.Helpers.Controls.IndentF + JetBrains.UI.Options.Helpers.Controls.IndentF));
+
+            var cacheInfoLabel = new Controls.Label("Note: After changing these settings, cleaning the solution cache (see " +
+                                           "\"General\" options page) is necessary to update already analyzed code.");
+            cacheInfoLabel.Margin += new Padding(0, 6, 0, 0);
+            Controls.Add(cacheInfoLabel);
 
             enabledCheckBox.Checked.Change.Advise(_lifetime, x => inputAndRefParametersCheckBox.Enabled = x.Property.Value);
 

@@ -1,4 +1,4 @@
-version: 1.0.0.{build}
+version: 1.0.1.{build}
 environment:
   NugetPushKey:
     secure: Fr6Et35ii82/P5ZjfsKoIomda8gim+SKJkklwChGm5Jm2+wd/5uyQYbwAP4M7UTv

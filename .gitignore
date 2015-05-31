@@ -10,7 +10,7 @@
 [Oo]bj/
 
 # NuGet Packages
-packages/*
+packages/
 *.nupkg
 
 # custom ignores
