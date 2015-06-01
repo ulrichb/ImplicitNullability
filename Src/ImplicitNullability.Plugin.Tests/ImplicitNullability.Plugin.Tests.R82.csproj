@@ -49,10 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compatibility.cs" />
-    <Compile Include="HighlightingTestSolutionTests.cs" />
-    <Compile Include="Infrastructure\HighlightingInPluginTestSolutionTestBase.cs" />
+    <Compile Include="HighlightingTests.cs" />
+    <Compile Include="Infrastructure\SampleSolutionTestBase.cs" />
+    <Compile Include="Infrastructure\SolutionExtensions.cs" />
     <Compile Include="TestEnvironmentSetUpFixture.R82.cs" />
-    <Compile Include="NullabilityAnalysisTestSolutionTests.cs" />
+    <Compile Include="NullabilityAnalysisTests.cs" />
     <Compile Include="Infrastructure\TestDataPathUtility.cs" />
   </ItemGroup>
   <ItemGroup>

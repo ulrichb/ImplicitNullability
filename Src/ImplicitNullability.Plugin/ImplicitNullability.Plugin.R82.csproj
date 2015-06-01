@@ -36,7 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
-    <StartArguments>/ReSharper.Plugin $(AssemblyName).dll /ReSharper.Internal $(SolutionDir)ImplicitNullability.PluginTest.sln</StartArguments>
+    <StartArguments>/ReSharper.Plugin $(AssemblyName).dll /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln</StartArguments>
     <StartWorkingDirectory>$(MSBuildProjectDirectory)\$(OutputPath)</StartWorkingDirectory>
     <NoWarn>1685</NoWarn>
   </PropertyGroup>
