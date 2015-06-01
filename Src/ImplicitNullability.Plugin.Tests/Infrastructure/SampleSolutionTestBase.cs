@@ -117,6 +117,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False, "fixate default value");
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
+            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, false); // TODO
         }
 
         [CanBeNull]

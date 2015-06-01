@@ -34,26 +34,45 @@ namespace ImplicitNullability.Plugin
             {
                 if (IsInputOrRefParameterOfRegularMethodOrIndexer(parameter))
                 {
-                    if (parameter.Type.IsValueType())
-                    {
-                        // Nullable or non-nullable value type
-
-                        if (parameter.Type.IsNullable())
-                            result = CodeAnnotationNullableValue.CAN_BE_NULL;
-                    }
+                    if (IsOptionalArgumentWithNullDefaultValue(parameter))
+                        result = CodeAnnotationNullableValue.CAN_BE_NULL;
                     else
-                    {
-                        // Reference/pointer type, generic method without value type/reference type constraint
-
-                        if (IsOptionalArgumentWithNullDefaultValue(parameter))
-                            result = CodeAnnotationNullableValue.CAN_BE_NULL;
-                        else
-                            result = CodeAnnotationNullableValue.NOT_NULL;
-                    }
+                        result = GetNullability(parameter.Type);
                 }
             }
 
             return result;
+        }
+
+        public CodeAnnotationNullableValue? AnalyzeMethod([NotNull] IMethod method)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            if (method.IsPartOfSolutionCode() && IsOptionEnabled(method, s => s.EnableOutParametersAndResult))
+            {
+                result = GetNullability(method.ReturnType);
+            }
+
+            return result;
+        }
+
+        private static CodeAnnotationNullableValue? GetNullability(IType type)
+        {
+            if (type.IsValueType())
+            {
+                // Nullable or non-nullable value type
+
+                if (type.IsNullable())
+                    return CodeAnnotationNullableValue.CAN_BE_NULL;
+            }
+            else
+            {
+                // Reference/pointer type, generic method without value type/reference type constraint
+
+                return CodeAnnotationNullableValue.NOT_NULL;
+            }
+
+            return null;
         }
 
         private bool IsInputOrRefParameterOfRegularMethodOrIndexer([NotNull] IParameter parameter)
@@ -91,7 +110,8 @@ namespace ImplicitNullability.Plugin
             return parameter.Kind != ParameterKind.OUTPUT;
         }
 
-        private bool IsOptionEnabled([NotNull] IParameter element, [NotNull] Expression<Func<ImplicitNullabilitySettings, bool>> optionExpression)
+        private bool IsOptionEnabled([NotNull] IClrDeclaredElement element,
+            [NotNull] Expression<Func<ImplicitNullabilitySettings, bool>> optionExpression)
         {
             var contextRange = ContextRange.Smart(element.Module.ToDataContext());
 

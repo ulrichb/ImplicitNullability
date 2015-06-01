@@ -33,6 +33,10 @@ namespace ImplicitNullability.Plugin
             if (parameter != null)
                 result = _implicitNullabilityProvider.AnalyzeParameter(parameter);
 
+            var method = element as IMethod;
+            if (method != null)
+                result = _implicitNullabilityProvider.AnalyzeMethod(method);
+
 #if DEBUG
             var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result == null ? "NULL" : result.ToString());
 
