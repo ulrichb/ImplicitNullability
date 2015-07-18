@@ -71,11 +71,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\BaseClassWithExternalInterfaceInOwnCode.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithVariousTypes.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\HiddenMethod.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\NonPolymorphicMethod.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithRefAndOutParameter.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithAnnotations.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\DerivedClassFromExternalClass.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\CanBeNullOnHiddenMethod.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\NonPolymorphicMethods.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\CanBeNullOnExplicitlyImplementedInterface.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsStrongerInDerived.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsWeakerInDerived.cs" />
