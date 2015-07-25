@@ -1,13 +1,12 @@
 using System;
 using ImplicitNullability.Plugin.Settings;
 using JetBrains.DocumentModel;
-using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
-
 #if RESHARPER8
 using IHighlighting = JetBrains.ReSharper.Daemon.Impl.IHighlightingWithRange;
 
 #else
+using JetBrains.ReSharper.Feature.Services.Daemon;
 
 #endif
 

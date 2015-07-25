@@ -1,12 +1,12 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
 using System;
-using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
-
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
 
 #else
+using JetBrains.ReSharper.Feature.Services.Daemon;
+
 #endif
 
 [assembly: RegisterConfigurableSeverity(
