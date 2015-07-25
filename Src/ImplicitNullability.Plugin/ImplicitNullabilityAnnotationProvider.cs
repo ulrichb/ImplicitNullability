@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
@@ -38,7 +39,7 @@ namespace ImplicitNullability.Plugin
                 result = _implicitNullabilityProvider.AnalyzeMethod(method);
 
 #if DEBUG
-            var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result == null ? "NULL" : result.ToString());
+            var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
 
             s_logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
 #endif
