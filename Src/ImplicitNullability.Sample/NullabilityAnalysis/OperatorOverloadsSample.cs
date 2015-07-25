@@ -30,6 +30,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
                 return 0;
             }
 
+            [CanBeNull]
             public static CanBeNull operator ++([CanBeNull] CanBeNull value)
             {
                 ReSharper.TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);

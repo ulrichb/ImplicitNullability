@@ -17,17 +17,45 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void FunctionWithNullReturnValue()
+        public void FunctionWithNonNullReturnValue()
         {
-            Action act = () => _instance.Function(null);
+            Action act = () =>
+            {
+                var result = _instance.Function(returnValue: "a");
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
+            };
 
-            act.ShouldNotThrow("at the moment, method return values should not be guarded");
+            act.ShouldNotThrow();
         }
 
         [Test]
-        public void FunctionWithCanBeNullResultAndNullReturnValue()
+        public void FunctionWithNullReturnValue()
         {
-            Action act = () => _instance.FunctionWithCanBeNullResult(null);
+            Action act = () => _instance.Function(returnValue: null);
+
+            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+        }
+
+        [Test]
+        public void FunctionWithCanBeNull_AndNullReturnValue()
+        {
+            Action act = () =>
+            {
+                var result = _instance.FunctionWithCanBeNull(returnValue: null);
+                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute*/, result == null);
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void FunctionWithNullableInt_AndNullReturnValue()
+        {
+            Action act = () =>
+            {
+                var result = _instance.FunctionWithNullableInt(returnValue: null);
+                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute*/, result == null);
+            };
 
             act.ShouldNotThrow();
         }

@@ -10,7 +10,12 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         }
 
         [CanBeNull]
-        public string FunctionWithCanBeNullResult([CanBeNull] string returnValue)
+        public string FunctionWithCanBeNull([CanBeNull] string returnValue)
+        {
+            return returnValue;
+        }
+
+        public int? FunctionWithNullableInt(int? returnValue)
         {
             return returnValue;
         }
