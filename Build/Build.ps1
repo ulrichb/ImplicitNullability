@@ -20,6 +20,7 @@ $NUnitTestAssemblyPaths = @(
   "Src\ImplicitNullability.Plugin.Tests\bin.R91\$Configuration\ImplicitNullability.Plugin.Tests.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"
+$TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.*"
 $NuspecPath = "Src\ImplicitNullability.nuspec"
 $PackageBaseVersion = StripLastPartFromVersion $Version
 $NugetPackProperties = @(

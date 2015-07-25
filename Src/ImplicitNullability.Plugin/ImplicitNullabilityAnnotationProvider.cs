@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
 using JetBrains.Util.Logging;
+using ReSharperExtensionsShared;
 
 namespace ImplicitNullability.Plugin
 {

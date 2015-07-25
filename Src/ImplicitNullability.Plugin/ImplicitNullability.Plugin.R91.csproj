@@ -136,6 +136,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\DebugUtilities.cs">
+      <Link>ReSharperExtensionsShared\DebugUtilities.cs</Link>
+    </Compile>
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchyHighlighting.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMemberHighlighting.cs" />
     <Compile Include="Highlighting\ImplicitNullabilityHighlightingBase.cs" />
@@ -144,7 +147,6 @@
     <Compile Include="Infrastructure\PsiExtensions.cs" />
     <Compile Include="ImplicitNullabilityProvider.cs" />
     <Compile Include="ImplicitNullabilityProblemAnalyzer.cs" />
-    <Compile Include="Infrastructure\DebugUtilities.cs" />
     <Compile Include="Settings\ImplicitNullabilityOptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>

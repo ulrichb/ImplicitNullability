@@ -1,11 +1,14 @@
 version: 1.0.1.{build}
+branches:
+  except: [/spike.*/]
 environment:
   NugetPushKey:
     secure: Fr6Et35ii82/P5ZjfsKoIomda8gim+SKJkklwChGm5Jm2+wd/5uyQYbwAP4M7UTv
 cache:
   - packages
   - Src\ImplicitNullability.Plugin.Tests\Packages
-
+artifacts:
+  - path: Build\Output\TestCoverage
 install:
   - git submodule update --init --recursive
   - rmdir /S /Q "%ProgramFiles(x86)%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6" # Workaround for the "Unsupported FrameworkVersion 4.6" error of the R# 8.2 Test SDK

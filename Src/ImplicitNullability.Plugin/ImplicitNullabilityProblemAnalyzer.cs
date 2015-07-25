@@ -11,6 +11,7 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
 using JetBrains.Util.Logging;
+using ReSharperExtensionsShared;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.Stages;
