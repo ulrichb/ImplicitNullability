@@ -25,9 +25,17 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void SomeDelegateToAnonymousMethod()
+        public void GetSomeActionToAnonymousMethod()
         {
-            Action act = () => DelegatesSample.GetSomeDelegateToAnonymousMethod()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => DelegatesSample.GetSomeActionToAnonymousMethod()(null);
+
+            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+        }
+
+        [Test]
+        public void GetSomeDelegateToLambda()
+        {
+            Action act = () => DelegatesSample.GetSomeDelegate()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
         }
@@ -46,7 +54,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateToNamedMethodWithCanBeNull()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldNotThrow("because the delegate *method* parameter is CanBeNull");
+            act.ShouldNotThrow();
         }
 
         [Test]
@@ -54,7 +62,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateWithCanBeNullToNamedMethod()(null);
 
-            act.ShouldThrow<ArgumentNullException>("because the delegate *method* parameter is implicitly NotNull")
+            act.ShouldThrow<ArgumentNullException>("because the delegate *method* parameter is (implicitly) NotNull")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -63,15 +71,53 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateWithCanBeNullToNamedMethodWithCanBeNull()(null);
 
-            act.ShouldNotThrow("because the delegate *method* parameter is CanBeNull");
+            act.ShouldNotThrow();
         }
 
         [Test]
-        public void SomeDelegateWithRefAndOutWithNullValueForRefArgument()
+        public void SomeFunctionDelegateWithNotNull()
         {
-            string outString;
-            string refString = null;
-            Action act = () => DelegatesSample.GetSomeDelegateWithRefAndOut()(out outString, ref refString);
+            Action act = () =>
+            {
+                var result = DelegatesSample.GetSomeFunctionDelegateWithNotNull()();
+                // REPORT? false negative, although input parameters of delegates work (see above) and the [NotNull] is used in the lambda:
+                ReSharper.TestValueAnalysis(result, result == null);
+            };
+
+            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+        }
+
+        [Test]
+        public void SomeFunctionDelegate()
+        {
+            Action act = () =>
+            {
+                var result = DelegatesSample.GetSomeFunctionDelegate()();
+                // This false negative is analog to SomeFunctionDelegateWithNotNull and even requires an exemption for the delegate Invoke() method,
+                // but it is necessary because this implicit annotation wouldn't be invertible with [CanBeNull]:
+                ReSharper.TestValueAnalysis(result, result == null);
+            };
+
+            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+        }
+
+        [Test]
+        public void SomeFunctionDelegateWithCanBeNull()
+        {
+            Action act = () =>
+            {
+                var result = DelegatesSample.GetSomeFunctionDelegateWithCanBeNull()();
+                // REPORT? false negative, equivalent to case in SomeFunctionDelegateWithNotNull
+                ReSharper.TestValueAnalysis(result, result == null);
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void SomeNotNullDelegateOfExternalCode()
+        {
+            Action act = () => DelegatesSample.GetSomeNotNullDelegateOfExternalCode()(null /*Expect:AssignNullToNotNullAttribute*/);
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
         }
@@ -85,9 +131,18 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void SomeNotNullDelegateOfExternalCode()
+        public void SomeDelegateWithRefAndOutWithNullValueForRefArgument()
         {
-            Action act = () => DelegatesSample.GetSomeNotNullDelegateOfExternalCode()(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () =>
+            {
+                string outString;
+                string refString = null;
+
+                DelegatesSample.GetSomeDelegateWithRefAndOut()(out outString, ref refString);
+
+                ReSharper.TestValueAnalysis(outString, outString == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
+                ReSharper.TestValueAnalysis(refString, refString == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
         }

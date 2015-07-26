@@ -13,22 +13,24 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public static Action<string> GetSomeActionWithClosedValues()
         {
-            var captured = 0;
+            var captured = Guid.NewGuid();
             return s =>
             {
                 ReSharper.TestValueAnalysis(s, s == null);
-                var x = captured;
+                ReSharper.SuppressUnusedWarning(captured);
             };
+        }
+
+        public static Action<string> GetSomeActionToAnonymousMethod()
+        {
+            return delegate(string s) { ReSharper.TestValueAnalysis(s, s == null); };
         }
 
         public delegate void SomeDelegate(string s);
 
-        public delegate void SomeDelegateWithCanBeNull([CanBeNull] string s);
-
-        public static SomeDelegate GetSomeDelegateToAnonymousMethod()
+        public static SomeDelegate GetSomeDelegate()
         {
-            // ReSharper disable once ConvertToLambdaExpression
-            return delegate(string s) { ReSharper.TestValueAnalysis(s, s == null); };
+            return s => ReSharper.TestValueAnalysis(s, s == null);
         }
 
         public static SomeDelegate GetSomeDelegateToNamedMethod()
@@ -41,9 +43,11 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             return NamedMethodWithCanBeNull;
         }
 
+        public delegate void SomeDelegateWithCanBeNull([CanBeNull] string s);
+
         public static SomeDelegateWithCanBeNull GetSomeDelegateWithCanBeNullToNamedMethod()
         {
-            // REPORT? Here R# could warn about assigning a method with a NotNull parameter to a delegate with CanBeNull on the corresponding parameter
+            // REPORT? Here R# could warn about the precondition substitutability issue
             return NamedMethod;
         }
 
@@ -52,12 +56,41 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             return NamedMethodWithCanBeNull;
         }
 
-        public static External.SomeDelegate GetSomeDelegateOfExternalCode()
+        [NotNull]
+        public delegate string SomeFunctionDelegateWithNotNull();
+
+        public static SomeFunctionDelegateWithNotNull GetSomeFunctionDelegateWithNotNull()
+        {
+            return () => null /*Expect:AssignNullToNotNullAttribute[RS >= 9]*/;
+        }
+
+        public delegate string SomeFunctionDelegate();
+
+        public static SomeFunctionDelegate GetSomeFunctionDelegate()
+        {
+            return () => null /*Expect:AssignNullToNotNullAttribute[RS >= 9 && MOut]*/;
+        }
+
+        public static SomeFunctionDelegate GetSomeFunctionDelegateToNamedMethod()
+        {
+            // REPORT? Here R# could warn about the postcondition substitutability issue
+            return NamedFunctionWithCanBeNull;
+        }
+
+        [CanBeNull]
+        public delegate string SomeFunctionDelegateWithCanBeNull();
+
+        public static SomeFunctionDelegateWithCanBeNull GetSomeFunctionDelegateWithCanBeNull()
+        {
+            return () => null;
+        }
+
+        public static External.SomeNotNullDelegate GetSomeNotNullDelegateOfExternalCode()
         {
             return s => ReSharper.TestValueAnalysis(s, s == null);
         }
 
-        public static External.SomeNotNullDelegate GetSomeNotNullDelegateOfExternalCode()
+        public static External.SomeDelegate GetSomeDelegateOfExternalCode()
         {
             return s => ReSharper.TestValueAnalysis(s, s == null);
         }
@@ -68,6 +101,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         {
             return delegate(out string outString, ref string refString)
             {
+                // For out-parameters, R# doesn't seem to use the delegate annotations (in contrast to the return value)
                 outString = null;
                 ReSharper.TestValueAnalysis(refString, refString == null);
             };
@@ -81,13 +115,20 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         {
         }
 
-        private static void ActionDelegateConstructor()
+        [CanBeNull]
+        private static string NamedFunctionWithCanBeNull()
+        {
+            return null;
+        }
+
+        public static void ActionDelegateConstructor()
         {
             Action nullAction = null;
 
             // Here the target parameter is a Special.Parameter, which is an IParameter. Note that this is an "builtin" null ref warning. Nullability 
             // annotations are not involved for this error, although the annotation provider is being called (observed in R# 8.2).
             var action = new Action(nullAction /*Expect:PossibleNullReferenceException*/);
+            ReSharper.SuppressUnusedWarning(action);
         }
     }
 }

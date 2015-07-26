@@ -18,7 +18,7 @@ namespace ImplicitNullability.Sample
         {
         }
 
-        public static void AvoidValueIsNeverUsedWarning(string value)
+        public static void SuppressUnusedWarning(object value)
         {
         }
 

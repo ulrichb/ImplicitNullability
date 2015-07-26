@@ -38,6 +38,10 @@ namespace ImplicitNullability.Plugin
             if (method != null)
                 result = _implicitNullabilityProvider.AnalyzeMethod(method);
 
+            var @delegate = element as IDelegate;
+            if (@delegate != null)
+                result = _implicitNullabilityProvider.AnalyzeDelegate(@delegate);
+
 #if DEBUG
             var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
 

@@ -7,6 +7,7 @@ using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
+using JetBrains.ReSharper.Psi.Impl.Special;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
@@ -37,12 +38,12 @@ namespace ImplicitNullability.Plugin
                     if (IsOptionalArgumentWithNullDefaultValue(parameter))
                         result = CodeAnnotationNullableValue.CAN_BE_NULL;
                     else
-                        result = GetNullability(parameter.Type);
+                        result = GetNullabilityForType(parameter.Type);
                 }
 
                 if (parameter.IsOut() && IsOptionEnabled(parameter, s => s.EnableOutParametersAndResult))
                 {
-                    result = GetNullability(parameter.Type);
+                    result = GetNullabilityForType(parameter.Type);
                 }
             }
 
@@ -53,15 +54,30 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (method.IsPartOfSolutionCode() && IsOptionEnabled(method, s => s.EnableOutParametersAndResult))
+            if (!(method is DelegateMethod))
             {
-                result = GetNullability(method.ReturnType);
+                if (method.IsPartOfSolutionCode() && IsOptionEnabled(method, s => s.EnableOutParametersAndResult))
+                {
+                    result = GetNullabilityForType(method.ReturnType);
+                }
             }
 
             return result;
         }
 
-        private static CodeAnnotationNullableValue? GetNullability([NotNull] IType type)
+        public CodeAnnotationNullableValue? AnalyzeDelegate([NotNull] IDelegate @delegate)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            if (@delegate.IsPartOfSolutionCode() && IsOptionEnabled(@delegate, s => s.EnableOutParametersAndResult))
+            {
+                result = GetNullabilityForType(@delegate.InvokeMethod.ReturnType);
+            }
+
+            return result;
+        }
+
+        private static CodeAnnotationNullableValue? GetNullabilityForType([NotNull] IType type)
         {
             if (type.IsValueType())
             {

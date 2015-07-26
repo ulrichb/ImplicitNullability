@@ -17,27 +17,27 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             public void CanBeNullRefParameterInInterfaceExplicitNotNullInDerived([NotNull] /*Expect:AnnotationConflictInHierarchy*/ ref string a)
             {
-                ReSharper.AvoidValueIsNeverUsedWarning(a);
+                ReSharper.SuppressUnusedWarning(a);
                 a = "";
             }
 
             public void CanBeNullRefParameterInInterfaceImplicitNotNullInDerived(ref string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {
-                ReSharper.AvoidValueIsNeverUsedWarning(a);
+                ReSharper.SuppressUnusedWarning(a);
                 a = null;
             }
 
             // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431
             public void ExplicitNotNullRefParameterInInterfaceCanBeNullInDerived([CanBeNull] ref string a)
             {
-                ReSharper.AvoidValueIsNeverUsedWarning(a);
+                ReSharper.SuppressUnusedWarning(a);
                 a = null;
             }
 
             // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431 may also fix this issue
             public void ImplicitNotNullRefParameterInInterfaceCanBeNullInDerived([CanBeNull] ref string a)
             {
-                ReSharper.AvoidValueIsNeverUsedWarning(a);
+                ReSharper.SuppressUnusedWarning(a);
                 a = null;
             }
         }
