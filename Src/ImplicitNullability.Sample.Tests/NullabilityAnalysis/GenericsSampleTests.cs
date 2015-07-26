@@ -19,6 +19,16 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
+        public void NoConstraintGenericWithDateTimeType_AndFunctionWithDefaultOfTReturnValue()
+        {
+            var instance = new GenericsSample.NoConstraint<DateTime>();
+
+            Action act = () => instance.Function(returnValue: default(DateTime));
+
+            act.ShouldNotThrow("the return value check should not perform a 'param == default(T)' comparison");
+        }
+
+        [Test]
         public void NoConstraintGenericWithNullableIntType_AndMethodWithNullArgument()
         {
             var instance = new GenericsSample.NoConstraint<int?>();
@@ -26,9 +36,20 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             Action act = () => instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>(
-                "this is a known issue for generic types without constraint (it is a trade-off between this false positive " +
-                "and a false-negative if T is a reference type (like in the StringTypeParameter_AndTestMethodNullArgument test case)")
+                "known issue for generics without constraint (it's a trade-off between this false positive and a false-negative if T is a reference type")
                 .And.ParamName.Should().Be("a");
+        }
+
+        [Test]
+        public void NoConstraintGenericWithNullableIntType_AndFunctionWithNullReturnValue()
+        {
+            var instance = new GenericsSample.NoConstraint<int?>();
+
+            Action act = () => instance.Function(returnValue: null);
+
+            act.ShouldThrow<InvalidOperationException>().WithMessage(
+                "[NullGuard] Return value * is null.",
+                "known issue for generics without constraint (it's a trade-off between this false positive and a false-negative if T is a reference type");
         }
 
         [Test]
@@ -39,6 +60,20 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             Action act = () => instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+        }
+
+        [Test]
+        public void NoConstraintGenericWithStringType_AndFunctionWithNullReturnValue()
+        {
+            var instance = new GenericsSample.NoConstraint<string>();
+
+            Action act = () =>
+            {
+                var result = instance.Function(returnValue: null);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
+            };
+
+            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -74,7 +109,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void MethodWithoutConstraintWithStringType_AndNullArgument()
         {
-            Action act = () => GenericsSample.GenericMethods.MethodWithoutConstraint((string)null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => GenericsSample.GenericMethods.MethodWithoutConstraint((string) null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

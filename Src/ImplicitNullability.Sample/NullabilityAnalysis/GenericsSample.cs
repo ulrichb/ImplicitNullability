@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.NullabilityAnalysis
 {
@@ -14,6 +15,11 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             public void Method(T a)
             {
                 ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            }
+
+            public T Function([CanBeNull] T returnValue)
+            {
+                return returnValue; /*Expect:AssignNullToNotNullAttribute[MOut]*/
             }
         }
 

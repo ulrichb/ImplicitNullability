@@ -3,6 +3,8 @@ using FluentAssertions;
 using ImplicitNullability.Sample.NullabilityAnalysis;
 using NUnit.Framework;
 
+// ReSharper disable ObjectCreationAsStatement
+
 namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
 {
     [TestFixture]
@@ -11,7 +13,11 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void CtorWithNotNullArgument()
         {
-            Action act = () => new ConstructorsSample("a");
+            Action act = () =>
+            {
+                var instance = new ConstructorsSample("a");
+                ReSharper.TestValueAnalysis(instance, instance == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            };
 
             act.ShouldNotThrow();
         }
@@ -36,7 +42,9 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         public void CtorWithViolatedBothNotNullArguments()
         {
             Action act =
-                () => new ConstructorsSample(null /*Expect:AssignNullToNotNullAttribute[MIn]*/, optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+                () => new ConstructorsSample(
+                    null /*Expect:AssignNullToNotNullAttribute[MIn]*/,
+                    optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a", "the evaluation of the arguments should start from left");
         }
