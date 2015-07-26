@@ -15,14 +15,20 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             return returnValue;
         }
 
-        public int? FunctionWithNullableInt(int? returnValue)
+        public int? FunctionWithNullableInt(int? returnValue, out int? outParam)
         {
+            outParam = returnValue;
             return returnValue;
         }
 
-        public void MethodWithOutParameter(out string outString)
+        public void MethodWithOutParameter(out string outParam)
         {
-            outString = null; // TODO
+            outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+        }
+
+        public void MethodWithCanBeNullOutParameter([CanBeNull] out string outParam1)
+        {
+            outParam1 = null;
         }
     }
 }

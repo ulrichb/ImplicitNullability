@@ -30,14 +30,19 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (parameter.IsPartOfSolutionCode() && IsOptionEnabled(parameter, s => s.EnableInputAndRefParameters))
+            if (parameter.IsPartOfSolutionCode() && IsImplicitNullabilityApplicableToParameter(parameter))
             {
-                if (IsInputOrRefParameterOfRegularMethodOrIndexer(parameter))
+                if (parameter.IsInputOrRef() && IsOptionEnabled(parameter, s => s.EnableInputAndRefParameters))
                 {
                     if (IsOptionalArgumentWithNullDefaultValue(parameter))
                         result = CodeAnnotationNullableValue.CAN_BE_NULL;
                     else
                         result = GetNullability(parameter.Type);
+                }
+
+                if (parameter.IsOut() && IsOptionEnabled(parameter, s => s.EnableOutParametersAndResult))
+                {
+                    result = GetNullability(parameter.Type);
                 }
             }
 
@@ -56,7 +61,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private static CodeAnnotationNullableValue? GetNullability(IType type)
+        private static CodeAnnotationNullableValue? GetNullability([NotNull] IType type)
         {
             if (type.IsValueType())
             {
@@ -73,11 +78,6 @@ namespace ImplicitNullability.Plugin
             }
 
             return null;
-        }
-
-        private bool IsInputOrRefParameterOfRegularMethodOrIndexer([NotNull] IParameter parameter)
-        {
-            return IsInputOrRefParameter(parameter) && IsImplicitNullabilityApplicableToParameter(parameter);
         }
 
         private bool IsImplicitNullabilityApplicableToParameter([NotNull] IParameter parameter)
@@ -103,11 +103,6 @@ namespace ImplicitNullability.Plugin
             // cannot override the result of the implicit nullability:
 
             return !containingParametersOwner.IsSynthetic();
-        }
-
-        private static bool IsInputOrRefParameter([NotNull] IParameter parameter)
-        {
-            return parameter.Kind != ParameterKind.OUTPUT;
         }
 
         private bool IsOptionEnabled([NotNull] IClrDeclaredElement element,

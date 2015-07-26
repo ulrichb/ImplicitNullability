@@ -5,7 +5,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
 {
     public class DerivedClassFromExternalClass
     {
-        private class DerivedClass : External.Class
+        public class DerivedClass : External.Class
         {
             public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/]
             {

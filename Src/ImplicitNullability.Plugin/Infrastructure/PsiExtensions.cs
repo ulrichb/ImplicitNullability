@@ -20,5 +20,15 @@ namespace ImplicitNullability.Plugin.Infrastructure
         {
             return x == null;
         }
+
+        public static bool IsInputOrRef([NotNull] this IParameter parameter)
+        {
+            return parameter.Kind == ParameterKind.VALUE || parameter.Kind == ParameterKind.REFERENCE;
+        }
+
+        public static bool IsOut([NotNull] this IParameter parameter)
+        {
+            return parameter.Kind == ParameterKind.OUTPUT;
+        }
     }
 }

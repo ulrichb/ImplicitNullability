@@ -5,13 +5,15 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
 {
     public class OverrideExternalMethodWithRefAndOutParameter
     {
-        private class InterfaceWithReferenceTypeRefParameter : External.IInterfaceWithRefAndOutParameter
+        public class Implementation : External.IInterfaceWithRefAndOutParameter
         {
-            public void SomeMethod(ref string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/, out string b)
+            public void SomeMethod(
+                ref string refParam /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/,
+                out string outParam)
             {
-                Console.WriteLine(a);
-                a = null /*Expect:AssignNullToNotNullAttribute*/;
-                b = null;
+                ReSharper.SuppressUnusedWarning(refParam);
+                refParam = "";
+                outParam = "";
             }
         }
     }

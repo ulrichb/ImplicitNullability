@@ -86,7 +86,7 @@ namespace ImplicitNullability.Plugin
             var isImplicitlyNotNull = !nullableAttributeMarks.Any() &&
                                       _implicitNullabilityProvider.AnalyzeParameter(parameter) == CodeAnnotationNullableValue.NOT_NULL;
 
-            if (isImplicitlyNotNull)
+            if (isImplicitlyNotNull && parameter.IsInputOrRef())
             {
                 var superMembersNullability = GetImmediateSuperMembersNullability(parameter).ToList();
 

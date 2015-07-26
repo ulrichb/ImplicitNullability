@@ -38,7 +38,7 @@ namespace ImplicitNullability.Sample.ExternalCode
 
         public interface IInterfaceWithRefAndOutParameter
         {
-            void SomeMethod(ref string a, out string b);
+            void SomeMethod(ref string refParam, out string outParam);
         }
     }
 }
