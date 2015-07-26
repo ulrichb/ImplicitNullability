@@ -28,7 +28,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestProcedureWithNullValue()
         {
-            Action act = () => _instance.TestProcedure(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestProcedure(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
@@ -162,7 +162,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestProcedureWithNonNullDefaultArgumentCalledWithNullValue()
         {
-            Action act = () => _instance.TestProcedureWithNonNullDefaultArgument(optional: null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestProcedureWithNonNullDefaultArgument(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
@@ -178,7 +178,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestProcedureWithNonNullDefaultArgumentFromConstWithNullValue()
         {
-            Action act = () => _instance.TestProcedureWithNonNullDefaultArgumentFromConst(optional: null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestProcedureWithNonNullDefaultArgumentFromConst(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
@@ -194,7 +194,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestProcedureWithParamsWithNullValue()
         {
-            Action act = () => _instance.TestProcedureWithParams(a: null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestProcedureWithParams(a: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
@@ -253,7 +253,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void StaticTestProcedureWithNullValue()
         {
-            Action act = () => MethodsSample.StaticTestProcedure(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => MethodsSample.StaticTestProcedure(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
@@ -261,7 +261,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void GenericMethodWithNullValue()
         {
-            Action act = () => _instance.GenericMethod((string) null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.GenericMethod((string)null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

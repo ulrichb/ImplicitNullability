@@ -27,7 +27,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void SomeDelegateToAnonymousMethod()
         {
-            Action act = () => DelegatesSample.GetSomeDelegateToAnonymousMethod()(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => DelegatesSample.GetSomeDelegateToAnonymousMethod()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
         }
@@ -35,7 +35,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void SomeDelegateToNamedMethod()
         {
-            Action act = () => DelegatesSample.GetSomeDelegateToNamedMethod()(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => DelegatesSample.GetSomeDelegateToNamedMethod()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>("because the delegate *method* parameter is implicitly NotNull")
                 .And.ParamName.Should().Be("a");
@@ -44,7 +44,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void SomeDelegateToNamedMethodWithCanBeNull()
         {
-            Action act = () => DelegatesSample.GetSomeDelegateToNamedMethodWithCanBeNull()(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => DelegatesSample.GetSomeDelegateToNamedMethodWithCanBeNull()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldNotThrow("because the delegate *method* parameter is CanBeNull");
         }

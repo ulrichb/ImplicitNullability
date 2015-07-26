@@ -20,7 +20,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             void TestMethod(string a);
         }
 
-        private class Implementation : IInterface1, IInterface2, IInterface3
+        public class Implementation : IInterface1, IInterface2, IInterface3
         {
             public void TestMethod(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {

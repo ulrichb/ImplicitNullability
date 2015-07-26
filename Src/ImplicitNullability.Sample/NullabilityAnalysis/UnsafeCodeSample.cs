@@ -7,7 +7,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
     {
         public static void SomeMethod(int* a)
         {
-            ReSharper.TestValueAnalysisUnsafe(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysisUnsafe(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public static void SomeMethodWithCanbeNull([CanBeNull] int* a)

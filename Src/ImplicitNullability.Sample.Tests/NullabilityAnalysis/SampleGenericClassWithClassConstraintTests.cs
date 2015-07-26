@@ -13,7 +13,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             var instance = new SampleGenericClassWithClassConstraint<string>();
 
-            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

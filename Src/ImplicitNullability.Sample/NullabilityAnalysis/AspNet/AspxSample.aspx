@@ -10,15 +10,15 @@
 
     private readonly int? _nullableInt = null;
 
-    private string TestMethod(string a)
+    private string SomeMethod(string a)
     {
-        ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+        ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         return "";
     }
 
-    private string TestNullableParametersMethod([CanBeNull] string a, int? b, string c = null)
+    private string SomeNullableParametersMethod([CanBeNull] string a, int? b, string c = null)
     {
-        return "";
+        return a; /*Expect:AssignNullToNotNullAttribute[MOut]*/
     }
 
 </script>
@@ -34,8 +34,8 @@
 <%= _nullString %>
 <%= _nullableInt %>
 
-<%= TestMethod(null /*Expect:AssignNullToNotNullAttribute*/) %>
-<%= TestNullableParametersMethod(null, null, null) %>
+<%= SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/) %>
+<%= SomeNullableParametersMethod(null, null, null) %>
 
 <%-- Data binding --%>
 <%# null %>

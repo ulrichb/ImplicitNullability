@@ -27,7 +27,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void IndexerSetterWithNullValue()
         {
-            Action act = () => _instance[null /*Expect:AssignNullToNotNullAttribute*/] = null;
+            Action act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/] = null;
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
@@ -43,7 +43,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void IndexerGetterWithNullValue()
         {
-            Action act = () => IgnoreValue(_instance[null /*Expect:AssignNullToNotNullAttribute*/]);
+            Action act = () => IgnoreValue(_instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/]);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

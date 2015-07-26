@@ -11,7 +11,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public void TestMethod(T a)
         {
-            ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
     }
 }

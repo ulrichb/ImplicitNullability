@@ -29,7 +29,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         public void TestIteratorWithNullArgument()
         {
             // ReSharper disable once IteratorMethodResultIsIgnored
-            Action act = () => _instance.TestIterator(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestIterator(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>("throws immediately => no ForceIteration needed")
                 .And.ParamName.Should().Be("str");
@@ -39,7 +39,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         public void TestIteratorWithManualNullCheckWithNullArgument()
         {
             // ReSharper disable once IteratorMethodResultIsIgnored
-            Action act = () => _instance.TestIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldNotThrow("no iteration");
         }
@@ -47,7 +47,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestIteratorWithManualNullCheckWithNullArgumentAndEnumerating()
         {
-            Func<IEnumerable<object>> act = () => _instance.TestIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute*/);
+            Func<IEnumerable<object>> act = () => _instance.TestIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.Enumerating().ShouldThrow<ArgumentNullException>()
                 .And.ParamName.Should().Be("str");

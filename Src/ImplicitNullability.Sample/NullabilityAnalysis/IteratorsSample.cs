@@ -8,7 +8,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
     {
         public IEnumerable<object> TestIterator(string str)
         {
-            ReSharper.TestValueAnalysis(str, str == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(str, str == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
             yield break;
         }
 

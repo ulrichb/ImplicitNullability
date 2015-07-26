@@ -24,6 +24,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 a = null;
             }
 
+            // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431 may also fix this issue
             public void ImplicitNotNullOutParameterInInterfaceCanBeNullInDerived([CanBeNull] out string a)
             {
                 a = null;
@@ -35,7 +36,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 return null;
             }
 
-            [CanBeNull]
+            [CanBeNull] /* Expect:AnnotationConflictInHierarchy*/
             public string FunctionWithImplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 return null;

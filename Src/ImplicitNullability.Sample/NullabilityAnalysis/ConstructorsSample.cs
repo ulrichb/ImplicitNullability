@@ -7,8 +7,8 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
     {
         public ConstructorsSample(string a, string optional = "default")
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
-            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public ConstructorsSample([CanBeNull] string canBeNull, int? nullableInt, string optional = null)

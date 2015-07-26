@@ -5,26 +5,26 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 {
     public class LongInheritanceChain
     {
-        private class Base1
+        public class Base1
         {
             public virtual void TestMethod([CanBeNull] string a)
             {
             }
         }
 
-        private class Base2 : Base1
+        public class Base2 : Base1
         {
         }
 
-        private class Base3 : Base2
+        public class Base3 : Base2
         {
         }
 
-        private class Base4 : Base3
+        public class Base4 : Base3
         {
         }
 
-        private class Derived : Base4
+        public class Derived : Base4
         {
             public override void TestMethod(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {

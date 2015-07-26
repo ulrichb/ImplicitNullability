@@ -21,7 +21,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestProcedureWithNullValue()
         {
-            Action act = () => _methodsSample.TestProcedure(null /* no warning because dynamic invocations should be excluded */);
+            Action act = () => _methodsSample.TestProcedure(null /* no warning because dynamic invocations are excluded */);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
@@ -29,7 +29,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void IndexerSetterWithNullValue()
         {
-            Action act = () => _indexersSample[null /* no warning because dynamic invocations should be excluded */] = null;
+            Action act = () => _indexersSample[null /* no warning because dynamic invocations are excluded */] = null;
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

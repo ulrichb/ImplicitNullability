@@ -19,7 +19,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void CtorWithViolatedNotNullArgument()
         {
-            Action act = () => new ConstructorsSample(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => new ConstructorsSample(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
@@ -36,7 +36,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         public void CtorWithViolatedBothNotNullArguments()
         {
             Action act =
-                () => new ConstructorsSample(null /*Expect:AssignNullToNotNullAttribute*/, optional: null /*Expect:AssignNullToNotNullAttribute*/);
+                () => new ConstructorsSample(null /*Expect:AssignNullToNotNullAttribute[MIn]*/, optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a", "the evaluation of the arguments should start from left");
         }
@@ -44,7 +44,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void CtorWithViolatedNotNullOptionalArgument()
         {
-            Action act = () => new ConstructorsSample("a", optional: null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => new ConstructorsSample("a", optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }

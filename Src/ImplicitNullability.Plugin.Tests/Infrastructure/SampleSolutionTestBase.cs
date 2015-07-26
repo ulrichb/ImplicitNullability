@@ -18,6 +18,7 @@ using JetBrains.ReSharper.Psi.Files;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
+using NCalc;
 using NUnit.Framework;
 #if RESHARPER8
 using JetBrains.Application;
@@ -45,21 +46,20 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         protected IList<IIssue> TestExpectedInspectionComments(
             ISolution solution,
             IEnumerable<IProjectFile> projectFilesToAnalyze,
-            IEnumerable<Type> highlightingTypesToAnalyze)
+            IEnumerable<Type> highlightingTypesToAnalyze,
+            string definedExpectedWarningSymbol = null)
         {
             var sourceFilesToAnalyze = projectFilesToAnalyze.Select(x => x.ToSourceFiles().Single()).ToList();
 
-            // IDEA: Support also warning message Expect:"some text"
-            // IDEA: Support predicates (e.g. using "Dynamic Linq"): Expect:SomeId[ReSharper9UP && X == "x"]
             var expectedWarningComments =
                 (from sourceFile in sourceFilesToAnalyze
                     from commentNode in sourceFile.GetPsiFiles<CSharpLanguage>().Single().GetAllCommentNodes()
-                    let match = Regex.Match(commentNode.CommentText, @"^\s*Expect:(.*)$")
-                    where match.Success
+                    let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbol)
+                    where expectedWarningId != null
                     select
                         new
                         {
-                            ExpectedWarningId = match.Groups[1].Value.Trim(),
+                            ExpectedWarningId = expectedWarningId,
                             File = sourceFile,
                             Range = FindPreviousNonWhiteSpaceNode(commentNode).NotNull().GetDocumentRange().TextRange
                         }).ToList();
@@ -105,7 +105,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             };
         }
 
-        protected static void EnableImplicitNullabilitySetting([NotNull] IProject project)
+        protected static void EnableImplicitNullabilitySetting([NotNull] IProject project, Action<IContextBoundSettingsStore> additionalChanges = null)
         {
             // Enable the setting on project level to test the correct "ToDataContext" binding of the settings. Unfortunately settings stored in
             // the ".csproj.DotSettings" file aren't evaluated (see https://devnet.jetbrains.com/message/5527647).
@@ -117,7 +117,35 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False, "fixate default value");
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
-            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, false); // TODO
+
+            if (additionalChanges != null)
+                additionalChanges(settingsStore);
+        }
+
+        [CanBeNull]
+        private string ExtractExpectedWarningId(string commentText, [CanBeNull] string definedExpectedWarningSymbol)
+        {
+            var match = Regex.Match(commentText, @"^\s*Expect:(?<Id>.+?)(\[(?<Condition>[^\]]+)*\])?$");
+
+            if (!match.Success)
+                return null;
+
+            if (match.Groups["Condition"].Success)
+            {
+                var expression = new Expression(match.Groups["Condition"].Value);
+
+#if RESHARPER8
+                expression.Parameters["RS"] = "8";
+#elif RESHARPER9
+                expression.Parameters["RS"] = "9";
+#endif
+                expression.EvaluateParameter += (name, args) => { args.Result = name == definedExpectedWarningSymbol; };
+
+                if (false.Equals(expression.Evaluate()))
+                    return null;
+            }
+
+            return match.Groups["Id"].Value;
         }
 
         [CanBeNull]

@@ -10,7 +10,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             get { return null; }
             set
             {
-                ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
                 ReSharper.TestValueAnalysis(value, value == null);
             }
         }

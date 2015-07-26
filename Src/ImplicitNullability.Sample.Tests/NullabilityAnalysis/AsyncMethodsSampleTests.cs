@@ -28,7 +28,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         public void TestAsyncWithNullArgument()
         {
             // Note that TestAsync throws immediately => no Wait() call
-            Action act = () => _instance.TestAsync(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _instance.TestAsync(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>("not an AggregateException because the outermost (rewritten) async method throwed")
                 .And.ParamName.Should().Be("a");
@@ -37,7 +37,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestAsyncWithManualNullCheck()
         {
-            Action act = () => _instance.TestAsyncWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute*/).Wait();
+            Action act = () => _instance.TestAsyncWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/).Wait();
 
             act.ShouldThrow<AggregateException>("the outermost (non rewritten) method throws *within* the async state machine")
                 .And.InnerException.Should().BeOfType<ArgumentNullException>()

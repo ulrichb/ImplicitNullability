@@ -11,7 +11,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public void TestProcedure(string a)
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public void TestProcedureWithExplicitCanBeNull([CanBeNull] string canBeNull)
@@ -30,9 +30,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
         }
 
-        // ReSharper disable AssignNullToNotNullAttribute - because only in R# 9 and not relevant for this test case IDEA: instead add a conditional "Except:[R#9]"?
-        public void TestProcedureWithNotNullAnnotationForNullDefaultArgument([NotNull] string optional = null)
-            // ReSharper restore AssignNullToNotNullAttribute
+        public void TestProcedureWithNotNullAnnotationForNullDefaultArgument([NotNull] string optional = null /*Expect:AssignNullToNotNullAttribute[RS >= 9]*/)
         {
             // REPORT? Warning, although explicitly NotNull
             ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
@@ -45,7 +43,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             ReSharper.TestValueAnalysis(refString, refString == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */);
 
             // Note that the implicit not null argument applies also to the outgoing value of 'refString'
-            refString = null /*Expect:AssignNullToNotNullAttribute*/;
+            refString = null /*Expect:AssignNullToNotNullAttribute[MIn]*/;
         }
 
         public void TestProcedureWithExplicitNotNullRefParameter([NotNull] ref string refString)
@@ -77,22 +75,22 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public void TestProcedureWithNonNullDefaultArgument(string optional = "default")
         {
-            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public void TestProcedureWithNonNullDefaultArgumentFromConst(string optional = StringConst)
         {
-            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public void TestProcedureWithParams(params string[] a)
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public string TestFunction([CanBeNull] string returnValue)
         {
-            return returnValue;
+            return returnValue; /*Expect:AssignNullToNotNullAttribute[MOut]*/
         }
 
         [CanBeNull]
@@ -104,29 +102,29 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         [UsedImplicitly]
         internal void InternalMethod (string internalMethodParameter)
         {
-            ReSharper.TestValueAnalysis(internalMethodParameter, internalMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(internalMethodParameter, internalMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         [UsedImplicitly]
         protected void ProtectedMethod (string protectedMethodParameter)
         {
-            ReSharper.TestValueAnalysis(protectedMethodParameter, protectedMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(protectedMethodParameter, protectedMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         [UsedImplicitly]
         private void PrivateMethod (string privateMethodParameter)
         {
-            ReSharper.TestValueAnalysis(privateMethodParameter, privateMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(privateMethodParameter, privateMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public static void StaticTestProcedure(string a)
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public void GenericMethod<T>(T a)
         {
-            ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
     }
 }

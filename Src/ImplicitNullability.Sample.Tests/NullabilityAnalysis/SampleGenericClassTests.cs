@@ -23,7 +23,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             var instance = new SampleGenericClass<int?>();
 
-            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>(
                 "this is a known issue for generic unconstraint types (it is a trade-off between this false positive " +
@@ -36,7 +36,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             var instance = new SampleGenericClass<string>();
 
-            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

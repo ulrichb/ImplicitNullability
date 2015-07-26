@@ -8,7 +8,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
     {
         public async Task TestAsync(string a)
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
             await Task.Delay(0);
         }
 
@@ -22,7 +22,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public async Task CallTestAsyncWithNullArgument()
         {
-            await TestAsync(null /*Expect:AssignNullToNotNullAttribute*/);
+            await TestAsync(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
         }
     }
 }

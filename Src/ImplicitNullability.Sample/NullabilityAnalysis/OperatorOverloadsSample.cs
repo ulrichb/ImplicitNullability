@@ -9,14 +9,14 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         {
             public static int operator +(Simple left, Simple right)
             {
-                ReSharper.TestValueAnalysis(left, left == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
-                ReSharper.TestValueAnalysis(right, right == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                ReSharper.TestValueAnalysis(left, left == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                ReSharper.TestValueAnalysis(right, right == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
                 return 0;
             }
 
             public static Simple operator ++(Simple value)
             {
-                ReSharper.TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                ReSharper.TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
                 return null;
             }
         }

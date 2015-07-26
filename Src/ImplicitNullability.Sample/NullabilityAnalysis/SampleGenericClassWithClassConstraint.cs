@@ -7,12 +7,12 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
     {
         public void CallTestMethodWithDefaultOfT()
         {
-            TestMethod(default(T) /*Expect:AssignNullToNotNullAttribute*/);
+            TestMethod(default(T) /*Expect:AssignNullToNotNullAttribute[MIn]*/);
         }
 
         public void TestMethod(T a)
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
     }
 }

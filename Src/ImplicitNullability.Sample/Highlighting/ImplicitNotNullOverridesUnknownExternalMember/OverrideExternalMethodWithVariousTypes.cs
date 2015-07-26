@@ -7,7 +7,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
     {
         private class Implementation : External.IInterface<string>
         {
-            public void SomeMethod(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember */)
+            public void SomeMethod(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
             {
             }
         }
