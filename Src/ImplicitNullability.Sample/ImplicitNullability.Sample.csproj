@@ -65,6 +65,7 @@
     </None>
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
     <Compile Include="NullabilityAnalysis\ConstructorsSample.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsOutputSample.cs" />
     <Compile Include="NullabilityAnalysis\UnsafeCodeSample.cs" />
     <Compile Include="NullabilityAnalysis\LinqQueriesSample.cs" />
     <Compile Include="NullabilityAnalysis\OperatorOverloadsSample.cs" />
@@ -88,13 +89,11 @@
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsWeakerInDerived.cs" />
     <Compile Include="NullabilityAnalysis\IteratorsSample.cs" />
     <Compile Include="NullabilityAnalysis\IndexersSample.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsSample.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsInputSample.cs" />
     <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSample.cs" />
     <Compile Include="ReSharper.cs" />
     <Compile Include="NullabilityAnalysis\AsyncMethodsSample.cs" />
-    <Compile Include="NullabilityAnalysis\SampleGenericClass.cs" />
-    <Compile Include="NullabilityAnalysis\SampleGenericClassWithClassConstraint.cs" />
-    <Compile Include="NullabilityAnalysis\SampleGenericClassWithStructConstraint.cs" />
+    <Compile Include="NullabilityAnalysis\GenericsSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

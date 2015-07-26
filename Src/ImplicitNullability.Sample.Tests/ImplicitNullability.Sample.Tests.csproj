@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NullabilityAnalysis\DynamicInvocationTests.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsOutputSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\OperatorOverloadsSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\DelegatesSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\AsyncMethodsSampleTests.cs" />
@@ -62,10 +63,8 @@
     <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSampleTests.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsStrongerInDerivedTests.cs" />
     <Compile Include="NullabilityAnalysis\IndexersSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\SampleGenericClassTests.cs" />
-    <Compile Include="NullabilityAnalysis\SampleGenericClassWithClassConstraintTests.cs" />
-    <Compile Include="NullabilityAnalysis\SampleGenericClassWithStructConstraintTests.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsInputSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\GenericsSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\IteratorsSampleTests.cs" />
   </ItemGroup>
   <ItemGroup>

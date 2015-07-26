@@ -14,14 +14,14 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [SetUp]
         public void SetUp()
         {
-            _methodsSample = new MethodsSample();
+            _methodsSample = new MethodsInputSample();
             _indexersSample = new IndexersSample();
         }
 
         [Test]
-        public void TestProcedureWithNullValue()
+        public void TestMethodWithNullValue()
         {
-            Action act = () => _methodsSample.TestProcedure(null /* no warning because dynamic invocations are excluded */);
+            Action act = () => _methodsSample.TestMethod(null /* no warning because dynamic invocations are excluded */);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

@@ -50,8 +50,8 @@ namespace ImplicitNullability.Plugin.Tests
                 var filePaths = issues.Select(x => x.GetSourceFile().Name).ToList();
                 Assert.That(filePaths, Has.Some.EqualTo("AspxSample.aspx"));
                 Assert.That(filePaths, Has.Some.EqualTo("RazorSample.cshtml"));
-                Assert.That(filePaths, Has.Some.EqualTo("MethodsSample.cs"));
-                Assert.That(filePaths, Has.Some.EqualTo("MethodsSampleTests.cs"));
+                Assert.That(filePaths, Has.Some.Matches("^Methods.*Sample.cs$"));
+                Assert.That(filePaths, Has.Some.Matches("^Methods.*SampleTests.cs$"));
             });
         }
     }
