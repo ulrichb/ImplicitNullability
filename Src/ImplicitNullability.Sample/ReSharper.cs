@@ -4,24 +4,24 @@ using NullGuard;
 
 namespace ImplicitNullability.Sample
 {
-  [NullGuard (ValidationFlags.None)]
-  public static class ReSharper
-  {
-    // ReSharper disable UnusedParameter.Global
-
-    public static T TestValueAnalysis<T> ([NotNull] T testNotNull, bool conditionToTestCanBeNull)
+    [NullGuard(ValidationFlags.None)]
+    public static class ReSharper
     {
-      return testNotNull;
-    }
+        // ReSharper disable UnusedParameter.Global
 
-    public static unsafe void TestValueAnalysisUnsafe ([NotNull] void* testNotNull, bool conditionToTestCanBeNull)
-    {
-    }
+        public static T TestValueAnalysis<T>([NotNull] T testNotNull, bool conditionToTestCanBeNull)
+        {
+            return testNotNull;
+        }
 
-    public static void AvoidValueIsNeverUsedWarning (string value)
-    {
-    }
+        public static unsafe void TestValueAnalysisUnsafe([NotNull] void* testNotNull, bool conditionToTestCanBeNull)
+        {
+        }
 
-    // ReSharper restore UnusedParameter.Global
-  }
+        public static void AvoidValueIsNeverUsedWarning(string value)
+        {
+        }
+
+        // ReSharper restore UnusedParameter.Global
+    }
 }

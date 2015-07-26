@@ -7,8 +7,8 @@ namespace ImplicitNullability.Plugin
     /// <summary>
     /// ReSharper platform zone marker.
     /// </summary>
-  [ZoneMarker]
-  public class ZoneMarker : IRequire<ICodeEditingZone>, IRequire<ILanguageCSharpZone>
-  {
-  }
+    [ZoneMarker]
+    public class ZoneMarker : IRequire<ICodeEditingZone>, IRequire<ILanguageCSharpZone>
+    {
+    }
 }

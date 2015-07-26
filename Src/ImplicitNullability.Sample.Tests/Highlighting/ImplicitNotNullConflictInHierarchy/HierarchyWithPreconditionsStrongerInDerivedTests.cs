@@ -5,24 +5,25 @@ using NUnit.Framework;
 
 namespace ImplicitNullability.Sample.Tests.Highlighting.ImplicitNotNullConflictInHierarchy
 {
-  [TestFixture]
-  public class HierarchyWithPreconditionsStrongerInDerivedTests
-  {
-    private HierarchyWithPreconditionsStrongerInDerived.IInterface _interface;
-
-    [SetUp]
-    public void SetUp ()
+    [TestFixture]
+    public class HierarchyWithPreconditionsStrongerInDerivedTests
     {
-      _interface = new HierarchyWithPreconditionsStrongerInDerived.Implementation();
-    }
+        private HierarchyWithPreconditionsStrongerInDerived.IInterface _interface;
 
-    [Test]
-    public void CanBeNullParameterInInterfaceExplicitNotNullInDerived ()
-    {
-      Action act = () => _interface.CanBeNullParameterInInterfaceExplicitNotNullInDerived (null);
+        [SetUp]
+        public void SetUp()
+        {
+            _interface = new HierarchyWithPreconditionsStrongerInDerived.Implementation();
+        }
 
-      act.ShouldThrow<ArgumentNullException> ("this throws although the base interface has a CanBeNull-annotation (but the implementation does not)")
-          .And.ParamName.Should().Be ("a");
+        [Test]
+        public void CanBeNullParameterInInterfaceExplicitNotNullInDerived()
+        {
+            Action act = () => _interface.CanBeNullParameterInInterfaceExplicitNotNullInDerived(null);
+
+            act.ShouldThrow<ArgumentNullException>(
+                "this throws although the base interface has a CanBeNull-annotation (but the implementation does not)")
+                .And.ParamName.Should().Be("a");
+        }
     }
-  }
 }

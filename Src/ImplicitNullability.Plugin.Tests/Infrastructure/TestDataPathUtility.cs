@@ -6,16 +6,16 @@ using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
-  internal static class TestDataPathUtility
-  {
-    public static string GetPathRelativeToSolution (params string[] path)
+    internal static class TestDataPathUtility
     {
-      return Path.Combine (new[] { GetDirectoryOfThisSoureFile(), "..", "..", ".." }.Concat (path).ToArray());
-    }
+        public static string GetPathRelativeToSolution(params string[] path)
+        {
+            return Path.Combine(new[] {GetDirectoryOfThisSoureFile(), "..", "..", ".."}.Concat(path).ToArray());
+        }
 
-    private static string GetDirectoryOfThisSoureFile ([CallerFilePath] string filePath = null)
-    {
-      return Path.GetDirectoryName (filePath);
+        private static string GetDirectoryOfThisSoureFile([CallerFilePath] string filePath = null)
+        {
+            return Path.GetDirectoryName(filePath);
+        }
     }
-  }
 }

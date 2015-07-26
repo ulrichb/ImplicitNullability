@@ -5,17 +5,17 @@ using NUnit.Framework;
 
 namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
 {
-  [TestFixture]
-  public class SampleGenericClassWithClassConstraintTests
-  {
-    [Test]
-    public void TestMethodWithNullArgument ()
+    [TestFixture]
+    public class SampleGenericClassWithClassConstraintTests
     {
-      var instance = new SampleGenericClassWithClassConstraint<string>();
+        [Test]
+        public void TestMethodWithNullArgument()
+        {
+            var instance = new SampleGenericClassWithClassConstraint<string>();
 
-      Action act = () => instance.TestMethod (null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute*/);
 
-      act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be ("a");
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+        }
     }
-  }
 }

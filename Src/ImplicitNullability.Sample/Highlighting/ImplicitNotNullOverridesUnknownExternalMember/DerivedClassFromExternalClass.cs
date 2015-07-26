@@ -3,20 +3,20 @@ using ImplicitNullability.Sample.ExternalCode;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
-  public class DerivedClassFromExternalClass
-  {
-    private class DerivedClass : External.Class
+    public class DerivedClassFromExternalClass
     {
-      public override string this [string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/]
-      {
-        get { return null; }
-      }
+        private class DerivedClass : External.Class
+        {
+            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/]
+            {
+                get { return null; }
+            }
 
-      public override void SomeMethod (
-          string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/,
-          string b /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
-      {
-      }
+            public override void SomeMethod(
+                string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/,
+                string b /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            {
+            }
+        }
     }
-  }
 }

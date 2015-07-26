@@ -11,24 +11,24 @@ using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin.Tests
 {
-  public static class Compatibility
-  {
-    public static IPsiSourceFile GetSourceFile (this IIssue issue)
+    public static class Compatibility
     {
+        public static IPsiSourceFile GetSourceFile(this IIssue issue)
+        {
 # if RESHARPER8
-      return issue.File.ToSourceFile().NotNull();
+            return issue.File.ToSourceFile().NotNull();
 #else
-      return issue.File.File;
+            return issue.File.File;
 #endif
-    }
+        }
 
-    public static IEnumerable<IComment> GetAllCommentNodes (this IFile file)
-    {
+        public static IEnumerable<IComment> GetAllCommentNodes(this IFile file)
+        {
 # if RESHARPER8
-      return file.EnumerateSubTree().OfType<IComment>();
+            return file.EnumerateSubTree().OfType<IComment>();
 #else
-      return file.ThisAndDescendants().OfType<IComment>().ToEnumerable();
+            return file.ThisAndDescendants().OfType<IComment>().ToEnumerable();
 #endif
+        }
     }
-  }
 }

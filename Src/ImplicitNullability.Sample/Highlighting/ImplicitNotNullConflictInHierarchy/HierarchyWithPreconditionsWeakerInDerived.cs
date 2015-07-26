@@ -6,35 +6,35 @@ using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
 {
-  public static class HierarchyWithPreconditionsWeakerInDerived
-  {
-    public interface IInterface
+    public static class HierarchyWithPreconditionsWeakerInDerived
     {
-      void ExplicitNotNullParamsInInterfaceExplicitCanBeNullInDerived ([NotNull] int? nullableInt, [NotNull] string optional = null);
+        public interface IInterface
+        {
+            void ExplicitNotNullParamsInInterfaceExplicitCanBeNullInDerived([NotNull] int? nullableInt, [NotNull] string optional = null);
 
-      void ImplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived ([NotNull] int? nullableInt, [NotNull] string optional = null);
+            void ImplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived([NotNull] int? nullableInt, [NotNull] string optional = null);
 
-      void ExplicitNotNullParameterInInterfaceCanBeNullInDerived ([NotNull] string a);
-      void ImplicitNotNullParameterInInterfaceCanBeNullInDerived (string a);
+            void ExplicitNotNullParameterInInterfaceCanBeNullInDerived([NotNull] string a);
+            void ImplicitNotNullParameterInInterfaceCanBeNullInDerived(string a);
+        }
+
+        public class Implementation : IInterface
+        {
+            public void ExplicitNotNullParamsInInterfaceExplicitCanBeNullInDerived([CanBeNull] int? nullableInt, [CanBeNull] string optional = null)
+            {
+            }
+
+            public void ImplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived(int? nullableInt, string optional = null)
+            {
+            }
+
+            public void ExplicitNotNullParameterInInterfaceCanBeNullInDerived([CanBeNull] string a)
+            {
+            }
+
+            public void ImplicitNotNullParameterInInterfaceCanBeNullInDerived([CanBeNull] string a)
+            {
+            }
+        }
     }
-
-    public class Implementation : IInterface
-    {
-      public void ExplicitNotNullParamsInInterfaceExplicitCanBeNullInDerived ([CanBeNull] int? nullableInt, [CanBeNull] string optional = null)
-      {
-      }
-
-      public void ImplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived (int? nullableInt, string optional = null)
-      {
-      }
-
-      public void ExplicitNotNullParameterInInterfaceCanBeNullInDerived ([CanBeNull] string a)
-      {
-      }
-
-      public void ImplicitNotNullParameterInInterfaceCanBeNullInDerived ([CanBeNull] string a)
-      {
-      }
-    }
-  }
 }

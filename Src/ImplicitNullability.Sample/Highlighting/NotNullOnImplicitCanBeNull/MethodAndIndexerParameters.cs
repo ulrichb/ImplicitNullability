@@ -5,19 +5,19 @@ using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
 {
-  public class MethodAndIndexerParameters
-  {
-    public string this [
-      [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull*/,
-      [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull*/]
+    public class MethodAndIndexerParameters
     {
-      get { return null; }
-    }
+        public string this[
+            [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull*/,
+            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull*/]
+        {
+            get { return null; }
+        }
 
-    public void TestMethod (
-        [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull*/,
-        [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull*/)
-    {
+        public void TestMethod(
+            [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull*/,
+            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull*/)
+        {
+        }
     }
-  }
 }
