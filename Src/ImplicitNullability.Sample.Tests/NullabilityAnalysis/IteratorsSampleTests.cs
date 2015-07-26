@@ -20,7 +20,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestIterator()
         {
-            Func<IEnumerable<object>> act = () => _instance.TestIterator("a");
+            Func<IEnumerable<object>> act = () => _instance.TestIterator("");
 
             act.Enumerating().ShouldNotThrow();
         }

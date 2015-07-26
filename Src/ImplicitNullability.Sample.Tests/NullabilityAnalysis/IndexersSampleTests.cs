@@ -19,7 +19,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void IndexerSetterWithNonNullValue()
         {
-            Action act = () => _instance["a"] = null;
+            Action act = () => _instance[""] = null;
 
             act.ShouldNotThrow();
         }
@@ -35,7 +35,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void IndexerGetterWithNonNullValue()
         {
-            Action act = () => IgnoreValue(_instance["a"]);
+            Action act = () => IgnoreValue(_instance[""]);
 
             act.ShouldNotThrow();
         }

@@ -20,7 +20,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestMethodWithNonNullValue()
         {
-            Action act = () => _instance.TestMethod("a");
+            Action act = () => _instance.TestMethod("");
 
             act.ShouldNotThrow();
         }
@@ -70,7 +70,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                string refString = "s";
+                string refString = "";
                 _instance.TestMethodWithRefParameter(ref refString);
             };
 
@@ -184,7 +184,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void TestMethodWithParams()
         {
-            Action act = () => _instance.TestMethodWithParams("a", "b");
+            Action act = () => _instance.TestMethodWithParams("1", "2", "3");
 
             act.ShouldNotThrow();
         }
@@ -227,7 +227,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void StaticTestMethodWithNonNullValue()
         {
-            Action act = () => MethodsInputSample.StaticTestMethod("a");
+            Action act = () => MethodsInputSample.StaticTestMethod("");
 
             act.ShouldNotThrow();
         }

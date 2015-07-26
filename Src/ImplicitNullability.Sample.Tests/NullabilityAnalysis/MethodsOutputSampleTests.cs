@@ -21,7 +21,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                var result = _instance.Function(returnValue: "a");
+                var result = _instance.Function(returnValue: "");
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 

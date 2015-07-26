@@ -1,5 +1,4 @@
-﻿@using System
-@using ImplicitNullability.Sample
+﻿@using ImplicitNullability.Sample
 @using JetBrains.Annotations
 
 @functions{
@@ -15,10 +14,18 @@
         return "";
     }
 
-    private string SomeNullableParametersMethod([CanBeNull] string a, int? b, string c = null)
+    [CanBeNull]
+    private string SomeNullableMethod([CanBeNull] string a, int? b, string optional = null)
     {
-        return a; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+        return null;
     }
+
+    private string SomeFunction(out string a)
+    {
+        a = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+        return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+    }
+
 }
 
 @* Write method *@
@@ -27,4 +34,4 @@
 @_nullableInt
 
 @SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/)
-@SomeNullableParametersMethod(null, null, null)
+@SomeNullableMethod(null, null, optional: null)

@@ -15,7 +15,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                var instance = new ConstructorsSample("a");
+                var instance = new ConstructorsSample("");
                 ReSharper.TestValueAnalysis(instance, instance == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             };
 
@@ -52,7 +52,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void CtorWithViolatedNotNullOptionalArgument()
         {
-            Action act = () => new ConstructorsSample("a", optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => new ConstructorsSample("", optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
