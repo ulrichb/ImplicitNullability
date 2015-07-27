@@ -1,0 +1,35 @@
+﻿using System;
+using FluentAssertions;
+using ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull;
+using NUnit.Framework;
+
+namespace ImplicitNullability.Sample.Tests.Highlighting.NotNullOnImplicitCanBeNull
+{
+    [TestFixture]
+    public class NotNullOnImplicitCanBeNullSampleTests
+    {
+        private NotNullOnImplicitCanBeNullSample _instance;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _instance = new NotNullOnImplicitCanBeNullSample();
+        }
+
+        [Test]
+        public void MethodWithNotNullAnnotationForNullableInt()
+        {
+            Action act = () => _instance.MethodWithNullableInt(null /*Expect:AssignNullToNotNullAttribute*/);
+
+            act.ShouldNotThrow("the [NotNull] won't be respected by NullGuard => warning");
+        }
+
+        [Test]
+        public void TestMethodWithNotNullAnnotationForNullDefaultArgument()
+        {
+            Action act = () => _instance.MethodWithOptionalParameter(optional: null /*Expect:AssignNullToNotNullAttribute*/);
+
+            act.ShouldNotThrow("the [NotNull] won't be respected by NullGuard => warning");
+        }
+    }
+}

@@ -84,7 +84,7 @@
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsStrongerInDerived.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithRefParameters.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSameNullability.cs" />
-    <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\MethodAndIndexerParameters.cs" />
+    <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\NotNullOnImplicitCanBeNullSample.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\CanBeNullOneOfThreeSuperMembers.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\LongInheritanceChain.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsWeakerInDerived.cs" />

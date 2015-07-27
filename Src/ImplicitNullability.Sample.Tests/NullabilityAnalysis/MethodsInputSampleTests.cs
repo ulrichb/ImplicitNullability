@@ -49,22 +49,6 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void TestMethodWithNotNullAnnotationForNullableInt()
-        {
-            Action act = () => _instance.TestMethodWithNotNullAnnotationForNullableInt(null /*Expect:AssignNullToNotNullAttribute*/);
-
-            act.ShouldNotThrow("the NotNull-annotation won't be respected by NullGuard (and it doesn't really make sense for nullable value types)");
-        }
-
-        [Test]
-        public void TestMethodWithNotNullAnnotationForNullDefaultArgument()
-        {
-            Action act = () => _instance.TestMethodWithNotNullAnnotationForNullDefaultArgument(null /*Expect:AssignNullToNotNullAttribute*/);
-
-            act.ShouldNotThrow("the NotNull-annotation won't be respected by NullGuard (and it doesn't really make sense for null default arguments)");
-        }
-
-        [Test]
         public void TestMethodWithRefParameter()
         {
             Action act = () =>

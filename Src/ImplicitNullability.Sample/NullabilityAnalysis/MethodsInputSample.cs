@@ -24,19 +24,6 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
         }
 
-        public void TestMethodWithNotNullAnnotationForNullableInt([NotNull] int? a)
-        {
-            // REPORT? Warning, although explicitly NotNull
-            ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
-        }
-
-        public void TestMethodWithNotNullAnnotationForNullDefaultArgument(
-            [NotNull] string optional = null /*Expect:AssignNullToNotNullAttribute[RS >= 9]*/)
-        {
-            // REPORT? Warning, although explicitly NotNull
-            ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
-        }
-
         public void TestMethodWithRefParameter(ref string refString)
         {
             ReSharper.TestValueAnalysis(refString, refString == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */);

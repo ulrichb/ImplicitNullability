@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\NotNullOnImplicitCanBeNullSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\DynamicInvocationTests.cs" />
     <Compile Include="NullabilityAnalysis\MethodsOutputSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\NonPublicMethodsSampleTests.cs" />
