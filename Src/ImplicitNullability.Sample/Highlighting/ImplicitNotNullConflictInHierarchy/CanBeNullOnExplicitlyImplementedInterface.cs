@@ -7,12 +7,12 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
     {
         public interface IInterface
         {
-            void TestMethod([CanBeNull] string a);
+            void Method([CanBeNull] string a);
         }
 
         public class Implementation : IInterface
         {
-            void IInterface.TestMethod(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            void IInterface.Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {
             }
         }

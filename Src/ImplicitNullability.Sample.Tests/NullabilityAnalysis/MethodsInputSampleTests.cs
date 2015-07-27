@@ -17,181 +17,181 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void TestMethodWithNonNullValue()
+        public void Method_WithNonNullValue()
         {
-            Action act = () => _instance.TestMethod("");
+            Action act = () => _instance.Method("");
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNullValue()
+        public void Method_WithNullValue()
         {
-            Action act = () => _instance.TestMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => _instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
-        public void TestMethodWithExplicitCanBeNull()
+        public void MethodWithExplicitCanBeNull()
         {
-            Action act = () => _instance.TestMethodWithExplicitCanBeNull(null);
+            Action act = () => _instance.MethodWithExplicitCanBeNull(null);
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithImplicitCanBeNull()
+        public void MethodWithImplicitCanBeNullParameters()
         {
-            Action act = () => _instance.TestMethodWithImplicitCanBeNull(nullableInt: null, optional: null);
+            Action act = () => _instance.MethodWithImplicitCanBeNullParameters(nullableInt: null, optional: null);
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithRefParameter()
+        public void MethodWithRefParameter()
         {
             Action act = () =>
             {
-                string refString = "";
-                _instance.TestMethodWithRefParameter(ref refString);
+                string refParam = "";
+                _instance.MethodWithRefParameter(ref refParam);
             };
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithRefParameterWithNullValue()
+        public void MethodWithRefParameter_WithNullValue()
         {
             Action act = () =>
             {
-                string refString = null;
-                _instance.TestMethodWithRefParameter(ref refString /* REPORT? constant null value to NotNull parameter */);
+                string refParam = null;
+                _instance.MethodWithRefParameter(ref refParam /* REPORT? constant null value to NotNull parameter */);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("refString");
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("refParam");
         }
 
         [Test]
-        public void TestMethodWithExplicitNotNullRefParameter()
+        public void MethodWithExplicitNotNullRefParameterParameter()
         {
             Action act = () =>
             {
-                string refString = "s";
-                _instance.TestMethodWithExplicitNotNullRefParameter(ref refString);
-            };
-
-            act.ShouldNotThrow();
-        }
-
-        [Test]
-        public void TestMethodWithExplicitNotNullRefParameterWithNullValue()
-        {
-            Action act = () =>
-            {
-                string refString = null;
-                _instance.TestMethodWithExplicitNotNullRefParameter(ref refString /* REPORT? constant null value to NotNull parameter */);
-            };
-
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("refString");
-        }
-
-        [Test]
-        public void TestMethodWithCanBeNullRefParameter()
-        {
-            Action act = () =>
-            {
-                string refString = null;
-                _instance.TestMethodWithCanBeNullRefParameter(ref refString);
+                string refParam = "s";
+                _instance.MethodWithExplicitNotNullRefParameter(ref refParam);
             };
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNullDefaultOfStringDefaultArgument()
+        public void MethodWithExplicitNotNullRefParameter_WithNullValue()
         {
-            Action act = () => _instance.TestMethodWithNullDefaultOfStringDefaultArgument(optional: null);
+            Action act = () =>
+            {
+                string refParam = null;
+                _instance.MethodWithExplicitNotNullRefParameter(ref refParam /* REPORT? constant null value to NotNull parameter */);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("refParam");
+        }
+
+        [Test]
+        public void MethodWithCanBeNullRefParameter()
+        {
+            Action act = () =>
+            {
+                string refParam = null;
+                _instance.MethodWithCanBeNullRefParameter(ref refParam);
+            };
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNullDefaultArgumentFromConst()
+        public void MethodWithNullDefaultOfStringDefaultArgument()
         {
-            Action act = () => _instance.TestMethodWithNullDefaultArgumentFromConst(optional: null);
+            Action act = () => _instance.MethodWithNullDefaultOfStringDefaultArgument(optional: null);
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNullDefaultArgumentFromDefaultOfStringConst()
+        public void MethodWithNullDefaultArgumentFromConst()
         {
-            Action act = () => _instance.TestMethodWithNullDefaultArgumentFromDefaultOfStringConst(optional: null);
+            Action act = () => _instance.MethodWithNullDefaultArgumentFromConst(optional: null);
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNonNullDefaultArgument()
+        public void MethodWithNullDefaultArgumentFromDefaultOfStringConst()
         {
-            Action act = () => _instance.TestMethodWithNonNullDefaultArgument(optional: "overridden default");
+            Action act = () => _instance.MethodWithNullDefaultArgumentFromDefaultOfStringConst(optional: null);
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNonNullDefaultArgumentCalledWithNullValue()
+        public void MethodWithNonNullDefaultArgument()
         {
-            Action act = () => _instance.TestMethodWithNonNullDefaultArgument(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => _instance.MethodWithNonNullDefaultArgument(optional: "overridden default");
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void MethodWithNonNullDefaultArgument_WithNullValue()
+        {
+            Action act = () => _instance.MethodWithNonNullDefaultArgument(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
 
         [Test]
-        public void TestMethodWithNonNullDefaultArgumentFromConst()
+        public void MethodWithNonNullDefaultArgumentFromConst()
         {
-            Action act = () => _instance.TestMethodWithNonNullDefaultArgumentFromConst(optional: "overridden default");
+            Action act = () => _instance.MethodWithNonNullDefaultArgumentFromConst(optional: "overridden default");
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithNonNullDefaultArgumentFromConstWithNullValue()
+        public void MethodWithNonNullDefaultArgumentFromConst_WithNullValue()
         {
-            Action act = () => _instance.TestMethodWithNonNullDefaultArgumentFromConst(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => _instance.MethodWithNonNullDefaultArgumentFromConst(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
 
         [Test]
-        public void TestMethodWithParams()
+        public void MethodWithParams()
         {
-            Action act = () => _instance.TestMethodWithParams("1", "2", "3");
+            Action act = () => _instance.MethodWithParams("1", "2", "3");
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void TestMethodWithParamsWithNullValue()
+        public void MethodWithParams_WithNullValue()
         {
-            Action act = () => _instance.TestMethodWithParams(a: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => _instance.MethodWithParams(a: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
-        public void StaticTestMethodWithNonNullValue()
+        public void StaticMethod_WithNonNullValue()
         {
-            Action act = () => MethodsInputSample.StaticTestMethod("");
+            Action act = () => MethodsInputSample.StaticMethod("");
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void StaticTestMethodWithNullValue()
+        public void StaticMethod_WithNullValue()
         {
-            Action act = () => MethodsInputSample.StaticTestMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => MethodsInputSample.StaticMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

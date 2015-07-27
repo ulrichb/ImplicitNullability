@@ -19,15 +19,15 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void TestMethodWithNullValue()
+        public void MethodInvocation_WithNullValue()
         {
-            Action act = () => _methodsSample.TestMethod(null /* no warning because dynamic invocations are excluded */);
+            Action act = () => _methodsSample.Method(null /* no warning because dynamic invocations are excluded */);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
-        public void IndexerSetterWithNullValue()
+        public void IndexerSetterInvocation_WithNullValue()
         {
             Action act = () => _indexersSample[null /* no warning because dynamic invocations are excluded */] = null;
 

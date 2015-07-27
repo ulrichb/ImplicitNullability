@@ -17,7 +17,7 @@ namespace ImplicitNullability.Sample.Tests.Highlighting.NotNullOnImplicitCanBeNu
         }
 
         [Test]
-        public void MethodWithNotNullAnnotationForNullableInt()
+        public void MethodWithNullableInt()
         {
             Action act = () => _instance.MethodWithNullableInt(null /*Expect:AssignNullToNotNullAttribute*/);
 
@@ -25,7 +25,7 @@ namespace ImplicitNullability.Sample.Tests.Highlighting.NotNullOnImplicitCanBeNu
         }
 
         [Test]
-        public void TestMethodWithNotNullAnnotationForNullDefaultArgument()
+        public void MethodWithOptionalParameter()
         {
             Action act = () => _instance.MethodWithOptionalParameter(optional: null /*Expect:AssignNullToNotNullAttribute*/);
 

@@ -7,40 +7,40 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
     {
         public interface IInterface
         {
-            void SomeMethod([CanBeNull] string a);
+            void Method([CanBeNull] string a);
         }
 
         public class Base
         {
-            public virtual void SomeMethod([CanBeNull] string a)
+            public virtual void Method([CanBeNull] string a)
             {
             }
         }
 
         public class MethodHiding : Base
         {
-            public new void SomeMethod(string a)
+            public new void Method(string a /* no warning */)
             {
             }
         }
 
         public class MethodHidingButInterfaceImplementation : Base, IInterface
         {
-            public new void SomeMethod(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public new void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {
             }
         }
 
         public class Overload : Base, IInterface
         {
-            public void SomeMethod(string a, string b)
+            public void Method(string a /* no warning */, string b)
             {
             }
         }
 
         public class GenericParameter : Base, IInterface
         {
-            public void SomeMethod<T>(string a)
+            public void Method<T>(string a /* no warning */)
             {
             }
         }

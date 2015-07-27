@@ -7,7 +7,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
     {
         public class Base1
         {
-            public virtual void TestMethod([CanBeNull] string a)
+            public virtual void Method([CanBeNull] string a)
             {
             }
         }
@@ -26,7 +26,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class Derived : Base4
         {
-            public override void TestMethod(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {
             }
         }
