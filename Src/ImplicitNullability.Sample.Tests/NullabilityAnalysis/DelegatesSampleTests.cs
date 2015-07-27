@@ -135,13 +135,13 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                string outString;
                 string refString = null;
+                string outString;
 
-                DelegatesSample.GetSomeDelegateWithRefAndOut()(out outString, ref refString);
+                DelegatesSample.GetSomeDelegateWithRefAndOut()(ref refString, out outString);
 
-                ReSharper.TestValueAnalysis(outString, outString == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
                 ReSharper.TestValueAnalysis(refString, refString == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                ReSharper.TestValueAnalysis(outString, outString == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");

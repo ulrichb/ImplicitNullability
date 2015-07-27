@@ -95,15 +95,17 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             return s => ReSharper.TestValueAnalysis(s, s == null);
         }
 
-        public delegate void SomeDelegateWithRefAndOut(out string outString, ref string refString);
+        public delegate void SomeDelegateWithRefAndOut(ref string refString, out string outString);
 
         public static SomeDelegateWithRefAndOut GetSomeDelegateWithRefAndOut()
         {
-            return delegate(out string outString, ref string refString)
+            return delegate(ref string refString, out string outString)
             {
-                // For out-parameters, R# doesn't seem to use the delegate annotations (in contrast to the return value)
-                outString = null;
                 ReSharper.TestValueAnalysis(refString, refString == null);
+
+                // For ref and out-parameters (in contrast to the return value), R# doesn't seem to use the delegate annotations:
+                refString = null;
+                outString = null;
             };
         }
 

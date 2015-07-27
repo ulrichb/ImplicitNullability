@@ -66,6 +66,7 @@
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
     <Compile Include="NullabilityAnalysis\ConstructorsSample.cs" />
     <Compile Include="NullabilityAnalysis\MethodsOutputSample.cs" />
+    <Compile Include="NullabilityAnalysis\NonPublicMethodsSample.cs" />
     <Compile Include="NullabilityAnalysis\UnsafeCodeSample.cs" />
     <Compile Include="NullabilityAnalysis\LinqQueriesSample.cs" />
     <Compile Include="NullabilityAnalysis\OperatorOverloadsSample.cs" />

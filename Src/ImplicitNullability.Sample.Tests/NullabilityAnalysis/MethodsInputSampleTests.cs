@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using FluentAssertions;
 using ImplicitNullability.Sample.NullabilityAnalysis;
 using NUnit.Framework;
@@ -198,33 +197,6 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void TestInternalMethodWithNullArgument()
-        {
-            Action act = () => GetNonPublicMethod("InternalMethod").Invoke(_instance, new object[] {null});
-
-            act.ShouldThrow<TargetInvocationException>()
-                .And.InnerException.Should().BeOfType<ArgumentNullException>().Which.ParamName.Should().Be("internalMethodParameter");
-        }
-
-        [Test]
-        public void TestProtectedMethodWithNullArgument()
-        {
-            Action act = () => GetNonPublicMethod("ProtectedMethod").Invoke(_instance, new object[] {null});
-
-            act.ShouldThrow<TargetInvocationException>()
-                .And.InnerException.Should().BeOfType<ArgumentNullException>().Which.ParamName.Should().Be("protectedMethodParameter");
-        }
-
-        [Test]
-        public void TestPrivateMethodWithNullArgument()
-        {
-            Action act = () => GetNonPublicMethod("PrivateMethod").Invoke(_instance, new object[] {null});
-
-            act.ShouldThrow<TargetInvocationException>()
-                .And.InnerException.Should().BeOfType<ArgumentNullException>().Which.ParamName.Should().Be("privateMethodParameter");
-        }
-
-        [Test]
         public void StaticTestMethodWithNonNullValue()
         {
             Action act = () => MethodsInputSample.StaticTestMethod("");
@@ -238,11 +210,6 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             Action act = () => MethodsInputSample.StaticTestMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
-        }
-
-        private MethodInfo GetNonPublicMethod(string name)
-        {
-            return _instance.GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance);
         }
     }
 }

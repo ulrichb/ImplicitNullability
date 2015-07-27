@@ -18,39 +18,46 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void TestIterator()
+        public void SomeIteratorWithNonNullArgument()
         {
-            Func<IEnumerable<object>> act = () => _instance.TestIterator("");
+            Func<IEnumerable<object>> act = () => _instance.SomeIterator("");
 
             act.Enumerating().ShouldNotThrow();
         }
 
         [Test]
-        public void TestIteratorWithNullArgument()
+        public void SomeIteratorWithNullArgument()
         {
-            // ReSharper disable once IteratorMethodResultIsIgnored
-            Action act = () => _instance.TestIterator(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act = () => ReSharper.SuppressUnusedWarning(_instance.SomeIterator(null /*Expect:AssignNullToNotNullAttribute[MIn]*/));
 
             act.ShouldThrow<ArgumentNullException>("throws immediately => no ForceIteration needed")
                 .And.ParamName.Should().Be("str");
         }
 
         [Test]
-        public void TestIteratorWithManualNullCheckWithNullArgument()
+        public void SomeIteratorWithManualNullCheckWithNullArgument()
         {
-            // ReSharper disable once IteratorMethodResultIsIgnored
-            Action act = () => _instance.TestIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Action act =
+                () => ReSharper.SuppressUnusedWarning(_instance.SomeIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/));
 
             act.ShouldNotThrow("no iteration");
         }
 
         [Test]
-        public void TestIteratorWithManualNullCheckWithNullArgumentAndEnumerating()
+        public void SomeIteratorWithManualNullCheckWithNullArgumentAndEnumerating()
         {
-            Func<IEnumerable<object>> act = () => _instance.TestIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            Func<IEnumerable<object>> act = () => _instance.SomeIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.Enumerating().ShouldThrow<ArgumentNullException>()
                 .And.ParamName.Should().Be("str");
+        }
+
+        [Test]
+        public void SomeIteratorReturningNullItem()
+        {
+            var result = _instance.SomeIteratorReturningNullItem();
+
+            result.Should().Equal(new object[] {null});
         }
     }
 }

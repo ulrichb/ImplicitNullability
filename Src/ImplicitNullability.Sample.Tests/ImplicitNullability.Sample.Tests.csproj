@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="NullabilityAnalysis\DynamicInvocationTests.cs" />
     <Compile Include="NullabilityAnalysis\MethodsOutputSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\NonPublicMethodsSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\OperatorOverloadsSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\DelegatesSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\AsyncMethodsSampleTests.cs" />
