@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSamePostconditions.cs" />
     <Compile Include="NullabilityAnalysis\DelegatesSample.cs" />
     <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
       <SubType>ASPXCodeBehind</SubType>
@@ -78,12 +79,12 @@
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithAnnotations.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\DerivedClassFromExternalClass.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\NonPolymorphicMethods.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\CanBeNullOnExplicitlyImplementedInterface.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\ExplicitInterfaceImplementation.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsStrongerInDerived.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsWeakerInDerived.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsStrongerInDerived.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithRefParameters.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSameNullability.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSamePreconditions.cs" />
     <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\NotNullOnImplicitCanBeNullSample.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\CanBeNullOneOfThreeSuperMembers.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\LongInheritanceChain.cs" />

@@ -10,6 +10,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             public virtual void Method([CanBeNull] string a)
             {
             }
+
+            public virtual string Function()
+            {
+                return "";
+            }
         }
 
         public class Base2 : Base1
@@ -28,6 +33,12 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {
+            }
+
+            [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
+            public override string Function()
+            {
+                return null;
             }
         }
     }
