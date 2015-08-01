@@ -29,7 +29,7 @@ namespace ImplicitNullability.Plugin.Highlighting
     {
         public const string SeverityId = "NotNullOnImplicitCanBeNull";
 
-        public const string Message = "Implicit CanBeNull parameter has an explicit NotNull annotation";
+        public const string Message = "Implicit CanBeNull element has an explicit NotNull annotation";
 
         public const string Description =
             "Warns about explicit NotNull annotations on implicit CanBeBull elements (like parameters with a null default value). " +

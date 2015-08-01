@@ -8,6 +8,7 @@ using JetBrains.ReSharper.Daemon.CSharp.Stages;
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
 using JetBrains.Util.Logging;
@@ -24,7 +25,7 @@ using JetBrains.ReSharper.Feature.Services.Daemon;
 namespace ImplicitNullability.Plugin
 {
     [ElementProblemAnalyzer(
-        typeof (IParameterDeclaration),
+        typeof (IParameterDeclaration), typeof (IMethodDeclaration), typeof (IDelegateDeclaration),
         HighlightingTypes =
             new[]
             {
@@ -32,7 +33,7 @@ namespace ImplicitNullability.Plugin
                 typeof (ImplicitNotNullConflictInHierarchyHighlighting),
                 typeof (ImplicitNotNullOverridesUnknownExternalMemberHighlighting)
             })]
-    public class ImplicitNullabilityProblemAnalyzer : IElementProblemAnalyzer
+    public class ImplicitNullabilityProblemAnalyzer : ElementProblemAnalyzer<IDeclaration>
     {
         private static readonly ILogger s_logger = Logger.GetLogger(typeof (ImplicitNullabilityProblemAnalyzer));
 
@@ -49,28 +50,35 @@ namespace ImplicitNullability.Plugin
             _implicitNullabilityProvider = implicitNullabilityProvider;
         }
 
-        public void Run(ITreeNode element, ElementProblemAnalyzerData data, IHighlightingConsumer consumer)
+        protected override void Run(IDeclaration element, ElementProblemAnalyzerData data, IHighlightingConsumer consumer)
         {
+#if DEBUG
+            var stopwatch = Stopwatch.StartNew();
+#endif
+
+            var highlightingList = new List<IHighlighting>();
+
             var parameterDeclaration = element as IParameterDeclaration;
-
             if (parameterDeclaration != null && parameterDeclaration.DeclaredElement != null)
-            {
+                highlightingList.AddRange(HandleParameter(parameterDeclaration, parameterDeclaration.DeclaredElement));
+
+            var methodDeclaration = element as IMethodDeclaration;
+            if (methodDeclaration != null && methodDeclaration.DeclaredElement != null)
+                highlightingList.AddRange(HandleMethod(methodDeclaration, methodDeclaration.DeclaredElement));
+
+            var delegateDeclaration = element as IDelegateDeclaration;
+            if (delegateDeclaration != null && delegateDeclaration.DeclaredElement != null)
+                highlightingList.AddRange(HandleDelegate(delegateDeclaration, delegateDeclaration.DeclaredElement));
+
+            highlightingList.ForEach(x => consumer.AddHighlighting(x));
+
 #if DEBUG
-                var stopwatch = Stopwatch.StartNew();
+
+            var message = DebugUtilities.FormatIncludingContext(element.DeclaredElement) +
+                          " => [" + string.Join(", ", highlightingList.Select(x => x.GetType().Name)) + "]";
+
+            s_logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
 #endif
-                var parameter = parameterDeclaration.DeclaredElement;
-
-                var highlightingList = HandleParameter(parameterDeclaration, parameter).ToList();
-
-                highlightingList.ForEach(x => consumer.AddHighlighting(x));
-
-#if DEBUG
-                string message = DebugUtilities.FormatIncludingContext(parameter) + " => ["
-                                 + string.Join(", ", highlightingList.Select(x => x.GetType().Name)) + "]";
-
-                s_logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
-#endif
-            }
         }
 
         private IEnumerable<IHighlighting> HandleParameter([NotNull] IParameterDeclaration parameterDeclaration, [NotNull] IParameter parameter)
@@ -98,12 +106,34 @@ namespace ImplicitNullability.Plugin
             }
         }
 
-        /// <summary>
-        /// Returns the direct (non-inherited) nullability attribute values of <paramref name="parameter"/>.
-        /// </summary>
-        private IEnumerable<CodeAnnotationNullableValue> GetNullableAttributeMarks([NotNull] IParameter parameter)
+        private IEnumerable<IHighlighting> HandleMethod([NotNull] IMethodDeclaration methodDeclaration, [NotNull] IMethod method)
         {
-            return parameter.GetAttributeInstances(inherit: false)
+            var nullableAttributeMarks = GetNullableAttributeMarks(method);
+
+            if (nullableAttributeMarks.Any(x => x == CodeAnnotationNullableValue.NOT_NULL)
+                && _implicitNullabilityProvider.AnalyzeMethod(method) == CodeAnnotationNullableValue.CAN_BE_NULL)
+            {
+                yield return new NotNullOnImplicitCanBeNullHighlighting(methodDeclaration.NameIdentifier);
+            }
+        }
+
+        private IEnumerable<IHighlighting> HandleDelegate([NotNull] IDelegateDeclaration delegateDeclaration, [NotNull] IDelegate @delegate)
+        {
+            var nullableAttributeMarks = GetNullableAttributeMarks(@delegate);
+
+            if (nullableAttributeMarks.Any(x => x == CodeAnnotationNullableValue.NOT_NULL)
+                && _implicitNullabilityProvider.AnalyzeDelegate(@delegate) == CodeAnnotationNullableValue.CAN_BE_NULL)
+            {
+                yield return new NotNullOnImplicitCanBeNullHighlighting(delegateDeclaration.NameIdentifier);
+            }
+        }
+
+        /// <summary>
+        /// Returns the direct (non-inherited) nullability attribute values of <paramref name="owner"/>.
+        /// </summary>
+        private IEnumerable<CodeAnnotationNullableValue> GetNullableAttributeMarks([NotNull] IAttributesSet owner)
+        {
+            return owner.GetAttributeInstances(inherit: false)
                 .Select(x => _codeAnnotationsCache.GetNullableAttributeMark(x)).Where(x => x != null).Select(x => x.Value);
         }
 

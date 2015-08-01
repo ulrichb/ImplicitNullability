@@ -29,5 +29,27 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
         {
             get { return null; }
         }
+
+        public void MethodWithNullableIntRefAndOutParameterMethod(
+            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull*/,
+            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull*/)
+        {
+            // REPORT? Warning, although explicitly NotNull
+            ReSharper.TestValueAnalysis(refParam /*Expect:AssignNullToNotNullAttribute*/, refParam == null);
+
+            outParam = null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
+        }
+
+        [NotNull]
+        public int? FunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull*/()
+        {
+            return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
+        }
+
+        [NotNull]
+        public delegate int? Delegate /*Expect:NotNullOnImplicitCanBeNull*/(
+            [NotNull] int? a /*Expect:NotNullOnImplicitCanBeNull*/,
+            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull*/,
+            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull*/);
     }
 }
