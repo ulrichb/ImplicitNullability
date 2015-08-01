@@ -65,7 +65,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Settings\ImplicitNullabilitySettings.cs" />
-    <Compile Include="ImplicitNullabilityAnnotationProvider.cs" />
+    <Compile Include="ImplicitNullabilityCustomCodeAnnotationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

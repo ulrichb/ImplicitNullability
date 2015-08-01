@@ -10,13 +10,13 @@ using ReSharperExtensionsShared;
 namespace ImplicitNullability.Plugin
 {
     [PsiComponent]
-    public class ImplicitNullabilityAnnotationProvider : ICustomCodeAnnotationProvider
+    public class ImplicitNullabilityCustomCodeAnnotationProvider : ICustomCodeAnnotationProvider
     {
-        private static readonly ILogger s_logger = Logger.GetLogger(typeof (ImplicitNullabilityAnnotationProvider));
+        private static readonly ILogger s_logger = Logger.GetLogger(typeof (ImplicitNullabilityCustomCodeAnnotationProvider));
 
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
 
-        public ImplicitNullabilityAnnotationProvider(ImplicitNullabilityProvider implicitNullabilityProvider)
+        public ImplicitNullabilityCustomCodeAnnotationProvider(ImplicitNullabilityProvider implicitNullabilityProvider)
         {
             s_logger.LogMessage(LoggingLevel.INFO, ".ctor");
             _implicitNullabilityProvider = implicitNullabilityProvider;
