@@ -73,11 +73,11 @@
     <Compile Include="NullabilityAnalysis\OperatorOverloadsSample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\BaseClassWithExternalInterfaceInOwnCode.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithVariousTypes.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeWithImplicitCanBeNull.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\NonPolymorphicMethod.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithRefAndOutParameter.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalMethodWithAnnotations.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\DerivedClassFromExternalClass.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeWithRefAndOutParameter.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeWithAnnotations.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCode.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\NonPolymorphicMethods.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\ExplicitInterfaceImplementation.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsStrongerInDerived.cs" />

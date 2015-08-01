@@ -5,34 +5,37 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
 {
     public class BaseClassWithExternalInterfaceInOwnCode
     {
-        private abstract class Base : External.IInterface<string>
+        // Note: Here we tests the "immediate super member" behavior
+
+        public abstract class Base : External.IInterfaceWithMethod<string>
         {
-            public virtual void SomeMethod(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public virtual void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
             {
             }
         }
 
-        private class Derived : Base
+        public class Derived : Base
         {
-            public override void SomeMethod(string a /* no warning expected because already displayed in base class */)
+            public override void Method(string a /* no warning expected because already displayed in base class */)
             {
             }
         }
 
-        private class DerivedAndImplementingTheInterface : Base, External.IInterface<string>
+        // ReSharper disable once RedundantExtendsListEntry
+        public class DerivedAndImplementingTheInterface : Base, External.IInterfaceWithMethod<string>
         {
-            public override void SomeMethod(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
             {
             }
         }
 
-        private class DerivedAndExplicitlyImplementingTheInterface : Base, External.IInterface<string>
+        public class DerivedAndExplicitlyImplementingTheInterface : Base, External.IInterfaceWithMethod<string>
         {
-            public override void SomeMethod(string a)
+            public override void Method(string a)
             {
             }
 
-            void External.IInterface<string>.SomeMethod(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            void External.IInterfaceWithMethod<string>.Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
             {
             }
         }

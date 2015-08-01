@@ -7,7 +7,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
     {
         public abstract class MethodHiding : External.Class
         {
-            public new void SomeMethod(string a, string b)
+            public new void Method(string a)
             {
             }
         }

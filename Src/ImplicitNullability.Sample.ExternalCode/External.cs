@@ -9,36 +9,36 @@ namespace ImplicitNullability.Sample.ExternalCode
 
         public delegate void SomeNotNullDelegate([NotNull] string a);
 
-        public abstract class Class
+        public class Class
         {
             public virtual string this[string a]
             {
                 get { return null; }
             }
 
-            public virtual void SomeMethod(string a, string b)
+            public virtual void Method(string a)
             {
             }
         }
 
-        public interface IInterface<in T>
+        public interface IInterfaceWithMethod<in T>
         {
-            void SomeMethod(T a);
+            void Method(T a);
         }
 
-        public interface IInterfaceWithCanBeNullParameter
+        public interface IInterfaceWithCanBeNullMethod
         {
-            void SomeMethod([CanBeNull] string a);
+            void Method([CanBeNull] string a);
         }
 
-        public interface IInterfaceWithNotNullParameter
+        public interface IInterfaceWithNotNullMethod
         {
-            void SomeMethod([NotNull] string a);
+            void Method([NotNull] string a);
         }
 
-        public interface IInterfaceWithRefAndOutParameter
+        public interface IInterfaceWithRefAndOutParameterMethod
         {
-            void SomeMethod(ref string refParam, out string outParam);
+            void Method(ref string refParam, out string outParam);
         }
     }
 }

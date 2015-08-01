@@ -36,9 +36,9 @@ namespace ImplicitNullability.Plugin.Tests
             Test((issueCount, issueFilePaths) =>
             {
                 // Fixation: minimum amount of warnings, selected files
-                Assert.That(issueCount, Is.GreaterThanOrEqualTo(10));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("OverrideExternalMethodWithAnnotations.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("DerivedClassFromExternalClass.cs"));
+                Assert.That(issueCount, Is.GreaterThanOrEqualTo(9));
+                Assert.That(issueFilePaths, Has.Some.EqualTo("OverrideExternalCodeWithAnnotations.cs"));
+                Assert.That(issueFilePaths, Has.Some.EqualTo("OverrideExternalCode.cs"));
             });
         }
 
