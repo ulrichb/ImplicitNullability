@@ -16,9 +16,9 @@ namespace ImplicitNullability.Plugin.Tests
     public class NullabilityAnalysisTests : SampleSolutionTestBase
     {
         [Test]
-        public void WithEnabledInputAndRefParameters()
+        public void WithEnabledInputParameters()
         {
-            Test(settingsStore => settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputAndRefParameters, true),
+            Test(settingsStore => settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, true),
                 (issueCount, issueFilePaths) =>
                 {
                     // Fixation: minimum amount of warnings, selected files
@@ -30,6 +30,20 @@ namespace ImplicitNullability.Plugin.Tests
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
                 },
                 "MIn");
+        }
+
+        [Test]
+        public void WithEnabledRefParameters()
+        {
+            Test(settingsStore => settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableRefParameters, true),
+                (issueCount, issueFilePaths) =>
+                {
+                    // Fixation: minimum amount of warnings, selected files
+
+                    Assert.That(issueCount, Is.GreaterThanOrEqualTo(25));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsRefParameterSample.cs"));
+                },
+                "MRef");
         }
 
         [Test]
@@ -62,7 +76,8 @@ namespace ImplicitNullability.Plugin.Tests
             {
                 EnableImplicitNullabilitySetting(solution.GetProjectByName("ImplicitNullability.Sample").NotNull(), settingsStore =>
                 {
-                    settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputAndRefParameters, false);
+                    settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, false);
+                    settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableRefParameters, false);
                     settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, false);
                     enableSettings(settingsStore);
                 });

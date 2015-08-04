@@ -8,7 +8,7 @@
     <projectUrl>https://github.com/ulrichb/ImplicitNullability#readme</projectUrl>
     <licenseUrl>https://github.com/ulrichb/ImplicitNullability/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Extends ReSharper's static nullability analysis by implicit [NotNull]/[CanBeNull] annotations for specific syntax elements.</description>
+    <description>Extends the static nullability analysis by implicit [NotNull] and [CanBeNull] annotations.</description>
     <tags>nullability analysis implicit annotation notnull canbenull</tags>
     <dependencies>
       <dependency id="$DependencyId$" version="$DependencyVer$" />

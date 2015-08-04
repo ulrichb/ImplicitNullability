@@ -20,7 +20,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             // REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414:
             ReSharper.TestValueAnalysisUnsafe(refParam, refParam == null);
 
-            refParam = null; /*Expect:AssignNullToNotNullAttribute[MIn]*/
+            refParam = null; /*Expect:AssignNullToNotNullAttribute[MRef]*/
             outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
         }
 

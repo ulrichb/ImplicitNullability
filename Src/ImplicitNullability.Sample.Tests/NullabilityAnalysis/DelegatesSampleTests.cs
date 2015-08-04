@@ -140,7 +140,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
 
                 DelegatesSample.GetSomeDelegateWithRefAndOut()(ref refParam, out outParam);
 
-                ReSharper.TestValueAnalysis(refParam, refParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                ReSharper.TestValueAnalysis(refParam, refParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MRef]*/);
                 ReSharper.TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 

@@ -1,20 +1,84 @@
-# Implicit Nullability ReSharper Extension
+## Implicit Nullability ReSharper Extension
 
-[![Build status](https://ci.appveyor.com/api/projects/status/qldjrfvj090h8b0q/branch/master?svg=true)](https://ci.appveyor.com/project/ulrichb/implicitnullability/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/7st3drnudnk7lplu/branch/master?svg=true)](https://ci.appveyor.com/project/ulrichb/implicitnullability/branch/master)
 
 ## Idea
-The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` / `[CanBeNull]` attribute. For example, reference types (in method parameters, ...) are by default `[NotNull]` (→ they need an opt-in `[CanBeNull]` to become nullable).
+The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` or `[CanBeNull]` attribute. For example, reference types in method parameters are by default `[NotNull]` (→ they need an opt-in `[CanBeNull]` to become nullable).
 
-![code sample](https://github.com/ulrichb/ImplicitNullability/blob/master/Doc/Sample.png)
+![Code Sample](/Doc/Sample.png)
 
-The following rules are used for the implicit nullability value for input and `ref` parameters of methods, delegates and indexers.
+With enabled _Implicit Nullability_ for specific, [configurable](#configuration), syntax elements, the following rules apply.
 
-* Reference type parameters (without null default value) → implicitly `[NotNull]`
-* Nullable value type parameters and optional parameters with null default value → implicitly `[CanBeNull]`
+ * Reference types are by default implicitly `[NotNull]`.
+ * Their nullability can be overridden with an explicit `[CanBeNull]` attribute. 
+ * Optional method parameters with a `null` default value are implicitly `[CanBeNull]`.
 
-Without this extension the default nullability value is "unknown" which means that ReSharper excludes these elements for its nullability analysis. As a result of the changed default nullability we have to place a `[CanBeNull]` annotation only for specific code elements (e.g. a reference type parameter which should be allowed to be `null` in a method invocation) and don't need explicit annotations for the majority of cases (in code bases which try to reduce passing `null` references to a minimum).
+In a nutshell, the following code ...
+```C#
+public string M(string a, string b = "b", string c = null)
+{
+    // ...
+}
+```
+... implicitly becomes ...
+```C#
+[NotNull]
+public string M([NotNull] string a, [NotNull] string b = "b", [CanBeNull] string c = null)
+{
+    // ...
+}
+```
 
-Another idea of this extension is to bring ReSharper's static analysis in sync with the implicit null checks (weaving of `ArgumentNullException`s into assemblies) of [Fody NullGuard](https://github.com/Fody/NullGuard#readme) which has the same rules for method and indexer parameters. Using this [Fody](https://github.com/Fody/Fody#readme) weaver, you get runtime checks in addition to ReSharper's static analysis.
+### `[NotNull]` as default
+
+Without this extension the default nullability value is "unknown" which means that ReSharper excludes these elements for its nullability analysis. As a result of the changed default nullability of this extension we have to place `[CanBeNull]` annotations only for _specific_ code elements (e.g. a reference type parameter where it should be allowed to pass `null` as argument) and don't need explicit annotations for the majority of cases (in code bases which try to reduce passing `null` references to a minimum).
+
+### Improves static analysis quality
+
+The following example program contains a potential `NullReferenceException` in `command​.Equals​("Hello")` because the programmer missed that `GetCommand()` could also return `null`.
+
+```C#
+public static void Main(string[] args)
+{
+    string command = GetCommand(args);
+
+    if (command.Equals("Hello"))
+        Console.WriteLine("Hello World!");
+}
+
+private static string GetCommand(string[] args)
+{
+    if (args.Length < 1)
+        return null;
+
+    return args[0];
+}
+```
+
+With enabled _Implicit Nullability_ this bug would have been detected by ReSharper's static analysis.
+
+ 1. ReSharper would warn about returning `null` in `GetCommand()` because this method would be implicitly annotated as `[NotNull]`.
+ 2. This warning would be solved by the programmer by adding `[CanBeNull]` to `GetCommand()`.
+ 3. As a consequence of the `[CanBeNull]` attribute, ReSharper would now warn about the potential `NullReferenceException` in the `command​.Equals​("Hello")` call in `Main()`.
+<!-- duplicated in the options page -->
+
+### Improves documentation
+
+In the example above _Implicit Nullability_ forces the programmer to fix the missing `[CanBeNull]` attribute on `GetCommand()`. This shows how the number of `[CanBeNull]` annotations will be increased in the code base and therefore doesn't only improve ReSharper's static analysis but also the documentation of method signatures (contracts).
+
+### Fody NullGuard
+
+Another goal of this extension is to bring ReSharper's static analysis in sync with the implicit null checks of [Fody NullGuard](https://github.com/Fody/NullGuard#readme). For example, this [Fody](https://github.com/Fody/Fody#readme) weaver injects `throw new ArgumentNullException​(/*...*/)` statements for method parameters into method bodies using the same rules as _Implicit Nullability_. In other words this weaver adds _runtime_ checks for nullability to ReSharper's _static_ analysis.
+
+## Configuration
+
+_Implicit nullability_ can be enabled or disabled for specific syntax elements in the *Code Inspection | Implicit Nullability* options page.
+
+![Options Page](/Doc/OptionsPage.png)
+
+Note that these settings can also be configured _per project_ by manually adding a [`.csproj.DotSettings` next to the `.csproj` file](https://blog.jetbrains.com/dotnet/2012/01/18/per-project-settings-or-how-to-have-different-naming-styles-for-my-test-project/).
+
+:warning: After changing these settings, [cleaning the solution cache](https://www.jetbrains.com/resharper/help/Configuring_Caches_Location.html#dynaProc1) is necessary to update already analyzed code.
 
 ## Code inspection warnings
 
@@ -25,9 +89,3 @@ In addition to the behavior change of the nullability analysis the following cod
 * "Implicit CanBeNull parameter has an explicit NotNull annotation" (`NotNullOnImplicitCanBeNull`)
 
 For more information about these warnings (and their motivation) see their description in the ReSharper *Code Inspection | Inspection Severity* options page.
-
-## Configuration
-
-Implicit nullability can be enabled/disabled for specific syntax elements in the *Code Inspection | Implicit Nullability* options page. This can also be set per project by manually adding a [`csproj.DotSettings` next to the `csproj` file](https://blog.jetbrains.com/dotnet/2012/01/18/per-project-settings-or-how-to-have-different-naming-styles-for-my-test-project/).
-
-:warning: After changing these settings, [cleaning the solution cache](https://www.jetbrains.com/resharper/help/Configuring_Caches_Location.html#dynaProc1) is necessary to update already analyzed code.

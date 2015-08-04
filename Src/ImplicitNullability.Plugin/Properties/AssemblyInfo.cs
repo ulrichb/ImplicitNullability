@@ -14,8 +14,7 @@ using JetBrains.Application.PluginSupport;
 // The following information is displayed by ReSharper in the Plugins dialog
 
 [assembly: PluginTitle(AssemblyConsts.Title)]
-[assembly: PluginDescription("Extends ReSharper's nullability code analysis feature by implicit NotNull/CanBeNull annotations " +
-                             "for specific syntax elements.")]
+[assembly: PluginDescription(AssemblyConsts.Title)]
 #endif
 
 // ReSharper disable once CheckNamespace

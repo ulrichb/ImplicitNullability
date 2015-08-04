@@ -33,7 +33,7 @@ namespace ImplicitNullability.Plugin
 
             if (parameter.IsPartOfSolutionCode() && IsImplicitNullabilityApplicableToParameter(parameter))
             {
-                if (parameter.IsInputOrRef() && IsOptionEnabled(parameter, s => s.EnableInputAndRefParameters))
+                if (parameter.IsInput() && IsOptionEnabled(parameter, s => s.EnableInputParameters))
                 {
                     if (IsOptionalArgumentWithNullDefaultValue(parameter))
                         result = CodeAnnotationNullableValue.CAN_BE_NULL;
@@ -41,10 +41,11 @@ namespace ImplicitNullability.Plugin
                         result = GetNullabilityForType(parameter.Type);
                 }
 
-                if (parameter.IsOut() && IsOptionEnabled(parameter, s => s.EnableOutParametersAndResult))
-                {
+                if (parameter.IsRef() && IsOptionEnabled(parameter, s => s.EnableRefParameters))
                     result = GetNullabilityForType(parameter.Type);
-                }
+
+                if (parameter.IsOut() && IsOptionEnabled(parameter, s => s.EnableOutParametersAndResult))
+                    result = GetNullabilityForType(parameter.Type);
             }
 
             return result;

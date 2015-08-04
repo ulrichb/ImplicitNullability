@@ -2,6 +2,7 @@
 using JetBrains.Application.Settings;
 #if RESHARPER8
 using JetBrains.ReSharper.Settings;
+
 #else
 using JetBrains.ReSharper.Resources.Settings;
 
@@ -15,8 +16,11 @@ namespace ImplicitNullability.Plugin.Settings
         [SettingsEntry(false, "Enabled")]
         public readonly bool Enabled;
 
-        [SettingsEntry(true, "EnableInputAndRefParameters")]
-        public readonly bool EnableInputAndRefParameters;
+        [SettingsEntry(true, "EnableInputParameters")]
+        public readonly bool EnableInputParameters;
+
+        [SettingsEntry(true, "EnableRefParameters")]
+        public readonly bool EnableRefParameters;
 
         [SettingsEntry(true, "EnableOutParametersAndResult")]
         public readonly bool EnableOutParametersAndResult;
