@@ -25,7 +25,7 @@ using JetBrains.ReSharper.Feature.Services.Daemon;
 namespace ImplicitNullability.Plugin
 {
     [ElementProblemAnalyzer(
-        typeof (IParameterDeclaration), typeof (IMethodDeclaration), typeof (IDelegateDeclaration),
+        typeof (IParameterDeclaration), typeof (IMethodDeclaration), typeof (IOperatorDeclaration), typeof (IDelegateDeclaration),
         HighlightingTypes =
             new[]
             {
@@ -64,7 +64,11 @@ namespace ImplicitNullability.Plugin
 
             var methodDeclaration = element as IMethodDeclaration;
             if (methodDeclaration != null && methodDeclaration.DeclaredElement != null)
-                highlightingList.AddRange(HandleMethod(methodDeclaration, methodDeclaration.DeclaredElement));
+                highlightingList.AddRange(HandleFunction(methodDeclaration.NameIdentifier, methodDeclaration.DeclaredElement));
+
+            var operatorDeclaration = element as IOperatorDeclaration;
+            if (operatorDeclaration != null && operatorDeclaration.DeclaredElement != null)
+                highlightingList.AddRange(HandleFunction(operatorDeclaration.OperatorKeyword, operatorDeclaration.DeclaredElement));
 
             var delegateDeclaration = element as IDelegateDeclaration;
             if (delegateDeclaration != null && delegateDeclaration.DeclaredElement != null)
@@ -106,14 +110,14 @@ namespace ImplicitNullability.Plugin
             }
         }
 
-        private IEnumerable<IHighlighting> HandleMethod([NotNull] IMethodDeclaration methodDeclaration, [NotNull] IMethod method)
+        private IEnumerable<IHighlighting> HandleFunction([NotNull] ITreeNode declaration, [NotNull] IFunction function)
         {
-            var nullableAttributeMarks = GetNullableAttributeMarks(method);
+            var nullableAttributeMarks = GetNullableAttributeMarks(function);
 
             if (nullableAttributeMarks.Any(x => x == CodeAnnotationNullableValue.NOT_NULL)
-                && _implicitNullabilityProvider.AnalyzeMethod(method) == CodeAnnotationNullableValue.CAN_BE_NULL)
+                && _implicitNullabilityProvider.AnalyzeFunction(function) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
-                yield return new NotNullOnImplicitCanBeNullHighlighting(methodDeclaration.NameIdentifier);
+                yield return new NotNullOnImplicitCanBeNullHighlighting(declaration);
             }
         }
 

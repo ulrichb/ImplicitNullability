@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 
 namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
@@ -51,5 +50,19 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
             [NotNull] int? a /*Expect:NotNullOnImplicitCanBeNull*/,
             [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull*/,
             [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull*/);
+
+        public class Operator
+        {
+            public static explicit operator Operator([NotNull] int? value /*Expect:NotNullOnImplicitCanBeNull*/)
+            {
+                return new Operator();
+            }
+
+            [NotNull]
+            public static explicit operator /*Expect:NotNullOnImplicitCanBeNull*/ int?(Operator value)
+            {
+                return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
+            }
+        }
     }
 }

@@ -51,8 +51,10 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeMethod([NotNull] IMethod method)
+        public CodeAnnotationNullableValue? AnalyzeFunction([NotNull] IFunction method)
         {
+            // Methods and operators
+
             CodeAnnotationNullableValue? result = null;
 
             if (!(method is DelegateMethod))

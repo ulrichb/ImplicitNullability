@@ -44,7 +44,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void SimpleUnaryIncreaseOperationWithLeftNullValue()
+        public void SimpleUnaryIncreaseOperationWithNullValue()
         {
             var value = (OperatorOverloadsSample.Simple) null;
             Action act = () => IgnoreValue(value++);
@@ -53,12 +53,21 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
-        public void CanBeNullUnaryIncreaseOperationWithLeftNullValue()
+        public void CanBeNullUnaryIncreaseOperationWithNullValue()
         {
             var value = (OperatorOverloadsSample.CanBeNull) null;
             Action act = () => IgnoreValue(value++);
 
             act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void NotNullReturnValueWithNullValue()
+        {
+            var value = new OperatorOverloadsSample.NotNullReturnValue();
+            Action act = () => IgnoreValue(value++);
+
+            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value of *op_Increment* is null.");
         }
 
         // ReSharper disable once UnusedParameter.Local

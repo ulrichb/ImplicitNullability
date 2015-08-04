@@ -34,9 +34,9 @@ namespace ImplicitNullability.Plugin
             if (parameter != null)
                 result = _implicitNullabilityProvider.AnalyzeParameter(parameter);
 
-            var method = element as IMethod;
-            if (method != null)
-                result = _implicitNullabilityProvider.AnalyzeMethod(method);
+            var function = element as IFunction;
+            if (function != null)
+                result = _implicitNullabilityProvider.AnalyzeFunction(function);
 
             var @delegate = element as IDelegate;
             if (@delegate != null)

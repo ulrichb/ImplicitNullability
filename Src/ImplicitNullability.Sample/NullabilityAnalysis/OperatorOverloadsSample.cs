@@ -17,7 +17,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             public static Simple operator ++(Simple value)
             {
                 ReSharper.TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
-                return null;
+                return new Simple();
             }
         }
 
@@ -35,6 +35,14 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             {
                 ReSharper.TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
                 return null;
+            }
+        }
+
+        public class NotNullReturnValue
+        {
+            public static NotNullReturnValue operator ++(NotNullReturnValue value)
+            {
+                return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
             }
         }
     }
