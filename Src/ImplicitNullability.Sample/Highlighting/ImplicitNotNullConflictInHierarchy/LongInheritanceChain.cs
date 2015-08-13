@@ -5,10 +5,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 {
     public class LongInheritanceChain
     {
-        public class Base1
+        public class Base
         {
             public virtual void Method([CanBeNull] string a)
             {
+                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
 
             public virtual string Function()
@@ -17,7 +18,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             }
         }
 
-        public class Base2 : Base1
+        public class Base2 : Base
         {
         }
 
@@ -25,20 +26,42 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
         }
 
-        public class Base4 : Base3
+        public class DerivedGood : Base3
         {
+            // This documents that the hierarchy conflict warnings compete with AnnotationRedundancyInHierarchy
+
+            public override void Method([CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 9]*/ string a)
+            {
+            }
+
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 9]*/
+            public override string Function()
+            {
+                return "";
+            }
         }
 
-        public class Derived : Base4
+        public class DerivedBad : Base3
         {
             public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
             {
+                // Note that ReSharper takes the inherited [CanBeNull]:
+                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
 
             [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
             public override string Function()
             {
                 return null;
+            }
+        }
+
+        public class DerivedBadAgain : DerivedBad
+        {
+            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            {
+                // Note that ReSharper takes the inherited [CanBeNull]:
+                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
         }
     }

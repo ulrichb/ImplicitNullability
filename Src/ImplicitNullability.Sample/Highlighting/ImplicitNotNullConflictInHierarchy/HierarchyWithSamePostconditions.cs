@@ -1,6 +1,8 @@
 ﻿using System;
 using JetBrains.Annotations;
 
+// ReSharper disable AnnotationRedundancyInHierarchy
+
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
 {
     public static class HierarchyWithSamePostconditions

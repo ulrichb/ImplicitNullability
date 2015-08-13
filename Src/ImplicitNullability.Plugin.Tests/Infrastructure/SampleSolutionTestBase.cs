@@ -101,7 +101,11 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 typeof (AssignNullToNotNullAttributeWarning),
                 typeof (ConditionIsAlwaysTrueOrFalseWarning),
                 typeof (PossibleNullReferenceExceptionWarning),
-                typeof (PossibleInvalidOperationExceptionWarning)
+                typeof (PossibleInvalidOperationExceptionWarning),
+#if !RESHARPER8
+                // This warning has been renamed in R# 9.0. We ignore R# 8.2 in the assertions to keep them simpler.
+                typeof (AnnotationRedundancyInHierarchyWarning)
+#endif
             };
         }
 
