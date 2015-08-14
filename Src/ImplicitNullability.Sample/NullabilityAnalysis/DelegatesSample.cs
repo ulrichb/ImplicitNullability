@@ -30,7 +30,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public static SomeDelegate GetSomeDelegate()
         {
-            return s => ReSharper.TestValueAnalysis(s, s == null);
+            return s => ReSharper.TestValueAnalysis(s, s == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
         }
 
         public static SomeDelegate GetSomeDelegateToNamedMethod()

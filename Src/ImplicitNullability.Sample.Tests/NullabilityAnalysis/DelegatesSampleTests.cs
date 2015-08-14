@@ -79,9 +79,9 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                var result = DelegatesSample.GetSomeFunctionDelegateWithNotNull()();
-                // REPORT? false negative, although input parameters of delegates work (see above) and the [NotNull] is used in the lambda:
-                ReSharper.TestValueAnalysis(result, result == null);
+                DelegatesSample.SomeFunctionDelegateWithNotNull @delegate = DelegatesSample.GetSomeFunctionDelegateWithNotNull();
+                var result = @delegate();
+                ReSharper.TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
@@ -92,10 +92,11 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                var result = DelegatesSample.GetSomeFunctionDelegate()();
+                DelegatesSample.SomeFunctionDelegate @delegate = DelegatesSample.GetSomeFunctionDelegate();
+                var result = @delegate();
                 // This false negative is analog to SomeFunctionDelegateWithNotNull and even requires an exemption for the delegate Invoke() method,
                 // but it is necessary because this implicit annotation wouldn't be invertible with [CanBeNull]:
-                ReSharper.TestValueAnalysis(result, result == null);
+                ReSharper.TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
@@ -106,9 +107,9 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                var result = DelegatesSample.GetSomeFunctionDelegateWithCanBeNull()();
-                // REPORT? false negative, equivalent to case in SomeFunctionDelegateWithNotNull
-                ReSharper.TestValueAnalysis(result, result == null);
+                DelegatesSample.SomeFunctionDelegateWithCanBeNull @delegate = DelegatesSample.GetSomeFunctionDelegateWithCanBeNull();
+                var result = @delegate();
+                ReSharper.TestValueAnalysis(result /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, result == null);
             };
 
             act.ShouldNotThrow();
