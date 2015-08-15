@@ -19,7 +19,7 @@ namespace ImplicitNullability.Plugin.Settings
 {
     [ExcludeFromCodeCoverage /* options page user interface is tested manually */]
     [OptionsPage(
-        c_pageId,
+        PageId,
         PageTitle,
         typeof (CommonThemedIcons.Bulb),
         ParentId = CodeInspectionPage.PID)]
@@ -28,7 +28,7 @@ namespace ImplicitNullability.Plugin.Settings
         // IDEA: After dropping R# 8.2 support: switch to SimpleOptionsPage (would automatically implement ISearchablePage)
 
         public const string PageTitle = "Implicit Nullability";
-        private const string c_pageId = "ImplicitNullabilityOptions";
+        private const string PageId = "ImplicitNullabilityOptions";
 
         private const int LeftMargin = 3; // pixels
         private const int VerticalSpace = 8; // pixels
@@ -37,7 +37,7 @@ namespace ImplicitNullability.Plugin.Settings
         private readonly OptionsSettingsSmartContext _settings;
 
         public ImplicitNullabilityOptionsPage(Lifetime lifetime, IUIApplication environment, OptionsSettingsSmartContext settings)
-            : base(lifetime, environment, c_pageId)
+            : base(lifetime, environment, PageId)
         {
             _lifetime = lifetime;
             _settings = settings;

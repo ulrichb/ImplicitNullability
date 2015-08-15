@@ -11,7 +11,6 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
-using JetBrains.Util.Logging;
 using ReSharperExtensionsShared;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
@@ -35,7 +34,7 @@ namespace ImplicitNullability.Plugin
             })]
     public class ImplicitNullabilityProblemAnalyzer : ElementProblemAnalyzer<IDeclaration>
     {
-        private static readonly ILogger s_logger = Logger.GetLogger(typeof (ImplicitNullabilityProblemAnalyzer));
+        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityProblemAnalyzer));
 
         private readonly CodeAnnotationsCache _codeAnnotationsCache;
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
@@ -44,7 +43,7 @@ namespace ImplicitNullability.Plugin
             CodeAnnotationsCache codeAnnotationsCache,
             ImplicitNullabilityProvider implicitNullabilityProvider)
         {
-            s_logger.LogMessage(LoggingLevel.INFO, ".ctor");
+            Logger.LogMessage(LoggingLevel.INFO, ".ctor");
 
             _codeAnnotationsCache = codeAnnotationsCache;
             _implicitNullabilityProvider = implicitNullabilityProvider;
@@ -81,7 +80,7 @@ namespace ImplicitNullability.Plugin
             var message = DebugUtilities.FormatIncludingContext(element.DeclaredElement) +
                           " => [" + string.Join(", ", highlightingList.Select(x => x.GetType().Name)) + "]";
 
-            s_logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
+            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
 #endif
         }
 

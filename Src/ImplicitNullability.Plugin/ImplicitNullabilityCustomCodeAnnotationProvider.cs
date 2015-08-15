@@ -4,7 +4,6 @@ using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
-using JetBrains.Util.Logging;
 using ReSharperExtensionsShared;
 
 namespace ImplicitNullability.Plugin
@@ -12,13 +11,13 @@ namespace ImplicitNullability.Plugin
     [PsiComponent]
     public class ImplicitNullabilityCustomCodeAnnotationProvider : ICustomCodeAnnotationProvider
     {
-        private static readonly ILogger s_logger = Logger.GetLogger(typeof (ImplicitNullabilityCustomCodeAnnotationProvider));
+        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityCustomCodeAnnotationProvider));
 
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
 
         public ImplicitNullabilityCustomCodeAnnotationProvider(ImplicitNullabilityProvider implicitNullabilityProvider)
         {
-            s_logger.LogMessage(LoggingLevel.INFO, ".ctor");
+            Logger.LogMessage(LoggingLevel.INFO, ".ctor");
             _implicitNullabilityProvider = implicitNullabilityProvider;
         }
 
@@ -45,7 +44,7 @@ namespace ImplicitNullability.Plugin
 #if DEBUG
             var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
 
-            s_logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
+            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
 #endif
             return result;
         }

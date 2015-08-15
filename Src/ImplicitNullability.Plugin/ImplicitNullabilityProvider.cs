@@ -11,14 +11,13 @@ using JetBrains.ReSharper.Psi.Impl.Special;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
-using JetBrains.Util.Logging;
 
 namespace ImplicitNullability.Plugin
 {
     [PsiComponent]
     public class ImplicitNullabilityProvider
     {
-        private static readonly ILogger s_logger = Logger.GetLogger(typeof (ImplicitNullabilityProvider));
+        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityProvider));
 
         private readonly ISettingsStore _settingsStore;
 
@@ -144,7 +143,7 @@ namespace ImplicitNullability.Plugin
                                             ", IsDefaultType: " + parameter.GetDefaultValue().IsDefaultType +
                                             ", DefaultTypeValue.IsValueType(): " + parameter.GetDefaultValue().DefaultTypeValue.IsValueType();
 
-                s_logger.LogMessage(LoggingLevel.VERBOSE, optionalParameterText);
+                Logger.LogMessage(LoggingLevel.VERBOSE, optionalParameterText);
             }
 #endif
 
