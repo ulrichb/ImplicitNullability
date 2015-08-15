@@ -86,7 +86,7 @@ namespace ImplicitNullability.Plugin
 
         private IEnumerable<IHighlighting> HandleParameter([NotNull] IParameterDeclaration parameterDeclaration, [NotNull] IParameter parameter)
         {
-            var nullableAttributeMarks = GetNullableAttributeMarks(parameter).ToList();
+            var nullableAttributeMarks = GetNullableAttributeMarks(parameter).ToArray();
 
             if (nullableAttributeMarks.Any(x => x == CodeAnnotationNullableValue.NOT_NULL)
                 && _implicitNullabilityProvider.AnalyzeParameter(parameter) == CodeAnnotationNullableValue.CAN_BE_NULL)
@@ -99,7 +99,7 @@ namespace ImplicitNullability.Plugin
 
             if (isImplicitlyNotNull && parameter.IsInputOrRef())
             {
-                var superMembersNullability = GetImmediateSuperMembersNullability(parameter).ToList();
+                var superMembersNullability = GetImmediateSuperMembersNullability(parameter).ToArray();
 
                 if (superMembersNullability.Any(x => x.NullableAttribute == CodeAnnotationNullableValue.CAN_BE_NULL))
                     yield return new ImplicitNotNullConflictInHierarchyHighlighting(parameterDeclaration);
@@ -145,7 +145,7 @@ namespace ImplicitNullability.Plugin
             var overridableMember = parameter.ContainingParametersOwner as IOverridableMember;
 
             if (overridableMember == null)
-                return new SuperMemberNullability[0];
+                return EmptyList<SuperMemberNullability>.InstanceList;
 
             var superMembers = overridableMember.GetImmediateSuperMembers();
 
@@ -163,7 +163,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private class SuperMemberNullability
+        private struct SuperMemberNullability
         {
             public IOverridableMember SuperMember;
             public CodeAnnotationNullableValue? NullableAttribute;
