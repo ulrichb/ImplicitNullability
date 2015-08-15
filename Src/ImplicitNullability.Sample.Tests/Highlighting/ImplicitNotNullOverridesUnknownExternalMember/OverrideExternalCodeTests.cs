@@ -41,7 +41,7 @@ namespace ImplicitNullability.Sample.Tests.Highlighting.ImplicitNotNullOverrides
         [Test]
         public void MethodOnDerivedClassInOwnCode()
         {
-            Action act = () => _derivedClassInOwnCode.Method(null /*Expect:AssignNullToNotNullAttribute*/);
+            Action act = () => _derivedClassInOwnCode.Method(null /*Expect:AssignNullToNotNullAttribute[Implicit]*/);
 
             act.ShouldThrow<ArgumentNullException>("the derived method has been rewritten altough External.Class base method is nullable")
                 .And.ParamName.Should().Be("a");

@@ -24,8 +24,8 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         public class Implementation : IInterface
         {
             public string this[
-                string a /*Expect:ImplicitNotNullConflictInHierarchy*/,
-                string b /*Expect:ImplicitNotNullConflictInHierarchy*/]
+                string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/,
+                string b /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/]
             {
                 get { return null; }
             }
@@ -37,32 +37,32 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             }
 
             public void ImplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived(
-                [NotNull] /*Expect:AnnotationConflictInHierarchy*/ int? nullableInt,
-                [NotNull] /*Expect:AnnotationConflictInHierarchy*/ string optional)
+                [NotNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/ int? nullableInt,
+                [NotNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/ string optional)
             {
             }
 
             public void ImplicitCanBeNullOptionalParameterInInterfaceExplicitNotNullInDerived(
-                [NotNull] /*Expect:AnnotationConflictInHierarchy*/ string optional)
+                [NotNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/ string optional)
             {
                 // Here the explicit NotNull overrides the inherited implicit CanBeNull:
                 ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             }
 
             public void ImplicitCanBeNullOptionalParameterInInterfaceImplicitNotNullInDerived(
-                string optional /*Expect:ImplicitNotNullConflictInHierarchy*/)
+                string optional /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
                 // Here the implicit NotNull overrides the inherited implicit CanBeNull:
-                ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse[Implicit]*/);
             }
 
             public void ImplicitCanBeNullOptionalParameterInInterfaceImplicitNotNullOptionalParameterInDerived(
-                string optional = "default" /*Expect:ImplicitNotNullConflictInHierarchy*/)
+                string optional = "default" /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
             }
 
             public void ExplicitCanBeNullOptionalParametersInInterfaceImplicitNotNullInDerived(
-                string optional = "default" /*Expect:ImplicitNotNullConflictInHierarchy*/)
+                string optional = "default" /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
             }
 
@@ -72,7 +72,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 ReSharper.TestValueAnalysis(a, a == null) /*Expect:ConditionIsAlwaysTrueOrFalse*/;
             }
 
-            public void CanBeNullParameterInInterfaceImplicitNotNullInDerived(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public void CanBeNullParameterInInterfaceImplicitNotNullInDerived(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
                 // Here the inherited explicit CanBeBull overrides the implicit NotNull: 
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);

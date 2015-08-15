@@ -22,7 +22,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class Implementation : IInterface1, IInterface2, IInterface3
         {
-            public void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
             }
         }

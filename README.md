@@ -15,7 +15,7 @@ With enabled _Implicit Nullability_ for specific, [configurable](#configuration)
 
 In a nutshell, the following code ...
 ```C#
-public string M(string a, string b = "b", string c = null)
+public string M(string a, [CanBeNull] string b, string c = null)
 {
     // ...
 }
@@ -23,7 +23,7 @@ public string M(string a, string b = "b", string c = null)
 ... implicitly becomes ...
 ```C#
 [NotNull]
-public string M([NotNull] string a, [NotNull] string b = "b", [CanBeNull] string c = null)
+public string M([NotNull] string a, [CanBeNull] string b, [CanBeNull] string c = null)
 {
     // ...
 }

@@ -9,12 +9,12 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
     {
         public class DerivedClassInOwnCode : External.Class
         {
-            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/]
+            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/]
             {
                 get { return null; }
             }
 
-            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
         }
@@ -45,7 +45,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
 
         public class OverrideWithDefaultValue : External.IInterfaceWithMethod<string>
         {
-            public void Method(string a = "default" /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public void Method(string a = "default" /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
         }

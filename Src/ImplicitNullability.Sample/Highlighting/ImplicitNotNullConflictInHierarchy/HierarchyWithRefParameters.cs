@@ -21,7 +21,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 a = "";
             }
 
-            public void CanBeNullRefParameterInInterfaceImplicitNotNullInDerived(ref string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public void CanBeNullRefParameterInInterfaceImplicitNotNullInDerived(ref string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
                 ReSharper.SuppressUnusedWarning(a);
                 a = null;

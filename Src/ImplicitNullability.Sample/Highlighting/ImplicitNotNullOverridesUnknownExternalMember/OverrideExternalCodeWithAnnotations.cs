@@ -7,7 +7,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
     {
         public class ExternalCanBeNull : External.IInterfaceWithCanBeNullMethod
         {
-            public void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
             }
         }
@@ -38,7 +38,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             External.IInterfaceWithMethod<string>, // The bad one
             IOwnCodeInterface // OK because implicitly NotNull
         {
-            public void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
         }

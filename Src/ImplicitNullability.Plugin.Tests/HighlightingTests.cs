@@ -4,22 +4,26 @@ using System.Diagnostics;
 using System.Linq;
 using ImplicitNullability.Plugin.Highlighting;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
+using JetBrains.Annotations;
+using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.Util;
 using NUnit.Framework;
-#if !RESHARPER8
-using JetBrains.ProjectModel;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Tests
 {
     public class HighlightingTests : SampleSolutionTestBase
     {
         [Test]
-        public void ImplicitNotNullConflictInHierarchy()
+        public void ImplicitNotNullConflictInHierarchy_WithDisabledImplicitNullability()
         {
-            Test((issueCount, issueFilePaths) =>
+            TestWithDisabledImplicitNullability();
+        }
+
+        [Test]
+        public void ImplicitNotNullConflictInHierarchy_WithEnabledImplicitNullability()
+        {
+            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
             {
                 // Fixation: minimum amount of warnings, selected files
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(20));
@@ -31,9 +35,15 @@ namespace ImplicitNullability.Plugin.Tests
         }
 
         [Test]
-        public void ImplicitNotNullOverridesUnknownExternalMember()
+        public void ImplicitNotNullOverridesUnknownExternalMember_WithDisabledImplicitNullability()
         {
-            Test((issueCount, issueFilePaths) =>
+            TestWithDisabledImplicitNullability();
+        }
+
+        [Test]
+        public void ImplicitNotNullOverridesUnknownExternalMember_TestWithEnabledImplicitNullability()
+        {
+            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
             {
                 // Fixation: minimum amount of warnings, selected files
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(9));
@@ -43,9 +53,15 @@ namespace ImplicitNullability.Plugin.Tests
         }
 
         [Test]
-        public void NotNullOnImplicitCanBeNull()
+        public void NotNullOnImplicitCanBeNull_WithDisabledImplicitNullability()
         {
-            Test((issueCount, issueFilePaths) =>
+            TestWithDisabledImplicitNullability();
+        }
+
+        [Test]
+        public void NotNullOnImplicitCanBeNull_TestWithEnabledImplicitNullability()
+        {
+            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
             {
                 // Fixation: minimum amount of warnings, selected files
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(7));
@@ -54,20 +70,37 @@ namespace ImplicitNullability.Plugin.Tests
             });
         }
 
-        private void Test(Action<int, IList<string>> assert)
+        private void TestWithDisabledImplicitNullability()
+        {
+            UseSampleSolution(solution =>
+            {
+                var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
+
+                TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetHighlightingTypesToAnalyze());
+            });
+        }
+
+        private void TestWithEnabledImplicitNullability(Action<int, IList<string>> assert)
         {
             UseSampleSolution(solution =>
             {
                 EnableImplicitNullabilitySetting(solution.GetProjectByName("ImplicitNullability.Sample").NotNull());
 
-                var pathPrefix = "Highlighting\\" + TestContext.CurrentContext.Test.Name;
-                var projectFilesToAnalyze = solution.GetAllProjectFilesWithPathPrefix(pathPrefix).ToList();
-                Trace.Assert(projectFilesToAnalyze.Any());
+                var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 
-                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetHighlightingTypesToAnalyze());
+                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetHighlightingTypesToAnalyze(), "Implicit");
 
                 assert(issues.Count, issues.Select(x => x.GetSourceFile().Name).ToList());
             });
+        }
+
+        private static IEnumerable<IProjectFile> GetProjectFilesToAnalyze([NotNull] ISolution solution)
+        {
+            var pathPrefix = "Highlighting\\" + TestContext.CurrentContext.Test.Name.Split('_')[0];
+
+            var projectFilesToAnalyze = solution.GetAllProjectFilesWithPathPrefix(pathPrefix).ToList();
+            Trace.Assert(projectFilesToAnalyze.Any(), "! projectFilesToAnalyze.Any()");
+            return projectFilesToAnalyze;
         }
 
         private IEnumerable<Type> GetHighlightingTypesToAnalyze()

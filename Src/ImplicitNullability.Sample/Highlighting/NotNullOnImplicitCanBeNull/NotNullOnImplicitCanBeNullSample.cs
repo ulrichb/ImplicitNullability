@@ -5,7 +5,7 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
 {
     public class NotNullOnImplicitCanBeNullSample
     {
-        public void MethodWithNullableInt([NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull*/)
+        public void MethodWithNullableInt([NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
         {
             // REPORT? Warning, although explicitly NotNull
             ReSharper.TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
@@ -13,7 +13,7 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
 
         public void MethodWithOptionalParameter(
             // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
-            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull*/)
+            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
             // ReSharper restore AssignNullToNotNullAttribute
         {
             // REPORT? Warning, although explicitly NotNull
@@ -21,17 +21,17 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
         }
 
         public string this[
-            [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull*/,
+            [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
             // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
-            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull*/]
+            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/]
             // ReSharper restore AssignNullToNotNullAttribute
         {
             get { return null; }
         }
 
         public void MethodWithNullableIntRefAndOutParameterMethod(
-            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull*/,
-            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull*/)
+            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
+            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
         {
             // REPORT? Warning, although explicitly NotNull
             ReSharper.TestValueAnalysis(refParam /*Expect:AssignNullToNotNullAttribute*/, refParam == null);
@@ -40,26 +40,26 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
         }
 
         [NotNull]
-        public int? FunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull*/()
+        public int? FunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/()
         {
             return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
         }
 
         [NotNull]
-        public delegate int? Delegate /*Expect:NotNullOnImplicitCanBeNull*/(
-            [NotNull] int? a /*Expect:NotNullOnImplicitCanBeNull*/,
-            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull*/,
-            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull*/);
+        public delegate int? Delegate /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/(
+            [NotNull] int? a /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
+            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
+            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/);
 
         public class Operator
         {
-            public static explicit operator Operator([NotNull] int? value /*Expect:NotNullOnImplicitCanBeNull*/)
+            public static explicit operator Operator([NotNull] int? value /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
             {
                 return new Operator();
             }
 
             [NotNull]
-            public static explicit operator /*Expect:NotNullOnImplicitCanBeNull*/ int?(Operator value)
+            public static explicit operator /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ int?(Operator value)
             {
                 return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
             }

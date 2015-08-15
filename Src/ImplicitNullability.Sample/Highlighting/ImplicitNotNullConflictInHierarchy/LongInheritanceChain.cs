@@ -34,7 +34,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             {
             }
 
-            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 9]*/
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[Implicit && RS >= 9]*/
             public override string Function()
             {
                 return "";
@@ -43,13 +43,13 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class DerivedBad : Base3
         {
-            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
                 // Note that ReSharper takes the inherited [CanBeNull]:
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
 
-            [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
+            [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
             public override string Function()
             {
                 return null;
@@ -58,7 +58,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class DerivedBadAgain : DerivedBad
         {
-            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
                 // Note that ReSharper takes the inherited [CanBeNull]:
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);

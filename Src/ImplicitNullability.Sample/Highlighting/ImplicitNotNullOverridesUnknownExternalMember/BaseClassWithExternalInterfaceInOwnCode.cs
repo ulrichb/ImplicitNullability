@@ -9,7 +9,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
 
         public abstract class Base : External.IInterfaceWithMethod<string>
         {
-            public virtual void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public virtual void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
         }
@@ -24,7 +24,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
         // ReSharper disable once RedundantExtendsListEntry
         public class DerivedAndImplementingTheInterface : Base, External.IInterfaceWithMethod<string>
         {
-            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
         }
@@ -35,7 +35,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             {
             }
 
-            void External.IInterfaceWithMethod<string>.Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/)
+            void External.IInterfaceWithMethod<string>.Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
         }

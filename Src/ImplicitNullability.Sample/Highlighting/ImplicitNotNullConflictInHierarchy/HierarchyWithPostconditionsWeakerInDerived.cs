@@ -36,7 +36,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 return null;
             }
 
-            [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
+            [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
             public string FunctionWithImplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 return null;

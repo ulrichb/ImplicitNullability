@@ -14,11 +14,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class Implementation : IInterface
         {
-            void IInterface.Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            void IInterface.Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
             }
 
-            [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
+            [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
             string IInterface.Function()
             {
                 return null;

@@ -26,7 +26,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class MethodHidingButInterfaceImplementation : Base, IInterface
         {
-            public new void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy*/)
+            public new void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
             }
         }

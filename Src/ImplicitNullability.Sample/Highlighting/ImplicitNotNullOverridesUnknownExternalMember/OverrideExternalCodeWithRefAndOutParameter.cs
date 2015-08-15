@@ -8,7 +8,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
         public class Implementation : External.IInterfaceWithRefAndOutParameterMethod
         {
             public void Method(
-                ref string refParam /*Expect:ImplicitNotNullOverridesUnknownExternalMember*/,
+                ref string refParam /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/,
                 out string outParam)
             {
                 ReSharper.SuppressUnusedWarning(refParam);
