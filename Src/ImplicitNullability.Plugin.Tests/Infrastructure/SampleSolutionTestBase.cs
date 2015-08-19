@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 using JetBrains.Application.Progress;
 using JetBrains.Application.Settings;
 using JetBrains.Application.Settings.Store.Implementation;
-using JetBrains.Extension;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
@@ -23,8 +22,15 @@ using NUnit.Framework;
 #if RESHARPER8
 using JetBrains.Application;
 using JetBrains.ReSharper.Daemon;
+using JetBrains.Extension;
+
+#elif RESHARPER91
+using JetBrains.Extension;
+using JetBrains.ReSharper.Feature.Services.Daemon;
+using JetBrains.ReSharper.Resources.Shell;
 
 #else
+using System.Reflection;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Resources.Shell;
 
@@ -140,8 +146,10 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
 #if RESHARPER8
                 expression.Parameters["RS"] = "8";
-#elif RESHARPER9
-                expression.Parameters["RS"] = "9";
+#elif RESHARPER91
+                expression.Parameters["RS"] = "9.1";
+#elif RESHARPER92
+                expression.Parameters["RS"] = "9.2";
 #endif
                 expression.EvaluateParameter += (name, args) => { args.Result = name == definedExpectedWarningSymbol; };
 

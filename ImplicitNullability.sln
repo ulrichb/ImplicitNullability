@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R82", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R82.csproj", "{71478F9F-1AAA-40DA-9C0C-6043C972558C}"
 EndProject
@@ -43,6 +43,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{47C5E8C5
 		Build\Build.ps1 = Build\Build.ps1
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R92", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R92.csproj", "{AF0ADEF1-3538-4176-A559-93429A15B4DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R92", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R92.csproj", "{CCE08E5C-767A-42A4-8915-080331158865}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF0ADEF1-3538-4176-A559-93429A15B4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF0ADEF1-3538-4176-A559-93429A15B4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF0ADEF1-3538-4176-A559-93429A15B4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF0ADEF1-3538-4176-A559-93429A15B4DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE08E5C-767A-42A4-8915-080331158865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE08E5C-767A-42A4-8915-080331158865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE08E5C-767A-42A4-8915-080331158865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE08E5C-767A-42A4-8915-080331158865}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,5 +101,7 @@ Global
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {67859B65-179D-40D0-80DB-003011824913}
 		{CDB42CAA-C42A-4343-9067-C9B766CAEFA6} = {67859B65-179D-40D0-80DB-003011824913}
 		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC} = {67859B65-179D-40D0-80DB-003011824913}
+		{AF0ADEF1-3538-4176-A559-93429A15B4DD} = {67859B65-179D-40D0-80DB-003011824913}
+		{CCE08E5C-767A-42A4-8915-080331158865} = {67859B65-179D-40D0-80DB-003011824913}
 	EndGlobalSection
 EndGlobal

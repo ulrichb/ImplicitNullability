@@ -48,5 +48,12 @@ namespace ImplicitNullability.Plugin
 #endif
             return result;
         }
+
+#if !(RESHARPER8 || RESHARPER91)
+        public CodeAnnotationNullableValue? GetContainerElementNullableAttribute(IDeclaredElement element)
+        {
+            return null;
+        }
+#endif
     }
 }

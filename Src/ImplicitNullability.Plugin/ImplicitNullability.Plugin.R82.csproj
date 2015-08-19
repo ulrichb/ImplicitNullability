@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImplicitNullability.Plugin</RootNamespace>
-    <AssemblyName>ImplicitNullability.Plugin</AssemblyName>
+    <AssemblyName>ImplicitNullability.Plugin.R82</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseIntermediateOutputPath>obj.R82\</BaseIntermediateOutputPath>
