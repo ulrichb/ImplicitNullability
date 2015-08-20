@@ -37,9 +37,11 @@ namespace ImplicitNullability.Plugin
             if (function != null)
                 result = _implicitNullabilityProvider.AnalyzeFunction(function);
 
+#if !RESHARPER8
             var @delegate = element as IDelegate;
             if (@delegate != null)
                 result = _implicitNullabilityProvider.AnalyzeDelegate(@delegate);
+#endif
 
 #if DEBUG
             var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
