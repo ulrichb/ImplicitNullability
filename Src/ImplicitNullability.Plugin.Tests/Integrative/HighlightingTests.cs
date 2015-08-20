@@ -10,7 +10,7 @@ using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.Util;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Plugin.Tests
+namespace ImplicitNullability.Plugin.Tests.Integrative
 {
     public class HighlightingTests : SampleSolutionTestBase
     {

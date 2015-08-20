@@ -11,7 +11,7 @@ using JetBrains.ProjectModel;
 
 #endif
 
-namespace ImplicitNullability.Plugin.Tests
+namespace ImplicitNullability.Plugin.Tests.Integrative
 {
     public class NullabilityAnalysisTests : SampleSolutionTestBase
     {

@@ -38,6 +38,10 @@
     <NoWarn>1685</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=1.25.3.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FakeItEasy.1.25.3\lib\net40\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
       <Private>True</Private>
@@ -53,11 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compatibility.cs" />
-    <Compile Include="HighlightingTests.cs" />
+    <Compile Include="Integrative\HighlightingTests.cs" />
+    <Compile Include="Highlighting\ImplicitNullabilityHighlightingBaseTest.cs" />
     <Compile Include="Infrastructure\SampleSolutionTestBase.cs" />
     <Compile Include="Infrastructure\SolutionExtensions.cs" />
     <Compile Include="TestEnvironmentSetUpFixture.R82.cs" />
-    <Compile Include="NullabilityAnalysisTests.cs" />
+    <Compile Include="Integrative\NullabilityAnalysisTests.cs" />
     <Compile Include="Infrastructure\TestDataPathUtility.cs" />
   </ItemGroup>
   <ItemGroup>
