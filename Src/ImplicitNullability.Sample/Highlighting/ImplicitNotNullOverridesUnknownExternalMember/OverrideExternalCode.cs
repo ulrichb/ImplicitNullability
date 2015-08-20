@@ -1,6 +1,5 @@
 using System;
 using ImplicitNullability.Sample.ExternalCode;
-using ImplicitNullability.Sample.NullabilityAnalysis;
 using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember

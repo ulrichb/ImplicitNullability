@@ -1,5 +1,6 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
 using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.Tree;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
@@ -35,7 +36,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "This is the equivalent to \"Annotation conflict in hierarchy\" for explicit NotNull annotations. " +
             NeedsSettingNoteText;
 
-        public ImplicitNotNullConflictInHierarchyHighlighting(ITreeNode treeNode)
+        public ImplicitNotNullConflictInHierarchyHighlighting([NotNull] ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }

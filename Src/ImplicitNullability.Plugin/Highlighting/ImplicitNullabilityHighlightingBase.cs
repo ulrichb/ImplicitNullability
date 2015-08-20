@@ -1,5 +1,6 @@
 using System;
 using ImplicitNullability.Plugin.Settings;
+using JetBrains.Annotations;
 using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Psi.Tree;
 #if RESHARPER8
@@ -21,7 +22,7 @@ namespace ImplicitNullability.Plugin.Highlighting
         private readonly ITreeNode _treeNode;
         private readonly string _toolTipText;
 
-        protected ImplicitNullabilityHighlightingBase(ITreeNode treeNode, string toolTipText)
+        protected ImplicitNullabilityHighlightingBase([NotNull] ITreeNode treeNode, [NotNull] string toolTipText)
         {
             _treeNode = treeNode;
             _toolTipText = toolTipText;

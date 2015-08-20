@@ -1,5 +1,6 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
 using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.Tree;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
@@ -38,7 +39,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "explicitly annotate this parameter after manually checking the constraints of the base member. " +
             NeedsSettingNoteText;
 
-        public ImplicitNotNullOverridesUnknownExternalMemberHighlighting(ITreeNode treeNode)
+        public ImplicitNotNullOverridesUnknownExternalMemberHighlighting([NotNull] ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }
