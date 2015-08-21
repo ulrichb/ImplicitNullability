@@ -5,10 +5,11 @@
     <version>$Version$</version>
     <title>Implicit Nullability</title>
     <authors>ulrichb</authors>
-    <projectUrl>https://github.com/ulrichb/ImplicitNullability#readme</projectUrl>
     <licenseUrl>https://github.com/ulrichb/ImplicitNullability/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ulrichb/ImplicitNullability#readme</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Extends the static nullability analysis by implicit [NotNull] and [CanBeNull] annotations.</description>
+    <releaseNotes>$ReleaseNotes$</releaseNotes>
     <tags>nullability analysis implicit annotation notnull canbenull</tags>
     <dependencies>
       <dependency id="$DependencyId$" version="$DependencyVer$" />
