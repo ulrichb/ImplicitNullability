@@ -10,7 +10,7 @@
 [Oo]bj/
 
 # NuGet Packages
-packages/
+[Pp]ackages/
 *.nupkg
 
 # custom ignores
@@ -18,5 +18,3 @@ packages/
 /Build/Output/
 bin.R??/
 obj.R??/
-
-/Src/ImplicitNullability.Plugin.Tests/Packages/
