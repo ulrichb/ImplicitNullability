@@ -4,7 +4,7 @@ using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
-using ReSharperExtensionsShared;
+using ReSharperExtensionsShared.Debugging;
 
 namespace ImplicitNullability.Plugin
 {
@@ -44,9 +44,9 @@ namespace ImplicitNullability.Plugin
 #endif
 
 #if DEBUG
-            var message = DebugUtilities.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
+            var message = DebugUtility.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
 
-            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
+            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtility.FormatWithElapsed(message, stopwatch));
 #endif
             return result;
         }

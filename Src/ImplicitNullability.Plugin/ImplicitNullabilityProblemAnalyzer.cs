@@ -11,7 +11,7 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
-using ReSharperExtensionsShared;
+using ReSharperExtensionsShared.Debugging;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.Stages;
@@ -77,10 +77,10 @@ namespace ImplicitNullability.Plugin
 
 #if DEBUG
 
-            var message = DebugUtilities.FormatIncludingContext(element.DeclaredElement) +
+            var message = DebugUtility.FormatIncludingContext(element.DeclaredElement) +
                           " => [" + string.Join(", ", highlightingList.Select(x => x.GetType().Name)) + "]";
 
-            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtilities.FormatWithElapsed(message, stopwatch));
+            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtility.FormatWithElapsed(message, stopwatch));
 #endif
         }
 

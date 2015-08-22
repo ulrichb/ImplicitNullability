@@ -2,6 +2,7 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.Tree;
+using ReSharperExtensionsShared.Highlighting;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
 
@@ -26,7 +27,7 @@ namespace ImplicitNullability.Plugin.Highlighting
         "CSHARP",
         OverlapResolve = OverlapResolveKind.WARNING,
         ToolTipFormatString = Message)]
-    public class NotNullOnImplicitCanBeNullHighlighting : ImplicitNullabilityHighlightingBase
+    public class NotNullOnImplicitCanBeNullHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
     {
         public const string SeverityId = "NotNullOnImplicitCanBeNull";
 
@@ -35,7 +36,7 @@ namespace ImplicitNullability.Plugin.Highlighting
         public const string Description =
             "Warns about explicit NotNull annotations on implicit CanBeBull elements (like parameters with a null default value). " +
             "This warning is useful when using tools like Fody NullGuard, which do not process explicit NotNull annotations. " +
-            NeedsSettingNoteText;
+            SharedHighlightingTexts.NeedsSettingNoteText;
 
         public NotNullOnImplicitCanBeNullHighlighting([NotNull] ITreeNode treeNode)
             : base(treeNode, Message)

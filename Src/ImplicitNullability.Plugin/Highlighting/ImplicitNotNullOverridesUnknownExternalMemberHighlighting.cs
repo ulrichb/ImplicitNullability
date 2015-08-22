@@ -2,6 +2,7 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.Tree;
+using ReSharperExtensionsShared.Highlighting;
 #if RESHARPER8
 using JetBrains.ReSharper.Daemon;
 
@@ -26,7 +27,7 @@ namespace ImplicitNullability.Plugin.Highlighting
         "CSHARP",
         OverlapResolve = OverlapResolveKind.WARNING,
         ToolTipFormatString = Message)]
-    public class ImplicitNotNullOverridesUnknownExternalMemberHighlighting : ImplicitNullabilityHighlightingBase
+    public class ImplicitNotNullOverridesUnknownExternalMemberHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
     {
         public const string SeverityId = "ImplicitNotNullOverridesUnknownExternalMember";
         public const string Message = "Implicit NotNull overrides unknown nullability of external code, nullability should be explicit";
@@ -37,7 +38,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "Because the base member's nullability is unknown, we do not know whether a substitutability violation exists (e.g. implicit NotNull " +
             "parameter overrides base member with a unannotated parameter, which has CanBeNull semantic), we thus require the programmer to " +
             "explicitly annotate this parameter after manually checking the constraints of the base member. " +
-            NeedsSettingNoteText;
+            SharedHighlightingTexts.NeedsSettingNoteText;
 
         public ImplicitNotNullOverridesUnknownExternalMemberHighlighting([NotNull] ITreeNode treeNode)
             : base(treeNode, Message)
