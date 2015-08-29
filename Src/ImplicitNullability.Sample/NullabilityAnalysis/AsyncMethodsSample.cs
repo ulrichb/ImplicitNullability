@@ -7,13 +7,13 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 {
     public class AsyncMethodsSample
     {
-        public async Task AsyncMethod(string a)
+        public async Task Method(string a)
         {
             ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
             await Task.Delay(0);
         }
 
-        public async Task AsyncMethodWithManualNullCheck([AllowNull /* avoid method rewriting */] string a)
+        public async Task MethodWithManualNullCheck([AllowNull /* avoid method rewriting */] string a)
         {
             if (a == null)
                 throw new ArgumentNullException("a");
@@ -21,16 +21,26 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             await Task.Delay(0);
         }
 
-        public async Task CallAsyncMethodWithNullArgument()
+        public async Task CallMethodWithNullArgument()
         {
-            await AsyncMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            await Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
         }
 
-        public async Task<string> AsyncFunction([CanBeNull] string returnValue)
+        public async Task NonVirtualAsyncMethod()
         {
             await Task.Delay(0);
+        }
 
+        public virtual async Task VirtualAsyncMethod()
+        {
+            await Task.Delay(0);
+        }
+
+        public async Task<string> Function([CanBeNull] string returnValue)
+        {
+            await Task.Delay(0);
             return returnValue; // REPORTED http://youtrack.jetbrains.com/issue/RSRP-376091, requires extension point for [ItemNotNull]
         }
+
     }
 }
