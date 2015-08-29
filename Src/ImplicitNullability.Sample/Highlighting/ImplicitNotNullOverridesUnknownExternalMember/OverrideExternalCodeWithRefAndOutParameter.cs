@@ -12,7 +12,6 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
                 out string outParam)
             {
                 ReSharper.SuppressUnusedWarning(refParam);
-                refParam = "";
                 outParam = "";
             }
         }
