@@ -30,11 +30,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             // This documents that the hierarchy conflict warnings compete with AnnotationRedundancyInHierarchy
 
-            public override void Method([CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 9]*/ string a)
+            public override void Method([CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 90]*/ string a)
             {
             }
 
-            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[Implicit && RS >= 9]*/
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[Implicit && RS >= 90]*/
             public override string Function()
             {
                 return "";

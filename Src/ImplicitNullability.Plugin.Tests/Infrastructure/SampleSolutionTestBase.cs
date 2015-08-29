@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using ImplicitNullability.Plugin.Settings;
 using JetBrains.Annotations;
@@ -30,7 +31,6 @@ using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Resources.Shell;
 
 #else
-using System.Reflection;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Resources.Shell;
 
@@ -144,13 +144,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             {
                 var expression = new Expression(match.Groups["Condition"].Value);
 
-#if RESHARPER8
-                expression.Parameters["RS"] = "8";
-#elif RESHARPER91
-                expression.Parameters["RS"] = "9.1";
-#elif RESHARPER92
-                expression.Parameters["RS"] = "9.2";
-#endif
+                var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+                expression.Parameters["RS"] = int.Parse(Regex.Match(assemblyName, @"\d+$").Value);
+
                 expression.EvaluateParameter += (name, args) => { args.Result = name == definedExpectedWarningSymbol; };
 
                 if (false.Equals(expression.Evaluate()))
