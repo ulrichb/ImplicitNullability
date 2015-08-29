@@ -34,7 +34,7 @@ namespace ImplicitNullability.Sample.Tests.Highlighting.ImplicitNotNullOverrides
         {
             Action act = () => _derivedClassInOwnCodeAsExternalClass.Method(null /* no warning */);
 
-            act.ShouldThrow<ArgumentNullException>("the derived method has been rewritten altough External.Class base method is nullable")
+            act.ShouldThrow<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -43,8 +43,46 @@ namespace ImplicitNullability.Sample.Tests.Highlighting.ImplicitNotNullOverrides
         {
             Action act = () => _derivedClassInOwnCode.Method(null /*Expect:AssignNullToNotNullAttribute[Implicit]*/);
 
-            act.ShouldThrow<ArgumentNullException>("the derived method has been rewritten altough External.Class base method is nullable")
+            act.ShouldThrow<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
                 .And.ParamName.Should().Be("a");
+        }
+
+        [Test]
+        public void FunctionOnExternalClass()
+        {
+            Action act = () =>
+            {
+                var result = _externalClass.Function();
+                ReSharper.TestValueAnalysis(result, result == null); // unknown nullability
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void FunctionOnExternalClassOverriddenInInOwnCode()
+        {
+            Action act = () =>
+            {
+                var result = _derivedClassInOwnCodeAsExternalClass.Function();
+                ReSharper.TestValueAnalysis(result, result == null); // unknown nullability
+            };
+
+            act.ShouldThrow<InvalidOperationException>("derived method has been rewritten altough external base method is (unannotated) nullable")
+                .WithMessage("[NullGuard] Return value * is null.");
+        }
+
+        [Test]
+        public void FunctionOnDerivedClassInOwnCode()
+        {
+            Action act = () =>
+            {
+                var result = _derivedClassInOwnCode.Function();
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[Implicit]*/);
+            };
+
+            act.ShouldThrow<InvalidOperationException>("derived method has been rewritten altough external base method is (unannotated) nullable")
+                .WithMessage("[NullGuard] Return value * is null.");
         }
     }
 }

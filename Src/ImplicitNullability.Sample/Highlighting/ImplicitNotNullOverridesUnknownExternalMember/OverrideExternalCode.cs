@@ -16,6 +16,13 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
             }
+
+            public override string Function()
+            {
+                var baseValue = base.Function();
+                // Here we convert an unknown (possibly CanBeNull) value to an implicitly NotNull return value:
+                return baseValue;
+            }
         }
 
         public class DerivedClassInOwnCodeWithExplicitCanBeNull : External.Class
@@ -27,6 +34,13 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
 
             public override void Method([CanBeNull] string a)
             {
+            }
+
+            [CanBeNull]
+            public override string Function()
+            {
+                var baseValue = base.Function();
+                return baseValue;
             }
         }
 
@@ -40,6 +54,13 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             public override void Method([NotNull] string a)
             {
             }
+
+            [NotNull]
+            public override string Function()
+            {
+                var baseValue = base.Function();
+                return baseValue;
+            }
         }
 
         public class OverrideWithDefaultValue : External.IInterfaceWithMethod<string>
@@ -49,10 +70,15 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             }
         }
 
-        public class ValueTypes : External.IInterfaceWithMethod<DateTime>
+        public class ValueTypes : External.IInterfaceWithMethod<DateTime>, External.IFunctionWithMethod<DateTime>
         {
             public void Method(DateTime a)
             {
+            }
+
+            public DateTime Function()
+            {
+                return default(DateTime);
             }
         }
     }

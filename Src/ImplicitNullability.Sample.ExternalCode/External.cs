@@ -19,11 +19,21 @@ namespace ImplicitNullability.Sample.ExternalCode
             public virtual void Method(string a)
             {
             }
+
+            public virtual string Function()
+            {
+                return null;
+            }
         }
 
         public interface IInterfaceWithMethod<in T>
         {
             void Method(T a);
+        }
+
+        public interface IFunctionWithMethod<out T>
+        {
+            T Function();
         }
 
         public interface IInterfaceWithCanBeNullMethod

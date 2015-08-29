@@ -7,10 +7,15 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
     {
         // Note: Here we tests the "immediate super member" behavior
 
-        public abstract class Base : External.IInterfaceWithMethod<string>
+        public abstract class Base : External.IInterfaceWithMethod<string>, External.IFunctionWithMethod<string>
         {
             public virtual void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
+            }
+
+            public virtual string Function()
+            {
+                return "";
             }
         }
 
@@ -18,6 +23,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
         {
             public override void Method(string a /* no warning expected because already displayed in base class */)
             {
+            }
+
+            public override string Function()
+            {
+                return "";
             }
         }
 
