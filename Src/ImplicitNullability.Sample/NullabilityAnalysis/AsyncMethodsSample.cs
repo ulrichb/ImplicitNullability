@@ -36,11 +36,34 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
             await Task.Delay(0);
         }
 
+        [ItemNotNull]
+        public async Task<string> FunctionWithExplicitNotNull([CanBeNull] string returnValue)
+        {
+            await Task.Delay(0);
+            return returnValue /*Expect:AssignNullToNotNullAttribute[RS >= 92]*/;
+        }
+
         public async Task<string> Function([CanBeNull] string returnValue)
         {
             await Task.Delay(0);
-            return returnValue; // REPORTED http://youtrack.jetbrains.com/issue/RSRP-376091, requires extension point for [ItemNotNull]
+            return returnValue /*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/;
         }
 
+        public async Task<int?> FunctionWithNullableInt(int? returnValue)
+        {
+            await Task.Delay(0);
+            return returnValue;
+        }
+
+        [ItemNotNull]
+        public Task<string> NonAsyncTaskResultFunctionWithExplicitNotNull([CanBeNull] string returnValue)
+        {
+            return Task.FromResult(returnValue);
+        }
+
+        public Task<string> NonAsyncTaskResultFunction([CanBeNull] string returnValue)
+        {
+            return Task.FromResult(returnValue);
+        }
     }
 }

@@ -44,9 +44,7 @@ namespace ImplicitNullability.Plugin
 #endif
 
 #if DEBUG
-            var message = DebugUtility.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
-
-            Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
+            LogResult("Attribute for ", element, stopwatch, result);
 #endif
             return result;
         }
@@ -54,7 +52,30 @@ namespace ImplicitNullability.Plugin
 #if !(RESHARPER8 || RESHARPER91)
         public CodeAnnotationNullableValue? GetContainerElementNullableAttribute(IDeclaredElement element)
         {
-            return null;
+#if DEBUG
+            var stopwatch = Stopwatch.StartNew();
+#endif
+
+            CodeAnnotationNullableValue? result = null;
+
+            var method = element as IMethod;
+            if (method != null)
+                result = _implicitNullabilityProvider.AnalyzeMethodContainerElement(method);
+
+#if DEBUG
+            LogResult("Elem attr for ", element, stopwatch, result);
+#endif
+
+            return result;
+        }
+#endif
+
+#if DEBUG
+        private static void LogResult(string messagePrefix, IDeclaredElement element, Stopwatch stopwatch, CodeAnnotationNullableValue? result)
+        {
+            var resultText = (result.IsUnknown() ? "UNKNOWN" : result.ToString());
+            var message = messagePrefix + DebugUtility.FormatIncludingContext(element) + " => " + resultText;
+            Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
         }
 #endif
     }

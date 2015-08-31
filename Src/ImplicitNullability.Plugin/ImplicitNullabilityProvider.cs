@@ -50,17 +50,17 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeFunction([NotNull] IFunction method)
+        public CodeAnnotationNullableValue? AnalyzeFunction([NotNull] IFunction function)
         {
             // Methods and operators
 
             CodeAnnotationNullableValue? result = null;
 
-            if (!(method is DelegateMethod))
+            if (!(function is DelegateMethod))
             {
-                if (method.IsPartOfSolutionCode() && IsOptionEnabled(method, s => s.EnableOutParametersAndResult))
+                if (function.IsPartOfSolutionCode() && IsOptionEnabled(function, s => s.EnableOutParametersAndResult))
                 {
-                    result = GetNullabilityForType(method.ReturnType);
+                    result = GetNullabilityForType(function.ReturnType);
                 }
             }
 
@@ -78,6 +78,23 @@ namespace ImplicitNullability.Plugin
 
             return result;
         }
+
+#if !(RESHARPER8 || RESHARPER91)
+        public CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            if (method.IsPartOfSolutionCode() && IsOptionEnabled(method, s => s.EnableOutParametersAndResult))
+            {
+                var taskUnderlyingType = method.ReturnType.GetTaskUnderlyingType();
+
+                if (taskUnderlyingType != null)
+                    result = GetNullabilityForType(taskUnderlyingType);
+            }
+
+            return result;
+        }
+#endif
 
         private static CodeAnnotationNullableValue? GetNullabilityForType([NotNull] IType type)
         {

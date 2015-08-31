@@ -74,13 +74,24 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         [Test]
+        public void FunctionWithExplicitNotNull()
+        {
+            Func<Task> act = async () =>
+            {
+                var result = await _instance.FunctionWithExplicitNotNull(returnValue: "");
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92]*/);
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
         public void FunctionWithNonNullValueReturnValue()
         {
             Func<Task> act = async () =>
             {
                 var result = await _instance.Function(returnValue: "");
-                // REPORTED http://youtrack.jetbrains.com/issue/RSRP-376091, requires an extension point for [ItemNotNull]:
-                ReSharper.TestValueAnalysis(result, result == null);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92 && MOut]*/);
             };
 
             act.ShouldNotThrow();
@@ -94,6 +105,36 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             act.ShouldThrow<AggregateException>()
                 .And.InnerException.Should().BeOfType<InvalidOperationException>()
                 .Which.Message.Should().Match("[NullGuard] Return value * is null.");
+        }
+
+        [Test]
+        public void FunctionWithNullableInt()
+        {
+            Func<Task> act = async () =>
+            {
+                var result = await _instance.FunctionWithNullableInt(returnValue: null);
+                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/, result == null);
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public async void NonAsyncTaskResultFunctionWithExplicitNotNull()
+        {
+            var result = await _instance.NonAsyncTaskResultFunctionWithExplicitNotNull(null);
+            ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92]*/);
+
+            result.Should().BeNull("not NullGuard rewritten");
+        }
+
+        [Test]
+        public async void NonAsyncTaskResultFunction()
+        {
+            var result = await _instance.NonAsyncTaskResultFunction(null);
+            ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92 && MOut]*/);
+
+            result.Should().BeNull("not NullGuard rewritten");
         }
     }
 }
