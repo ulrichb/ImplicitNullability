@@ -28,8 +28,10 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void AsyncMethodWithNullArgument()
         {
+#pragma warning disable CS4014
             // Note that AsyncMethod() throws immediately => no await necessary
             Action act = () => _instance.AsyncMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+#pragma warning restore CS4014
 
             act.ShouldThrow<ArgumentNullException>("not an AggregateException because the outermost (rewritten) async method throwed")
                 .And.ParamName.Should().Be("a");

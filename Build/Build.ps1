@@ -13,7 +13,7 @@ Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference
 $BuildOutputPath = "Build\Output"
 $SolutionFilePath = "ImplicitNullability.sln"
 $AssemblyVersionFilePath = "Src\ImplicitNullability.Plugin\Properties\AssemblyInfo.cs"
-$MSBuildPath = "${env:ProgramFiles(x86)}\MSBuild\12.0\Bin\MSBuild.exe"
+$MSBuildPath = "${env:ProgramFiles(x86)}\MSBuild\14.0\Bin\MSBuild.exe"
 $NUnitExecutable = "nunit-console-x86.exe"
 $NUnitTestAssemblyPaths = @(
     "Src\ImplicitNullability.Plugin.Tests\bin.R82\$Configuration\ImplicitNullability.Plugin.Tests.R82.dll",
