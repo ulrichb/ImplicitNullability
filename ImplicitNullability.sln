@@ -14,21 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R82", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R82.csproj", "{3C27B37B-9889-48E9-A61D-D129CB14D527}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4998CFBC-6ECF-4D29-954C-CF020091308E}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.ExternalCode", "Src\ImplicitNullability.Sample.ExternalCode\ImplicitNullability.Sample.ExternalCode.csproj", "{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71E8A124-D55F-464E-AAB2-82C8C02D9A38}"
-	ProjectSection(SolutionItems) = preProject
-		DEVELOPING.md = DEVELOPING.md
-		History.md = History.md
-		LICENSE = LICENSE
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R91", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R91.csproj", "{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}"
 EndProject
@@ -39,14 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{67859B65-179
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R91", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R91.csproj", "{86C170AA-FAE5-4ABF-BE26-FBBE392315DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{47C5E8C5-AA9B-4923-8009-C09808A1366B}"
-	ProjectSection(SolutionItems) = preProject
-		Build\Build.ps1 = Build\Build.ps1
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R92", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R92.csproj", "{AF0ADEF1-3538-4176-A559-93429A15B4DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R92", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R92.csproj", "{CCE08E5C-767A-42A4-8915-080331158865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionItems", "SolutionItems.csproj", "{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +73,8 @@ Global
 		{CCE08E5C-767A-42A4-8915-080331158865}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCE08E5C-767A-42A4-8915-080331158865}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCE08E5C-767A-42A4-8915-080331158865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
