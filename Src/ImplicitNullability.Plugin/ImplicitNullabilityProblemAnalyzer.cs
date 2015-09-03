@@ -43,7 +43,7 @@ namespace ImplicitNullability.Plugin
             CodeAnnotationsCache codeAnnotationsCache,
             ImplicitNullabilityProvider implicitNullabilityProvider)
         {
-            Logger.LogMessage(LoggingLevel.INFO, ".ctor");
+            Logger.Verbose(".ctor");
 
             _codeAnnotationsCache = codeAnnotationsCache;
             _implicitNullabilityProvider = implicitNullabilityProvider;
@@ -80,7 +80,7 @@ namespace ImplicitNullability.Plugin
             var message = DebugUtility.FormatIncludingContext(element.DeclaredElement) +
                           " => [" + string.Join(", ", highlightingList.Select(x => x.GetType().Name)) + "]";
 
-            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtility.FormatWithElapsed(message, stopwatch));
+            Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
 #endif
         }
 

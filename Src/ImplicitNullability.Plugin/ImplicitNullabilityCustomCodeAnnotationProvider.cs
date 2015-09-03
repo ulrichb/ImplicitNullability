@@ -17,7 +17,7 @@ namespace ImplicitNullability.Plugin
 
         public ImplicitNullabilityCustomCodeAnnotationProvider(ImplicitNullabilityProvider implicitNullabilityProvider)
         {
-            Logger.LogMessage(LoggingLevel.INFO, ".ctor");
+            Logger.Verbose(".ctor");
             _implicitNullabilityProvider = implicitNullabilityProvider;
         }
 
@@ -46,7 +46,7 @@ namespace ImplicitNullability.Plugin
 #if DEBUG
             var message = DebugUtility.FormatIncludingContext(element) + " => " + (result.IsUnknown() ? "<unknown>" : result.ToString());
 
-            Logger.LogMessage(LoggingLevel.VERBOSE, DebugUtility.FormatWithElapsed(message, stopwatch));
+            Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
 #endif
             return result;
         }

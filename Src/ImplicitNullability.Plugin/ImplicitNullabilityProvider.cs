@@ -143,7 +143,7 @@ namespace ImplicitNullability.Plugin
                                             ", IsDefaultType: " + parameter.GetDefaultValue().IsDefaultType +
                                             ", DefaultTypeValue.IsValueType(): " + parameter.GetDefaultValue().DefaultTypeValue.IsValueType();
 
-                Logger.LogMessage(LoggingLevel.VERBOSE, optionalParameterText);
+                Logger.Verbose(optionalParameterText);
             }
 #endif
 
