@@ -9,6 +9,7 @@ The basic idea of this extension is to change the behavior of ReSharper's [stati
 
 With enabled _Implicit Nullability_ for specific, [configurable](#configuration), syntax elements, the following rules apply.
 
+<!-- duplicated in the options page -->
  * Reference types are by default implicitly `[NotNull]`.
  * Their nullability can be overridden with an explicit `[CanBeNull]` attribute. 
  * Optional method parameters with a `null` default value are implicitly `[CanBeNull]`.
@@ -60,7 +61,6 @@ With enabled _Implicit Nullability_ this bug would have been detected by ReSharp
  1. ReSharper would warn about returning `null` in `GetCommand()` because this method would be implicitly annotated as `[NotNull]`.
  2. This warning would be solved by the programmer by adding `[CanBeNull]` to `GetCommand()`.
  3. As a consequence of the `[CanBeNull]` attribute, ReSharper would now warn about the potential `NullReferenceException` in the `command​.Equals​("Hello")` call in `Main()`.
-<!-- duplicated in the options page -->
 
 ### Improves documentation
 
