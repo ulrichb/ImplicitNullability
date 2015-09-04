@@ -5,4 +5,9 @@
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8180D39E8F16764B90221B1534307E85/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8180D39E8F16764B90221B1534307E85/RelativePriority/@EntryValue">1</s:Double>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=ConvertClosureToMethodGroup/@EntryIndexedValue">DO_NOT_SHOW</s:String>
+	<s:Boolean x:Key="/Default/RunConfigs/Config/=A63227FB55A36F4595680B78CFBF574D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/RunConfigs/Config/=A63227FB55A36F4595680B78CFBF574D/DefaultAction/@EntryValue">run</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=A63227FB55A36F4595680B78CFBF574D/Name/@EntryValue">ImplicitNullability.Plugin.R92</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=A63227FB55A36F4595680B78CFBF574D/ProjectGuid/@EntryValue">F1DE0AAF38357641A55993429A15B4DD</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=A63227FB55A36F4595680B78CFBF574D/Type/@EntryValue">project</s:String>
 </wpf:ResourceDictionary>
