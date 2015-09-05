@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
@@ -15,6 +16,12 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
             [CanBeNull]
             string FunctionWithCanBeNullInInterfaceImplicitNotNullInDerived();
+
+            [ItemCanBeNull]
+            Task<string> TaskFunctionWithCanBeNullInInterfaceExplicitNotNullInDerived();
+
+            [ItemCanBeNull]
+            Task<string> TaskFunctionWithCanBeNullInInterfaceImplicitNotNullInDerived();
         }
 
         public class Implementation : IInterface
@@ -38,6 +45,19 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
             public string FunctionWithCanBeNullInInterfaceImplicitNotNullInDerived()
             {
+                return "";
+            }
+
+            [ItemNotNull]
+            public async Task<string> TaskFunctionWithCanBeNullInInterfaceExplicitNotNullInDerived()
+            {
+                await Task.Delay(0);
+                return "";
+            }
+
+            public async Task<string> TaskFunctionWithCanBeNullInInterfaceImplicitNotNullInDerived()
+            {
+                await Task.Delay(0);
                 return "";
             }
         }

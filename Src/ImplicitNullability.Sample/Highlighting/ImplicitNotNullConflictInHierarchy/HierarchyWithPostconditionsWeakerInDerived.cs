@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
@@ -14,6 +15,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             string FunctionWithExplicitNotNullInInterfaceCanBeNullInDerived();
 
             string FunctionWithImplicitNotNullInInterfaceCanBeNullInDerived();
+
+            [ItemNotNull]
+            Task<string> TaskFunctionWithExplicitNotNullInInterfaceCanBeNullInDerived();
+
+            Task<string> TaskFunctionWithImplicitNotNullInInterfaceCanBeNullInDerived();
         }
 
         public class Implementation : IInterface
@@ -39,6 +45,20 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
             public string FunctionWithImplicitNotNullInInterfaceCanBeNullInDerived()
             {
+                return null;
+            }
+
+            [ItemCanBeNull] // REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-447891
+            public async Task<string> TaskFunctionWithExplicitNotNullInInterfaceCanBeNullInDerived()
+            {
+                await Task.Delay(0);
+                return null;
+            }
+
+            [ItemCanBeNull] // REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-447891 may also fix this issue 
+            public async Task<string> TaskFunctionWithImplicitNotNullInInterfaceCanBeNullInDerived()
+            {
+                await Task.Delay(0);
                 return null;
             }
         }
