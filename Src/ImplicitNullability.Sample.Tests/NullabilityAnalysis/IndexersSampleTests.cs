@@ -64,6 +64,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             act.ShouldNotThrow();
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private void IgnoreValue(object value)
         {
         }

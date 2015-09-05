@@ -42,6 +42,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             public void Method<T>(string a /* no warning */)
             {
+                ReSharper.SuppressUnusedWarning(typeof (T));
             }
         }
     }
