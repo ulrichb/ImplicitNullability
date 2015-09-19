@@ -61,6 +61,7 @@
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeTests.cs" />
     <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\NotNullOnImplicitCanBeNullSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\DynamicInvocationTests.cs" />
+    <Compile Include="NullabilityAnalysis\ExternalCodeExclusionTests.cs" />
     <Compile Include="NullabilityAnalysis\MethodsOutputSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\MethodsRefParameterSampleTests.cs" />
     <Compile Include="NullabilityAnalysis\NonPublicMethodsSampleTests.cs" />

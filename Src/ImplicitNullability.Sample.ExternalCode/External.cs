@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.ExternalCode
@@ -8,6 +9,8 @@ namespace ImplicitNullability.Sample.ExternalCode
         public delegate void SomeDelegate(string a);
 
         public delegate void SomeNotNullDelegate([NotNull] string a);
+
+        public delegate string SomeFunctionDelegate();
 
         public class Class
         {
@@ -22,6 +25,12 @@ namespace ImplicitNullability.Sample.ExternalCode
 
             public virtual string Function()
             {
+                return null;
+            }
+
+            public virtual async Task<string> AsyncFunction()
+            {
+                await Task.Delay(0);
                 return null;
             }
         }
