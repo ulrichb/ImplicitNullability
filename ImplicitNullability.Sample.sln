@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.Tests", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Sample.Tests.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.NonImplicit", "Src\ImplicitNullability.Sample.NonImplicit\ImplicitNullability.Sample.NonImplicit.csproj", "{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{456A6456-5F34-4B64-9751-135686CE3A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{456A6456-5F34-4B64-9751-135686CE3A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456A6456-5F34-4B64-9751-135686CE3A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

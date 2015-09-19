@@ -1,6 +1,7 @@
 using System;
 using FluentAssertions;
 using ImplicitNullability.Sample.NullabilityAnalysis;
+using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
@@ -71,7 +72,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         }
 
         // ReSharper disable once UnusedParameter.Local
-        private void IgnoreValue(object value)
+        private void IgnoreValue([CanBeNull] object value)
         {
         }
     }

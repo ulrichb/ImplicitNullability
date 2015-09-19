@@ -42,6 +42,10 @@
     <Reference Include="ImplicitNullability.Sample.ExternalCode">
       <HintPath>..\ImplicitNullability.Sample.ExternalCode\bin\ImplicitNullability.Sample.ExternalCode.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=9.2.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.9.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>

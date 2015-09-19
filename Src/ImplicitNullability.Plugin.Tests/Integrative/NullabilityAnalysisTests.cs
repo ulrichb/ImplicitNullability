@@ -4,12 +4,7 @@ using System.Linq;
 using ImplicitNullability.Plugin.Settings;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Application.Settings;
-using JetBrains.Util;
 using NUnit.Framework;
-#if !RESHARPER8
-using JetBrains.ProjectModel;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
 {
@@ -26,6 +21,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                     Assert.That(issueCount, Is.GreaterThanOrEqualTo(70));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("NonImplicitNullabilitySettingsSample.cs"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSample.cs"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
                 },
@@ -42,6 +38,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
                     Assert.That(issueCount, Is.GreaterThanOrEqualTo(25));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsRefParameterSample.cs"));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("NonImplicitNullabilitySettingsSample.cs"));
                 },
                 "MRef");
         }
@@ -57,6 +54,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                     Assert.That(issueCount, Is.GreaterThanOrEqualTo(25));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("NonImplicitNullabilitySettingsSample.cs"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSample.cs"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
                 },
@@ -74,7 +72,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         {
             UseSampleSolution(solution =>
             {
-                EnableImplicitNullabilitySetting(solution.GetProjectByName("ImplicitNullability.Sample").NotNull(), settingsStore =>
+                EnableImplicitNullabilitySetting(solution, settingsStore =>
                 {
                     settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, false);
                     settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableRefParameters, false);
@@ -84,8 +82,8 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
                 var projectFilesToAnalyze = solution.GetAllProjectFilesWithPathPrefix("NullabilityAnalysis\\");
 
-                var issues =
-                    TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetNullabilityAnalysisHighlightingTypes(), expectedWarningSymbol);
+                var highlightingTypesToAnalyze = GetNullabilityAnalysisHighlightingTypes();
+                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, highlightingTypesToAnalyze, expectedWarningSymbol);
 
                 assert(issues.Count, issues.Select(x => x.GetSourceFile().Name).ToList());
             });

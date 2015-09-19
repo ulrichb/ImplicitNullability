@@ -40,13 +40,15 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
     public abstract class SampleSolutionTestBase : BaseTestWithExistingSolution
     {
-        protected void UseSampleSolution(Action<ISolution> action)
+        protected void UseSampleSolution(Action<ISolution> testAction)
         {
             var solutionFilePath = FileSystemPath.Parse(TestDataPathUtility.GetPathRelativeToSolution("ImplicitNullability.Sample.sln"));
 
-            DoTestSolution(
-                solutionFilePath,
-                (lifetime, solution) => { action(solution); });
+            DoTestSolution(solutionFilePath, (lifetime, solution) => { testAction(solution); });
+
+            // Close the solution to isolate all solution-level settings changes (this has a small performance hit because normally the
+            // solution is only "cleaned" at the end of DoTestSolution())
+            RunGuarded(() => CloseSolution());
         }
 
         protected IList<IIssue> TestExpectedInspectionComments(
@@ -115,21 +117,32 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             };
         }
 
-        protected static void EnableImplicitNullabilitySetting([NotNull] IProject project, Action<IContextBoundSettingsStore> additionalChanges = null)
+        /// <summary>
+        /// Enable implicit nullability for the *whole solution* (otherwise the IsPartOfSolutionCode() checks in 
+        /// <see cref="ImplicitNullabilityProvider"/> wouldn't be tested, as project-level settings wouldn't include external assembly
+        /// code elements). Further, specially disable implicit nullability for the 'ImplicitNullability.Sample.NonImplicit' project.
+        /// </summary>
+        protected static void EnableImplicitNullabilitySetting(
+            [NotNull] ISolution sampleSolution, Action<IContextBoundSettingsStore> additionalSolutionChanges = null)
         {
-            // Enable the setting on project level to test the correct "ToDataContext" binding of the settings. Unfortunately settings stored in
-            // the ".csproj.DotSettings" file aren't evaluated (see https://devnet.jetbrains.com/message/5527647).
+            // We need to change the settings here by code, because the settings stored in the .DotSettings files aren't 
+            // evaluated (see https://devnet.jetbrains.com/message/5527647).
+            // Note that the settings changes are cleaned in UseSampleSolution() => no reset mechanism necessary.
 
-            // Note that as we bind the settings changes to a project within the solution, this seems to isolate the changes => no reset 
-            // mechanism necessary.
-            var settingsStore = Shell.Instance.GetComponent<SettingsStore>()
-                .BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(project.ToDataContext()));
+            var solutionSettings = Shell.Instance.GetComponent<SettingsStore>()
+                .BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(sampleSolution.ToDataContext()));
 
-            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False, "fixate default value");
-            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
+            Assert.That(solutionSettings.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False, "fixate default value");
+            solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
 
-            if (additionalChanges != null)
-                additionalChanges(settingsStore);
+            if (additionalSolutionChanges != null)
+                additionalSolutionChanges(solutionSettings);
+
+            var nonImplicitProject = sampleSolution.GetProjectByName("ImplicitNullability.Sample.NonImplicit").NotNull();
+            var nonImplicitProjectSettings = Shell.Instance.GetComponent<SettingsStore>()
+                .BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(nonImplicitProject.ToDataContext()));
+
+            nonImplicitProjectSettings.SetValue((ImplicitNullabilitySettings s) => s.Enabled, false);
         }
 
         [CanBeNull]
