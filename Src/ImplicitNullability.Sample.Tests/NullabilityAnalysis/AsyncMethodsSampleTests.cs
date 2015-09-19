@@ -78,7 +78,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Func<Task> act = async () =>
             {
-                var result = await _instance.FunctionWithExplicitNotNull(returnValue: "");
+                var result = await _instance.FunctionWithExplicitItemNotNull(returnValue: "");
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92]*/);
             };
 
@@ -105,6 +105,14 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             act.ShouldThrow<AggregateException>()
                 .And.InnerException.Should().BeOfType<InvalidOperationException>()
                 .Which.Message.Should().Match("[NullGuard] Return value * is null.");
+        }
+
+        [Test]
+        public void FunctionWithItemCanBeNull()
+        {
+            Func<Task> act = async () => await _instance.FunctionWithItemCanBeNull(returnValue: null);
+
+            act.ShouldNotThrow();
         }
 
         [Test]

@@ -37,7 +37,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         }
 
         [ItemNotNull]
-        public async Task<string> FunctionWithExplicitNotNull([CanBeNull] string returnValue)
+        public async Task<string> FunctionWithExplicitItemNotNull([CanBeNull] string returnValue)
         {
             await Task.Delay(0);
             return returnValue /*Expect:AssignNullToNotNullAttribute[RS >= 92]*/;
@@ -47,6 +47,14 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         {
             await Task.Delay(0);
             return returnValue /*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/;
+        }
+
+        [ItemCanBeNull]
+        [return: AllowNull] // REPORT? NullGuard doesn't support [ItemCanBeNull]
+        public async Task<string> FunctionWithItemCanBeNull([CanBeNull] string returnValue)
+        {
+            await Task.Delay(0);
+            return returnValue;
         }
 
         public async Task<int?> FunctionWithNullableInt(int? returnValue)
