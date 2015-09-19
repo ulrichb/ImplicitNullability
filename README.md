@@ -2,7 +2,10 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7st3drnudnk7lplu/branch/master?svg=true)](https://ci.appveyor.com/project/ulrichb/implicitnullability/branch/master)
 
+[ReSharper Gallery Page](https://resharper-plugins.jetbrains.com/packages/ReSharper.ImplicitNullability/)
+
 ## Idea
+
 The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` or `[CanBeNull]` attribute. For example, reference types in method parameters are by default `[NotNull]` (→ they need an opt-in `[CanBeNull]` to become nullable).
 
 ![Code Sample](/Doc/Sample.png)
@@ -33,6 +36,10 @@ public string M([NotNull] string a, [CanBeNull] string b, [CanBeNull] string c =
 ### `[NotNull]` as default
 
 Without this extension the default nullability value is "unknown" which means that ReSharper excludes these elements for its nullability analysis. As a result of the changed default nullability of this extension we have to place `[CanBeNull]` annotations only for _specific_ code elements (e.g. a reference type parameter where it should be allowed to pass `null` as argument) and don't need explicit annotations for the majority of cases (in code bases which try to reduce passing `null` references to a minimum).
+
+### Async method return types (requires ReSharper 9.2)
+
+ReSharper 9.2 [introduced](https://youtrack.jetbrains.com/issue/RSRP-376091) support for nullability analysis for `async` (`Task<T>` return typed) methods. With enabled _Implicit Nullability_ for method return values, `Task<T>` return typed methods also become implicitly `[ItemNotNull]` (ReSharper uses this attribute to refer to the _value_ of `Task<T>`). For nullable `Task<T>` return values, this can be overridden with `[ItemCanBeNull]`.
 
 ### Improves static analysis quality
 
