@@ -11,7 +11,7 @@ using ReSharperExtensionsShared.Highlighting;
     ImplicitNotNullConflictInHierarchyHighlighting.Message,
     ImplicitNotNullConflictInHierarchyHighlighting.Description,
     Severity.WARNING,
-    solutionAnalysisRequired: false)]
+    /*SolutionAnalysisRequired:*/ false)]
 
 namespace ImplicitNullability.Plugin.Highlighting
 {
