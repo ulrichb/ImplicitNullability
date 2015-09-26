@@ -58,19 +58,19 @@ namespace ImplicitNullability.Plugin
             var highlightingList = new List<IHighlighting>();
 
             var parameterDeclaration = element as IParameterDeclaration;
-            if (parameterDeclaration != null && parameterDeclaration.DeclaredElement != null)
+            if (parameterDeclaration?.DeclaredElement != null)
                 highlightingList.AddRange(HandleParameter(parameterDeclaration, parameterDeclaration.DeclaredElement));
 
             var methodDeclaration = element as IMethodDeclaration;
-            if (methodDeclaration != null && methodDeclaration.DeclaredElement != null)
+            if (methodDeclaration?.DeclaredElement != null)
                 highlightingList.AddRange(HandleFunction(methodDeclaration.NameIdentifier, methodDeclaration.DeclaredElement));
 
             var operatorDeclaration = element as IOperatorDeclaration;
-            if (operatorDeclaration != null && operatorDeclaration.DeclaredElement != null)
+            if (operatorDeclaration?.DeclaredElement != null)
                 highlightingList.AddRange(HandleFunction(operatorDeclaration.OperatorKeyword, operatorDeclaration.DeclaredElement));
 
             var delegateDeclaration = element as IDelegateDeclaration;
-            if (delegateDeclaration != null && delegateDeclaration.DeclaredElement != null)
+            if (delegateDeclaration?.DeclaredElement != null)
                 highlightingList.AddRange(HandleDelegate(delegateDeclaration, delegateDeclaration.DeclaredElement));
 
             highlightingList.ForEach(x => consumer.AddHighlighting(x));
