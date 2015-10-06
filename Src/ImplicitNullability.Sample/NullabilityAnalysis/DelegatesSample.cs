@@ -61,14 +61,14 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public static SomeFunctionDelegateWithNotNull GetSomeFunctionDelegateWithNotNull()
         {
-            return () => null /*Expect:AssignNullToNotNullAttribute[RS >= 90]*/;
+            return () => null /*Expect:AssignNullToNotNullAttribute*/;
         }
 
         public delegate string SomeFunctionDelegate();
 
         public static SomeFunctionDelegate GetSomeFunctionDelegate()
         {
-            return () => null /*Expect:AssignNullToNotNullAttribute[RS >= 90 && MOut]*/;
+            return () => null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         public static SomeFunctionDelegate GetSomeFunctionDelegateToNamedMethod()

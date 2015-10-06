@@ -1,12 +1,5 @@
-﻿using System;
-using JetBrains.Application.Settings;
-#if RESHARPER8
-using JetBrains.ReSharper.Settings;
-
-#else
+﻿using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Resources.Settings;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Settings
 {

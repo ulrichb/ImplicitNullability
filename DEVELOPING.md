@@ -34,13 +34,6 @@ Therefore, the user is responsible for checking nullability constraints when cre
 
 The ReSharper integration tests don't use the "gold file approach" of the ReSharper SDK, but use annotations directly in the source files for the expectations (e.g. `str == null /*Expect:ConditionIsAlwaysTrueOrFalse*/`), which are matched with the actual inspection warnings when running the analysis during test execution.
 
-## CSS directory
-
-The CSS directory is a copy of R# 8.2's bin directory, because it is necessary for aspx/cshtml tests and 
-it's not included in the SDK package (see http://youtrack.jetbrains.com/issue/RSRP-416928).
-
-Starting with the R# 9.0 SDK this could be removed again.
-
 ## ExternalAnnotations directory
 
 Includes specific external annotations, e.g. for TemplateControl.Eval(), because the external annotation files 

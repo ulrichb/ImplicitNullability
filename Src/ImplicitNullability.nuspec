@@ -12,10 +12,10 @@
     <releaseNotes>$ReleaseNotes$</releaseNotes>
     <tags>nullability analysis implicit annotation notnull canbenull</tags>
     <dependencies>
-      <dependency id="$DependencyId$" version="$DependencyVer$" />
+      <dependency id="Wave" version="$DependencyVer$" />
     </dependencies>
   </metadata>
   <files>
-    <file src="ImplicitNullability.Plugin\$BinDirInclude$\$Configuration$\ImplicitNullability.Plugin.*" target="$TargetDir$" />
+    <file src="ImplicitNullability.Plugin\$BinDirInclude$\$Configuration$\ImplicitNullability.Plugin.*" target="dotFiles" />
   </files>
 </package>

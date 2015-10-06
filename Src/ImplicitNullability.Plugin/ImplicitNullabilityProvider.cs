@@ -79,7 +79,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-#if !(RESHARPER8 || RESHARPER91)
+#if !(RESHARPER91)
         public CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
         {
             CodeAnnotationNullableValue? result = null;

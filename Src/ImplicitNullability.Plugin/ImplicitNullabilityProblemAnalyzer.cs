@@ -6,20 +6,13 @@ using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Daemon.CSharp.Stages;
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
+using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
 using ReSharperExtensionsShared.Debugging;
-#if RESHARPER8
-using JetBrains.ReSharper.Daemon;
-using JetBrains.ReSharper.Daemon.Stages;
-
-#else
-using JetBrains.ReSharper.Feature.Services.Daemon;
-
-#endif
 
 namespace ImplicitNullability.Plugin
 {

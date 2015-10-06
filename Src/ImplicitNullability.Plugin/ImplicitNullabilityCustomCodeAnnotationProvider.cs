@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
@@ -37,11 +36,9 @@ namespace ImplicitNullability.Plugin
             if (function != null)
                 result = _implicitNullabilityProvider.AnalyzeFunction(function);
 
-#if !RESHARPER8
             var @delegate = element as IDelegate;
             if (@delegate != null)
                 result = _implicitNullabilityProvider.AnalyzeDelegate(@delegate);
-#endif
 
 #if DEBUG
             LogResult("Attribute for ", element, stopwatch, result);
@@ -49,7 +46,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-#if !(RESHARPER8 || RESHARPER91)
+#if !(RESHARPER91)
         public CodeAnnotationNullableValue? GetContainerElementNullableAttribute(IDeclaredElement element)
         {
 #if DEBUG

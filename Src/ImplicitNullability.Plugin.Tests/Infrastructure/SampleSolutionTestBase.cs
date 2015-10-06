@@ -20,12 +20,7 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NCalc;
 using NUnit.Framework;
-#if RESHARPER8
-using JetBrains.Application;
-using JetBrains.ReSharper.Daemon;
-using JetBrains.Extension;
-
-#elif RESHARPER91
+#if RESHARPER91
 using JetBrains.Extension;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Resources.Shell;
@@ -61,7 +56,8 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
             var expectedWarningComments =
                 (from sourceFile in sourceFilesToAnalyze
-                    from commentNode in sourceFile.GetPsiFiles<CSharpLanguage>().Single().GetAllCommentNodes()
+                    let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
+                    from commentNode in rootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
                     let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbol)
                     where expectedWarningId != null
                     select
@@ -110,10 +106,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 typeof (ConditionIsAlwaysTrueOrFalseWarning),
                 typeof (PossibleNullReferenceExceptionWarning),
                 typeof (PossibleInvalidOperationExceptionWarning),
-#if !RESHARPER8
-                // This warning has been renamed in R# 9.0. We ignore R# 8.2 in the assertions to keep them simpler.
                 typeof (AnnotationRedundancyInHierarchyWarning)
-#endif
             };
         }
 
@@ -182,11 +175,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             Assert.IsTrue(
                 CollectInspectionResults.Do(
                     solution,
-# if RESHARPER8
-                    sourceFiles.Select(x => x.ToProjectFile().NotNull()).ToList(),
-#else
                     sourceFiles,
-#endif
                     SimpleTaskExecutor.Instance,
                     x =>
                     {

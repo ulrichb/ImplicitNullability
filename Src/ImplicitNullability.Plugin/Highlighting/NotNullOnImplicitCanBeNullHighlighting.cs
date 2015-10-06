@@ -1,15 +1,8 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
-using System;
 using JetBrains.Annotations;
+using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
-#if RESHARPER8
-using JetBrains.ReSharper.Daemon;
-
-#else
-using JetBrains.ReSharper.Feature.Services.Daemon;
-
-#endif
 
 [assembly: RegisterConfigurableSeverity(
     NotNullOnImplicitCanBeNullHighlighting.SeverityId,

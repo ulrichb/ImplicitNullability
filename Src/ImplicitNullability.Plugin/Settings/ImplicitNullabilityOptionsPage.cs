@@ -1,19 +1,12 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 using JetBrains.Application.Settings;
 using JetBrains.DataFlow;
+using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
 using JetBrains.UI.Application;
 using JetBrains.UI.Options;
 using JetBrains.UI.Options.Helpers;
 using JetBrains.UI.Resources;
-#if RESHARPER8
-using JetBrains.ReSharper.Features.Environment.Options.Inspections;
-
-#else
-using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Settings
 {

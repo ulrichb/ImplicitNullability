@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<definitions xmlns="urn:schemas-jetbrains-com:css-xml">
-  <browser id="IE" name="Internet Explorer" prefix="-ms-" icon="IE.ico"/>
-  <browser id="C" name="Chrome" prefix="-webkit-" icon="Chrome.ico"/>
-  <browser id="S" name="Safari" prefix="-webkit-" icon="Safari.ico"/>
-  <browser id="FF" name="Firefox" prefix="-moz-" icon="Firefox.ico"/>
-  <browser id="O" name="Opera" prefix="-o-" icon="Opera.ico"/>
-</definitions>
