@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchyHighlighting.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMemberHighlighting.cs" />
+    <Compile Include="Highlighting\LoooolHighlighting.cs" />
     <Compile Include="Highlighting\SharedHighlightingTexts.cs" />
     <Compile Include="Highlighting\NotNullOnImplicitCanBeNullHighlighting.cs" />
     <Compile Include="ZoneMarker.cs" />
