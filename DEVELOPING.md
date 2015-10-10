@@ -29,20 +29,29 @@ Note that ReSharper does not check nullability constraints when binding methods 
 
 Therefore, the user is responsible for checking nullability constraints when creating delegates bound to methods.
 
+# ImplicitNullability.Plugin.Tests project
 
-# ImplicitNullability.Plugin.Tests integration tests
+The ReSharper "integrative" tests don't use the "gold file approach" of the ReSharper SDK, but use annotations directly in the source files for the expectations (e.g. `/*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/`). These expectations are matched with the actual inspection warnings when running the analysis during test execution.
 
-The ReSharper integration tests don't use the "gold file approach" of the ReSharper SDK, but use annotations directly in the source files for the expectations (e.g. `str == null /*Expect:ConditionIsAlwaysTrueOrFalse*/`), which are matched with the actual inspection warnings when running the analysis during test execution.
+The advantages of this approach:
+* The static analysis expectations are directly next to the "runtime analysis" expectations (see `ImplicitNullability.Sample.Tests` project).
+* Conditional expectations.
+* Expectations also visible during manual tests.
+* Better editing experience (no duplication of the test data) and better readability (less indirections).
 
 ## ExternalAnnotations directory
 
 Includes specific external annotations, e.g. for TemplateControl.Eval(), because the external annotation files 
 aren't included in the SDK package.
 
-# ReSharper 9.0 local development
+# Local development / manual testing
 
-Install ReSharper into an `Exp` VisualStudio instance and copy the following property into the `.csproj.user`.
+1. Install ReSharper into an `Exp` VisualStudio instance.
+2. Install the extension package (`Build.ps1` artifact).
+3. Copy the following property into `ImplicitNullability.Plugin.RXX.csproj.user`.
 
-    <PropertyGroup>
-      <HostFullIdentifier>ReSharperPlatformVs12Exp</HostFullIdentifier>
-    </PropertyGroup>
+```xml
+<PropertyGroup>
+  <HostFullIdentifier>ReSharperPlatformVs(version of VS)Exp</HostFullIdentifier>
+</PropertyGroup>
+```
