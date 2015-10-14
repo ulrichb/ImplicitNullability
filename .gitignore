@@ -1,6 +1,7 @@
 *.tmp
 
 # User-specific files
+.vs/
 *.suo
 *.user
 *.sln.docstates
