@@ -11,7 +11,7 @@
     <AssemblyName>ImplicitNullability.Plugin.R91</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>obj.R91\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\R91\</BaseIntermediateOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <NuGetPackageImportStamp>bd72ae56</NuGetPackageImportStamp>
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin.R91\Debug\</OutputPath>
+    <OutputPath>bin\R91\Debug\</OutputPath>
     <DefineConstants>JET_MODE_ASSERT;DEBUG;TRACE;RESHARPER91</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin.R91\Release\</OutputPath>
+    <OutputPath>bin\R91\Release\</OutputPath>
     <DefineConstants>TRACE;RESHARPER91</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

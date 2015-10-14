@@ -16,5 +16,3 @@
 # custom ignores
 
 /Build/Output/
-bin.R??/
-obj.R??/
