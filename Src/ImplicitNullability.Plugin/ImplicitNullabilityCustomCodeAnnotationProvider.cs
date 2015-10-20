@@ -12,6 +12,10 @@ using System.Collections.Generic;
 
 namespace ImplicitNullability.Plugin
 {
+    /// <summary>
+    /// An implementation of ReSharper's <see cref="ICustomCodeAnnotationProvider"/> extension point which uses
+    /// the <see cref="ImplicitNullabilityProvider"/> to implement the Implicit Nullability rules.
+    /// </summary>
     [PsiComponent]
     public class ImplicitNullabilityCustomCodeAnnotationProvider : ICustomCodeAnnotationProvider
     {
