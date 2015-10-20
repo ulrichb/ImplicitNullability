@@ -1,85 +1,116 @@
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Windows.Forms;
-using JetBrains.Application.Settings;
+using System.Linq.Expressions;
+using JetBrains.Annotations;
 using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
-using JetBrains.UI.Application;
+using JetBrains.UI;
+using JetBrains.UI.Extensions.Commands;
 using JetBrains.UI.Options;
-using JetBrains.UI.Options.Helpers;
+using JetBrains.UI.Options.OptionsDialog2.SimpleOptions;
+using JetBrains.UI.Options.OptionsDialog2.SimpleOptions.ViewModel;
 using JetBrains.UI.Resources;
+using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin.Settings
 {
     [ExcludeFromCodeCoverage /* options page user interface is tested manually */]
-    [OptionsPage(
-        PageId,
-        PageTitle,
-        typeof (CommonThemedIcons.Bulb),
-        ParentId = CodeInspectionPage.PID)]
-    public class ImplicitNullabilityOptionsPage : AStackPanelOptionsPage
+    [OptionsPage(PageId, PageTitle, typeof (CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]
+    public class ImplicitNullabilityOptionsPage : SimpleOptionsPage
     {
-        // IDEA: After dropping R# 8.2 support: switch to SimpleOptionsPage (would automatically implement ISearchablePage)
-
+        private readonly Clipboard _clipboard;
         public const string PageTitle = "Implicit Nullability";
         private const string PageId = "ImplicitNullabilityOptions";
 
-        private const int LeftMargin = 3; // pixels
-        private const int VerticalSpace = 8; // pixels
+        private readonly BoolOptionViewModel _enableInputParametersOption;
+        private readonly BoolOptionViewModel _enableRefParametersOption;
+        private readonly BoolOptionViewModel _enableOutParametersAndResultOption;
 
-        private readonly Lifetime _lifetime;
-        private readonly OptionsSettingsSmartContext _settings;
-
-        public ImplicitNullabilityOptionsPage(Lifetime lifetime, IUIApplication environment, OptionsSettingsSmartContext settings)
-            : base(lifetime, environment, PageId)
+        public ImplicitNullabilityOptionsPage(Lifetime lifetime, OptionsSettingsSmartContext optionsSettingsSmartContext, Clipboard clipboard)
+            : base(lifetime, optionsSettingsSmartContext)
         {
-            _lifetime = lifetime;
-            _settings = settings;
-            InitControls();
-        }
+            _clipboard = clipboard;
 
-        private void InitControls()
-        {
-            var enabledCheckBox = new Controls.CheckBox {Text = "Enabled", AutoSize = true};
-            enabledCheckBox.Margin += new Padding(LeftMargin, VerticalSpace, 0, 0);
-            Controls.Add(enabledCheckBox);
+            var enabledOption = AddBoolOption((ImplicitNullabilitySettings s) => s.Enabled, "Enabled");
 
             // Note: Text duplicated in README
-            var infoLabel = new Controls.Label(
-                "With enabled Implicit Nullability, reference types are by default implicitly [NotNull] for the syntax elements selected below. " +
+            var infoText =
+                "With enabled Implicit Nullability, reference types are by default implicitly [NotNull] for " +
+                "specific, configurable elements (see below). " +
                 "Their nullability can be overridden with an explicit [CanBeNull] attribute. " +
-                "Optional method parameters with a null default value are implicitly [CanBeNull].",
-                JetBrains.UI.Options.Helpers.Controls.IndentF);
+                "Optional method parameters with a null default value are implicitly [CanBeNull].\n" +
+                "\n" +
+                "Code elements which should be affected by Implicit Nullability can be configured in two ways.\n" +
+                "\n" +
+                "1. Recommended for application authors: Using the following settings.";
+            SetIndent(AddText(infoText), 1);
 
-            enabledCheckBox.Checked.Change.Advise(_lifetime, x => infoLabel.Enabled = x.Property.Value);
-            Controls.Add(infoLabel);
 
-            var inputParametersCheckBox = CreateOptionCheckBox(enabledCheckBox, "Input parameters of methods, delegates, and indexers");
-            Controls.Add(inputParametersCheckBox);
+            _enableInputParametersOption = AddNullabilityBoolOption(
+                s => s.EnableInputParameters,
+                "Input parameters of methods, delegates, and indexers",
+                enabledOption);
+            SetIndent(_enableInputParametersOption, 2);
 
-            var refParametersCheckBox = CreateOptionCheckBox(enabledCheckBox, "Ref parameters of methods and delegates");
-            Controls.Add(refParametersCheckBox);
+            _enableRefParametersOption = AddNullabilityBoolOption(
+                s => s.EnableRefParameters,
+                "Ref parameters of methods and delegates",
+                enabledOption);
+            SetIndent(_enableRefParametersOption, 2);
 
-            var outParametersAndResultCheckBox = CreateOptionCheckBox(enabledCheckBox, "Return values and out parameters of methods and delegates");
-            Controls.Add(outParametersAndResultCheckBox);
+            _enableOutParametersAndResultOption = AddNullabilityBoolOption(
+                s => s.EnableOutParametersAndResult,
+                "Return values and out parameters of methods and delegates",
+                enabledOption);
+            SetIndent(_enableOutParametersAndResultOption, 2);
 
-            var cacheInfoLabel = new Controls.Label("Note: After changing these settings, cleaning the solution cache (see " +
-                                                    "\"General\" options page) is necessary to update already analyzed code.");
-            cacheInfoLabel.Margin += new Padding(LeftMargin, VerticalSpace, 0, 0);
-            Controls.Add(cacheInfoLabel);
+            var assemblyAttributeInfoText1 =
+                "\n" +
+                "2. Recommended for library authors: By defining an [AssemblyMetadata] attribute in all concerned assemblies. "
+                +
+                "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies.";
+            SetIndent(AddText(assemblyAttributeInfoText1), 1);
 
-            _settings.SetBinding(_lifetime, (ImplicitNullabilitySettings s) => s.Enabled, enabledCheckBox.Checked);
-            _settings.SetBinding(_lifetime, (ImplicitNullabilitySettings s) => s.EnableInputParameters, inputParametersCheckBox.Checked);
-            _settings.SetBinding(_lifetime, (ImplicitNullabilitySettings s) => s.EnableRefParameters, refParametersCheckBox.Checked);
-            _settings.SetBinding(_lifetime, (ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, outParametersAndResultCheckBox.Checked);
+            var copyButtonText = "Copy [AssemblyMetadata] attribute to clipboard (using above options as a template)";
+            var copyButton = AddButton(copyButtonText, new DelegateCommand(CopyAssemblyAttributeCode));
+            SetIndent(copyButton, 2);
+            enabledOption.CheckedProperty.FlowInto(myLifetime, copyButton.GetIsEnabledProperty());
+
+            var assemblyAttributeInfoText2 =
+                "Implicit Nullability normally ignores referenced assemblies. " +
+                "It can take referenced libraries into account only if they contain embedded [AssemblyMetadata]-based configuration.\n" +
+                "\n" +
+                "The options in a [AssemblyMetadata] attribute override the options selected above.";
+            SetIndent(AddText(assemblyAttributeInfoText2), 1);
+
+            var cacheInfoText =
+                "Warning: After changing these settings respectively changing the [AssemblyMetadata] attribute value, " +
+                "cleaning the solution cache (see \"General\" options page) " +
+                "is necessary to update already analyzed code.";
+            AddText(cacheInfoText);
         }
 
-        private Controls.CheckBox CreateOptionCheckBox(Controls.CheckBox enabledCheckBox, string text)
+        private BoolOptionViewModel AddNullabilityBoolOption(
+            [NotNull] Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
+            [NotNull] string text,
+            [NotNull] BoolOptionViewModel enabledOption)
         {
-            var checkBox = new Controls.CheckBox {Text = text, AutoSize = true};
-            checkBox.Margin += JetBrains.UI.Options.Helpers.Controls.IndentF;
-            enabledCheckBox.Checked.Change.Advise(_lifetime, x => checkBox.Enabled = x.Property.Value);
+            var result = AddBoolOption(settingsExpression, text);
+            enabledOption.CheckedProperty.FlowInto(myLifetime, result.GetIsEnabledProperty());
 
-            return checkBox;
+            return result;
+        }
+
+        private void CopyAssemblyAttributeCode()
+        {
+            var assemblyMetadataCode = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(
+                new ImplicitNullabilityConfiguration(
+                    _enableInputParametersOption.CheckedProperty.Value,
+                    _enableRefParametersOption.CheckedProperty.Value,
+                    _enableOutParametersAndResultOption.CheckedProperty.Value));
+
+            _clipboard.SetText(assemblyMetadataCode);
+            MessageBox.ShowInfo("The following code has been copied to your clipboard:\n\n\n" + assemblyMetadataCode);
         }
     }
 }
