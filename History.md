@@ -1,4 +1,4 @@
-### vNext ###
+### 3.0.0 ###
 - Implicit Nullability support for compiled assemblies with [AssemblyMetadata("ImplicitNullability.AppliesTo", "...")] configuration attribute
 - New "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit" warning for return values and out parameters
 - New "Implicit NotNull result or out parameter overrides unknown nullability of external code" hint
