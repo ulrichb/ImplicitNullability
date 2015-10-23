@@ -16,17 +16,16 @@ $AssemblyVersionFilePath = "Src\ImplicitNullability.Plugin\Properties\AssemblyIn
 $MSBuildPath = "${env:ProgramFiles(x86)}\MSBuild\14.0\Bin\MSBuild.exe"
 $NUnitExecutable = "nunit-console-x86.exe"
 $NUnitTestAssemblyPaths = @(
-    "Src\ImplicitNullability.Plugin.Tests\bin\R91\$Configuration\ImplicitNullability.Plugin.Tests.R91.dll",
-    "Src\ImplicitNullability.Plugin.Tests\bin\R92\$Configuration\ImplicitNullability.Plugin.Tests.R92.dll",
+    "Src\ImplicitNullability.Plugin.Tests\bin\R91\$Configuration\ImplicitNullability.Plugin.Tests.R91.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\R92\$Configuration\ImplicitNullability.Plugin.Tests.R92.dll"
     "Src\ImplicitNullability.Sample.Tests\bin\$Configuration\ImplicitNullability.Sample.Tests.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Sample]* -[ImplicitNullability.Sample.ExternalCode]*"
 $NuspecPath = "Src\ImplicitNullability.nuspec"
-$PackageBaseVersion = StripLastPartFromVersion $Version
 $NugetPackProperties = @(
-    "Version=$PackageBaseVersion.91;Configuration=$Configuration;DependencyVer=[2.0];BinDirInclude=bin\R91",
-    "Version=$PackageBaseVersion.92;Configuration=$Configuration;DependencyVer=[3.0];BinDirInclude=bin\R92"
+    "Version=$(CalcNuGetPackageVersion 91);Configuration=$Configuration;DependencyVer=[2.0];BinDirInclude=bin\R91"
+    "Version=$(CalcNuGetPackageVersion 92);Configuration=$Configuration;DependencyVer=[3.0];BinDirInclude=bin\R92"
 )
 $NugetPushServer = "https://www.myget.org/F/ulrichb/api/v2/package"
 
