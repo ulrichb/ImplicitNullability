@@ -1,14 +1,14 @@
-﻿using JetBrains.Application.BuildScript.Application.Zones;
+﻿using ImplicitNullability.Plugin.Tests;
+using JetBrains.Application.BuildScript.Application.Zones;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework;
 using JetBrains.TestFramework.Application.Zones;
 using NUnit.Framework;
-using ImplicitNullability.Plugin.Tests;
 
 namespace ImplicitNullability.Plugin.Tests
 {
     [ZoneDefinition]
-    public interface IImplicitNullabilityTestEnvironmentZone : ITestsZone, IRequire<PsiFeatureTestZone>
+    public interface IImplicitNullabilityTestEnvironmentZone : ITestsZone, IRequire<PsiFeatureTestZone>, IRequire<IImplicitNullabilityZone>
     {
     }
 

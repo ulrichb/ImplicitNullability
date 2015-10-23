@@ -1,4 +1,5 @@
 ### vNext ###
+- Added configuration option in ReSharper's "Products & Features" settings
 - Dropped ReSharper 8.2 support
 
 ### 2.1.0 ###
