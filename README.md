@@ -4,6 +4,8 @@
 
 [ReSharper Gallery Page](https://resharper-plugins.jetbrains.com/packages/ReSharper.ImplicitNullability/)
 
+[History of changes](History.md)
+
 ## Idea
 
 The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` or `[CanBeNull]` attribute. For example, reference types in method parameters are by default `[NotNull]` (→ they need an opt-in `[CanBeNull]` to become nullable).
