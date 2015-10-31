@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
@@ -29,11 +28,6 @@ namespace ImplicitNullability.Plugin.Infrastructure
         public static bool IsRef([NotNull] this IParameter parameter)
         {
             return parameter.Kind == ParameterKind.REFERENCE;
-        }
-
-        public static bool IsInputOrRef([NotNull] this IParameter parameter)
-        {
-            return parameter.IsInput() || parameter.IsRef();
         }
 
         public static bool IsOut([NotNull] this IParameter parameter)

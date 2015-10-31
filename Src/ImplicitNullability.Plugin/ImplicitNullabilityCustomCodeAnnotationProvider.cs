@@ -31,19 +31,7 @@ namespace ImplicitNullability.Plugin
             var stopwatch = Stopwatch.StartNew();
 #endif
 
-            CodeAnnotationNullableValue? result = null;
-
-            var parameter = element as IParameter;
-            if (parameter != null)
-                result = _implicitNullabilityProvider.AnalyzeParameter(parameter);
-
-            var function = element as IFunction;
-            if (function != null)
-                result = _implicitNullabilityProvider.AnalyzeFunction(function);
-
-            var @delegate = element as IDelegate;
-            if (@delegate != null)
-                result = _implicitNullabilityProvider.AnalyzeDelegate(@delegate);
+            var result = _implicitNullabilityProvider.AnalyzeDeclaredElement(element);
 
 #if DEBUG
             LogResult("Attribute for ", element, stopwatch, result);
@@ -58,11 +46,7 @@ namespace ImplicitNullability.Plugin
             var stopwatch = Stopwatch.StartNew();
 #endif
 
-            CodeAnnotationNullableValue? result = null;
-
-            var method = element as IMethod;
-            if (method != null)
-                result = _implicitNullabilityProvider.AnalyzeMethodContainerElement(method);
+            var result = _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element);
 
 #if DEBUG
             LogResult("Elem attr for ", element, stopwatch, result);

@@ -9,6 +9,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             void Method([CanBeNull] string a);
 
+            [CanBeNull]
             string Function();
         }
 
@@ -18,8 +19,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             {
             }
 
-            [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
-            string IInterface.Function()
+            string IInterface.Function /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
                 return null;
             }

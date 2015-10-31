@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.ExternalCode
 {
     public static class External
     {
+        public static string UnknownNullabilityString => null;
+
         public delegate void SomeDelegate(string a);
 
         public delegate void SomeNotNullDelegate([NotNull] string a);
@@ -40,19 +41,36 @@ namespace ImplicitNullability.Sample.ExternalCode
             void Method(T a);
         }
 
-        public interface IFunctionWithMethod<out T>
+        public interface IInterfaceWithFunction<out T>
         {
             T Function();
         }
 
-        public interface IInterfaceWithCanBeNullMethod
+        public interface IInterfaceWithAsyncFunction<T>
         {
-            void Method([CanBeNull] string a);
+            Task<T> AsyncFunction();
         }
 
-        public interface IInterfaceWithNotNullMethod
+        public abstract class BaseClassWithCanBeNull
         {
-            void Method([NotNull] string a);
+            public abstract void Method([CanBeNull] string a);
+
+            [CanBeNull]
+            public abstract string Function();
+
+            [ItemCanBeNull]
+            public abstract Task<string> AsyncFunction();
+        }
+
+        public abstract class BaseClassWithNotNull
+        {
+            public abstract void Method([NotNull] string a);
+
+            [NotNull]
+            public abstract string Function();
+
+            [ItemNotNull]
+            public abstract Task<string> AsyncFunction();
         }
 
         public interface IInterfaceWithRefAndOutParameterMethod

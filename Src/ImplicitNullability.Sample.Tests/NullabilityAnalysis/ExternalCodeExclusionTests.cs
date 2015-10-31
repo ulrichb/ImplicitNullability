@@ -22,7 +22,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         [Test]
         public void Method()
         {
-            Action act = () => _externalClass.Method(null /* no warning */);
+            Action act = () => _externalClass.Method(null /*Expect no warning*/);
 
             act.ShouldNotThrow();
         }
@@ -33,7 +33,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             Action act = () =>
             {
                 var result = _externalClass.Function();
-                ReSharper.TestValueAnalysis(result, result == null /* no warning */);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);
             };
 
             act.ShouldNotThrow();
@@ -44,9 +44,9 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
         {
             Action act = () =>
             {
-                External.SomeFunctionDelegate @delegate = () => null /* no warning */;
+                External.SomeFunctionDelegate @delegate = () => null /*Expect no warning*/;
                 var result = @delegate();
-                ReSharper.TestValueAnalysis(result, result == null /* no warning */);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);
             };
 
             act.ShouldNotThrow();
@@ -58,7 +58,7 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
             Func<Task> act = async () =>
             {
                 var result = await _externalClass.AsyncFunction();
-                ReSharper.TestValueAnalysis(result, result == null /* no warning */);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);
             };
 
             act.ShouldNotThrow();

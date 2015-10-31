@@ -12,6 +12,7 @@ using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.SolutionAnalysis;
+using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Files;
@@ -53,6 +54,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             string definedExpectedWarningSymbol = null)
         {
             var sourceFilesToAnalyze = projectFilesToAnalyze.Select(x => x.ToSourceFiles().Single()).ToList();
+            Assert.That(sourceFilesToAnalyze, Is.Not.Empty);
 
             var expectedWarningComments =
                 (from sourceFile in sourceFilesToAnalyze
@@ -100,14 +102,17 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
         protected IEnumerable<Type> GetNullabilityAnalysisHighlightingTypes()
         {
+            var implicitNullabilityProblemAnalyzerHighlightingTypes =
+                typeof (ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(false).HighlightingTypes;
+
             return new[]
             {
                 typeof (AssignNullToNotNullAttributeWarning),
                 typeof (ConditionIsAlwaysTrueOrFalseWarning),
                 typeof (PossibleNullReferenceExceptionWarning),
-                typeof (PossibleInvalidOperationExceptionWarning),
-                typeof (AnnotationRedundancyInHierarchyWarning)
-            };
+                typeof (PossibleInvalidOperationExceptionWarning)
+            }
+                .Concat(implicitNullabilityProblemAnalyzerHighlightingTypes);
         }
 
         /// <summary>

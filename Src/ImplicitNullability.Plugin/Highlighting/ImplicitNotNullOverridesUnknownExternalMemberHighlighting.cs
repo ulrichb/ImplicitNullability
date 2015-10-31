@@ -22,15 +22,19 @@ namespace ImplicitNullability.Plugin.Highlighting
         ToolTipFormatString = Message)]
     public class ImplicitNotNullOverridesUnknownExternalMemberHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
     {
+        // IDEA: Due to symmetry reasons with ImplicitNotNullConflictInHierarchyHighlighting and to emphasize that this is about
+        // input/ref elements, rename to ImplicitNotNullPotentialConflictWithExternalBaseMember?
+
         public const string SeverityId = "ImplicitNotNullOverridesUnknownExternalMember";
         public const string Message = "Implicit NotNull overrides unknown nullability of external code, nullability should be explicit";
 
         public const string Description =
-            "Warns about implicit NotNull elements that override an external base class/interface member, which has no nullabiliy annotations (neither " +
-            "by attributes nor by external XML annotations), e.g. an implicit NotNull parameter of a method, which implements an external interface. " +
-            "Because the base member's nullability is unknown, we do not know whether a substitutability violation exists (e.g. implicit NotNull " +
-            "parameter overrides base member with a unannotated parameter, which has CanBeNull semantic), we thus require the programmer to " +
-            "explicitly annotate this parameter after manually checking the constraints of the base member. " +
+            "Warns about implicit [NotNull] elements that override an external base class/interface member " +
+            "which has no corresponding nullability annotations (neither by attributes nor by external XML annotations). " +
+            "Because the base member's nullability is unknown, we do not know whether a substitutability " +
+            "violation exists (e.g. implicit [NotNull] parameter overrides base member with an unannotated " +
+            "parameter, which has [CanBeNull] semantic), we thus encourage the programmer to explicitly " +
+            "annotate [NotNull] or [CanBeNull] on those elements after manually checking the nullability of the base member. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
         public ImplicitNotNullOverridesUnknownExternalMemberHighlighting([NotNull] ITreeNode treeNode)

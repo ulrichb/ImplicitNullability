@@ -1,45 +1,96 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using ImplicitNullability.Sample.ExternalCode;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
     public class OverrideExternalCodeWithAnnotations
     {
-        public class ExternalCanBeNull : External.IInterfaceWithCanBeNullMethod
+        public class ExternalCanBeNull : External.BaseClassWithCanBeNull
         {
-            public void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
+            public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
+            }
+
+            public override string Function /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
+            {
+                return null;
+            }
+
+            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[RS >= 92 && Implicit]*/()
+            {
+                await Task.Delay(0);
+                return null;
             }
         }
 
-        public class ExternalNotNull : External.IInterfaceWithNotNullMethod
+        public class ExternalNotNull : External.BaseClassWithNotNull
         {
-            public void Method(string a /* no warning expected because this is a safe case (same nullability as in the base member) */)
+            public override void Method(string a /*Expect no warning*/)
             {
+            }
+
+            public override string Function /*Expect no warning*/()
+            {
+                return "";
+            }
+
+            public override async Task<string> AsyncFunction /*Expect no warning*/()
+            {
+                await Task.Delay(0);
+                return "";
             }
         }
 
         private interface IOwnCodeInterface
         {
             void Method(string a);
+            string Function();
+            Task<string> AsyncFunction();
         }
 
-        public class AllBaseInterfacesNotNull :
-            External.IInterfaceWithNotNullMethod, // OK because of the NotNull annotation
-            IOwnCodeInterface // OK because implicitly NotNull
+        public class AllBaseTypesNotNull :
+            // OK because of the NotNull annotation:
+            External.BaseClassWithNotNull,
+            // OK because implicitly NotNull:
+            IOwnCodeInterface
         {
-            public void Method(string a)
+            public override void Method(string a)
             {
+            }
+
+            public override string Function()
+            {
+                return "";
+            }
+
+            public override async Task<string> AsyncFunction()
+            {
+                await Task.Delay(0);
+                return "";
             }
         }
 
-        public class OneOfThreeBaseInterfacesIsUnknownExternalMember :
-            External.IInterfaceWithNotNullMethod, // OK because of the NotNull annotation
-            External.IInterfaceWithMethod<string>, // The bad one
-            IOwnCodeInterface // OK because implicitly NotNull
+        public class OneOfThreeBaseTypesIsUnknownExternalMember :
+            // OK because of the NotNull annotation:
+            External.BaseClassWithNotNull,
+            // The bad ones:
+            External.IInterfaceWithMethod<string>, External.IInterfaceWithFunction<string>, External.IInterfaceWithAsyncFunction<string>,
+            // OK because implicitly NotNull:
+            IOwnCodeInterface
         {
-            public void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
+            }
+
+            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            {
+                return "";
+            }
+
+            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[RS >= 92 && Implicit]*/()
+            {
+                await Task.Delay(0);
+                return "";
             }
         }
     }

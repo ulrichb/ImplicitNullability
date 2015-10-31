@@ -95,8 +95,10 @@ Note that these settings can also be configured _per project_ by manually adding
 
 In addition to the behavior change of the nullability analysis the following code inspection warnings are provided by this extension.
 
-* "Implicit NotNull conflicts with nullability in super type" (`ImplicitNotNullConflictInHierarchy`)
-* "Implicit NotNull overrides unknown nullability of external code" (`ImplicitNotNullOverridesUnknownExternalMember`)
-* "Implicit CanBeNull parameter has an explicit NotNull annotation" (`NotNullOnImplicitCanBeNull`)
+* "Implicit NotNull conflicts with nullability in base type" (Id: `ImplicitNotNullConflictInHierarchy`)
+* "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit" (Id: `ImplicitNotNullElementCannotOverrideCanBeNull`)
+* "Implicit NotNull overrides unknown nullability of external code" (Id: `ImplicitNotNullOverridesUnknownExternalMember`)
+* "Implicit NotNull result or out parameter overrides unknown nullability of external code" (Id: `ImplicitNotNullResultOverridesUnknownExternalMember`)
+* "Implicit CanBeNull element has an explicit NotNull annotation" (Id: `NotNullOnImplicitCanBeNull`)
 
 For more information about these warnings (and their motivation) see their description in the ReSharper *Code Inspection | Inspection Severity* options page.

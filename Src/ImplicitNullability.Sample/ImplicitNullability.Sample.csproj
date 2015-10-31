@@ -59,7 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\AsyncMethods.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSamePostconditions.cs" />
+    <Compile Include="Highlighting\IncorrectNullableAttributeUsageAnalyzer\OtherWarningsSample.cs" />
+    <Compile Include="Highlighting\IncorrectNullableAttributeUsageAnalyzer\AnnotationRedundancyInHierarchySample.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\NullabilityInheritanceBehavior.cs" />
     <Compile Include="NullabilityAnalysis\DelegatesSample.cs" />
     <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
       <SubType>ASPXCodeBehind</SubType>

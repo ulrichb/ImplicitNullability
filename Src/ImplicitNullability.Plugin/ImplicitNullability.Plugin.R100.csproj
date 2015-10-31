@@ -160,8 +160,11 @@
     <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Highlighting\SimpleTreeNodeHighlightingBase.cs">
       <Link>ReSharperExtensionsShared\SimpleTreeNodeHighlightingBase.cs</Link>
     </Compile>
+    <Compile Include="AnnotationRedundancyInHierarchyWarningFilteringDecorator.cs" />
     <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchyHighlighting.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullElementCannotOverrideCanBeNullHighlighting.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMemberHighlighting.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.cs" />
     <Compile Include="Highlighting\SharedHighlightingTexts.cs" />
     <Compile Include="Highlighting\NotNullOnImplicitCanBeNullHighlighting.cs" />
     <Compile Include="ZoneMarker.cs" />

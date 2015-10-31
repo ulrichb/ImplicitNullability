@@ -1,7 +1,5 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
-// ReSharper disable AnnotationRedundancyInHierarchy
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
 {
@@ -20,7 +18,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class Implementation : IInterface
         {
-            public void ExplicitNotNull([NotNull] string a)
+            public void ExplicitNotNull([NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/ string a)
             {
             }
 
@@ -32,7 +30,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             {
             }
 
-            public void ExplicitCanBeNull([CanBeNull] string canBeNull)
+            public void ExplicitCanBeNull([CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/ string canBeNull)
             {
             }
 

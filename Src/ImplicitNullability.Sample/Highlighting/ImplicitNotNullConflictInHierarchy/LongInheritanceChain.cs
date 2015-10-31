@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
 {
@@ -12,9 +11,10 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
 
+            [CanBeNull]
             public virtual string Function()
             {
-                return "";
+                return null;
             }
         }
 
@@ -28,13 +28,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
 
         public class DerivedGood : Base3
         {
-            // This documents that the hierarchy conflict warnings compete with AnnotationRedundancyInHierarchy
-
-            public override void Method([CanBeNull] /*Expect:AnnotationRedundancyInHierarchy*/ string a)
+            public override void Method([CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/ string a)
             {
             }
 
-            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[Implicit]*/
+            [NotNull]
             public override string Function()
             {
                 return "";
@@ -45,12 +43,9 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
-                // Note that ReSharper takes the inherited [CanBeNull]:
-                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
 
-            [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
-            public override string Function()
+            public override string Function /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
                 return null;
             }
@@ -60,8 +55,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
         {
             public override void Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
-                // Note that ReSharper takes the inherited [CanBeNull]:
-                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
+            }
+
+            public override string Function /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
+            {
+                return null;
             }
         }
     }

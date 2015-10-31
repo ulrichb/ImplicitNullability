@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using ImplicitNullability.Plugin.Highlighting;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Daemon.CSharp.Errors;
-using JetBrains.Util;
 using NUnit.Framework;
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
@@ -70,13 +66,31 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             });
         }
 
+        [Test]
+        public void IncorrectNullableAttributeUsageAnalyzer_WithDisabledImplicitNullability()
+        {
+            TestWithDisabledImplicitNullability();
+        }
+
+        [Test]
+        public void IncorrectNullableAttributeUsageAnalyzer_TestWithEnabledImplicitNullability()
+        {
+            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
+            {
+                // Fixation: minimum amount of warnings, selected files
+                Assert.That(issueCount, Is.GreaterThanOrEqualTo(4));
+                Assert.That(issueFilePaths, Has.Some.EqualTo("AnnotationRedundancyInHierarchySample.cs"));
+                Assert.That(issueFilePaths, Has.Some.EqualTo("OtherWarningsSample.cs"));
+            });
+        }
+
         private void TestWithDisabledImplicitNullability()
         {
             UseSampleSolution(solution =>
             {
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 
-                TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetHighlightingTypesToAnalyze());
+                TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetNullabilityAnalysisHighlightingTypes());
             });
         }
 
@@ -88,7 +102,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 
-                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetHighlightingTypesToAnalyze(), "Implicit");
+                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetNullabilityAnalysisHighlightingTypes(), "Implicit");
 
                 assert(issues.Count, issues.Select(x => x.GetSourceFile().Name).ToList());
             });
@@ -98,23 +112,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         {
             var pathPrefix = "Highlighting\\" + TestContext.CurrentContext.Test.Name.Split('_')[0];
 
-            var projectFilesToAnalyze = solution.GetAllProjectFilesWithPathPrefix(pathPrefix).ToList();
-            Trace.Assert(projectFilesToAnalyze.Any(), "! projectFilesToAnalyze.Any()");
-            return projectFilesToAnalyze;
-        }
-
-        private IEnumerable<Type> GetHighlightingTypesToAnalyze()
-        {
-            return new[]
-            {
-                typeof (NotNullOnImplicitCanBeNullHighlighting),
-                //
-                typeof (ImplicitNotNullConflictInHierarchyHighlighting),
-                typeof (AnnotationConflictInHierarchyWarning), // This is ReSharper's hierarchy conflict warning
-                //
-                typeof (ImplicitNotNullOverridesUnknownExternalMemberHighlighting)
-            }
-                .Concat(GetNullabilityAnalysisHighlightingTypes());
+            return solution.GetAllProjectFilesWithPathPrefix(pathPrefix).ToList();
         }
     }
 }

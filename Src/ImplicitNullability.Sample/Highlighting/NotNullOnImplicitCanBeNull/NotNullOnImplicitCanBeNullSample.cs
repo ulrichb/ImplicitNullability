@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
 {
@@ -43,6 +43,13 @@ namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
         public int? FunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/()
         {
             return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
+        }
+
+        [ItemNotNull]
+        public async Task<int?> AsyncFunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull[RS >= 92 && Implicit]*/()
+        {
+            await Task.Delay(0);
+            return null /*Expect:AssignNullToNotNullAttribute[RS >= 92]*/; // This warning results from the explicit NotNull
         }
 
         [NotNull]

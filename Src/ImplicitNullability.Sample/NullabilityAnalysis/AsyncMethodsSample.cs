@@ -16,7 +16,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         public async Task MethodWithManualNullCheck([AllowNull /* avoid method rewriting */] string a)
         {
             if (a == null)
-                throw new ArgumentNullException("a");
+                throw new ArgumentNullException(nameof(a));
 
             await Task.Delay(0);
         }
@@ -54,13 +54,13 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         public async Task<string> FunctionWithItemCanBeNull([CanBeNull] string returnValue)
         {
             await Task.Delay(0);
-            return returnValue;
+            return returnValue /*Expect no warning*/;
         }
 
         public async Task<int?> FunctionWithNullableInt(int? returnValue)
         {
             await Task.Delay(0);
-            return returnValue;
+            return returnValue /*Expect no warning*/;
         }
 
         [ItemNotNull]

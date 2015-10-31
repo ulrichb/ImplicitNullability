@@ -1,0 +1,32 @@
+﻿using JetBrains.Annotations;
+
+namespace ImplicitNullability.Sample.Highlighting.IncorrectNullableAttributeUsageAnalyzer
+{
+    public static class OtherWarningsSample
+    {
+        // Test that our problem analyzer, which hides IncorrectNullableAttributeUsageAnalyzer still passes the remaining warnings.
+
+        public interface IInterface
+        {
+            void ExplicitCanBeNull([CanBeNull] string a);
+        }
+
+        public class Implementation : IInterface
+        {
+            public void ExplicitCanBeNull([NotNull] /*Expect:AnnotationConflictInHierarchy*/ string a)
+            {
+            }
+
+            [NotNull] /*Expect:AnnotationRedundancyAtValueType*/
+            public void AnnotationOnVoid()
+            {
+            }
+
+            [NotNull, CanBeNull]
+            public string MultipleAnnotations /*Expect:MultipleNullableAttributesUsage*/()
+            {
+                return "";
+            }
+        }
+    }
+}

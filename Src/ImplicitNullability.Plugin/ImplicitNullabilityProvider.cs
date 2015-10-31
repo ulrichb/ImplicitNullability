@@ -26,7 +26,26 @@ namespace ImplicitNullability.Plugin
             _settingsStore = settingsStore;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeParameter([NotNull] IParameter parameter)
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElement([NotNull] IDeclaredElement declaredElement)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            var parameter = declaredElement as IParameter;
+            if (parameter != null)
+                result = AnalyzeParameter(parameter);
+
+            var function = declaredElement as IFunction;
+            if (function != null)
+                result = AnalyzeFunction(function);
+
+            var @delegate = declaredElement as IDelegate;
+            if (@delegate != null)
+                result = AnalyzeDelegate(@delegate);
+
+            return result;
+        }
+
+        private CodeAnnotationNullableValue? AnalyzeParameter([NotNull] IParameter parameter)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -50,7 +69,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeFunction([NotNull] IFunction function)
+        private CodeAnnotationNullableValue? AnalyzeFunction([NotNull] IFunction function)
         {
             // Methods and operators
 
@@ -67,7 +86,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeDelegate([NotNull] IDelegate @delegate)
+        private CodeAnnotationNullableValue? AnalyzeDelegate([NotNull] IDelegate @delegate)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -80,7 +99,18 @@ namespace ImplicitNullability.Plugin
         }
 
 #if !(RESHARPER91)
-        public CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([NotNull] IDeclaredElement element)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            var method = element as IMethod;
+            if (method != null)
+                result = AnalyzeMethodContainerElement(method);
+
+            return result;
+        }
+
+        private CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
         {
             CodeAnnotationNullableValue? result = null;
 

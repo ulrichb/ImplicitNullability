@@ -27,8 +27,8 @@ namespace ImplicitNullability.Plugin.Highlighting
         public const string Message = "Implicit CanBeNull element has an explicit NotNull annotation";
 
         public const string Description =
-            "Warns about explicit NotNull annotations on implicit CanBeBull elements (like parameters with a null default value). " +
-            "This warning is useful when using tools like Fody NullGuard, which do not process explicit NotNull annotations. " +
+            "Warns about explicit [NotNull] annotations on implicit CanBeBull elements (like parameters with a null default value). " +
+            "This warning is useful when using tools like Fody NullGuard, which do not process explicit [NotNull] annotations. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
         public NotNullOnImplicitCanBeNullHighlighting([NotNull] ITreeNode treeNode)

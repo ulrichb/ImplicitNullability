@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
-
-// ReSharper disable AnnotationRedundancyInHierarchy
 
 namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
 {
@@ -24,11 +22,17 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             int? ExplicitCanBeNullInInterfaceAndImplicitCanBeNullInDerived();
 
             int? ImplicitCanBeNullInInterfaceAndExplicitCanBeNullInDerived();
+
+            [ItemNotNull]
+            Task<string> TaskFunctionWithExplicitNotNull();
+
+            [ItemCanBeNull]
+            Task<string> TaskFunctionWithExplicitCanBeNull();
         }
 
         public class Implementation : IInterface
         {
-            [NotNull]
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public string ExplicitNotNull()
             {
                 return "";
@@ -45,7 +49,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
                 return "";
             }
 
-            [CanBeNull]
+            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public string ExplicitCanBeNull()
             {
                 return null;
@@ -59,6 +63,20 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHiera
             [CanBeNull]
             public int? ImplicitCanBeNullInInterfaceAndExplicitCanBeNullInDerived()
             {
+                return null;
+            }
+
+            [ItemNotNull] // REPORT? missing AnnotationRedundancyInHierarchy
+            public async Task<string> TaskFunctionWithExplicitNotNull()
+            {
+                await Task.Delay(0);
+                return "";
+            }
+
+            [ItemCanBeNull] // REPORT? missing AnnotationRedundancyInHierarchy
+            public async Task<string> TaskFunctionWithExplicitCanBeNull()
+            {
+                await Task.Delay(0);
                 return null;
             }
         }

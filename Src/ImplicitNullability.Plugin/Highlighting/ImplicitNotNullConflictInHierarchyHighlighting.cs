@@ -23,11 +23,12 @@ namespace ImplicitNullability.Plugin.Highlighting
     public class ImplicitNotNullConflictInHierarchyHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
     {
         public const string SeverityId = "ImplicitNotNullConflictInHierarchy";
-        public const string Message = "Implicit NotNull conflicts with nullability in super type";
+        public const string Message = "Implicit NotNull conflicts with nullability in base type";
 
         public const string Description =
-            "Warns about substitutability violations, e.g. implicit NotNull parameter overrides base member with a corresponding CanBeNull parameter. " +
-            "This is the equivalent to \"Annotation conflict in hierarchy\" for explicit NotNull annotations. " +
+            "Warns about substitutability violations, e.g. implicit [NotNull] input parameter with a corresponding explicit [CanBeNull] " +
+            "parameter in the base member. " +
+            "This is the equivalent to \"Annotation conflict in hierarchy\" for explicit [NotNull] annotations. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
         public ImplicitNotNullConflictInHierarchyHighlighting([NotNull] ITreeNode treeNode)
