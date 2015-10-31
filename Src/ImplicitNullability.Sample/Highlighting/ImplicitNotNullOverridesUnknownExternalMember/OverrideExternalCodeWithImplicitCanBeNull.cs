@@ -1,7 +1,7 @@
 ﻿using System;
-using ImplicitNullability.Sample.ExternalCode;
+using ImplicitNullability.Samples.CodeWithoutIN;
 
-namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
     public class OverrideExternalCodeWithImplicitCanBeNull
     {

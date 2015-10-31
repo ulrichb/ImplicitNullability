@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 // ReSharper disable AssignNullToNotNullAttribute - because not relevant for this test case
 // ReSharper disable NotNullOnImplicitCanBeNull - because not relevant for this test case
 
-namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullConflictInHierarchy
 {
     public static class HierarchyWithPreconditionsWeakerInDerived
     {

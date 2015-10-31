@@ -10,8 +10,13 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
     {
         public static IEnumerable<IProjectFile> GetAllProjectFilesWithPathPrefix(this ISolution solution, string prefix)
         {
+            return GetAllProjectFilesWithPathPrefix(solution.GetAllProjects(), prefix);
+        }
+
+        public static IEnumerable<IProjectFile> GetAllProjectFilesWithPathPrefix(this IEnumerable<IProject> projects, string prefix)
+        {
             return
-                (from project in solution.GetAllProjects()
+                (from project in projects
                     from file in project.GetAllProjectFiles()
                     where ProjectUtil.GetRelativePresentableProjectPath(file, project).StartsWith(prefix)
                     select file).ToList();

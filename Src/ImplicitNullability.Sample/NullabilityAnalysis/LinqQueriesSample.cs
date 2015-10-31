@@ -3,7 +3,7 @@ using System.Linq;
 
 // ReSharper disable UnusedVariable
 
-namespace ImplicitNullability.Sample.NullabilityAnalysis
+namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
     public class LinqQueriesSample
     {

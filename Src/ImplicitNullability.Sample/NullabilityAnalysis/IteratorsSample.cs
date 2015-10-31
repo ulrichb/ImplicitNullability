@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NullGuard;
 
-namespace ImplicitNullability.Sample.NullabilityAnalysis
+namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
     public class IteratorsSample
     {

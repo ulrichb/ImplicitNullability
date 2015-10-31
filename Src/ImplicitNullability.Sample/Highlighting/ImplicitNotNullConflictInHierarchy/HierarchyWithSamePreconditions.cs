@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 
 
-namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullConflictInHierarchy
 {
     public static class HierarchyWithSamePreconditions
     {

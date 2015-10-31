@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using ImplicitNullability.Sample.ExternalCode;
+using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Sample.Highlighting.IncorrectNullableAttributeUsageAnalyzer
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableAttributeUsageAnalyzer
 {
     public static class AnnotationRedundancyInHierarchySample
     {

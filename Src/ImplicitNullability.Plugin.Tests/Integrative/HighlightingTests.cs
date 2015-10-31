@@ -4,6 +4,7 @@ using System.Linq;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ProjectModel;
+using JetBrains.ReSharper.Psi;
 using NUnit.Framework;
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
@@ -19,14 +20,14 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         [Test]
         public void ImplicitNotNullConflictInHierarchy_WithEnabledImplicitNullability()
         {
-            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
+            TestWithEnabledImplicitNullability((issueCount, issueSourceFiles) =>
             {
                 // Fixation: minimum amount of warnings, selected files
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(20));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("CanBeNullOneOfThreeSuperMembers.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("HierarchyWithPostconditionsWeakerInDerived.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("HierarchyWithPreconditionsStrongerInDerived.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("LongInheritanceChain.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("CanBeNullOneOfThreeSuperMembers.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("HierarchyWithPostconditionsWeakerInDerived.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("HierarchyWithPreconditionsStrongerInDerived.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("LongInheritanceChain.cs"));
             });
         }
 
@@ -39,12 +40,16 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         [Test]
         public void ImplicitNotNullOverridesUnknownExternalMember_TestWithEnabledImplicitNullability()
         {
-            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
+            TestWithEnabledImplicitNullability((issueCount, issueSourceFiles) =>
             {
                 // Fixation: minimum amount of warnings, selected files
-                Assert.That(issueCount, Is.GreaterThanOrEqualTo(9));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("OverrideExternalCodeWithAnnotations.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("OverrideExternalCode.cs"));
+                Assert.That(issueCount, Is.GreaterThanOrEqualTo(15));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("OverrideExternalCodeWithAnnotations.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("OverrideExternalCode.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.DisplayName),
+                    Has.Some.StringMatching(@"<.*Consumer\.OfInternalCodeWithIN>.*\\ExternalUnknownVsImplicitlyNullableCode\.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.DisplayName),
+                    Has.Some.StringMatching(@"<.*Consumer\.OfExternalCodeWithIN>.*\\ExternalUnknownVsImplicitlyNullableCode\.cs"));
             });
         }
 
@@ -57,12 +62,12 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         [Test]
         public void NotNullOnImplicitCanBeNull_TestWithEnabledImplicitNullability()
         {
-            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
+            TestWithEnabledImplicitNullability((issueCount, issueSourceFiles) =>
             {
                 // Fixation: minimum amount of warnings, selected files
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(7));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("NotNullOnImplicitCanBeNullSample.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("NotNullOnImplicitCanBeNullSampleTests.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("NotNullOnImplicitCanBeNullSample.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("NotNullOnImplicitCanBeNullSampleTests.cs"));
             });
         }
 
@@ -75,12 +80,12 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         [Test]
         public void IncorrectNullableAttributeUsageAnalyzer_TestWithEnabledImplicitNullability()
         {
-            TestWithEnabledImplicitNullability((issueCount, issueFilePaths) =>
+            TestWithEnabledImplicitNullability((issueCount, issueSourceFiles) =>
             {
                 // Fixation: minimum amount of warnings, selected files
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(4));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("AnnotationRedundancyInHierarchySample.cs"));
-                Assert.That(issueFilePaths, Has.Some.EqualTo("OtherWarningsSample.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("AnnotationRedundancyInHierarchySample.cs"));
+                Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("OtherWarningsSample.cs"));
             });
         }
 
@@ -94,17 +99,17 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             });
         }
 
-        private void TestWithEnabledImplicitNullability(Action<int, IList<string>> assert)
+        private void TestWithEnabledImplicitNullability(Action<int, IList<IPsiSourceFile>> assert)
         {
             UseSampleSolution(solution =>
             {
-                EnableImplicitNullabilitySetting(solution);
+                EnableImplicitNullability(solution);
 
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 
                 var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, GetNullabilityAnalysisHighlightingTypes(), "Implicit");
 
-                assert(issues.Count, issues.Select(x => x.GetSourceFile().Name).ToList());
+                assert(issues.Count, issues.Select(x => x.GetSourceFile()).ToList());
             });
         }
 

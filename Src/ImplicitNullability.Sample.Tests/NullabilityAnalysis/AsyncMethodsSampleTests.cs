@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using ImplicitNullability.Sample.NullabilityAnalysis;
+using ImplicitNullability.Samples.CodeWithIN;
+using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
+namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 {
     [TestFixture]
     public class AsyncMethodsSampleTests

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using ImplicitNullability.Sample.ExternalCode;
+using ImplicitNullability.Samples.CodeWithoutIN;
 
-namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
     public class OverrideExternalCodeWithAnnotations
     {
@@ -41,18 +41,11 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             }
         }
 
-        private interface IOwnCodeInterface
-        {
-            void Method(string a);
-            string Function();
-            Task<string> AsyncFunction();
-        }
-
         public class AllBaseTypesNotNull :
             // OK because of the NotNull annotation:
             External.BaseClassWithNotNull,
             // OK because implicitly NotNull:
-            IOwnCodeInterface
+            IImplicitlyNullableInterface
         {
             public override void Method(string a)
             {
@@ -76,7 +69,7 @@ namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknow
             // The bad ones:
             External.IInterfaceWithMethod<string>, External.IInterfaceWithFunction<string>, External.IInterfaceWithAsyncFunction<string>,
             // OK because implicitly NotNull:
-            IOwnCodeInterface
+            IImplicitlyNullableInterface
         {
             public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {

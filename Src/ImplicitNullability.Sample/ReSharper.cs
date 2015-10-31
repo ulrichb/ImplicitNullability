@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using NullGuard;
 
-namespace ImplicitNullability.Sample
+namespace ImplicitNullability.Samples.CodeWithIN
 {
     [NullGuard(ValidationFlags.None)]
     public static class ReSharper
@@ -18,7 +18,7 @@ namespace ImplicitNullability.Sample
         {
         }
 
-        public static void SuppressUnusedWarning(object value)
+        public static void SuppressUnusedWarning(params object[] values)
         {
         }
 

@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace ImplicitNullability.Sample.NullabilityAnalysis
+namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
     public class MethodsRefParameterSample
     {

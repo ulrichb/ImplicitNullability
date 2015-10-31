@@ -1,10 +1,10 @@
 using System;
 using System.Reflection;
 using FluentAssertions;
-using ImplicitNullability.Sample.NullabilityAnalysis;
+using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
+namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 {
     [TestFixture]
     public class NonPublicMethodsSampleTests

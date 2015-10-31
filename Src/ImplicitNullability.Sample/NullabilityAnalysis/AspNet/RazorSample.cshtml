@@ -1,6 +1,5 @@
-﻿@using ImplicitNullability.Sample
+﻿@using ImplicitNullability.Samples.CodeWithIN
 @using JetBrains.Annotations
-
 @functions{
 
     [CanBeNull]
@@ -17,12 +16,13 @@
     [CanBeNull]
     private string SomeNullableMethod([CanBeNull] string a, int? b, string optional = null)
     {
+        ReSharper.SuppressUnusedWarning(a, b, optional);
         return null;
     }
 
-    private string SomeFunction(out string a)
+    private string SomeFunction(out string outParam)
     {
-        a = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+        outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
         return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
     }
 
@@ -35,3 +35,7 @@
 
 @SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/)
 @SomeNullableMethod(null, null, optional: null)
+@{
+    string outParam;
+}
+@SomeFunction(out outParam)

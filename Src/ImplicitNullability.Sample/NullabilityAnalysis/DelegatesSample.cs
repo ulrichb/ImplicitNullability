@@ -1,8 +1,8 @@
 ﻿using System;
-using ImplicitNullability.Sample.ExternalCode;
+using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Sample.NullabilityAnalysis
+namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
     public static class DelegatesSample
     {

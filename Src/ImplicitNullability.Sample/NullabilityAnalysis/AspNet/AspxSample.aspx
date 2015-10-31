@@ -1,8 +1,6 @@
 ﻿<%@ Page Language="C#" %>
-<%@ Import Namespace="ImplicitNullability.Sample" %>
+<%@ Import Namespace="ImplicitNullability.Samples.CodeWithIN" %>
 <%@ Import Namespace="JetBrains.Annotations" %>
-
-<%-- ReSharper disable UnusedMember.Local, UnusedParameter.Local --%>
 
 <script runat="server">
 
@@ -20,12 +18,13 @@
     [CanBeNull]
     private string SomeNullableMethod([CanBeNull] string a, int? b, string optional = null)
     {
+        ReSharper.SuppressUnusedWarning(a, b, optional);
         return null;
     }
 
-    private string SomeFunction(out string a)
+    private string SomeFunction(out string outParam)
     {
-        a = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+        outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
         return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
     }
 
@@ -44,6 +43,7 @@
 
 <%= SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/) %>
 <%= SomeNullableMethod(null, null, optional: null) %>
+<% string outParam; %><%= SomeFunction(out outParam) %>
 
 <%-- Data binding --%>
 <%# null %>

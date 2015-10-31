@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using ImplicitNullability.Sample.ExternalCode;
+using ImplicitNullability.Samples.CodeWithoutIN;
 
-namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
     public class BaseClassWithExternalInterfaceInOwnCode
     {

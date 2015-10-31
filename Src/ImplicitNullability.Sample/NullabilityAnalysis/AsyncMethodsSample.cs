@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NullGuard;
 
-namespace ImplicitNullability.Sample.NullabilityAnalysis
+namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
     public class AsyncMethodsSample
     {

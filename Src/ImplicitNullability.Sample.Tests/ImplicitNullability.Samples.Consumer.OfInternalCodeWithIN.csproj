@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{456A6456-5F34-4B64-9751-135686CE3A8F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImplicitNullability.Samples.Consumer</RootNamespace>
+    <AssemblyName>ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileAlignment>512</FileAlignment>
+    <BaseIntermediateOutputPath>obj\OfInternalCodeWithIN\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\OfInternalCodeWithIN\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\OfInternalCodeWithIN\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentAssertions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImplicitNullability.Samples.CodeWithoutIN.External">
+      <HintPath>..\ImplicitNullability.Sample.ExternalCode\bin\External\ImplicitNullability.Samples.CodeWithoutIN.External.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=9.2.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.9.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsStrongerInDerivedTests.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\ExternalUnknownVsImplicitlyNullableCode.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeTests.cs" />
+    <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\NotNullOnImplicitCanBeNullSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\DynamicInvocationTests.cs" />
+    <Compile Include="NullabilityAnalysis\ExternalCodeExclusionTests.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsOutputSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsRefParameterSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\NonPublicMethodsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\OperatorOverloadsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\DelegatesSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\AsyncMethodsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\ConstructorsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\IndexersSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsInputSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\GenericsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\IteratorsSampleTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImplicitNullability.Sample\ImplicitNullability.Samples.CodeWithIN.Internal.csproj">
+      <Project>{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}</Project>
+      <Name>ImplicitNullability.Samples.CodeWithIN.Internal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

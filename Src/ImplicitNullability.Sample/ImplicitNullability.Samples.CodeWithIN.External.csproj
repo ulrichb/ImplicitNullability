@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9001EFB4-358F-4C98-AF13-F374E831A06E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImplicitNullability.Samples.CodeWithIN</RootNamespace>
+    <AssemblyName>ImplicitNullability.Samples.CodeWithIN.External</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseIntermediateOutputPath>obj\External\</BaseIntermediateOutputPath>
+    <NuGetPackageImportStamp>da49a2e7</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\External\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\External\</OutputPath>
+    <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImplicitNullability.Samples.CodeWithoutIN.External">
+      <HintPath>..\ImplicitNullability.Sample.ExternalCode\bin\External\ImplicitNullability.Samples.CodeWithoutIN.External.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\..\packages\JetBrains.Annotations.9.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="NullGuard, Version=1.4.4.0, Culture=neutral, PublicKeyToken=1958ac8092168428, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NullGuard.Fody.1.4.4\Lib\portable-net4+sl5+wpa81+wp8+win8+MonoAndroid16+MonoTouch40\NullGuard.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\IImplicitlyNullableInterface.cs" />
+    <Compile Include="NullabilityAnalysis\DelegatesSample.cs" />
+    <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </None>
+    <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
+    <Compile Include="NullabilityAnalysis\ConstructorsSample.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsOutputSample.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsRefParameterSample.cs" />
+    <Compile Include="NullabilityAnalysis\NonPublicMethodsSample.cs" />
+    <Compile Include="NullabilityAnalysis\UnsafeCodeSample.cs" />
+    <Compile Include="NullabilityAnalysis\LinqQueriesSample.cs" />
+    <Compile Include="NullabilityAnalysis\OperatorOverloadsSample.cs" />
+    <Compile Include="NullabilityAnalysis\IteratorsSample.cs" />
+    <Compile Include="NullabilityAnalysis\IndexersSample.cs" />
+    <Compile Include="NullabilityAnalysis\MethodsInputSample.cs" />
+    <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSample.cs" />
+    <Compile Include="Properties\ImplicitNullabilityAssemblyMetadata.cs" />
+    <Compile Include="Properties\NullGuardConfiguration.cs" />
+    <Compile Include="ReSharper.cs" />
+    <Compile Include="NullabilityAnalysis\AsyncMethodsSample.cs" />
+    <Compile Include="NullabilityAnalysis\GenericsSample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

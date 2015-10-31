@@ -17,15 +17,17 @@ The methods arguments *are* implicitly nullable. -> Principle: "Wherever a CanBe
 
 Note that ReSharper does not check nullability constraints when binding methods to delegates. For example, the following code does not produce a warning.
 
-    public delegate void SomeDelegate ([CanBeNull] string s);
+```C#
+public delegate void SomeDelegate ([CanBeNull] string s);
 
-    private static void M (/*[NotNull]*/ string s) // Explicit or implicit NotNull doesn't make a difference
-    {
-       Console.WriteLine (s.Length); // NullReferenceException when called with s == null
-    }
+private static void M (/*[NotNull]*/ string s) // Explicit or implicit NotNull doesn't make a difference
+{
+   Console.WriteLine (s.Length); // NullReferenceException when called with s == null
+}
 
-    SomeDelegate d = M;
-    d(null); // Problem: Static analysis allows calling d with null, although the method M does not
+SomeDelegate d = M;
+d(null); // Problem: Static analysis allows calling d with null, although the method M does not
+```
 
 Therefore, the user is responsible for checking nullability constraints when creating delegates bound to methods.
 
@@ -34,15 +36,48 @@ Therefore, the user is responsible for checking nullability constraints when cre
 The ReSharper "integrative" tests don't use the "gold file approach" of the ReSharper SDK, but use annotations directly in the source files for the expectations (e.g. `/*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/`). These expectations are matched with the actual inspection warnings when running the analysis during test execution.
 
 The advantages of this approach:
-* The static analysis expectations are directly next to the "runtime analysis" expectations (see `ImplicitNullability.Sample.Tests` project).
+* The static analysis expectations are directly next to the "runtime analysis" expectations (see `ImplicitNullability.Samples.Consumer` projects).
 * Conditional expectations.
 * Expectations also visible during manual tests.
 * Better editing experience (no duplication of the test data) and better readability (less indirections).
 
 ## ExternalAnnotations directory
 
-Includes specific external annotations, e.g. for TemplateControl.Eval(), because the external annotation files 
+Includes specific external annotations, e.g. for TemplateControl.Eval(), because the external annotation files
 aren't included in the SDK package.
+
+## Test data
+
+Test data used for the integrative tests (in ImplicitNullability.Plugin.Tests) and for manual tests consists of the following projects:
+* Samples.CodeWithoutIN.External: Simulates external code which does not use Implicit Nullability (unannotated  members have default nullability).
+* Samples.CodeWithIN.Internal: Simulates a library project which is part of the own solution with configured Implicit Nullability.
+* Samples.Consumer.OfInternalCodeWithIN: Code which uses Samples.CodeWithIN.Internal _as project reference_ (simulates a consumer of internal IN code).
+* Samples.CodeWithIN.External: Simulates an external library with configured Implicit Nullability. Contains parts of Samples.CodeWithIN.Internal + an `[AssemblyMetadata]` configuration.
+* Samples.Consumer.OfExternalCodeWithIN: Code which uses Samples.CodeWithIN.External _as assembly reference_ (simulates a consumer of external IN code).
+
+```plain
+                                +----------------------------------+
+                                |  Samples.CodeWithoutIN.External  |
+                                +----------------+-----------------+
+                                                 ^
+                                                 |
+                         +-----------------------+----------------------+
+                         |                                              |
+ /-----------------------------------------------\                      |
+ |                       |                       |                      |
+ |       +---------------+---------------+       |      +---------------+---------------+
+ |       |  Samples.CodeWithIN.Internal  |       |      |  Samples.CodeWithIN.External  |
+ |       +---------------+---------------+       |      +---------------+---------------+
+ |                       ^                       |                      ^
+ |                       |                       \----------------------------------------------\
+ |                       |                                              |                       |
+ |  +--------------------+--------------------+    +--------------------+--------------------+  |
+ |  |  Samples.Consumer.OfInternalCodeWithIN  |    |  Samples.Consumer.OfExternalCodeWithIN  |  |
+ |  +-----------------------------------------+    +-----------------------------------------+  |
+ |                                                                                              |
+ | ImplicitNullability.Sample.sln                                                               |
+ \----------------------------------------------------------------------------------------------/
+```
 
 # Local development / manual testing
 

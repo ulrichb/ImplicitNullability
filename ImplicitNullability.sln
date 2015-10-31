@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample", "Src\ImplicitNullability.Sample\ImplicitNullability.Sample.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Sample\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.Tests", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Sample.Tests.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.ExternalCode", "Src\ImplicitNullability.Sample.ExternalCode\ImplicitNullability.Sample.ExternalCode.csproj", "{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithoutIN.External", "Src\ImplicitNullability.Sample.ExternalCode\ImplicitNullability.Samples.CodeWithoutIN.External.csproj", "{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R91", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R91.csproj", "{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}"
 EndProject
@@ -27,7 +27,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionItems", "SolutionItems.csproj", "{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Sample.NonImplicit", "Src\ImplicitNullability.Sample.NonImplicit\ImplicitNullability.Sample.NonImplicit.csproj", "{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN.csproj", "{E84293D7-D774-4BDD-8250-238FB12D51A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9001EFB4-358F-4C98-AF13-F374E831A06E} = {9001EFB4-358F-4C98-AF13-F374E831A06E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.External", "Src\ImplicitNullability.Sample\ImplicitNullability.Samples.CodeWithIN.External.csproj", "{9001EFB4-358F-4C98-AF13-F374E831A06E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R100", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R100.csproj", "{723F4454-4FC6-4433-90AB-0CC031193870}"
 EndProject
@@ -69,10 +77,14 @@ Global
 		{CCE08E5C-767A-42A4-8915-080331158865}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9001EFB4-358F-4C98-AF13-F374E831A06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9001EFB4-358F-4C98-AF13-F374E831A06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9001EFB4-358F-4C98-AF13-F374E831A06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9001EFB4-358F-4C98-AF13-F374E831A06E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{723F4454-4FC6-4433-90AB-0CC031193870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{723F4454-4FC6-4433-90AB-0CC031193870}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{723F4454-4FC6-4433-90AB-0CC031193870}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,7 +105,8 @@ Global
 		{86C170AA-FAE5-4ABF-BE26-FBBE392315DC} = {67859B65-179D-40D0-80DB-003011824913}
 		{AF0ADEF1-3538-4176-A559-93429A15B4DD} = {67859B65-179D-40D0-80DB-003011824913}
 		{CCE08E5C-767A-42A4-8915-080331158865} = {67859B65-179D-40D0-80DB-003011824913}
-		{556E74FD-16B0-43BE-98A3-1E0FBC13B75E} = {67859B65-179D-40D0-80DB-003011824913}
+		{E84293D7-D774-4BDD-8250-238FB12D51A4} = {67859B65-179D-40D0-80DB-003011824913}
+		{9001EFB4-358F-4C98-AF13-F374E831A06E} = {67859B65-179D-40D0-80DB-003011824913}
 		{723F4454-4FC6-4433-90AB-0CC031193870} = {67859B65-179D-40D0-80DB-003011824913}
 		{870599EC-1407-48EE-BC49-0CF9D7CA5D8D} = {67859B65-179D-40D0-80DB-003011824913}
 	EndGlobalSection

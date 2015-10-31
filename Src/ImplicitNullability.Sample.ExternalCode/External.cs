@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Sample.ExternalCode
+namespace ImplicitNullability.Samples.CodeWithoutIN
 {
     public static class External
     {

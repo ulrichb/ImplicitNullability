@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using ImplicitNullability.Sample.ExternalCode;
+using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
     public class OverrideExternalCode
     {

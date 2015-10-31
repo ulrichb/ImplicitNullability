@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentAssertions;
-using ImplicitNullability.Sample.Highlighting.ImplicitNotNullConflictInHierarchy;
+using ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullConflictInHierarchy;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Sample.Tests.Highlighting.ImplicitNotNullConflictInHierarchy
+namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullConflictInHierarchy
 {
     [TestFixture]
     public class HierarchyWithPreconditionsStrongerInDerivedTests

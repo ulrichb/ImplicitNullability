@@ -1,11 +1,12 @@
 ﻿using System;
 using FluentAssertions;
-using ImplicitNullability.Sample.NullabilityAnalysis;
+using ImplicitNullability.Samples.CodeWithIN;
+using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
 
 // ReSharper disable ObjectCreationAsStatement
 
-namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
+namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 {
     [TestFixture]
     public class ConstructorsSampleTests

@@ -13,6 +13,7 @@ using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.SolutionAnalysis;
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
+using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Files;
@@ -21,14 +22,9 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NCalc;
 using NUnit.Framework;
+
 #if RESHARPER91
 using JetBrains.Extension;
-using JetBrains.ReSharper.Feature.Services.Daemon;
-using JetBrains.ReSharper.Resources.Shell;
-
-#else
-using JetBrains.ReSharper.Feature.Services.Daemon;
-using JetBrains.ReSharper.Resources.Shell;
 
 #endif
 
@@ -36,7 +32,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
     public abstract class SampleSolutionTestBase : BaseTestWithExistingSolution
     {
-        protected void UseSampleSolution(Action<ISolution> testAction)
+        protected void UseSampleSolution([NotNull] Action<ISolution> testAction)
         {
             var solutionFilePath = FileSystemPath.Parse(TestDataPathUtility.GetPathRelativeToSolution("ImplicitNullability.Sample.sln"));
 
@@ -48,10 +44,10 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         }
 
         protected IList<IIssue> TestExpectedInspectionComments(
-            ISolution solution,
-            IEnumerable<IProjectFile> projectFilesToAnalyze,
-            IEnumerable<Type> highlightingTypesToAnalyze,
-            string definedExpectedWarningSymbol = null)
+            [NotNull] ISolution solution,
+            [NotNull] IEnumerable<IProjectFile> projectFilesToAnalyze,
+            [NotNull] IEnumerable<Type> highlightingTypesToAnalyze,
+            [NotNull] params string[] definedExpectedWarningSymbols)
         {
             var sourceFilesToAnalyze = projectFilesToAnalyze.Select(x => x.ToSourceFiles().Single()).ToList();
             Assert.That(sourceFilesToAnalyze, Is.Not.Empty);
@@ -60,7 +56,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 (from sourceFile in sourceFilesToAnalyze
                     let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
                     from commentNode in rootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
-                    let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbol)
+                    let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbols)
                     where expectedWarningId != null
                     select
                         new
@@ -115,36 +111,33 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 .Concat(implicitNullabilityProblemAnalyzerHighlightingTypes);
         }
 
-        /// <summary>
-        /// Enable implicit nullability for the *whole solution* (otherwise the IsPartOfSolutionCode() checks in 
-        /// <see cref="ImplicitNullabilityProvider"/> wouldn't be tested, as project-level settings wouldn't include external assembly
-        /// code elements). Further, specially disable implicit nullability for the 'ImplicitNullability.Sample.NonImplicit' project.
-        /// </summary>
-        protected static void EnableImplicitNullabilitySetting(
-            [NotNull] ISolution sampleSolution, Action<IContextBoundSettingsStore> additionalSolutionChanges = null)
+        protected static void EnableImplicitNullability(
+            [NotNull] ISolution sampleSolution,
+            bool enableInputParameters = true,
+            bool enableRefParameters = true,
+            bool enableOutParametersAndResult = true)
         {
             // We need to change the settings here by code, because the settings stored in the .DotSettings files aren't 
             // evaluated (see https://devnet.jetbrains.com/message/5527647).
             // Note that the settings changes are cleaned in UseSampleSolution() => no reset mechanism necessary.
 
-            var solutionSettings = Shell.Instance.GetComponent<SettingsStore>()
+            var solutionSettings = sampleSolution.GetComponent<SettingsStore>()
                 .BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(sampleSolution.ToDataContext()));
 
-            Assert.That(solutionSettings.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False, "fixate default value");
+            // Fixate default values:
+            Assert.That(solutionSettings.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False);
+            Assert.That(solutionSettings.GetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters), Is.True);
+            Assert.That(solutionSettings.GetValue((ImplicitNullabilitySettings s) => s.EnableRefParameters), Is.True);
+            Assert.That(solutionSettings.GetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult), Is.True);
+
             solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
-
-            if (additionalSolutionChanges != null)
-                additionalSolutionChanges(solutionSettings);
-
-            var nonImplicitProject = sampleSolution.GetProjectByName("ImplicitNullability.Sample.NonImplicit").NotNull();
-            var nonImplicitProjectSettings = Shell.Instance.GetComponent<SettingsStore>()
-                .BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(nonImplicitProject.ToDataContext()));
-
-            nonImplicitProjectSettings.SetValue((ImplicitNullabilitySettings s) => s.Enabled, false);
+            solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, enableInputParameters);
+            solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableRefParameters, enableRefParameters);
+            solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, enableOutParametersAndResult);
         }
 
         [CanBeNull]
-        private string ExtractExpectedWarningId(string commentText, [CanBeNull] string definedExpectedWarningSymbol)
+        private string ExtractExpectedWarningId([NotNull] string commentText, [NotNull] string[] definedExpectedWarningSymbols)
         {
             var match = Regex.Match(commentText, @"^\s*Expect:(?<Id>.+?)(\[(?<Condition>[^\]]+)*\])?$");
 
@@ -158,7 +151,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
                 expression.Parameters["RS"] = int.Parse(Regex.Match(assemblyName, @"\d+$").Value);
 
-                expression.EvaluateParameter += (name, args) => { args.Result = name == definedExpectedWarningSymbol; };
+                expression.EvaluateParameter += (name, args) => { args.Result = definedExpectedWarningSymbols.Contains(name); };
 
                 if (false.Equals(expression.Evaluate()))
                     return null;

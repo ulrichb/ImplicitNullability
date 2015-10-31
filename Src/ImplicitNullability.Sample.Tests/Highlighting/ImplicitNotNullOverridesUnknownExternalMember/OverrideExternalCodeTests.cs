@@ -1,10 +1,11 @@
 ﻿using System;
 using FluentAssertions;
-using ImplicitNullability.Sample.ExternalCode;
-using ImplicitNullability.Sample.Highlighting.ImplicitNotNullOverridesUnknownExternalMember;
+using ImplicitNullability.Samples.CodeWithIN;
+using ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember;
+using ImplicitNullability.Samples.CodeWithoutIN;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Sample.Tests.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
 {
     [TestFixture]
     public class OverrideExternalCodeTests

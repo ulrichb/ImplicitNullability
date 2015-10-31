@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace ImplicitNullability.Sample.Highlighting.IncorrectNullableAttributeUsageAnalyzer
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableAttributeUsageAnalyzer
 {
     public static class OtherWarningsSample
     {

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
-
-namespace ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitCanBeNull
 {
     public class NotNullOnImplicitCanBeNullSample
     {

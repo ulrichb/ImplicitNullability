@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentAssertions;
-using ImplicitNullability.Sample.Highlighting.NotNullOnImplicitCanBeNull;
+using ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitCanBeNull;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Sample.Tests.Highlighting.NotNullOnImplicitCanBeNull
+namespace ImplicitNullability.Samples.Consumer.Highlighting.NotNullOnImplicitCanBeNull
 {
     [TestFixture]
     public class NotNullOnImplicitCanBeNullSampleTests
