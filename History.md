@@ -1,4 +1,4 @@
-### vNext ###
+### 2.2.0 ###
 - ReSharper 10.0 support
 - Added configuration option in ReSharper's "Products & Features" settings
 - Dropped ReSharper 8.2 support
