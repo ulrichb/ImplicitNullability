@@ -7,10 +7,10 @@ using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
-using JetBrains.ReSharper.Psi.Impl.Special;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
+using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
 
 namespace ImplicitNullability.Plugin
 {
@@ -75,7 +75,7 @@ namespace ImplicitNullability.Plugin
 
             CodeAnnotationNullableValue? result = null;
 
-            if (!(function is DelegateMethod))
+            if (!IsDelegateInvokeOrEndInvokeFunction(function))
             {
                 if (function.IsPartOfSolutionCode() && IsOptionEnabled(function, s => s.EnableOutParametersAndResult))
                 {
@@ -158,14 +158,38 @@ namespace ImplicitNullability.Plugin
             var isParametersOwnerRegularFunctionOrIndexer = (parametersOwner is IFunction && !(parametersOwner is AspImplicitTypeMember)) ||
                                                             parametersOwner is IProperty;
 
-            return isParametersOwnerRegularFunctionOrIndexer && IsParametersOwnerNotSynthetic(parametersOwner);
+            return isParametersOwnerRegularFunctionOrIndexer &&
+                   !IsDelegateBeginInvokeMethod(parametersOwner) &&
+                   IsParametersOwnerNotSynthetic(parametersOwner);
         }
 
-        private bool IsParametersOwnerNotSynthetic([NotNull] IParametersOwner containingParametersOwner)
+        private static bool IsDelegateBeginInvokeMethod([NotNull] IParametersOwner parametersOwner)
         {
-            // Exclude ReSharper's fake (called "synthetic") parameter owners (methods), like ASP.NET WebForms' Render-method, or Razor's Write-methods,
-            // because these look like regular project methods but should be excluded from the implicit nullability annotations because the developer
-            // cannot override the result of the implicit nullability:
+            // Delegate BeginInvoke() methods must be excluded for *parameters*, because ReSharper doesn't pass the parameter attributes to
+            // the DelegateBeginInvokeMethod => implicit nullability could not be overridden with explicit annotations.
+
+            if (parametersOwner.ShortName != DELEGATE_BEGIN_INVOKE_METHOD_NAME)
+                return false;
+
+            return parametersOwner.GetContainingType() is IDelegate;
+        }
+
+        private static bool IsDelegateInvokeOrEndInvokeFunction(IFunction function)
+        {
+            // Delegate Invoke() and EndInvoke() methods must be excluded for *result values*, because of
+            // an R# issue, see DelegatesSampleTests.SomeFunctionDelegate.
+
+            if (!(function.ShortName == DELEGATE_INVOKE_METHOD_NAME || function.ShortName == DELEGATE_END_INVOKE_METHOD_NAME))
+                return false;
+
+            return function.GetContainingType() is IDelegate;
+        }
+
+        private static bool IsParametersOwnerNotSynthetic([NotNull] IParametersOwner containingParametersOwner)
+        {
+            // Exclude ReSharper's fake (called "synthetic") parameter owners (methods), like ASP.NET WebForms' Render-method, or 
+            // Razor's Write-methods, because these look like regular project methods but should be excluded from Implicit
+            // Nullability because the developer cannot override the result with explicit annotations.
 
             return !containingParametersOwner.IsSynthetic();
         }

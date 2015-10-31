@@ -147,5 +147,51 @@ namespace ImplicitNullability.Sample.Tests.NullabilityAnalysis
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
         }
+
+        [Test]
+        public void SomeDelegateWithInvokeAndBeginInvokeCalls()
+        {
+            Action act = () =>
+            {
+                var someDelegate = DelegatesSample.GetSomeDelegate();
+                someDelegate.Invoke(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+
+                var asyncResult = someDelegate.BeginInvoke(null, null, null);
+                // The BeginInvoke() result is made implicitly NotNull by ReSharper's CodeAnnotationsCache:
+                ReSharper.TestValueAnalysis(asyncResult, asyncResult == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                asyncResult.AsyncWaitHandle.WaitOne();
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void GetSomeDelegateWithCanBeNullWithInvokeAndBeginInvokeCalls()
+        {
+            Action act = () =>
+            {
+                var someDelegate = DelegatesSample.GetSomeDelegateWithCanBeNull();
+                someDelegate.Invoke(null);
+                someDelegate.BeginInvoke(null, null, null).AsyncWaitHandle.WaitOne();
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void SomeFunctionDelegateWithInvokeAndBeginInvokeCalls()
+        {
+            Action act = () =>
+            {
+                var @delegate = DelegatesSample.GetSomeFunctionDelegate();
+                var result = @delegate.Invoke();
+                ReSharper.TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+
+                var endInvokeResult = @delegate.EndInvoke(@delegate.BeginInvoke(null, null));
+                ReSharper.TestValueAnalysis(endInvokeResult, endInvokeResult == null);
+            };
+
+            act.ShouldNotThrow();
+        }
     }
 }

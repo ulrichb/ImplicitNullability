@@ -45,6 +45,11 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
 
         public delegate void SomeDelegateWithCanBeNull([CanBeNull] string s);
 
+        public static SomeDelegateWithCanBeNull GetSomeDelegateWithCanBeNull()
+        {
+            return s => ReSharper.TestValueAnalysis(s /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, s == null);
+        }
+
         public static SomeDelegateWithCanBeNull GetSomeDelegateWithCanBeNullToNamedMethod()
         {
             // REPORT? Here R# could warn about the precondition substitutability issue
@@ -127,7 +132,7 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
         {
             Action nullAction = null;
 
-            // Here the target parameter is a Special.Parameter, which is an IParameter. Note that this is an "builtin" null ref warning. Nullability 
+            // Here the target parameter is a Special.Parameter, which is an IParameter. Note that this is an "builtin" null ref warning. Nullability
             // annotations are not involved for this error, although the annotation provider is being called (observed in R# 8.2).
             var action = new Action(nullAction /*Expect:PossibleNullReferenceException*/);
             ReSharper.SuppressUnusedWarning(action);
