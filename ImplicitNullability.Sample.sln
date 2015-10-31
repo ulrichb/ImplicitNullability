@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Sample\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN", "Src\ImplicitNullability.Samples.Consumer\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN.csproj", "{E84293D7-D774-4BDD-8250-238FB12D51A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN", "Src\ImplicitNullability.Samples.Consumer\ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN.csproj", "{E84293D7-D774-4BDD-8250-238FB12D51A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Sample\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN", "Src\ImplicitNullability.Samples.Consumer\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.csproj", "{456A6456-5F34-4B64-9751-135686CE3A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithoutIN.External", "Src\ImplicitNullability.Sample.ExternalCode\ImplicitNullability.Samples.CodeWithoutIN.External.csproj", "{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithoutIN.External", "Src\ImplicitNullability.Samples.CodeWithoutIN\ImplicitNullability.Samples.CodeWithoutIN.External.csproj", "{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R91", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R91.csproj", "{CDB42CAA-C42A-4343-9067-C9B766CAEFA6}"
 EndProject
@@ -27,12 +27,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionItems", "SolutionItems.csproj", "{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN", "Src\ImplicitNullability.Sample.Tests\ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN.csproj", "{E84293D7-D774-4BDD-8250-238FB12D51A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN", "Src\ImplicitNullability.Samples.Consumer\ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN.csproj", "{E84293D7-D774-4BDD-8250-238FB12D51A4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9001EFB4-358F-4C98-AF13-F374E831A06E} = {9001EFB4-358F-4C98-AF13-F374E831A06E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.External", "Src\ImplicitNullability.Sample\ImplicitNullability.Samples.CodeWithIN.External.csproj", "{9001EFB4-358F-4C98-AF13-F374E831A06E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.External", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.External.csproj", "{9001EFB4-358F-4C98-AF13-F374E831A06E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
 	EndProjectSection

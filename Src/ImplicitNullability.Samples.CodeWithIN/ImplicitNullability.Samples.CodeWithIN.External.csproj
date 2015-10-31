@@ -4,21 +4,21 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}</ProjectGuid>
+    <ProjectGuid>{9001EFB4-358F-4C98-AF13-F374E831A06E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImplicitNullability.Samples.CodeWithIN</RootNamespace>
-    <AssemblyName>ImplicitNullability.Samples.CodeWithIN.Internal</AssemblyName>
+    <AssemblyName>ImplicitNullability.Samples.CodeWithIN.External</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>obj\Internal\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\External\</BaseIntermediateOutputPath>
     <NuGetPackageImportStamp>da49a2e7</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Internal\Debug\</OutputPath>
+    <OutputPath>bin\External\</OutputPath>
     <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Internal\Release\</OutputPath>
+    <OutputPath>bin\External\</OutputPath>
     <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ImplicitNullability.Samples.CodeWithoutIN.External">
-      <HintPath>..\ImplicitNullability.Sample.ExternalCode\bin\External\ImplicitNullability.Samples.CodeWithoutIN.External.dll</HintPath>
+      <HintPath>..\ImplicitNullability.Samples.CodeWithoutIN\bin\External\ImplicitNullability.Samples.CodeWithoutIN.External.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Annotations">
       <HintPath>..\..\packages\JetBrains.Annotations.9.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
@@ -60,29 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\AsyncMethods.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\CanBeNullOneOfThreeSuperMembers.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\ExplicitInterfaceImplementation.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsStrongerInDerived.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPostconditionsWeakerInDerived.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsStrongerInDerived.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithPreconditionsWeakerInDerived.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithRefParameters.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSamePostconditions.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\HierarchyWithSamePreconditions.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\LongInheritanceChain.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\NonPolymorphicMethods.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchy\NullabilityInheritanceBehavior.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\BaseClassWithExternalInterfaceInOwnCode.cs" />
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\IImplicitlyNullableInterface.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\NonPolymorphicMethod.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCode.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeWithAnnotations.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeWithImplicitCanBeNull.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\OverrideExternalCodeWithRefAndOutParameter.cs" />
-    <Compile Include="Highlighting\IncorrectNullableAttributeUsageAnalyzer\AnnotationRedundancyInHierarchySample.cs" />
-    <Compile Include="Highlighting\IncorrectNullableAttributeUsageAnalyzer\OtherWarningsSample.cs" />
-    <Compile Include="Highlighting\NotNullOnImplicitCanBeNull\NotNullOnImplicitCanBeNullSample.cs" />
     <Compile Include="NullabilityAnalysis\DelegatesSample.cs" />
     <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
       <SubType>ASPXCodeBehind</SubType>
@@ -99,6 +77,7 @@
     <Compile Include="NullabilityAnalysis\IndexersSample.cs" />
     <Compile Include="NullabilityAnalysis\MethodsInputSample.cs" />
     <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSample.cs" />
+    <Compile Include="Properties\ImplicitNullabilityAssemblyMetadata.cs" />
     <Compile Include="Properties\NullGuardConfiguration.cs" />
     <Compile Include="ReSharper.cs" />
     <Compile Include="NullabilityAnalysis\AsyncMethodsSample.cs" />
