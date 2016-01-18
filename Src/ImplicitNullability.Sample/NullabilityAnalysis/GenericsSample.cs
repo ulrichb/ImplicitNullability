@@ -7,9 +7,15 @@ namespace ImplicitNullability.Sample.NullabilityAnalysis
     {
         public class NoConstraint<T>
         {
+            public void CallMethodWithCanBeNullArgument([CanBeNull] T a)
+            {
+                Method(a /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+            }
+
             public void CallMethodWithDefaultOfT()
             {
-                Method(default(T)); // FALSE NEGATIVE for argument b, if T is a reference type
+                // REPORT? In opposite to the previous example we have a false negative for default(T), if T is a reference type:
+                Method(default(T));
             }
 
             public void Method(T a)
