@@ -25,9 +25,7 @@ namespace ImplicitNullability.Plugin
 
         public void ConsumeHighlighting(HighlightingInfo highlightingInfo)
         {
-            var annotationRedundancyInHierarchyWarning = highlightingInfo.Highlighting as AnnotationRedundancyInHierarchyWarning;
-
-            if (annotationRedundancyInHierarchyWarning == null)
+            if (!(highlightingInfo.Highlighting is AnnotationRedundancyInHierarchyWarning))
             {
                 _decorated.ConsumeHighlighting(highlightingInfo);
             }
