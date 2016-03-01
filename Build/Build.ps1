@@ -14,7 +14,7 @@ $BuildOutputPath = "Build\Output"
 $SolutionFilePath = "ImplicitNullability.sln"
 $AssemblyVersionFilePath = "Src\ImplicitNullability.Plugin\Properties\AssemblyInfo.cs"
 $MSBuildPath = "${env:ProgramFiles(x86)}\MSBuild\14.0\Bin\MSBuild.exe"
-$NUnitExecutable = "nunit-console-x86.exe"
+$NUnitAdditionalArgs = "--x86 --labels=All"
 $NUnitTestAssemblyPaths = @(
     "Src\ImplicitNullability.Plugin.Tests\bin\R91\$Configuration\ImplicitNullability.Plugin.Tests.R91.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\R92\$Configuration\ImplicitNullability.Plugin.Tests.R92.dll"
