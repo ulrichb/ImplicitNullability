@@ -7,17 +7,22 @@ namespace ImplicitNullability.Plugin.Infrastructure
 {
     public static class PsiExtensions
     {
-        /// <summary>
-        /// Check if this element is part of the solution code (see http://devnet.jetbrains.com/thread/454638)
-        /// </summary>
         public static bool IsPartOfSolutionCode([NotNull] this IClrDeclaredElement declaredElement)
         {
-            return declaredElement.Module is IProjectPsiModule;
+            return declaredElement.Module.IsPartOfSolutionCode();
+        }
+
+        /// <summary>
+        /// Check if this module is part of the solution code (see http://devnet.jetbrains.com/thread/454638).
+        /// </summary>
+        public static bool IsPartOfSolutionCode([NotNull] this IPsiModule psiModule)
+        {
+            return psiModule is IProjectPsiModule;
         }
 
         public static bool IsUnknown(this CodeAnnotationNullableValue? x)
         {
-            return x == null;
+            return !x.HasValue;
         }
 
         public static bool IsInput([NotNull] this IParameter parameter)

@@ -1,29 +1,27 @@
-using System;
-using System.Linq.Expressions;
 using ImplicitNullability.Plugin.Infrastructure;
-using ImplicitNullability.Plugin.Settings;
 using JetBrains.Annotations;
-using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
-using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
 
 namespace ImplicitNullability.Plugin
 {
+    /// <summary>
+    /// Calculates the nullability value of the different PSI elements => implements the Implicit Nullability rules.
+    /// </summary>
     [PsiComponent]
     public class ImplicitNullabilityProvider
     {
         private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityProvider));
 
-        private readonly ISettingsStore _settingsStore;
+        private readonly ImplicitNullabilityConfigurationEvaluator _configurationEvaluator;
 
-        public ImplicitNullabilityProvider(ISettingsStore settingsStore)
+        public ImplicitNullabilityProvider(ImplicitNullabilityConfigurationEvaluator configurationEvaluator)
         {
-            _settingsStore = settingsStore;
+            _configurationEvaluator = configurationEvaluator;
         }
 
         public CodeAnnotationNullableValue? AnalyzeDeclaredElement([NotNull] IDeclaredElement declaredElement)
@@ -49,9 +47,11 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (parameter.IsPartOfSolutionCode() && IsImplicitNullabilityApplicableToParameter(parameter))
+            if (IsImplicitNullabilityApplicableToParameter(parameter))
             {
-                if (parameter.IsInput() && IsOptionEnabled(parameter, s => s.EnableInputParameters))
+                var configuration = _configurationEvaluator.EvaluateFor(parameter.Module);
+
+                if (parameter.IsInput() && configuration.EnableInputParameters)
                 {
                     if (IsOptionalArgumentWithNullDefaultValue(parameter))
                         result = CodeAnnotationNullableValue.CAN_BE_NULL;
@@ -59,10 +59,10 @@ namespace ImplicitNullability.Plugin
                         result = GetNullabilityForType(parameter.Type);
                 }
 
-                if (parameter.IsRef() && IsOptionEnabled(parameter, s => s.EnableRefParameters))
+                if (parameter.IsRef() && configuration.EnableRefParameters)
                     result = GetNullabilityForType(parameter.Type);
 
-                if (parameter.IsOut() && IsOptionEnabled(parameter, s => s.EnableOutParametersAndResult))
+                if (parameter.IsOut() && configuration.EnableOutParametersAndResult)
                     result = GetNullabilityForType(parameter.Type);
             }
 
@@ -77,7 +77,7 @@ namespace ImplicitNullability.Plugin
 
             if (!IsDelegateInvokeOrEndInvokeFunction(function))
             {
-                if (function.IsPartOfSolutionCode() && IsOptionEnabled(function, s => s.EnableOutParametersAndResult))
+                if (_configurationEvaluator.EvaluateFor(function.Module).EnableOutParametersAndResult)
                 {
                     result = GetNullabilityForType(function.ReturnType);
                 }
@@ -90,7 +90,7 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (@delegate.IsPartOfSolutionCode() && IsOptionEnabled(@delegate, s => s.EnableOutParametersAndResult))
+            if (_configurationEvaluator.EvaluateFor(@delegate.Module).EnableOutParametersAndResult)
             {
                 result = GetNullabilityForType(@delegate.InvokeMethod.ReturnType);
             }
@@ -110,11 +110,11 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
+        private CodeAnnotationNullableValue? AnalyzeMethodContainerElement([NotNull] IMethod method)
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (method.IsPartOfSolutionCode() && IsOptionEnabled(method, s => s.EnableOutParametersAndResult))
+            if (_configurationEvaluator.EvaluateFor(method.Module).EnableOutParametersAndResult)
             {
                 var taskUnderlyingType = method.ReturnType.GetTaskUnderlyingType();
 
@@ -149,12 +149,9 @@ namespace ImplicitNullability.Plugin
         {
             var parametersOwner = parameter.ContainingParametersOwner;
 
-            //Using declarations:
-            ////return parameter.GetDeclarations().SingleOrDefault() is IRegularParameterDeclaration &&
-            ////       (parametersOwner != null && IsParametersOwnerNotSynthetic (parametersOwner));
-
-            // IFunction includes methods, constructors, operator overloads, delegates, but also implicitly defined ASP.NET methods, e.g. Bind(), which
-            // we want to exclude, because the developer cannot override the implicit annotation.
+            // IFunction includes methods, constructors, operator overloads, delegates, but also implicitly defined ASP.NET methods, e.g. Bind()
+            // which we want to exclude, because the developer cannot override the implicit annotation.
+            // IProperty includes indexer parameters.
             var isParametersOwnerRegularFunctionOrIndexer = (parametersOwner is IFunction && !(parametersOwner is AspImplicitTypeMember)) ||
                                                             parametersOwner is IProperty;
 
@@ -176,7 +173,7 @@ namespace ImplicitNullability.Plugin
 
         private static bool IsDelegateInvokeOrEndInvokeFunction(IFunction function)
         {
-            // Delegate Invoke() and EndInvoke() methods must be excluded for *result values*, because of
+            // Delegate Invoke() and EndInvoke() methods must be excluded for *result values*, because of 
             // an R# issue, see DelegatesSampleTests.SomeFunctionDelegate.
 
             if (!(function.ShortName == DELEGATE_INVOKE_METHOD_NAME || function.ShortName == DELEGATE_END_INVOKE_METHOD_NAME))
@@ -194,25 +191,16 @@ namespace ImplicitNullability.Plugin
             return !containingParametersOwner.IsSynthetic();
         }
 
-        private bool IsOptionEnabled([NotNull] IClrDeclaredElement element,
-            [NotNull] Expression<Func<ImplicitNullabilitySettings, bool>> optionExpression)
-        {
-            var contextRange = ContextRange.Smart(element.Module.ToDataContext());
-
-            var enabled = _settingsStore.BindToContextTransient(contextRange).GetValue((ImplicitNullabilitySettings s) => s.Enabled);
-
-            return enabled && _settingsStore.BindToContextTransient(contextRange).GetValue(optionExpression);
-        }
-
         private static bool IsOptionalArgumentWithNullDefaultValue([NotNull] IParameter parameter)
         {
 #if DEBUG
             if (parameter.IsOptional)
             {
-                var optionalParameterText = "OptionalParameter IsConstant: " + parameter.GetDefaultValue().IsConstant +
-                                            ", ConstantValue.Value: " + (parameter.GetDefaultValue().ConstantValue.Value ?? "NULL") +
-                                            ", IsDefaultType: " + parameter.GetDefaultValue().IsDefaultType +
-                                            ", DefaultTypeValue.IsValueType(): " + parameter.GetDefaultValue().DefaultTypeValue.IsValueType();
+                var defaultValue = parameter.GetDefaultValue();
+                var optionalParameterText = "OptionalParameter IsConstant: " + defaultValue.IsConstant +
+                                            ", ConstantValue.Value: " + (defaultValue.ConstantValue.Value ?? "NULL") +
+                                            ", IsDefaultType: " + defaultValue.IsDefaultType +
+                                            ", DefaultTypeValue.IsValueType(): " + defaultValue.DefaultTypeValue.IsValueType();
 
                 Logger.Verbose(optionalParameterText);
             }

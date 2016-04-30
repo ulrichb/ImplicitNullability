@@ -6,7 +6,7 @@ using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Plugin.Tests.Isolated
+namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
     [TestFixture]
     public class AnnotationRedundancyInHierarchyWarningFilteringDecoratorTest
@@ -40,7 +40,7 @@ namespace ImplicitNullability.Plugin.Tests.Isolated
                 Severity.INFO,
                 "overriddenHighlightingAttributeId",
                 OverlapResolveKind.ERROR,
-                42));
+                42)).MustHaveHappened();
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace ImplicitNullability.Plugin.Tests.Isolated
 
             _sut.ConsumeHighlighting(highlightingInfo);
 
-            A.CallTo(() => _decorated.ConsumeHighlighting(highlightingInfo));
+            A.CallTo(() => _decorated.ConsumeHighlighting(highlightingInfo)).MustHaveHappened();
         }
 
         [Test]

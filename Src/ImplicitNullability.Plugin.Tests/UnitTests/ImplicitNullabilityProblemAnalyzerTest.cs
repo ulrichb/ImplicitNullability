@@ -11,7 +11,7 @@ using JetBrains.Util;
 using NuGet;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Plugin.Tests.Isolated
+namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
     [TestFixture]
     public class ImplicitNullabilityProblemAnalyzerTest : BaseTestWithSolution

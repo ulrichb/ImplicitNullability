@@ -168,14 +168,29 @@
     <Compile Include="Integrative\HighlightingTests.cs" />
     <Compile Include="Infrastructure\SampleSolutionTestBase.cs" />
     <Compile Include="Infrastructure\MiscTestExtensions.cs" />
-    <Compile Include="Isolated\AnnotationRedundancyInHierarchyWarningFilteringDecoratorTest.cs" />
-    <Compile Include="Isolated\ImplicitNullabilityProblemAnalyzerTest.cs" />
+    <Compile Include="UnitTests\AnnotationRedundancyInHierarchyWarningFilteringDecoratorTest.cs" />
+    <Compile Include="UnitTests\AssemblyAttributeConfigurationTranslatorTest.cs" />
+    <Compile Include="UnitTests\ImplicitNullabilityConfigurationEvaluatorTest.cs" />
+    <Compile Include="UnitTests\ImplicitNullabilityProblemAnalyzerTest.cs" />
     <Compile Include="ZoneMarkerAndSetUpFixture.cs" />
     <Compile Include="Integrative\NullabilityAnalysisTests.cs" />
     <Compile Include="Infrastructure\TestDataPathUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Plugin.Tests.R92.config" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithAllOptions.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithNoOption.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithInvalidValue.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithNullKey.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithNullValue.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithOnlyInputParametersOption.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\AttributeWithValueContainingInvalidOption.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\MultipleAttributes.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\NoConfigurationAttribute.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\NonCompilingAttribute1.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\NonCompilingAttribute2.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\NonCompilingAttribute3.cs" />
+    <None Include="test\data\UnitTests\ImplicitNullabilityConfigurationEvaluatorTest\NonCompilingAttribute4.cs" />
     <None Include="test\data\nuget.config" />
   </ItemGroup>
   <ItemGroup>

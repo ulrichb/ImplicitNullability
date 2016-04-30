@@ -87,9 +87,13 @@ _Implicit nullability_ can be enabled or disabled for specific syntax elements i
 
 ![Options Page](/Doc/OptionsPage.png)
 
-Note that these settings can also be configured _per project_ by manually adding a [`.csproj.DotSettings` next to the `.csproj` file](https://blog.jetbrains.com/dotnet/2012/01/18/per-project-settings-or-how-to-have-different-naming-styles-for-my-test-project/).
+### Code configuration
 
-:warning: After changing these settings, [cleaning the solution cache](https://www.jetbrains.com/resharper/help/Configuring_Caches_Location.html#dynaProc1) is necessary to update already analyzed code.
+_Implicit Nullability_ can also be configured by code, using a [`AssemblyMetadataAttribute`](https://msdn.microsoft.com/en-us/library/system.reflection.assemblymetadataattribute.aspx). This has the advantage that the configuration gets compiled into the assembly, so that consumers of the assembly with installed _Implicit Nullability_ get the same implicit nullability annotations of the compiled code elements, as within the library's solution.
+
+Example: `[assembly: System.Reflection.AssemblyMetadata("ImplicitNullability.AppliesTo", "InputParameters, RefParameters, OutParametersAndResult")]`
+
+:warning: After changing the settings (either by code or in the options page), [cleaning the solution cache](https://www.jetbrains.com/resharper/help/Configuring_Caches_Location.html#dynaProc1) is necessary to update already analyzed code.
 
 ## Code inspection warnings
 
