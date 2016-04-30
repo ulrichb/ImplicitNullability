@@ -166,7 +166,7 @@
     <Compile Include="Integrative\HighlightingTests.cs" />
     <Compile Include="Infrastructure\SampleSolutionTestBase.cs" />
     <Compile Include="Infrastructure\MiscTestExtensions.cs" />
-    <Compile Include="ZoneMarker.cs" />
+    <Compile Include="ZoneMarkerAndSetUpFixture.cs" />
     <Compile Include="Integrative\NullabilityAnalysisTests.cs" />
     <Compile Include="Infrastructure\TestDataPathUtility.cs" />
   </ItemGroup>
