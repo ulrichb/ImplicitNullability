@@ -160,7 +160,6 @@ namespace ImplicitNullability.Plugin
                 CheckForOutputElementSuperMemberConflicts(superMembersNullability, highlightingNode, highlightingList);
             }
 
-#if !RESHARPER91
 
             if (IsContainerElementImplicitlyNotNull(method, attributeInstances))
             {
@@ -169,7 +168,6 @@ namespace ImplicitNullability.Plugin
                 var superMembersNullability = GetImmediateSuperMembersContainerElementNullability(method).ToArray();
                 CheckForOutputElementSuperMemberConflicts(superMembersNullability, highlightingNode, highlightingList);
             }
-#endif
         }
 
         private static void CheckForInputOrRefElementSuperMemberConflicts(
@@ -204,7 +202,6 @@ namespace ImplicitNullability.Plugin
                    _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
-#if !RESHARPER91
         private bool IsContainerElementImplicitlyNotNull(
             [NotNull] IDeclaredElement declaredElement,
             [NotNull] IEnumerable<IAttributeInstance> attributeInstances)
@@ -212,7 +209,6 @@ namespace ImplicitNullability.Plugin
             return !ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
-#endif
 
         private static bool ContainsCanBeNull(IEnumerable<SuperMemberNullability> superMembersNullability)
         {
@@ -236,13 +232,11 @@ namespace ImplicitNullability.Plugin
                 highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
             }
 
-#if !RESHARPER91
             if (ContainsExplicitItemNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
                 highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
             }
-#endif
         }
 
         private void DelegateToIncorrectNullableAttributeUsageAnalyzer(
@@ -273,7 +267,6 @@ namespace ImplicitNullability.Plugin
             return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.NotNullAttributeShortName));
         }
 
-#if !RESHARPER91
         private bool ContainsAnyExplicitItemNullabilityAttributes(IEnumerable<IAttributeInstance> attributeInstances)
         {
             return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemNotNullAttributeShortName) ||
@@ -284,7 +277,6 @@ namespace ImplicitNullability.Plugin
         {
             return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemNotNullAttributeShortName));
         }
-#endif
 
         private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersNullability([NotNull] IParameter parameter)
         {
@@ -318,7 +310,6 @@ namespace ImplicitNullability.Plugin
             });
         }
 
-#if !RESHARPER91
         private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersContainerElementNullability(IOverridableMember method)
         {
             return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
@@ -327,7 +318,6 @@ namespace ImplicitNullability.Plugin
                 NullableAttribute = _codeAnnotationsCache.GetContainerElementNullableAttribute(x.Member)
             });
         }
-#endif
 
         private struct SuperMemberNullability
         {

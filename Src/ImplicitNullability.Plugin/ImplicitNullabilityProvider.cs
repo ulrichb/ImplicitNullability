@@ -98,7 +98,6 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-#if !(RESHARPER91)
         public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([NotNull] IDeclaredElement element)
         {
             CodeAnnotationNullableValue? result = null;
@@ -124,7 +123,6 @@ namespace ImplicitNullability.Plugin
 
             return result;
         }
-#endif
 
         private static CodeAnnotationNullableValue? GetNullabilityForType([NotNull] IType type)
         {

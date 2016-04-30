@@ -23,11 +23,6 @@ using JetBrains.Util;
 using NCalc;
 using NUnit.Framework;
 
-#if RESHARPER91
-using JetBrains.Extension;
-
-#endif
-
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
     public abstract class SampleSolutionTestBase : BaseTestWithExistingSolution

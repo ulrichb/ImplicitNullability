@@ -18,7 +18,6 @@ $AssemblyVersionFilePath = "Src\ImplicitNullability.Plugin\Properties\AssemblyIn
 $MSBuildPath = "${env:ProgramFiles(x86)}\MSBuild\14.0\Bin\MSBuild.exe"
 $NUnitAdditionalArgs = "--x86 --labels=All"
 $NUnitTestAssemblyPaths = @(
-    "Src\ImplicitNullability.Plugin.Tests\bin\R91\$Configuration\ImplicitNullability.Plugin.Tests.R91.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\R92\$Configuration\ImplicitNullability.Plugin.Tests.R92.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\R100\$Configuration\ImplicitNullability.Plugin.Tests.R100.dll"
     "Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
@@ -27,7 +26,6 @@ $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Samples.CodeWithIN.*]* -[ImplicitNullability.Samples.CodeWithoutIN.External]*"
 $NuspecPath = "Src\ImplicitNullability.nuspec"
 $NugetPackProperties = @(
-    "Version=$(CalcNuGetPackageVersion 91);Configuration=$Configuration;DependencyVer=[2.0];BinDirInclude=bin\R91"
     "Version=$(CalcNuGetPackageVersion 92);Configuration=$Configuration;DependencyVer=[3.0];BinDirInclude=bin\R92"
     "Version=$(CalcNuGetPackageVersion 100);Configuration=$Configuration;DependencyVer=[4.0];BinDirInclude=bin\R100"
 )

@@ -5,7 +5,7 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
 using ReSharperExtensionsShared.Debugging;
 
-#if !(RESHARPER91 || RESHARPER92)
+#if !RESHARPER92
 using System.Collections.Generic;
 
 #endif
@@ -43,7 +43,6 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-#if !RESHARPER91
         public CodeAnnotationNullableValue? GetContainerElementNullableAttribute(IDeclaredElement element)
         {
 #if DEBUG
@@ -58,9 +57,8 @@ namespace ImplicitNullability.Plugin
 
             return result;
         }
-#endif
 
-#if !(RESHARPER91 || RESHARPER92)
+#if !RESHARPER92
         public ICollection<IAttributeInstance> GetSpecialAttributeInstances(IClrDeclaredElement element)
         {
             return EmptyList<IAttributeInstance>.InstanceList;

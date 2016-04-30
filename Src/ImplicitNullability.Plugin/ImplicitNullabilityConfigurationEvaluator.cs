@@ -5,7 +5,7 @@ using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Tree;
-#if RESHARPER91 || RESHARPER92
+#if RESHARPER92
 using JetBrains.Util.Lazy;
 using JetBrains.Metadata.Reader.API;
 
@@ -72,7 +72,7 @@ namespace ImplicitNullability.Plugin
         {
             var moduleAttributes = _psiServices.Value.Symbols.GetModuleAttributes(psiModule
 
-#if (RESHARPER91 || RESHARPER92)
+#if RESHARPER92
                 ,
                 // The generic resolve context (e.g. necessary to resolve the attribute argument types) is sufficient in our case:
                 UniversalModuleReferenceContext.Instance
