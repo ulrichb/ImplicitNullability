@@ -25,8 +25,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
         public class Implementation : IInterface
         {
-            // REPORTED false positive http://youtrack.jetbrains.com/issue/RSRP-415431
-            public void CanBeNullOutParameterInInterfaceExplicitNotNullInDerived([NotNull] /*Expect:AnnotationConflictInHierarchy*/ out string a)
+            public void CanBeNullOutParameterInInterfaceExplicitNotNullInDerived(
+                [NotNull] /*Expect:AnnotationConflictInHierarchy[RS < 20161]*/ out string a)
             {
                 a = "";
             }

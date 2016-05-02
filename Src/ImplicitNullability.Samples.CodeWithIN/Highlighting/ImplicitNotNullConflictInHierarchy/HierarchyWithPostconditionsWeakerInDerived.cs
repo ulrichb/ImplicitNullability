@@ -24,14 +24,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
         public class Implementation : IInterface
         {
-            // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431
-            public void ExplicitNotNullOutParameterInInterfaceCanBeNullInDerived([CanBeNull] out string a)
+            public void ExplicitNotNullOutParameterInInterfaceCanBeNullInDerived(
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161]*/ out string a)
             {
-                a = null;
+                a = null /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/;
             }
 
-            // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431 may also fix this issue
-            public void ImplicitNotNullOutParameterInInterfaceCanBeNullInDerived([CanBeNull] out string a)
+            public void ImplicitNotNullOutParameterInInterfaceCanBeNullInDerived(
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161 && Implicit]*/ out string a)
             {
                 a = null;
             }
@@ -39,7 +39,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
             public string FunctionWithExplicitNotNullInInterfaceCanBeNullInDerived()
             {
-                return null;
+                // The invalid CanBeNull does not override the NotNull:
+                return null /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/;
             }
 
             [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
@@ -48,14 +49,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 return null;
             }
 
-            [ItemCanBeNull] // REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-447891
+            [ItemCanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161]*/
             public async Task<string> TaskFunctionWithExplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 await Task.Delay(0);
                 return null;
             }
 
-            [ItemCanBeNull] // REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-447891 may also fix this issue 
+            [ItemCanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161 && Implicit]*/
             public async Task<string> TaskFunctionWithImplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 await Task.Delay(0);

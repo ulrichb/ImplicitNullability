@@ -6,7 +6,6 @@ using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.Application.Components;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
-using JetBrains.ReSharper.Daemon.CSharp.Stages;
 using JetBrains.ReSharper.Daemon.CSharp.Stages.Analysis;
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 using JetBrains.ReSharper.Feature.Services.Daemon;
@@ -16,6 +15,11 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
 using ReSharperExtensionsShared.Debugging;
+
+#if RESHARPER92 || RESHARPER100
+using JetBrains.ReSharper.Daemon.CSharp.Stages;
+
+#endif
 
 namespace ImplicitNullability.Plugin
 {
@@ -32,6 +36,9 @@ namespace ImplicitNullability.Plugin
                 typeof (AnnotationRedundancyInHierarchyWarning),
                 typeof (AnnotationConflictInHierarchyWarning),
                 typeof (AnnotationRedundancyAtValueTypeWarning),
+#if !(RESHARPER92 || RESHARPER100)
+                typeof (ContainerAnnotationRedundancyWarning),
+#endif
                 typeof (MultipleNullableAttributesUsageWarning),
                 // The own ones:
                 typeof (NotNullOnImplicitCanBeNullHighlighting),
@@ -45,17 +52,18 @@ namespace ImplicitNullability.Plugin
     {
         private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityProblemAnalyzer));
 
-        private readonly CodeAnnotationsCache _codeAnnotationsCache;
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
         private readonly IncorrectNullableAttributeUsageAnalyzer _incorrectNullableAttributeUsageAnalyzer;
+        private readonly NullabilityProvider _nullabilityProvider;
 
         public ImplicitNullabilityProblemAnalyzer(
+            NullabilityProvider nullabilityProvider,
             CodeAnnotationsCache codeAnnotationsCache,
             ImplicitNullabilityProvider implicitNullabilityProvider)
         {
             Logger.Verbose(".ctor");
 
-            _codeAnnotationsCache = codeAnnotationsCache;
+            _nullabilityProvider = nullabilityProvider;
             _implicitNullabilityProvider = implicitNullabilityProvider;
 
             _incorrectNullableAttributeUsageAnalyzer = new IncorrectNullableAttributeUsageAnalyzer(codeAnnotationsCache);
@@ -70,7 +78,7 @@ namespace ImplicitNullability.Plugin
             var declaredElement = declaration.DeclaredElement;
             var attributesSet = declaredElement as IAttributesSet;
 
-            var filterAnnotationRedundancyInHierarchyWarning = false;
+            var hasOveriddenImplicitNullability = false;
 
             var highlightingList = new List<IHighlighting>();
 
@@ -110,11 +118,13 @@ namespace ImplicitNullability.Plugin
 
                 highlightingList.ForEach(x => consumer.AddHighlighting(x));
 
-                if (ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
-                    _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) != null)
-                {
-                    filterAnnotationRedundancyInHierarchyWarning = true;
-                }
+                hasOveriddenImplicitNullability |=
+                    _nullabilityProvider.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
+                    _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) != null;
+
+                hasOveriddenImplicitNullability |=
+                    _nullabilityProvider.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
+                    _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) != null;
             }
 
 #if DEBUG
@@ -124,7 +134,7 @@ namespace ImplicitNullability.Plugin
             Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
 #endif
 
-            DelegateToIncorrectNullableAttributeUsageAnalyzer(declaration, data, consumer, filterAnnotationRedundancyInHierarchyWarning);
+            DelegateToIncorrectNullableAttributeUsageAnalyzer(declaration, data, consumer, hasOveriddenImplicitNullability);
         }
 
         private void CheckForParameterSuperMemberConflicts(
@@ -198,7 +208,7 @@ namespace ImplicitNullability.Plugin
             [NotNull] IDeclaredElement declaredElement,
             [NotNull] IEnumerable<IAttributeInstance> attributeInstances)
         {
-            return !ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
+            return !_nullabilityProvider.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
@@ -206,7 +216,7 @@ namespace ImplicitNullability.Plugin
             [NotNull] IDeclaredElement declaredElement,
             [NotNull] IEnumerable<IAttributeInstance> attributeInstances)
         {
-            return !ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
+            return !_nullabilityProvider.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
@@ -226,13 +236,13 @@ namespace ImplicitNullability.Plugin
             [NotNull] ITreeNode highlightingNode,
             [NotNull] ICollection<IHighlighting> highlightingList)
         {
-            if (ContainsExplicitNotNullNullabilityAttribute(attributeInstances) &&
+            if (_nullabilityProvider.ContainsExplicitNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
                 highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
             }
 
-            if (ContainsExplicitItemNotNullNullabilityAttribute(attributeInstances) &&
+            if (_nullabilityProvider.ContainsExplicitItemNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
                 highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
@@ -243,9 +253,9 @@ namespace ImplicitNullability.Plugin
             [NotNull] ITreeNode declaration,
             [NotNull] ElementProblemAnalyzerData data,
             [NotNull] IHighlightingConsumer consumer,
-            bool filterAnnotationRedundancyInHierarchyWarning)
+            bool hasOveriddenImplicitNullability)
         {
-            if (filterAnnotationRedundancyInHierarchyWarning)
+            if (hasOveriddenImplicitNullability)
             {
                 var consumerDecorator = new AnnotationRedundancyInHierarchyWarningFilteringDecorator(consumer);
                 _incorrectNullableAttributeUsageAnalyzer.Run(declaration, data, consumerDecorator);
@@ -254,28 +264,6 @@ namespace ImplicitNullability.Plugin
             {
                 _incorrectNullableAttributeUsageAnalyzer.Run(declaration, data, consumer);
             }
-        }
-
-        private bool ContainsAnyExplicitNullabilityAttributes(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.NotNullAttributeShortName) ||
-                                               _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.CanBeNullAttributeShortName));
-        }
-
-        private bool ContainsExplicitNotNullNullabilityAttribute(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.NotNullAttributeShortName));
-        }
-
-        private bool ContainsAnyExplicitItemNullabilityAttributes(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemNotNullAttributeShortName) ||
-                                               _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemCanBeNullAttributeShortName));
-        }
-
-        private bool ContainsExplicitItemNotNullNullabilityAttribute(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x => _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemNotNullAttributeShortName));
         }
 
         private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersNullability([NotNull] IParameter parameter)
@@ -295,7 +283,7 @@ namespace ImplicitNullability.Plugin
                     {
                         SuperMember = x.Element,
                         // We assume that the super members of a parameter owner are also parameter owners with the same number of parameters:
-                        NullableAttribute = _codeAnnotationsCache.GetNullableAttribute(((IParametersOwner) x.Element).Parameters[parameterIndex])
+                        NullableAttribute = _nullabilityProvider.GetElementNullability(((IParametersOwner) x.Element).Parameters[parameterIndex])
                     });
 
             return result;
@@ -306,7 +294,7 @@ namespace ImplicitNullability.Plugin
             return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
             {
                 SuperMember = x.Element,
-                NullableAttribute = _codeAnnotationsCache.GetNullableAttribute(x.Member)
+                NullableAttribute = _nullabilityProvider.GetElementNullability(x.Member)
             });
         }
 
@@ -315,7 +303,7 @@ namespace ImplicitNullability.Plugin
             return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
             {
                 SuperMember = x.Element,
-                NullableAttribute = _codeAnnotationsCache.GetContainerElementNullableAttribute(x.Member)
+                NullableAttribute = _nullabilityProvider.GetContainerElementNullability(x.Member)
             });
         }
 

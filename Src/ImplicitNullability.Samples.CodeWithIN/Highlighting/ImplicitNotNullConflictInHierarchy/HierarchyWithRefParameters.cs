@@ -24,17 +24,17 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public void CanBeNullRefParameterInInterfaceImplicitNotNullInDerived(ref string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
                 ReSharper.SuppressUnusedWarning(a);
-                a = null; // Interestingly the CodeAnnotationProvider is not asked here => [CanBeNull] is inherited
+                a = null;
             }
 
-            // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431
-            public void ExplicitNotNullRefParameterInInterfaceCanBeNullInDerived([CanBeNull] ref string a)
+            public void ExplicitNotNullRefParameterInInterfaceCanBeNullInDerived(
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161]*/ ref string a)
             {
                 ReSharper.SuppressUnusedWarning(a);
             }
 
-            // REPORTED false negative http://youtrack.jetbrains.com/issue/RSRP-415431 may also fix this issue
-            public void ImplicitNotNullRefParameterInInterfaceCanBeNullInDerived([CanBeNull] ref string a)
+            public void ImplicitNotNullRefParameterInInterfaceCanBeNullInDerived(
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161 && Implicit]*/ ref string a)
             {
                 ReSharper.SuppressUnusedWarning(a);
             }

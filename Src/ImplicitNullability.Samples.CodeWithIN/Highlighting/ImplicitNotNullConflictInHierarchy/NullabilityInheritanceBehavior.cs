@@ -38,7 +38,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             [NotNull]
             public string OverriddenNullabilityInDerived([CanBeNull] string a)
             {
-                // Here the explicit NotNull/CanBeNull overrides the base annotations.
+                // Here the explicit NotNull/CanBeNull overrides the base annotation.
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
                 return null /*Expect:AssignNullToNotNullAttribute*/;
             }

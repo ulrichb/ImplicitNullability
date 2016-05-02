@@ -21,6 +21,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             _sut = new AnnotationRedundancyInHierarchyWarningFilteringDecorator(_decorated);
         }
 
+#if RESHARPER92 || RESHARPER100
         [Test]
         public void ConsumeHighlighting_ShouldPassCall()
         {
@@ -42,6 +43,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
                 OverlapResolveKind.ERROR,
                 42)).MustHaveHappened();
         }
+#endif
 
         [Test]
         public void ConsumeHighlighting_WithSomeHighlighting_ShouldPassCall()

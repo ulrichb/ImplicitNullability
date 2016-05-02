@@ -76,7 +76,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
                 return External.UnknownNullabilityString;
             }
 
-            [ItemCanBeNull] /*Expect no warning*/
+            [ItemCanBeNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 20161 && not Implicit]*/
             public async Task<string> ExplicitItemCanBeNullInBaseAndDerived()
             {
                 return await Task.FromResult<string>(null);

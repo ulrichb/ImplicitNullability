@@ -27,6 +27,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
             {
                 return "";
             }
+
+            [ItemNotNull] /*Expect:ContainerAnnotationRedundancy[RS >= 20161]*/
+            public object NonAsyncMethod()
+            {
+                return "";
+            }
         }
     }
 }

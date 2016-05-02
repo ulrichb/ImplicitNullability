@@ -170,6 +170,7 @@
     <Compile Include="Highlighting\NotNullOnImplicitCanBeNullHighlighting.cs" />
     <Compile Include="ImplicitNullabilityConfiguration.cs" />
     <Compile Include="ImplicitNullabilityConfigurationEvaluator.cs" />
+    <Compile Include="NullabilityProvider.cs" />
     <Compile Include="ZoneMarker.cs" />
     <Compile Include="Infrastructure\PsiExtensions.cs" />
     <Compile Include="ImplicitNullabilityProvider.cs" />

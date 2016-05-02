@@ -14,8 +14,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void CallMethodWithDefaultOfT()
             {
-                // REPORT? In opposite to the previous example we have a false negative for default(T), if T is a reference type:
-                Method(default(T));
+                Method(default(T) /*Expect:AssignNullToNotNullAttribute[RS >= 20161 && MIn]*/);
             }
 
             public void Method(T a)
