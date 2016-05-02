@@ -53,15 +53,16 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                     from commentNode in rootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
                     let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbols)
                     where expectedWarningId != null
-                    select
-                        new
-                        {
-                            ExpectedWarningId = expectedWarningId,
-                            File = sourceFile,
-                            Range = FindPreviousNonWhiteSpaceNode(commentNode).NotNull().GetDocumentRange().TextRange
-                        }).ToList();
+                    let documentRange = FindPreviousNonWhiteSpaceNode(commentNode).NotNull().GetDocumentRange()
+                    select new
+                    {
+                        ExpectedWarningId = expectedWarningId,
+                        File = sourceFile,
+                        Range = documentRange.TextRange,
+                        Coords = documentRange.Document.GetCoordsByOffset(documentRange.TextRange.StartOffset)
+                    }).ToList();
 
-            var issues = RunInspection(solution, sourceFilesToAnalyze);
+            var issues = RunInspections(solution, sourceFilesToAnalyze);
 
             // Assert
 
@@ -73,7 +74,14 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             var actualIssuesThatMatchExpected = actualIssues.Select(
                 issue => new
                 {
-                    Issue = new {issue.Message, File = issue.GetSourceFile(), issue.Range}, // Info for the assertion message
+                    // Info for the assertion message:
+                    IssueInfo = new
+                    {
+                        issue.Message,
+                        File = issue.GetSourceFile(),
+                        issue.Range,
+                        Coords = issue.File.File.Document.GetCoordsByOffset(issue.Range.NotNull().StartOffset)
+                    },
                     Match = expectedWarningComments.SingleOrDefault(
                         x => x.ExpectedWarningId == issue.IssueType.ConfigurableSeverityId &&
                              issue.GetSourceFile().Equals(x.File) &&
@@ -161,7 +169,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             return currentNode.FindPrevNode(x => x is IWhitespaceNode ? TreeNodeActionType.CONTINUE : TreeNodeActionType.ACCEPT);
         }
 
-        private static List<IIssue> RunInspection(ISolution solution, ICollection<IPsiSourceFile> sourceFiles)
+        private static IReadOnlyCollection<IIssue> RunInspections(ISolution solution, ICollection<IPsiSourceFile> sourceFiles)
         {
             var issues = new List<IIssue>();
 
