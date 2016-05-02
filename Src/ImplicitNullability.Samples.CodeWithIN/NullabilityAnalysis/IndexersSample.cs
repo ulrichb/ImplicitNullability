@@ -20,6 +20,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             get { return null; }
             set
             {
+                ReSharper.SuppressUnusedWarning(value);
                 ReSharper.TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
                 ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
             }

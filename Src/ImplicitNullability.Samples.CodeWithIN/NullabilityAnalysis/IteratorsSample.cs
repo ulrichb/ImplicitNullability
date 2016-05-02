@@ -15,7 +15,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         public IEnumerable<object> SomeIteratorWithManualNullCheck([AllowNull /* avoid method rewriting */] string str)
         {
             if (str == null)
-                throw new ArgumentNullException("str");
+                throw new ArgumentNullException(nameof(str));
 
             yield break;
         }

@@ -13,6 +13,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public ConstructorsSample([CanBeNull] string canBeNull, int? nullableInt, string optional = null)
         {
+            ReSharper.SuppressUnusedWarning(canBeNull);
             ReSharper.TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
             ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
         }
