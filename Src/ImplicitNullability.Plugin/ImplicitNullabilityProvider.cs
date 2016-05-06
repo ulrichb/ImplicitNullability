@@ -15,7 +15,7 @@ namespace ImplicitNullability.Plugin
     [PsiComponent]
     public class ImplicitNullabilityProvider
     {
-        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityProvider));
+        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityProvider));
 
         private readonly ImplicitNullabilityConfigurationEvaluator _configurationEvaluator;
 

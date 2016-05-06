@@ -21,7 +21,7 @@ using JetBrains.Application.UI.Commands;
 namespace ImplicitNullability.Plugin.Settings
 {
     [ExcludeFromCodeCoverage /* options page user interface is tested manually */]
-    [OptionsPage(PageId, PageTitle, typeof (CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]
+    [OptionsPage(PageId, PageTitle, typeof(CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]
     public class ImplicitNullabilityOptionsPage : SimpleOptionsPage
     {
         private readonly Clipboard _clipboard;

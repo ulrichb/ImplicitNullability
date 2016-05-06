@@ -31,8 +31,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 a = "";
             }
 
-            public void CanBeNullOutParameterInInterfaceImplicitNotNullInDerived(out string a
-                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/)
+            public void CanBeNullOutParameterInInterfaceImplicitNotNullInDerived(
+                out string a /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/)
             {
                 a = null;
             }
@@ -43,7 +43,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 return "";
             }
 
-            public string FunctionWithCanBeNullInInterfaceImplicitNotNullInDerived /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
+            public string FunctionWithCanBeNullInInterfaceImplicitNotNullInDerived
+                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
                 return "";
             }

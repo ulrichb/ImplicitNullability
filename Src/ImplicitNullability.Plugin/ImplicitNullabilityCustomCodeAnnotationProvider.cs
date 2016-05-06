@@ -19,7 +19,7 @@ namespace ImplicitNullability.Plugin
     [PsiComponent]
     public class ImplicitNullabilityCustomCodeAnnotationProvider : ICustomCodeAnnotationProvider
     {
-        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityCustomCodeAnnotationProvider));
+        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityCustomCodeAnnotationProvider));
 
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
 

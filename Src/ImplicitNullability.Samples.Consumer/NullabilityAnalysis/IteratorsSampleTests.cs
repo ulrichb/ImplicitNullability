@@ -58,7 +58,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             var result = _instance.SomeIteratorReturningNullItem();
 
-            result.Should().Equal(new object[] {null});
+            result.Should().Equal(new object[] { null });
         }
     }
 }

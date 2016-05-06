@@ -42,7 +42,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
         {
             public void Method<T>(string a /* no warning */)
             {
-                ReSharper.SuppressUnusedWarning(typeof (T));
+                ReSharper.SuppressUnusedWarning(typeof(T));
             }
         }
     }

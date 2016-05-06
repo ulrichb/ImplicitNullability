@@ -3,7 +3,7 @@ using JetBrains.ReSharper.Resources.Settings;
 
 namespace ImplicitNullability.Plugin.Settings
 {
-    [SettingsKey(typeof (CodeInspectionSettings), "Implicit Nullability")]
+    [SettingsKey(typeof(CodeInspectionSettings), "Implicit Nullability")]
     public class ImplicitNullabilitySettings
     {
         [SettingsEntry(false, "Enabled")]

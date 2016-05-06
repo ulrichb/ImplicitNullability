@@ -9,14 +9,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
     {
         public void MiscLinqQueries()
         {
-            var someEnumerable = new[] {""};
+            var someEnumerable = new[] { "" };
 
             var simpleQuery =
                 from x in someEnumerable
                 select ReSharper.TestValueAnalysis(x, x == null);
 
             var selectMany =
-                from x in new[] {someEnumerable}
+                from x in new[] { someEnumerable }
                 from y in x
                 select ReSharper.TestValueAnalysis(y, y == null);
 
@@ -35,7 +35,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             var join =
                 from x in someEnumerable
                 join y in someEnumerable on x equals ReSharper.TestValueAnalysis(y, y == null)
-                select new {X = x, Y = ReSharper.TestValueAnalysis(y, y == null)};
+                select new { X = x, Y = ReSharper.TestValueAnalysis(y, y == null) };
 
             var joinInto =
                 from x in someEnumerable

@@ -25,32 +25,32 @@ namespace ImplicitNullability.Plugin
 {
     [ElementProblemAnalyzer(
         // From IncorrectNullableAttributeUsageAnalyzer:
-        typeof (IMethodDeclaration), typeof (IParameterDeclaration), typeof (IFieldDeclaration),
-        typeof (IPropertyDeclaration), typeof (IIndexerDeclaration), typeof (IOperatorDeclaration),
+        typeof(IMethodDeclaration), typeof(IParameterDeclaration), typeof(IFieldDeclaration),
+        typeof(IPropertyDeclaration), typeof(IIndexerDeclaration), typeof(IOperatorDeclaration),
         // Extra:
-        typeof (IDelegateDeclaration),
+        typeof(IDelegateDeclaration),
         HighlightingTypes =
             new[]
             {
                 // From IncorrectNullableAttributeUsageAnalyzer:
-                typeof (AnnotationRedundancyInHierarchyWarning),
-                typeof (AnnotationConflictInHierarchyWarning),
-                typeof (AnnotationRedundancyAtValueTypeWarning),
+                typeof(AnnotationRedundancyInHierarchyWarning),
+                typeof(AnnotationConflictInHierarchyWarning),
+                typeof(AnnotationRedundancyAtValueTypeWarning),
 #if !(RESHARPER92 || RESHARPER100)
-                typeof (ContainerAnnotationRedundancyWarning),
+                typeof(ContainerAnnotationRedundancyWarning),
 #endif
-                typeof (MultipleNullableAttributesUsageWarning),
+                typeof(MultipleNullableAttributesUsageWarning),
                 // The own ones:
-                typeof (NotNullOnImplicitCanBeNullHighlighting),
-                typeof (ImplicitNotNullConflictInHierarchyHighlighting),
-                typeof (ImplicitNotNullElementCannotOverrideCanBeNullHighlighting),
-                typeof (ImplicitNotNullOverridesUnknownExternalMemberHighlighting),
-                typeof (ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting)
+                typeof(NotNullOnImplicitCanBeNullHighlighting),
+                typeof(ImplicitNotNullConflictInHierarchyHighlighting),
+                typeof(ImplicitNotNullElementCannotOverrideCanBeNullHighlighting),
+                typeof(ImplicitNotNullOverridesUnknownExternalMemberHighlighting),
+                typeof(ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting)
             })]
     public class ImplicitNullabilityProblemAnalyzer : ElementProblemAnalyzer<IDeclaration>,
         IHideImplementation<IncorrectNullableAttributeUsageAnalyzer>
     {
-        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof (ImplicitNullabilityProblemAnalyzer));
+        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityProblemAnalyzer));
 
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
         private readonly IncorrectNullableAttributeUsageAnalyzer _incorrectNullableAttributeUsageAnalyzer;

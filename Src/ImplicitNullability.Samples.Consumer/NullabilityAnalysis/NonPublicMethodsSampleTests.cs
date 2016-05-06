@@ -23,7 +23,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [TestCase("PrivateMethod", "privateMethodParameter")]
         public void MethodWithNullArgument(string methodName, string parameterName)
         {
-            Action act = () => GetNonPublicMethod(methodName).Invoke(_instance, new object[] {null});
+            Action act = () => GetNonPublicMethod(methodName).Invoke(_instance, new object[] { null });
 
             act.ShouldThrow<TargetInvocationException>()
                 .And.InnerException.Should().BeOfType<ArgumentNullException>().Which.ParamName.Should().Be(parameterName);
