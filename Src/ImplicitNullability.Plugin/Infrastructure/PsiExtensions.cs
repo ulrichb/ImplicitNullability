@@ -13,7 +13,7 @@ namespace ImplicitNullability.Plugin.Infrastructure
         }
 
         /// <summary>
-        /// Check if this module is part of the solution code (see http://devnet.jetbrains.com/thread/454638).
+        /// Check if this module is part of the solution code (see https://resharper-support.jetbrains.com/hc/en-us/community/posts/205991209).
         /// </summary>
         public static bool IsPartOfSolutionCode([NotNull] this IPsiModule psiModule)
         {

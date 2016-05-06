@@ -121,7 +121,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             bool enableOutParametersAndResult = true)
         {
             // We need to change the settings here by code, because the settings stored in the .DotSettings files aren't 
-            // evaluated (see https://devnet.jetbrains.com/message/5527647).
+            // evaluated (see https://resharper-support.jetbrains.com/hc/en-us/community/posts/206628865).
             // Note that the settings changes are cleaned in UseSampleSolution() => no reset mechanism necessary.
 
             var solutionSettings = sampleSolution.GetComponent<SettingsStore>()
