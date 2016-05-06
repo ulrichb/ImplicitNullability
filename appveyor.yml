@@ -4,6 +4,8 @@ branches:
 environment:
   NugetPushKey:
     secure: Fr6Et35ii82/P5ZjfsKoIomda8gim+SKJkklwChGm5Jm2+wd/5uyQYbwAP4M7UTv
+  CoverageBadgeUploadToken:
+    secure: /NFXyIKW45Q39yQFvB+0aJ1xGynLzg2bdJYDCyhhLH1l718N0vB1qt42hVxdv4GCGleHV4wHy1Efj1xNdNANpKlxPP/yrJrKtBLCYuEciAU=
 cache:
   - packages -> **\packages.config
   - Src\ImplicitNullability.Plugin.Tests\Packages
@@ -12,7 +14,7 @@ artifacts:
 install:
   - git submodule update --init --recursive
 build_script:
-  - powershell -Command "& Build\Build.ps1 -Configuration Release -Version %APPVEYOR_BUILD_VERSION% -NugetPushKey %NugetPushKey%"
+  - powershell -Command "& Build\Build.ps1 -Configuration 'Release' -Version '%APPVEYOR_BUILD_VERSION%' -BranchName '%APPVEYOR_REPO_BRANCH%' -CoverageBadgeUploadToken '%CoverageBadgeUploadToken%' -NugetPushKey '%NugetPushKey%'"
 
 test: off
 deploy: off
