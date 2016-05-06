@@ -113,7 +113,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
 
         private ImplicitNullabilityConfiguration GetImplicitNullabilityConfigurationFor(
             [NotNull] string testInput,
-            Action<IContextBoundSettingsStore> changeSolutionSettings = null,
+            [NotNull] Action<IContextBoundSettingsStore> changeSolutionSettings,
             Action<IContextBoundSettingsStore> changeProjectSettings = null)
         {
             ImplicitNullabilityConfiguration? result = null;
@@ -129,7 +129,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
                         var sut = solution.GetComponent<ImplicitNullabilityConfigurationEvaluator>();
                         var settingsStore = project.GetComponent<SettingsStore>();
 
-                        changeSolutionSettings?.Invoke(
+                        changeSolutionSettings.Invoke(
                             settingsStore.BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(solution.ToDataContext())));
 
                         changeProjectSettings?.Invoke(
