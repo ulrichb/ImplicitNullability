@@ -5,7 +5,7 @@ environment:
   NugetPushKey:
     secure: Fr6Et35ii82/P5ZjfsKoIomda8gim+SKJkklwChGm5Jm2+wd/5uyQYbwAP4M7UTv
 cache:
-  - packages
+  - packages -> **\packages.config
   - Src\ImplicitNullability.Plugin.Tests\Packages
 artifacts:
   - path: Build\Output\TestCoverage
