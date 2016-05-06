@@ -9,10 +9,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
     {
         public class DerivedClassInOwnCode : External.Class
         {
-            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/]
-            {
-                get { return null; }
-            }
+            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/] => null;
 
             public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
             {
@@ -35,10 +32,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
         public class DerivedClassInOwnCodeWithExplicitCanBeNull : External.Class
         {
-            public override string this[[CanBeNull] string a]
-            {
-                get { return null; }
-            }
+            public override string this[[CanBeNull] string a] => null;
 
             public override void Method([CanBeNull] string a)
             {
@@ -61,10 +55,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
         public class DerivedClassInOwnCodeWithExplicitNotNull : External.Class
         {
-            public override string this[[NotNull] string a]
-            {
-                get { return null; }
-            }
+            public override string this[[NotNull] string a] => null;
 
             public override void Method([NotNull] string a)
             {

@@ -25,10 +25,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
         {
             public string this[
                 string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/,
-                string b /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/]
-            {
-                get { return null; }
-            }
+                string b /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/] => null;
 
             public void ExplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived(
                 [NotNull] /*Expect:AnnotationConflictInHierarchy*/ int? nullableInt,
@@ -70,7 +67,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             {
                 // Since R# 2016.1, the invalid NotNull does not override the CanBeNull:
                 ReSharper.TestValueAnalysis(
-                    a /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/, 
+                    a /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/,
                     a == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS < 20161]*/);
             }
 

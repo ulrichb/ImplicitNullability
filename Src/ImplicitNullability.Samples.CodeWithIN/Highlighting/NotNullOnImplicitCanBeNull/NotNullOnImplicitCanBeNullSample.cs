@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
+
 namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitCanBeNull
 {
     public class NotNullOnImplicitCanBeNullSample
@@ -22,11 +23,10 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
         public string this[
             [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
             // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
-            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/]
-            // ReSharper restore AssignNullToNotNullAttribute
-        {
-            get { return null; }
-        }
+            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/] => null;
+
+        // ReSharper restore AssignNullToNotNullAttribute
+
 
         public void MethodWithNullableIntRefAndOutParameterMethod(
             [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,

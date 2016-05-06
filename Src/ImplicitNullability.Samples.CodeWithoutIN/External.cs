@@ -15,10 +15,7 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
 
         public class Class
         {
-            public virtual string this[string a]
-            {
-                get { return null; }
-            }
+            public virtual string this[string a] => null;
 
             public virtual void Method(string a)
             {
