@@ -1,6 +1,7 @@
 ## Implicit Nullability ReSharper Extension
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7st3drnudnk7lplu/branch/master?svg=true)](https://ci.appveyor.com/project/ulrichb/implicitnullability/branch/master)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ulrichb/ImplicitNullability?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Line Coverage](https://dl.dropbox.com/s/4uvis2i6jngwuf2/master-linecoverage.svg)](https://ci.appveyor.com/api/projects/ulrichb/implicitnullability/artifacts/Build/Output/TestCoverage.zip?branch=master)
 [![Branch Coverage](https://dl.dropbox.com/s/lf82ryp12razzni/master-branchcoverage.svg)](https://ci.appveyor.com/api/projects/ulrichb/implicitnullability/artifacts/Build/Output/TestCoverage.zip?branch=master)
 
