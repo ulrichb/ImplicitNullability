@@ -2,7 +2,7 @@
 - Implicit Nullability support for compiled assemblies with [AssemblyMetadata("ImplicitNullability.AppliesTo", "...")] configuration attribute
 - New "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit" warning for return values and out parameters
 - New "Implicit NotNull result or out parameter overrides unknown nullability of external code" hint
-- Added suppression of "Base declaration has the same annotation" highlighting on implicitly nullable elements
+- Added suppression of "Base declaration has the same annotation" highlighting on code elements with enabled implicit nullability
 - Added exclusion of delegate BeginInvoke() method parameters and Invoke() / EndInvoke() results because their implicit nullability cannot be overridden with explicit annotations
 - ReSharper 2016.1 support
 
