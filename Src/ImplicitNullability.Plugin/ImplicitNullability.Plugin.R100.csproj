@@ -160,27 +160,7 @@
     <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Highlighting\SimpleTreeNodeHighlightingBase.cs">
       <Link>ReSharperExtensionsShared\SimpleTreeNodeHighlightingBase.cs</Link>
     </Compile>
-    <Compile Include="AnnotationRedundancyInHierarchyWarningFilteringDecorator.cs" />
-    <Compile Include="AssemblyAttributeConfigurationTranslator.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullConflictInHierarchyHighlighting.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullElementCannotOverrideCanBeNullHighlighting.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMemberHighlighting.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.cs" />
-    <Compile Include="Highlighting\SharedHighlightingTexts.cs" />
-    <Compile Include="Highlighting\NotNullOnImplicitCanBeNullHighlighting.cs" />
-    <Compile Include="ImplicitNullabilityConfiguration.cs" />
-    <Compile Include="ImplicitNullabilityConfigurationEvaluator.cs" />
-    <Compile Include="NullabilityProvider.cs" />
-    <Compile Include="ZoneMarker.cs" />
-    <Compile Include="Infrastructure\PsiExtensions.cs" />
-    <Compile Include="ImplicitNullabilityProvider.cs" />
-    <Compile Include="ImplicitNullabilityProblemAnalyzer.cs" />
-    <Compile Include="Settings\ImplicitNullabilityOptionsPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Settings\ImplicitNullabilitySettings.cs" />
-    <Compile Include="ImplicitNullabilityCustomCodeAnnotationProvider.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="**\*.cs" Exclude="obj\**" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Plugin.R100.config" />
