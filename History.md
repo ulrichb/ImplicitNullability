@@ -1,3 +1,6 @@
+### 3.1.0 ###
+- ReSharper 2016.2 support
+
 ### 3.0.0 ###
 - Implicit Nullability support for compiled assemblies with [AssemblyMetadata("ImplicitNullability.AppliesTo", "...")] configuration attribute
 - New "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit" warning for return values and out parameters
