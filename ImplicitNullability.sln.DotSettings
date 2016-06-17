@@ -1,5 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=3C27B37B_002D9889_002D48E9_002DA61D_002DD129CB14D527_002Fd_003ACSS/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/Enabled/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/EnableInputParameters/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/EnableOutParametersAndResult/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/EnableRefParameters/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8180D39E8F16764B90221B1534307E85/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8180D39E8F16764B90221B1534307E85/AbsolutePath/@EntryValue">C:\NonExistingFilePath.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8180D39E8F16764B90221B1534307E85/RelativePath/@EntryValue">..\Shared\Shared.DotSettings</s:String>

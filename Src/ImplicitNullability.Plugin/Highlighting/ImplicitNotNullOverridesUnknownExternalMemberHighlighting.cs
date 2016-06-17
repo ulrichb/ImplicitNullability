@@ -1,5 +1,4 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
-using JetBrains.Annotations;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
@@ -37,7 +36,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "annotate [NotNull] or [CanBeNull] on those elements after manually checking the nullability of the base member. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
-        public ImplicitNotNullOverridesUnknownExternalMemberHighlighting([NotNull] ITreeNode treeNode)
+        public ImplicitNotNullOverridesUnknownExternalMemberHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }

@@ -1,5 +1,4 @@
 using ImplicitNullability.Plugin.Infrastructure;
-using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
@@ -24,7 +23,7 @@ namespace ImplicitNullability.Plugin
             _configurationEvaluator = configurationEvaluator;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeDeclaredElement([NotNull] IDeclaredElement declaredElement)
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElement(IDeclaredElement declaredElement)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -43,7 +42,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeParameter([NotNull] IParameter parameter)
+        private CodeAnnotationNullableValue? AnalyzeParameter(IParameter parameter)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -69,7 +68,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeFunction([NotNull] IFunction function)
+        private CodeAnnotationNullableValue? AnalyzeFunction(IFunction function)
         {
             // Methods and operators
 
@@ -86,7 +85,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeDelegate([NotNull] IDelegate @delegate)
+        private CodeAnnotationNullableValue? AnalyzeDelegate(IDelegate @delegate)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -98,7 +97,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([NotNull] IDeclaredElement element)
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement(IDeclaredElement element)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -109,7 +108,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeMethodContainerElement([NotNull] IMethod method)
+        private CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -124,7 +123,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private static CodeAnnotationNullableValue? GetNullabilityForType([NotNull] IType type)
+        private static CodeAnnotationNullableValue? GetNullabilityForType(IType type)
         {
             if (type.IsValueType())
             {
@@ -143,7 +142,7 @@ namespace ImplicitNullability.Plugin
             return null;
         }
 
-        private bool IsImplicitNullabilityApplicableToParameter([NotNull] IParameter parameter)
+        private bool IsImplicitNullabilityApplicableToParameter(IParameter parameter)
         {
             var parametersOwner = parameter.ContainingParametersOwner;
 
@@ -158,7 +157,7 @@ namespace ImplicitNullability.Plugin
                    IsParametersOwnerNotSynthetic(parametersOwner);
         }
 
-        private static bool IsDelegateBeginInvokeMethod([NotNull] IParametersOwner parametersOwner)
+        private static bool IsDelegateBeginInvokeMethod(IParametersOwner parametersOwner)
         {
             // Delegate BeginInvoke() methods must be excluded for *parameters*, because ReSharper doesn't pass the parameter attributes to
             // the DelegateBeginInvokeMethod => implicit nullability could not be overridden with explicit annotations.
@@ -180,7 +179,7 @@ namespace ImplicitNullability.Plugin
             return function.GetContainingType() is IDelegate;
         }
 
-        private static bool IsParametersOwnerNotSynthetic([NotNull] IParametersOwner containingParametersOwner)
+        private static bool IsParametersOwnerNotSynthetic(IParametersOwner containingParametersOwner)
         {
             // Exclude ReSharper's fake (called "synthetic") parameter owners (methods), like ASP.NET WebForms' Render-method, or 
             // Razor's Write-methods, because these look like regular project methods but should be excluded from Implicit
@@ -189,7 +188,7 @@ namespace ImplicitNullability.Plugin
             return !containingParametersOwner.IsSynthetic();
         }
 
-        private static bool IsOptionalArgumentWithNullDefaultValue([NotNull] IParameter parameter)
+        private static bool IsOptionalArgumentWithNullDefaultValue(IParameter parameter)
         {
 #if DEBUG
             if (parameter.IsOptional)
@@ -207,7 +206,7 @@ namespace ImplicitNullability.Plugin
             return parameter.IsOptional && IsNullDefaultValue(parameter.GetDefaultValue());
         }
 
-        private static bool IsNullDefaultValue([NotNull] DefaultValue defaultValue)
+        private static bool IsNullDefaultValue(DefaultValue defaultValue)
         {
             // Note that for "param = null" and "param = default(string)", the ConstantValue cannot be trusted; we therefore must check IsDefaultType:
             var isNullDefaultExpression = defaultValue.IsDefaultType && !defaultValue.DefaultTypeValue.IsValueType();

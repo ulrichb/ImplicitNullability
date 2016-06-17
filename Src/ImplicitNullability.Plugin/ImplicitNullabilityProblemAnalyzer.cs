@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using ImplicitNullability.Plugin.Highlighting;
 using ImplicitNullability.Plugin.Infrastructure;
-using JetBrains.Annotations;
 using JetBrains.Application.Components;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.CSharp.Stages.Analysis;
@@ -138,10 +137,10 @@ namespace ImplicitNullability.Plugin
         }
 
         private void CheckForParameterSuperMemberConflicts(
-            [NotNull] IParameter parameter,
-            [NotNull] IList<IAttributeInstance> attributeInstances,
-            [NotNull] ITreeNode highlightingNode,
-            [NotNull] ICollection<IHighlighting> highlightingList)
+            IParameter parameter,
+            IList<IAttributeInstance> attributeInstances,
+            ITreeNode highlightingNode,
+            ICollection<IHighlighting> highlightingList)
         {
             if (IsImplicitlyNotNull(parameter, attributeInstances))
             {
@@ -156,10 +155,10 @@ namespace ImplicitNullability.Plugin
         }
 
         private void CheckForMethodSuperMemberConflicts(
-            [NotNull] IMethod method,
-            [NotNull] IList<IAttributeInstance> attributeInstances,
-            [NotNull] ITreeNode highlightingNode,
-            [NotNull] ICollection<IHighlighting> highlightingList)
+            IMethod method,
+            IList<IAttributeInstance> attributeInstances,
+            ITreeNode highlightingNode,
+            ICollection<IHighlighting> highlightingList)
         {
             // Handle async methods like explicit [NotNull] methods to avoid unnecessary false positives.
             // See Derived.CanBeNull_WithOverridingAsyncMethod() test case.
@@ -181,9 +180,9 @@ namespace ImplicitNullability.Plugin
         }
 
         private static void CheckForInputOrRefElementSuperMemberConflicts(
-            [NotNull] SuperMemberNullability[] superMembersNullability,
-            [NotNull] ITreeNode highlightingNode,
-            [NotNull] ICollection<IHighlighting> highlightingList)
+            SuperMemberNullability[] superMembersNullability,
+            ITreeNode highlightingNode,
+            ICollection<IHighlighting> highlightingList)
         {
             if (ContainsCanBeNull(superMembersNullability))
                 highlightingList.Add(new ImplicitNotNullConflictInHierarchyHighlighting(highlightingNode));
@@ -193,9 +192,9 @@ namespace ImplicitNullability.Plugin
         }
 
         private static void CheckForOutputElementSuperMemberConflicts(
-            [NotNull] SuperMemberNullability[] superMembersNullability,
-            [NotNull] ITreeNode highlightingNode,
-            [NotNull] ICollection<IHighlighting> highlightingList)
+            SuperMemberNullability[] superMembersNullability,
+            ITreeNode highlightingNode,
+            ICollection<IHighlighting> highlightingList)
         {
             if (ContainsCanBeNull(superMembersNullability))
                 highlightingList.Add(new ImplicitNotNullElementCannotOverrideCanBeNullHighlighting(highlightingNode));
@@ -204,17 +203,13 @@ namespace ImplicitNullability.Plugin
                 highlightingList.Add(new ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting(highlightingNode));
         }
 
-        private bool IsImplicitlyNotNull(
-            [NotNull] IDeclaredElement declaredElement,
-            [NotNull] IEnumerable<IAttributeInstance> attributeInstances)
+        private bool IsImplicitlyNotNull(IDeclaredElement declaredElement, IEnumerable<IAttributeInstance> attributeInstances)
         {
             return !_nullabilityProvider.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
-        private bool IsContainerElementImplicitlyNotNull(
-            [NotNull] IDeclaredElement declaredElement,
-            [NotNull] IEnumerable<IAttributeInstance> attributeInstances)
+        private bool IsContainerElementImplicitlyNotNull(IDeclaredElement declaredElement, IEnumerable<IAttributeInstance> attributeInstances)
         {
             return !_nullabilityProvider.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
@@ -231,10 +226,10 @@ namespace ImplicitNullability.Plugin
         }
 
         private void CheckForNotNullOnImplicitCanBeNull(
-            [NotNull] IDeclaredElement element,
-            [NotNull] IList<IAttributeInstance> attributeInstances,
-            [NotNull] ITreeNode highlightingNode,
-            [NotNull] ICollection<IHighlighting> highlightingList)
+            IDeclaredElement element,
+            IList<IAttributeInstance> attributeInstances,
+            ITreeNode highlightingNode,
+            ICollection<IHighlighting> highlightingList)
         {
             if (_nullabilityProvider.ContainsExplicitNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
@@ -250,9 +245,9 @@ namespace ImplicitNullability.Plugin
         }
 
         private void DelegateToIncorrectNullableAttributeUsageAnalyzer(
-            [NotNull] ITreeNode declaration,
-            [NotNull] ElementProblemAnalyzerData data,
-            [NotNull] IHighlightingConsumer consumer,
+            ITreeNode declaration,
+            ElementProblemAnalyzerData data,
+            IHighlightingConsumer consumer,
             bool hasOveriddenImplicitNullability)
         {
             if (hasOveriddenImplicitNullability)
@@ -266,7 +261,7 @@ namespace ImplicitNullability.Plugin
             }
         }
 
-        private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersNullability([NotNull] IParameter parameter)
+        private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersNullability(IParameter parameter)
         {
             var overridableMember = parameter.ContainingParametersOwner as IOverridableMember;
 

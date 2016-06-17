@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
-using JetBrains.Annotations;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using NUnit.Framework;
@@ -113,7 +112,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             });
         }
 
-        private static IEnumerable<IProjectFile> GetProjectFilesToAnalyze([NotNull] ISolution solution)
+        private static IEnumerable<IProjectFile> GetProjectFilesToAnalyze(ISolution solution)
         {
             var pathPrefix = "Highlighting\\" + TestContext.CurrentContext.Test.Name.Split('_')[0];
 

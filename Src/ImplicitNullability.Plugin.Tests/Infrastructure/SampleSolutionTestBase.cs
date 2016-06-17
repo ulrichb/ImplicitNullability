@@ -32,7 +32,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
     public abstract class SampleSolutionTestBase : BaseTestWithExistingSolution
     {
-        protected void UseSampleSolution([NotNull] Action<ISolution> testAction)
+        protected void UseSampleSolution(Action<ISolution> testAction)
         {
             var solutionFilePath = FileSystemPath.Parse(TestDataPathUtility.GetPathRelativeToSolution("ImplicitNullability.Sample.sln"));
 
@@ -44,10 +44,10 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         }
 
         protected IList<IIssue> TestExpectedInspectionComments(
-            [NotNull] ISolution solution,
-            [NotNull] IEnumerable<IProjectFile> projectFilesToAnalyze,
-            [NotNull] IEnumerable<Type> highlightingTypesToAnalyze,
-            [NotNull] params string[] definedExpectedWarningSymbols)
+            ISolution solution,
+            IEnumerable<IProjectFile> projectFilesToAnalyze,
+            IEnumerable<Type> highlightingTypesToAnalyze,
+            params string[] definedExpectedWarningSymbols)
         {
             var sourceFilesToAnalyze = projectFilesToAnalyze.Select(x => x.ToSourceFiles().Single()).ToList();
             Assert.That(sourceFilesToAnalyze, Is.Not.Empty);
@@ -120,7 +120,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         }
 
         protected static void EnableImplicitNullability(
-            [NotNull] ISolution sampleSolution,
+            ISolution sampleSolution,
             bool enableInputParameters = false,
             bool enableRefParameters = false,
             bool enableOutParametersAndResult = false)
@@ -144,13 +144,13 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, enableOutParametersAndResult);
         }
 
-        protected static void EnableImplicitNullabilityWithAllOptions([NotNull] ISolution sampleSolution)
+        protected static void EnableImplicitNullabilityWithAllOptions(ISolution sampleSolution)
         {
             EnableImplicitNullability(sampleSolution, true, true, true);
         }
 
         [CanBeNull]
-        private string ExtractExpectedWarningId([NotNull] string commentText, [NotNull] string[] definedExpectedWarningSymbols)
+        private string ExtractExpectedWarningId(string commentText, string[] definedExpectedWarningSymbols)
         {
             var match = Regex.Match(commentText, @"^\s*Expect:(?<Id>.+?)(\[(?<Condition>[^\]]+)*\])?$");
 
@@ -174,7 +174,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         }
 
         [CanBeNull]
-        private ITreeNode FindPreviousNonWhiteSpaceNode([NotNull] ITreeNode currentNode)
+        private ITreeNode FindPreviousNonWhiteSpaceNode(ITreeNode currentNode)
         {
             return currentNode.FindPrevNode(x => x is IWhitespaceNode ? TreeNodeActionType.CONTINUE : TreeNodeActionType.ACCEPT);
         }

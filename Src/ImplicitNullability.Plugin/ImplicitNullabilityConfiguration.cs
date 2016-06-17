@@ -1,5 +1,4 @@
 ﻿using ImplicitNullability.Plugin.Settings;
-using JetBrains.Annotations;
 using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin
@@ -11,7 +10,7 @@ namespace ImplicitNullability.Plugin
     {
         public static readonly ImplicitNullabilityConfiguration AllDisabled = new ImplicitNullabilityConfiguration(false, false, false);
 
-        public static ImplicitNullabilityConfiguration CreateFromSettings([NotNull] ImplicitNullabilitySettings implicitNullabilitySettings)
+        public static ImplicitNullabilityConfiguration CreateFromSettings(ImplicitNullabilitySettings implicitNullabilitySettings)
         {
             Assertion.Assert(implicitNullabilitySettings.Enabled, "implicitNullabilitySettings.Enabled");
 

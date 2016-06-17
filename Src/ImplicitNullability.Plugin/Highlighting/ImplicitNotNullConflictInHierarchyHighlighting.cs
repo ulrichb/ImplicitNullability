@@ -1,5 +1,4 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
-using JetBrains.Annotations;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
@@ -31,7 +30,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "This is the equivalent to \"Annotation conflict in hierarchy\" for explicit [NotNull] annotations. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
-        public ImplicitNotNullConflictInHierarchyHighlighting([NotNull] ITreeNode treeNode)
+        public ImplicitNotNullConflictInHierarchyHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }

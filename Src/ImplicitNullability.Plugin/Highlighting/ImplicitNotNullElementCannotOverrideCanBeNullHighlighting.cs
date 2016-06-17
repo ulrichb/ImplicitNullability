@@ -1,5 +1,4 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
-using JetBrains.Annotations;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
@@ -32,7 +31,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "because the implicit [NotNull] doesn't have any effect (ReSharper inherits the base's [CanBeNull]). " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
-        public ImplicitNotNullElementCannotOverrideCanBeNullHighlighting([NotNull] ITreeNode treeNode)
+        public ImplicitNotNullElementCannotOverrideCanBeNullHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }

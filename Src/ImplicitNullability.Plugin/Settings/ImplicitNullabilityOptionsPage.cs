@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using JetBrains.Annotations;
 using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
 using JetBrains.UI;
@@ -97,9 +96,9 @@ namespace ImplicitNullability.Plugin.Settings
         }
 
         private BoolOptionViewModel AddNullabilityBoolOption(
-            [NotNull] Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
-            [NotNull] string text,
-            [NotNull] BoolOptionViewModel enabledOption)
+            Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
+            string text,
+            BoolOptionViewModel enabledOption)
         {
             var result = AddBoolOption(settingsExpression, text);
             enabledOption.CheckedProperty.FlowInto(myLifetime, result.GetIsEnabledProperty());

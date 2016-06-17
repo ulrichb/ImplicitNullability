@@ -1,5 +1,4 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
-using JetBrains.Annotations;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
@@ -31,7 +30,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "This warning is useful when using tools like Fody NullGuard, which do not process explicit [NotNull] annotations. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
-        public NotNullOnImplicitCanBeNullHighlighting([NotNull] ITreeNode treeNode)
+        public NotNullOnImplicitCanBeNullHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }

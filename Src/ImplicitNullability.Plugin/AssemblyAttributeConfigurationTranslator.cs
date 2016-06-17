@@ -48,7 +48,7 @@ namespace ImplicitNullability.Plugin
         }
 
         [CanBeNull]
-        private static string GetAssemblyAttributeOptionsText([NotNull] IAttributesSet attributes)
+        private static string GetAssemblyAttributeOptionsText(IAttributesSet attributes)
         {
             var assemblyMetadataAttributes = attributes.GetAttributeInstances(AssemblyMetadataAttributeTypeName, false);
 
@@ -61,7 +61,7 @@ namespace ImplicitNullability.Plugin
             return attributeWithAppliesToAttributeKey.PositionParameter(1).ConstantValue.Value as string;
         }
 
-        private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText([NotNull] string text)
+        private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(string text)
         {
             var optionTexts = text.Split(',').Select(x => x.Trim()).ToList();
 

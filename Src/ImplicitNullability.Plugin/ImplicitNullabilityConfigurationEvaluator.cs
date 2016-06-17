@@ -1,6 +1,5 @@
 using ImplicitNullability.Plugin.Infrastructure;
 using ImplicitNullability.Plugin.Settings;
-using JetBrains.Annotations;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
@@ -39,7 +38,7 @@ namespace ImplicitNullability.Plugin
             _psiServices = psiServices;
         }
 
-        public ImplicitNullabilityConfiguration EvaluateFor([NotNull] IPsiModule psiModule)
+        public ImplicitNullabilityConfiguration EvaluateFor(IPsiModule psiModule)
         {
             // IDEA: Implement a PsiModule=>ImplicitNullabilityConfiguration cache (which gets invalidated on module changes)
 
@@ -59,8 +58,7 @@ namespace ImplicitNullability.Plugin
             return ImplicitNullabilityConfiguration.CreateFromSettings(implicitNullabilitySettings);
         }
 
-        [NotNull]
-        private ImplicitNullabilitySettings GetSettings([NotNull] IPsiModule psiModule)
+        private ImplicitNullabilitySettings GetSettings(IPsiModule psiModule)
         {
             var contextRange = ContextRange.Smart(psiModule.ToDataContext());
             var contextBoundSettingsStore = _settingsStore.BindToContextTransient(contextRange);

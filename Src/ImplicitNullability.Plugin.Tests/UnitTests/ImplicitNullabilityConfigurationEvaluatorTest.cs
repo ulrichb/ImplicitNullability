@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ImplicitNullability.Plugin.Settings;
-using JetBrains.Annotations;
 using JetBrains.Application.Settings;
 using JetBrains.Application.Settings.Store.Implementation;
 using JetBrains.ProjectModel;
@@ -112,8 +111,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         }
 
         private ImplicitNullabilityConfiguration GetImplicitNullabilityConfigurationFor(
-            [NotNull] string testInput,
-            [NotNull] Action<IContextBoundSettingsStore> changeSolutionSettings,
+            string testInput,
+            Action<IContextBoundSettingsStore> changeSolutionSettings,
             Action<IContextBoundSettingsStore> changeProjectSettings = null)
         {
             ImplicitNullabilityConfiguration? result = null;
