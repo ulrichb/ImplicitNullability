@@ -62,21 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
     <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\ExternalUnknownVsImplicitlyNullableCode.cs" />
-    <Compile Include="NullabilityAnalysis\DynamicInvocationTests.cs" />
-    <Compile Include="NullabilityAnalysis\ExternalCodeExclusionTests.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsOutputSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsRefParameterSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\NonPublicMethodsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\OperatorOverloadsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\DelegatesSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\AsyncMethodsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\ConstructorsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\IndexersSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsInputSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\GenericsSampleTests.cs" />
-    <Compile Include="NullabilityAnalysis\IteratorsSampleTests.cs" />
+    <Compile Include="NullabilityAnalysis\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN.config" />

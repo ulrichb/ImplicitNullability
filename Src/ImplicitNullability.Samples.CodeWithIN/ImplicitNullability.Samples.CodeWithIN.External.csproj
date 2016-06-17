@@ -61,28 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\IImplicitlyNullableInterface.cs" />
-    <Compile Include="NullabilityAnalysis\DelegatesSample.cs" />
     <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </None>
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
-    <Compile Include="NullabilityAnalysis\ConstructorsSample.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsOutputSample.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsRefParameterSample.cs" />
-    <Compile Include="NullabilityAnalysis\NonPublicMethodsSample.cs" />
-    <Compile Include="NullabilityAnalysis\UnsafeCodeSample.cs" />
-    <Compile Include="NullabilityAnalysis\LinqQueriesSample.cs" />
-    <Compile Include="NullabilityAnalysis\OperatorOverloadsSample.cs" />
-    <Compile Include="NullabilityAnalysis\IteratorsSample.cs" />
-    <Compile Include="NullabilityAnalysis\IndexersSample.cs" />
-    <Compile Include="NullabilityAnalysis\MethodsInputSample.cs" />
-    <Compile Include="NullabilityAnalysis\PropertiesAndFieldsSample.cs" />
-    <Compile Include="Properties\ImplicitNullabilityAssemblyMetadata.cs" />
-    <Compile Include="Properties\NullGuardConfiguration.cs" />
     <Compile Include="ReSharper.cs" />
-    <Compile Include="NullabilityAnalysis\AsyncMethodsSample.cs" />
-    <Compile Include="NullabilityAnalysis\GenericsSample.cs" />
+    <Compile Include="Properties\NullGuardConfiguration.cs" />
+    <Compile Include="Properties\ImplicitNullabilityAssemblyMetadata.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
+    <Compile Include="NullabilityAnalysis\**\*.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\IImplicitlyNullableInterface.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.ImplicitNullability.Samples.CodeWithIN.External.config" />
   </ItemGroup>
   <ItemGroup>
