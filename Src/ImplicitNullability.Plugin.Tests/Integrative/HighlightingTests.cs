@@ -103,7 +103,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         {
             UseSampleSolution(solution =>
             {
-                EnableImplicitNullability(solution);
+                EnableImplicitNullabilityWithAllOptions(solution);
 
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 

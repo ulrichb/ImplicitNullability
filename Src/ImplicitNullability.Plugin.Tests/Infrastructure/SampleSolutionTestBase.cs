@@ -121,9 +121,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
         protected static void EnableImplicitNullability(
             [NotNull] ISolution sampleSolution,
-            bool enableInputParameters = true,
-            bool enableRefParameters = true,
-            bool enableOutParametersAndResult = true)
+            bool enableInputParameters = false,
+            bool enableRefParameters = false,
+            bool enableOutParametersAndResult = false)
         {
             // We need to change the settings here by code, because the settings stored in the .DotSettings files aren't 
             // evaluated (see https://resharper-support.jetbrains.com/hc/en-us/community/posts/206628865).
@@ -142,6 +142,11 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, enableInputParameters);
             solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableRefParameters, enableRefParameters);
             solutionSettings.SetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult, enableOutParametersAndResult);
+        }
+
+        protected static void EnableImplicitNullabilityWithAllOptions([NotNull] ISolution sampleSolution)
+        {
+            EnableImplicitNullability(sampleSolution, true, true, true);
         }
 
         [CanBeNull]
