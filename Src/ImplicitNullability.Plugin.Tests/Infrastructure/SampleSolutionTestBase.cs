@@ -107,14 +107,14 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         protected IEnumerable<Type> GetNullabilityAnalysisHighlightingTypes()
         {
             var implicitNullabilityProblemAnalyzerHighlightingTypes =
-                typeof (ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(false).HighlightingTypes;
+                typeof(ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(false).HighlightingTypes;
 
             return new[]
             {
-                typeof (AssignNullToNotNullAttributeWarning),
-                typeof (ConditionIsAlwaysTrueOrFalseWarning),
-                typeof (PossibleNullReferenceExceptionWarning),
-                typeof (PossibleInvalidOperationExceptionWarning)
+                typeof(AssignNullToNotNullAttributeWarning),
+                typeof(ConditionIsAlwaysTrueOrFalseWarning),
+                typeof(PossibleNullReferenceExceptionWarning),
+                typeof(PossibleInvalidOperationExceptionWarning)
             }
                 .Concat(implicitNullabilityProblemAnalyzerHighlightingTypes);
         }

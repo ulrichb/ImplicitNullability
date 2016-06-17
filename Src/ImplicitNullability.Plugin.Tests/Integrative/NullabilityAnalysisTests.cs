@@ -15,7 +15,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         public void WithEnabledInputParameters()
         {
             Test(changeSettings: solution => EnableImplicitNullability(solution, true, false, false),
-                definedExpectedWarningSymbols: new[] {"MIn"},
+                definedExpectedWarningSymbols: new[] { "MIn" },
                 //
                 assert: (issueCount, issueFilePaths) =>
                 {
@@ -33,7 +33,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         public void WithEnabledRefParameters()
         {
             Test(changeSettings: solution => EnableImplicitNullability(solution, false, true, false),
-                definedExpectedWarningSymbols: new[] {"MRef"},
+                definedExpectedWarningSymbols: new[] { "MRef" },
                 //
                 assert: (issueCount, issueFilePaths) =>
                 {
@@ -48,7 +48,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         public void WithEnabledOutParametersAndResult()
         {
             Test(changeSettings: solution => EnableImplicitNullability(solution, false, false, true),
-                definedExpectedWarningSymbols: new[] {"MOut"},
+                definedExpectedWarningSymbols: new[] { "MOut" },
                 //
                 assert: (issueCount, issueFilePaths) =>
                 {
@@ -75,7 +75,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         {
             Test(changeSettings: solution => EnableImplicitNullability(solution, false, false, false),
                 projectFilter: x => x.Name == ExternalCodeConsumerProjectName,
-                definedExpectedWarningSymbols: new[] {"MIn", "MRef", "MOut"} /*as configured in ImplicitNullabilityAssemblyMetadata.cs*/,
+                definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut" } /*as configured in ImplicitNullabilityAssemblyMetadata.cs*/,
                 //
                 assert: (issueCount, issueFilePaths) =>
                 {

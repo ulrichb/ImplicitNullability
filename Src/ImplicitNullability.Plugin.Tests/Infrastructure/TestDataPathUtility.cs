@@ -10,7 +10,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
     {
         public static string GetPathRelativeToSolution(params string[] path)
         {
-            return Path.Combine(new[] {GetDirectoryOfThisSoureFile(), "..", "..", ".."}.Concat(path).ToArray());
+            return Path.Combine(new[] { GetDirectoryOfThisSoureFile(), "..", "..", ".." }.Concat(path).ToArray());
         }
 
         private static string GetDirectoryOfThisSoureFile([CallerFilePath] string filePath = null)

@@ -19,23 +19,23 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         [Test]
         public void ImplicitNullabilityProblemAnalyzer_ShouldBeDecoratedWithCorrectElementProblemAnalyzerAttribute()
         {
-            var problemAnalyzerAttribute = typeof (ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>();
+            var problemAnalyzerAttribute = typeof(ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>();
 
             var hiddenProblemAnalyzerAttribute =
-                typeof (IncorrectNullableAttributeUsageAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>();
+                typeof(IncorrectNullableAttributeUsageAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>();
 
             Assert.That(
                 problemAnalyzerAttribute.ElementTypes,
-                Is.EqualTo(hiddenProblemAnalyzerAttribute.ElementTypes.Concat(typeof (IDelegateDeclaration))));
+                Is.EqualTo(hiddenProblemAnalyzerAttribute.ElementTypes.Concat(typeof(IDelegateDeclaration))));
 
             Assert.That(
                 problemAnalyzerAttribute.HighlightingTypes,
                 Is.EqualTo(hiddenProblemAnalyzerAttribute.HighlightingTypes.Concat(
-                    typeof (NotNullOnImplicitCanBeNullHighlighting),
-                    typeof (ImplicitNotNullConflictInHierarchyHighlighting),
-                    typeof (ImplicitNotNullElementCannotOverrideCanBeNullHighlighting),
-                    typeof (ImplicitNotNullOverridesUnknownExternalMemberHighlighting),
-                    typeof (ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting))));
+                    typeof(NotNullOnImplicitCanBeNullHighlighting),
+                    typeof(ImplicitNotNullConflictInHierarchyHighlighting),
+                    typeof(ImplicitNotNullElementCannotOverrideCanBeNullHighlighting),
+                    typeof(ImplicitNotNullOverridesUnknownExternalMemberHighlighting),
+                    typeof(ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting))));
         }
 
         [Test]
