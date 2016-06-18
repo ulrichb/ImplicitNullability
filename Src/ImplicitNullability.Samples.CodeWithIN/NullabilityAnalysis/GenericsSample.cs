@@ -25,7 +25,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public T Function([CanBeNull] T returnValue)
             {
-                return returnValue; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+                return returnValue /*Expect:AssignNullToNotNullAttribute[MOut]*/;
             }
         }
 

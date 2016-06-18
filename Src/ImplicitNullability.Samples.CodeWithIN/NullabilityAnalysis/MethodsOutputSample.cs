@@ -6,7 +6,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
     {
         public string Function([CanBeNull] string returnValue)
         {
-            return returnValue; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            return returnValue /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         [CanBeNull]
@@ -23,7 +23,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public void MethodWithOutParameter(out string outParam)
         {
-            outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            outParam = null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         public void MethodWithCanBeNullOutParameter([CanBeNull] out string outParam1)

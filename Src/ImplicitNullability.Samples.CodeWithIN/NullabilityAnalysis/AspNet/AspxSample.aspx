@@ -24,8 +24,8 @@
 
     private string SomeFunction(out string outParam)
     {
-        outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
-        return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+        outParam = null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+        return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
     }
 
 </script>

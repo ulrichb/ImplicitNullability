@@ -26,19 +26,19 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         [UsedImplicitly]
         internal string InternalFunction()
         {
-            return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         [UsedImplicitly]
         protected string ProtectedFunction()
         {
-            return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         [UsedImplicitly]
         private string PrivateFunction()
         {
-            return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
     }
 }

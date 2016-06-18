@@ -20,13 +20,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             // REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414:
             ReSharper.TestValueAnalysisUnsafe(refParam, refParam == null);
 
-            refParam = null; /*Expect:AssignNullToNotNullAttribute[MRef]*/
-            outParam = null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            refParam = null /*Expect:AssignNullToNotNullAttribute[MRef]*/;
+            outParam = null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         public static int* Function()
         {
-            return null; /*Expect:AssignNullToNotNullAttribute[MOut]*/
+            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
     }
 }
