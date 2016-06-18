@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableAttributeUsageAnalyzer
 {
@@ -22,17 +23,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
             {
             }
 
-            [NotNull, CanBeNull]
-            public string MultipleAnnotations /*Expect:MultipleNullableAttributesUsage*/()
-            {
-                return "";
-            }
+            [NotNull] /*Expect:AnnotationRedundancyAtValueType*/
+            public int AnnotationOnStruct() => 0;
 
             [ItemNotNull] /*Expect:ContainerAnnotationRedundancy[RS >= 20161]*/
-            public object NonAsyncMethod()
-            {
-                return "";
-            }
+            public object NonAsyncMethod() => "";
+
+            [NotNull, CanBeNull]
+            public string MultipleAnnotations /*Expect:MultipleNullableAttributesUsage*/() => "";
         }
     }
 }

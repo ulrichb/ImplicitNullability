@@ -7,7 +7,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
     {
         public void MethodWithNullableInt([NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
         {
-            // REPORT? Warning, although explicitly NotNull
+            // R# ignores the [NotNull] here, but respects it at the call site.
+
             ReSharper.TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
         }
 
@@ -16,7 +17,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
             [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
             // ReSharper restore AssignNullToNotNullAttribute
         {
-            // REPORT? Warning, although explicitly NotNull
+            // R# ignores the [NotNull] here, but respects it at the call site.
+
             ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
         }
 
@@ -26,7 +28,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
             [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/] => null;
 
         // ReSharper restore AssignNullToNotNullAttribute
-
 
         public void MethodWithNullableIntRefAndOutParameterMethod(
             [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
