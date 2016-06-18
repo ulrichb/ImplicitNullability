@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
@@ -7,15 +8,15 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
     {
         public ConstructorsSample(string a, string optional = "default")
         {
-            ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
-            ReSharper.TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            TestValueAnalysis(optional, optional == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         public ConstructorsSample([CanBeNull] string canBeNull, int? nullableInt, string optional = null)
         {
-            ReSharper.SuppressUnusedWarning(canBeNull);
-            ReSharper.TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
-            ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+            SuppressUnusedWarning(canBeNull);
+            TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
+            TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
         }
     }
 }

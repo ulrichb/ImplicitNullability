@@ -1,8 +1,8 @@
 using System;
 using FluentAssertions;
-using ImplicitNullability.Samples.CodeWithIN;
 using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 {
@@ -82,7 +82,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             {
                 DelegatesSample.SomeFunctionDelegateWithNotNull @delegate = DelegatesSample.GetSomeFunctionDelegateWithNotNull();
                 var result = @delegate();
-                ReSharper.TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+                TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
@@ -97,7 +97,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 var result = @delegate();
                 // This false negative is analog to SomeFunctionDelegateWithNotNull and even requires an exemption for the delegate Invoke() method,
                 // but it is necessary because this implicit annotation wouldn't be invertible with [CanBeNull]:
-                ReSharper.TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+                TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
@@ -110,7 +110,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             {
                 DelegatesSample.SomeFunctionDelegateWithCanBeNull @delegate = DelegatesSample.GetSomeFunctionDelegateWithCanBeNull();
                 var result = @delegate();
-                ReSharper.TestValueAnalysis(result /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, result == null);
+                TestValueAnalysis(result /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, result == null);
             };
 
             act.ShouldNotThrow();
@@ -142,8 +142,8 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
                 DelegatesSample.GetSomeDelegateWithRefAndOut()(ref refParam, out outParam);
 
-                ReSharper.TestValueAnalysis(refParam, refParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MRef]*/);
-                ReSharper.TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
+                TestValueAnalysis(refParam, refParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MRef]*/);
+                TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
             act.ShouldNotThrow("because the delegate *method* is an anonymous method");
@@ -159,7 +159,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
                 var asyncResult = someDelegate.BeginInvoke(null, null, null);
                 // The BeginInvoke() result is made implicitly NotNull by ReSharper's CodeAnnotationsCache:
-                ReSharper.TestValueAnalysis(asyncResult, asyncResult == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                TestValueAnalysis(asyncResult, asyncResult == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
                 asyncResult.AsyncWaitHandle.WaitOne();
             };
 
@@ -186,10 +186,10 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             {
                 var @delegate = DelegatesSample.GetSomeFunctionDelegate();
                 var result = @delegate.Invoke();
-                ReSharper.TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+                TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
 
                 var endInvokeResult = @delegate.EndInvoke(@delegate.BeginInvoke(null, null));
-                ReSharper.TestValueAnalysis(endInvokeResult, endInvokeResult == null);
+                TestValueAnalysis(endInvokeResult, endInvokeResult == null);
             };
 
             act.ShouldNotThrow();

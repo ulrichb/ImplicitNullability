@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
@@ -10,8 +11,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             get { return null; }
             set
             {
-                ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
-                ReSharper.TestValueAnalysis(value, value == null);
+                TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                TestValueAnalysis(value, value == null);
             }
         }
 
@@ -20,9 +21,9 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             get { return null; }
             set
             {
-                ReSharper.SuppressUnusedWarning(value);
-                ReSharper.TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
-                ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+                SuppressUnusedWarning(value);
+                TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
+                TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
             }
         }
     }

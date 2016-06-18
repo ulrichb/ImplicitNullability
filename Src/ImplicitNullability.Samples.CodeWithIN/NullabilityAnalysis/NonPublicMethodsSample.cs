@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
@@ -7,19 +8,19 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         [UsedImplicitly]
         internal void InternalMethod(string internalMethodParameter)
         {
-            ReSharper.TestValueAnalysis(internalMethodParameter, internalMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            TestValueAnalysis(internalMethodParameter, internalMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         [UsedImplicitly]
         protected void ProtectedMethod(string protectedMethodParameter)
         {
-            ReSharper.TestValueAnalysis(protectedMethodParameter, protectedMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            TestValueAnalysis(protectedMethodParameter, protectedMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         [UsedImplicitly]
         private void PrivateMethod(string privateMethodParameter)
         {
-            ReSharper.TestValueAnalysis(privateMethodParameter, privateMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+            TestValueAnalysis(privateMethodParameter, privateMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
         [UsedImplicitly]

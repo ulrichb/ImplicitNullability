@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
@@ -6,7 +7,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
     {
         public void MethodWithRefParameter(ref string refParam)
         {
-            ReSharper.TestValueAnalysis(refParam, refParam == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */);
+            TestValueAnalysis(refParam, refParam == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */);
 
             // Note that the implicit not null argument applies also to the outgoing value of 'refParam'
             refParam = null /*Expect:AssignNullToNotNullAttribute[MRef]*/;
@@ -14,13 +15,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public void MethodWithExplicitNotNullRefParameter([NotNull] ref string refParam)
         {
-            ReSharper.TestValueAnalysis(refParam, refParam == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */);
+            TestValueAnalysis(refParam, refParam == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */);
             refParam = null /*Expect:AssignNullToNotNullAttribute*/;
         }
 
         public void MethodWithCanBeNullRefParameter([CanBeNull] ref string refParam)
         {
-            ReSharper.TestValueAnalysis(refParam /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */, refParam == null);
+            TestValueAnalysis(refParam /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */, refParam == null);
             refParam = null;
         }
     }

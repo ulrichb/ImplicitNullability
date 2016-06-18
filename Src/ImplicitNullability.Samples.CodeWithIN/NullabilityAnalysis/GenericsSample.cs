@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
@@ -19,7 +20,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void Method(T a)
             {
-                ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
             }
 
             public T Function([CanBeNull] T returnValue)
@@ -39,7 +40,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void Method(T a)
             {
-                ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
             }
         }
 
@@ -53,12 +54,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void Method(T a)
             {
-                ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+                TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             }
 
             public void MethodWithNullableParameter(T? a)
             {
-                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
+                TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
         }
 
@@ -67,7 +68,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             public static void MethodWithoutConstraint<T>(T a)
             {
-                ReSharper.TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+                TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
             }
         }
     }

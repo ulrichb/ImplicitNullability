@@ -1,6 +1,7 @@
 ﻿using System;
 using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
+using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
@@ -8,7 +9,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
     {
         public static Action<string> GetSomeAction()
         {
-            return s => ReSharper.TestValueAnalysis(s, s == null);
+            return s => TestValueAnalysis(s, s == null);
         }
 
         public static Action<string> GetSomeActionWithClosedValues()
@@ -16,21 +17,21 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             var captured = Guid.NewGuid();
             return s =>
             {
-                ReSharper.TestValueAnalysis(s, s == null);
-                ReSharper.SuppressUnusedWarning(captured);
+                TestValueAnalysis(s, s == null);
+                SuppressUnusedWarning(captured);
             };
         }
 
         public static Action<string> GetSomeActionToAnonymousMethod()
         {
-            return delegate(string s) { ReSharper.TestValueAnalysis(s, s == null); };
+            return delegate(string s) { TestValueAnalysis(s, s == null); };
         }
 
         public delegate void SomeDelegate(string s);
 
         public static SomeDelegate GetSomeDelegate()
         {
-            return s => ReSharper.TestValueAnalysis(s, s == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+            return s => TestValueAnalysis(s, s == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
         }
 
         public static SomeDelegate GetSomeDelegateToNamedMethod()
@@ -47,7 +48,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public static SomeDelegateWithCanBeNull GetSomeDelegateWithCanBeNull()
         {
-            return s => ReSharper.TestValueAnalysis(s /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, s == null);
+            return s => TestValueAnalysis(s /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, s == null);
         }
 
         public static SomeDelegateWithCanBeNull GetSomeDelegateWithCanBeNullToNamedMethod()
@@ -92,12 +93,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public static External.SomeNotNullDelegate GetSomeNotNullDelegateOfExternalCode()
         {
-            return s => ReSharper.TestValueAnalysis(s, s == null);
+            return s => TestValueAnalysis(s, s == null);
         }
 
         public static External.SomeDelegate GetSomeDelegateOfExternalCode()
         {
-            return s => ReSharper.TestValueAnalysis(s, s == null);
+            return s => TestValueAnalysis(s, s == null);
         }
 
         public delegate void SomeDelegateWithRefAndOut(ref string refParam, out string outParam);
@@ -106,7 +107,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             return delegate(ref string refParam, out string outParam)
             {
-                ReSharper.TestValueAnalysis(refParam, refParam == null);
+                TestValueAnalysis(refParam, refParam == null);
 
                 // For ref and out-parameters (in contrast to the return value), R# doesn't seem to use the delegate annotations:
                 refParam = null;
@@ -135,7 +136,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             // Here the target parameter is a Special.Parameter, which is an IParameter. Note that this is an "builtin" null ref warning. Nullability
             // annotations are not involved for this error, although the annotation provider is being called (observed in R# 8.2).
             var action = new Action(nullAction /*Expect:PossibleNullReferenceException*/);
-            ReSharper.SuppressUnusedWarning(action);
+            SuppressUnusedWarning(action);
         }
     }
 }
