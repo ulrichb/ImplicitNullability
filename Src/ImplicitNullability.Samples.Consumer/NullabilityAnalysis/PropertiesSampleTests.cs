@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentAssertions;
 using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
@@ -6,30 +6,14 @@ using NUnit.Framework;
 namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 {
     [TestFixture]
-    public class PropertiesAndFieldsSampleTests
+    public class PropertiesSampleTests
     {
-        private PropertiesAndFieldsSample _instance;
+        private PropertiesSample _instance;
 
         [SetUp]
         public void SetUp()
         {
-            _instance = new PropertiesAndFieldsSample();
-        }
-
-        [Test]
-        public void SomeFieldWithNullValue()
-        {
-            Action act = () => _instance.SomeField = null;
-
-            act.ShouldNotThrow("field write access cannot throw");
-        }
-
-        [Test]
-        public void SomeCanBeNullFieldWithNullValue()
-        {
-            Action act = () => _instance.SomeCanBeNullField = null;
-
-            act.ShouldNotThrow();
+            _instance = new PropertiesSample();
         }
 
         [Test]

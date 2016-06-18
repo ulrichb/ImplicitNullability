@@ -1,14 +1,10 @@
-﻿using System;
 using JetBrains.Annotations;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
-    public class PropertiesAndFieldsSample
+    public class PropertiesSample
     {
-        public string SomeField;
-
-        [CanBeNull]
-        public string SomeCanBeNullField;
+        // Proves that (at the moment) properties should be excluded
 
         public string SomeProperty
         {
