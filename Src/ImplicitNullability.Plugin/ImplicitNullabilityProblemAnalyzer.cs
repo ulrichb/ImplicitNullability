@@ -112,6 +112,13 @@ namespace ImplicitNullability.Plugin
                     CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, nameIdentifier, highlightingList);
                 }
 
+                var fieldDeclaration = declaration as IFieldDeclaration;
+                if (fieldDeclaration != null)
+                {
+                    var nameIdentifier = fieldDeclaration.NameIdentifier;
+                    CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, nameIdentifier, highlightingList);
+                }
+
                 highlightingList.ForEach(x => consumer.AddHighlighting(x));
 
                 hasOveriddenImplicitNullability |=

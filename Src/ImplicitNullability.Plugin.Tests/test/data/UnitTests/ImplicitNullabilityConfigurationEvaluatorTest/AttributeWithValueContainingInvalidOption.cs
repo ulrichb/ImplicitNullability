@@ -1,3 +1,3 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyMetadata("ImplicitNullability.AppliesTo", "InputParameters, INVALID, OutParametersAndResult")]
+[assembly: AssemblyMetadata("ImplicitNullability.AppliesTo", "InputParameters, INVALID, Fields")]

@@ -9,6 +9,8 @@
 
     private readonly int? _nullableInt = null;
 
+    private readonly string _field = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
+
     private string SomeMethod(string a)
     {
         ReSharper.TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
@@ -26,6 +28,11 @@
     {
         outParam = null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+    }
+
+    public void Consume()
+    {
+        ReSharper.TestValueAnalysis(_field, _field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
     }
 
 </script>

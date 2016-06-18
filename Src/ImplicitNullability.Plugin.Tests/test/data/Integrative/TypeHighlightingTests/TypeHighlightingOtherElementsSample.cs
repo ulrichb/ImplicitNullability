@@ -23,12 +23,12 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             public delegate string SomeNullableDelegate([CanBeNull] string a);
         }
 
-        // Atm. IN doesn't support fields & properties
-
         public class Fields
         {
             [NotNull]
-            public string SomeField;
+            public string SomeNotNullField;
+
+            public readonly string SomeReadonlyField = "";
 
             [CanBeNull]
             public string SomeCanBeNullField;
@@ -39,6 +39,8 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             [NotNull]
             public abstract string VirtualPropertyWithExplicitNullabilityInBase { get; set; }
         }
+
+        // Atm. IN doesn't support properties/indexers
 
         public class Properties : PropertiesBase
         {

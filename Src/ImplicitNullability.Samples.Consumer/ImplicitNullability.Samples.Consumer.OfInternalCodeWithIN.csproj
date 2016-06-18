@@ -62,6 +62,7 @@
   <ItemGroup>
     <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
     <Compile Include="Highlighting\**\*.cs" />
+    <Compile Include="Properties\**\*.cs" />
     <Compile Include="NullabilityAnalysis\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,9 +73,6 @@
       <Project>{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}</Project>
       <Name>ImplicitNullability.Samples.CodeWithIN.Internal</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

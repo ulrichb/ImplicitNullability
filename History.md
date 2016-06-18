@@ -1,4 +1,5 @@
 ### vNext ###
+- Added support for fields (including the option to restrict to readonly fields / fields in reference types)
 - Extended "type highlighting" for fields and properties
 - Fixed wrong highlighting of async void method results (issue #8)
 

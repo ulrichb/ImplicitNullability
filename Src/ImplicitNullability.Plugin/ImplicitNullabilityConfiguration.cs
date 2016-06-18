@@ -8,7 +8,8 @@ namespace ImplicitNullability.Plugin
     /// </summary>
     public struct ImplicitNullabilityConfiguration
     {
-        public static readonly ImplicitNullabilityConfiguration AllDisabled = new ImplicitNullabilityConfiguration(false, false, false);
+        public static readonly ImplicitNullabilityConfiguration AllDisabled =
+            new ImplicitNullabilityConfiguration(false, false, false, false, false, false);
 
         public static ImplicitNullabilityConfiguration CreateFromSettings(ImplicitNullabilitySettings implicitNullabilitySettings)
         {
@@ -17,14 +18,26 @@ namespace ImplicitNullability.Plugin
             return new ImplicitNullabilityConfiguration(
                 implicitNullabilitySettings.EnableInputParameters,
                 implicitNullabilitySettings.EnableRefParameters,
-                implicitNullabilitySettings.EnableOutParametersAndResult);
+                implicitNullabilitySettings.EnableOutParametersAndResult,
+                implicitNullabilitySettings.EnableFields,
+                implicitNullabilitySettings.FieldsRestrictToReadonly,
+                implicitNullabilitySettings.FieldsRestrictToReferenceTypes);
         }
 
-        public ImplicitNullabilityConfiguration(bool enableInputParameters, bool enableRefParameters, bool enableOutParametersAndResult)
+        public ImplicitNullabilityConfiguration(
+            bool enableInputParameters,
+            bool enableRefParameters,
+            bool enableOutParametersAndResult,
+            bool enableFields,
+            bool fieldsRestrictToReadonly,
+            bool fieldsRestrictToReferenceTypes)
         {
             EnableInputParameters = enableInputParameters;
             EnableRefParameters = enableRefParameters;
             EnableOutParametersAndResult = enableOutParametersAndResult;
+            EnableFields = enableFields;
+            FieldsRestrictToReadonly = fieldsRestrictToReadonly;
+            FieldsRestrictToReferenceTypes = fieldsRestrictToReferenceTypes;
         }
 
         public bool EnableInputParameters { get; }
@@ -32,5 +45,11 @@ namespace ImplicitNullability.Plugin
         public bool EnableRefParameters { get; }
 
         public bool EnableOutParametersAndResult { get; }
+
+        public bool EnableFields { get; }
+
+        public bool FieldsRestrictToReadonly { get; }
+
+        public bool FieldsRestrictToReferenceTypes { get; }
     }
 }

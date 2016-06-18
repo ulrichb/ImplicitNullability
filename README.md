@@ -92,15 +92,20 @@ The highlighting can be enabled/disabled on the _Implicit Nullability_ options p
 
 Implicit nullability can be enabled or disabled for specific syntax elements in the *Code Inspection | Implicit Nullability* options page.
 
-<img src="/Doc/OptionsPage.png" alt="Options Page" width="837" />
+<img src="/Doc/OptionsPage.png" alt="Options Page" />
 
 ### Code configuration
 
-_Implicit Nullability_ can also be configured by code, using a [`AssemblyMetadataAttribute`](https://msdn.microsoft.com/en-us/library/system.reflection.assemblymetadataattribute.aspx). This has the advantage that the configuration gets compiled into the assembly, so that consumers of the assembly with installed _Implicit Nullability_ get the same implicit nullability annotations of the compiled code elements, as within the library's solution.
+_Implicit Nullability_ can also be configured by code using an [`AssemblyMetadataAttribute`](https://msdn.microsoft.com/en-us/library/system.reflection.assemblymetadataattribute.aspx). This has the advantage that the configuration gets compiled into the assembly so that consumers of the assembly with installed _Implicit Nullability_ get the same implicit nullability annotations of the compiled code elements as _within_ the library's solution.
 
-Example: `[assembly: System.Reflection.AssemblyMetadata("ImplicitNullability.AppliesTo", "InputParameters, RefParameters, OutParametersAndResult")]`
+Example:
+```C#
+[assembly: AssemblyMetadata("ImplicitNullability.AppliesTo",
+                            "InputParameters, RefParameters, OutParametersAndResult, Fields")]
+[assembly: AssemblyMetadata("ImplicitNullability.Fields", "RestrictToReadonly, RestrictToReferenceTypes")]
+```
 
-:warning: After changing the settings (either by code or in the options page), [cleaning the solution cache](https://www.jetbrains.com/resharper/help/Configuring_Caches_Location.html#dynaProc1) is necessary to update already analyzed code.
+:warning: After changing the settings (either by code or in the options page), [cleaning the solution cache](https://www.jetbrains.com/help/resharper/Configuring_Caches_Location.html#cleanup) is necessary to update already analyzed code.
 
 ## Code inspection warnings
 

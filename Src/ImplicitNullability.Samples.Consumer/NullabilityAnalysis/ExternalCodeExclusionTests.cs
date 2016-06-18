@@ -21,6 +21,15 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
+        public void Field()
+        {
+            var value = _externalClass.Field;
+
+            ReSharper.TestValueAnalysis(value, value == null /*Expect no warning*/);
+            value.Should().BeNull();
+        }
+
+        [Test]
         public void Method()
         {
             Action act = () => _externalClass.Method(null /*Expect no warning*/);

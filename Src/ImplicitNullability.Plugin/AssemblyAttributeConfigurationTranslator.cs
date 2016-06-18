@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.Metadata.Reader.Impl;
 using JetBrains.ReSharper.Psi;
+using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin
 {
@@ -18,57 +20,139 @@ namespace ImplicitNullability.Plugin
         private const string InputParametersAssemblyAttributeOption = "InputParameters";
         private const string RefParametersAssemblyAttributeOption = "RefParameters";
         private const string OutParametersAndResultAssemblyAttributeOption = "OutParametersAndResult";
+        private const string FieldsAssemblyAttributeOption = "Fields";
+
+        private const string FieldsAttributeKey = "ImplicitNullability.Fields";
+        private const string FieldsRestrictToReadonlyOption = "RestrictToReadonly";
+        private const string FieldsRestrictToReferenceTypesOption = "RestrictToReferenceTypes";
 
         public static ImplicitNullabilityConfiguration? ParseAttributes(IAttributesSet attributes)
         {
-            var assemblyAttributeOptionsText = GetAssemblyAttributeOptionsText(attributes);
+            var assemblyMetadataValues = AssemblyMetadataAttributeValues.Parse(attributes);
 
-            if (assemblyAttributeOptionsText == null)
+            if (assemblyMetadataValues.AppliesTo == null)
                 return null;
 
-            return ParseFromAssemblyAttributeOptionsText(assemblyAttributeOptionsText);
+            return ParseFromAssemblyAttributeOptionsText(assemblyMetadataValues);
         }
 
         public static string GenerateAttributeCode(ImplicitNullabilityConfiguration configuration)
         {
-            var optionTexts = new List<string>();
+            var appliesToList = new List<string>();
 
             if (configuration.EnableInputParameters)
-                optionTexts.Add(InputParametersAssemblyAttributeOption);
+                appliesToList.Add(InputParametersAssemblyAttributeOption);
 
             if (configuration.EnableRefParameters)
-                optionTexts.Add(RefParametersAssemblyAttributeOption);
+                appliesToList.Add(RefParametersAssemblyAttributeOption);
 
             if (configuration.EnableOutParametersAndResult)
-                optionTexts.Add(OutParametersAndResultAssemblyAttributeOption);
+                appliesToList.Add(OutParametersAndResultAssemblyAttributeOption);
 
-            return $"[assembly: {AssemblyMetadataAttributeTypeName.FullName}(" +
-                   $"\"{AppliesToAttributeKey}\", " +
-                   $"\"{string.Join(", ", optionTexts)}\")]";
+            if (configuration.EnableFields)
+                appliesToList.Add(FieldsAssemblyAttributeOption);
+
+            List<string> fieldsList = null;
+
+            if (configuration.EnableFields)
+            {
+                fieldsList = new List<string>();
+
+                if (configuration.FieldsRestrictToReadonly)
+                    fieldsList.Add(FieldsRestrictToReadonlyOption);
+
+                if (configuration.FieldsRestrictToReferenceTypes)
+                    fieldsList.Add(FieldsRestrictToReferenceTypesOption);
+            }
+
+            return new AssemblyMetadataAttributeValues(JoinParts(appliesToList), JoinParts(fieldsList)).GenerateAttributeCode();
+        }
+
+        private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(AssemblyMetadataAttributeValues attributeValues)
+        {
+            var appliesToParts = SplitParts(attributeValues.AppliesTo);
+            var fieldsParts = SplitParts(attributeValues.Fields);
+
+            return new ImplicitNullabilityConfiguration(
+                appliesToParts.Contains(InputParametersAssemblyAttributeOption),
+                appliesToParts.Contains(RefParametersAssemblyAttributeOption),
+                appliesToParts.Contains(OutParametersAndResultAssemblyAttributeOption),
+                appliesToParts.Contains(FieldsAssemblyAttributeOption),
+                fieldsParts.Contains(FieldsRestrictToReadonlyOption),
+                fieldsParts.Contains(FieldsRestrictToReferenceTypesOption));
+        }
+
+        private static IList<string> SplitParts([CanBeNull] string text)
+        {
+            if (text == null)
+                return EmptyList<string>.InstanceList;
+
+            return text.Split(',').Select(x => x.Trim()).ToList();
         }
 
         [CanBeNull]
-        private static string GetAssemblyAttributeOptionsText(IAttributesSet attributes)
+        private static string JoinParts([CanBeNull] IEnumerable<string> parts)
         {
-            var assemblyMetadataAttributes = attributes.GetAttributeInstances(AssemblyMetadataAttributeTypeName, false);
-
-            var attributeWithAppliesToAttributeKey = assemblyMetadataAttributes
-                .FirstOrDefault(x => Equals(x.PositionParameter(0).ConstantValue.Value, AppliesToAttributeKey));
-
-            if (attributeWithAppliesToAttributeKey == null)
-                return null;
-
-            return attributeWithAppliesToAttributeKey.PositionParameter(1).ConstantValue.Value as string;
+            return parts?.Join(", ");
         }
 
-        private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(string text)
+        private struct AssemblyMetadataAttributeValues
         {
-            var optionTexts = text.Split(',').Select(x => x.Trim()).ToList();
+            // Note: Optimize for performance because attribute parsing happens in every IN provider call
 
-            return new ImplicitNullabilityConfiguration(
-                optionTexts.Contains(InputParametersAssemblyAttributeOption),
-                optionTexts.Contains(RefParametersAssemblyAttributeOption),
-                optionTexts.Contains(OutParametersAndResultAssemblyAttributeOption));
+            [CanBeNull]
+            public readonly string AppliesTo;
+
+            [CanBeNull]
+            public readonly string Fields;
+
+            public AssemblyMetadataAttributeValues([CanBeNull] string appliesTo, [CanBeNull] string fields)
+            {
+                AppliesTo = appliesTo;
+                Fields = fields;
+            }
+
+            public static AssemblyMetadataAttributeValues Parse(IAttributesSet attributes)
+            {
+                var assemblyMetadataAttributes = attributes.GetAttributeInstances(AssemblyMetadataAttributeTypeName, false);
+
+                string appliesTo = null;
+                string fields = null;
+
+                foreach (var attributeInstance in assemblyMetadataAttributes)
+                {
+                    var key = attributeInstance.PositionParameter(0).ConstantValue.Value as string;
+                    var value = attributeInstance.PositionParameter(1).ConstantValue.Value as string;
+
+                    switch (key)
+                    {
+                        case AppliesToAttributeKey:
+                            appliesTo = value;
+                            break;
+
+                        case FieldsAttributeKey:
+                            fields = value;
+                            break;
+                    }
+                }
+
+                return new AssemblyMetadataAttributeValues(appliesTo, fields);
+            }
+
+            public string GenerateAttributeCode()
+            {
+                var attributeType = AssemblyMetadataAttributeTypeName.FullName;
+
+                var values = new Dictionary<string, string>
+                {
+                    { AppliesToAttributeKey, AppliesTo },
+                    { FieldsAttributeKey, Fields }
+                };
+
+                return string.Join(
+                    Environment.NewLine,
+                    values.Where(x => x.Value != null).Select(x => $"[assembly: {attributeType}(\"{x.Key}\", \"{x.Value}\")]"));
+            }
         }
     }
 }

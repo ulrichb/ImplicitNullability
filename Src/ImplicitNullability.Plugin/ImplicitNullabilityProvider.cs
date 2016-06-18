@@ -37,13 +37,17 @@ namespace ImplicitNullability.Plugin
             if (parameter != null)
                 result = AnalyzeParameter(parameter);
 
-            var function = declaredElement as IFunction;
+            var function = declaredElement as IFunction /* methods and operators */;
             if (function != null)
                 result = AnalyzeFunction(function);
 
             var @delegate = declaredElement as IDelegate;
             if (@delegate != null)
                 result = AnalyzeDelegate(@delegate);
+
+            var field = declaredElement as IField;
+            if (field != null)
+                result = AnalyzeField(field);
 
             return result;
         }
@@ -76,8 +80,6 @@ namespace ImplicitNullability.Plugin
 
         private CodeAnnotationNullableValue? AnalyzeFunction(IFunction function)
         {
-            // Methods and operators
-
             CodeAnnotationNullableValue? result = null;
 
             if (!IsDelegateInvokeOrEndInvokeFunction(function))
@@ -101,6 +103,24 @@ namespace ImplicitNullability.Plugin
             if (_configurationEvaluator.EvaluateFor(@delegate.Module).EnableOutParametersAndResult)
             {
                 result = GetNullabilityForType(@delegate.InvokeMethod.ReturnType);
+            }
+
+            return result;
+        }
+
+        private CodeAnnotationNullableValue? AnalyzeField(IField field)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            var configuration = _configurationEvaluator.EvaluateFor(field.Module);
+
+            if (configuration.EnableFields)
+            {
+                if ((!configuration.FieldsRestrictToReadonly || field.IsReadonly) &&
+                    (!configuration.FieldsRestrictToReferenceTypes || field.IsMemberOfReferenceType()))
+                {
+                    result = GetNullabilityForType(field.Type);
+                }
             }
 
             return result;

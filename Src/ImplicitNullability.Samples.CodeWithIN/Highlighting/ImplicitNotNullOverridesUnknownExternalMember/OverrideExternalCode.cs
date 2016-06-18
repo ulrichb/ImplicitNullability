@@ -94,5 +94,24 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
                 return default(DateTime);
             }
         }
+
+        // In contrast:
+        public class DerivedFromImplicitlyNullableCode : IImplicitlyNullableInterface
+        {
+            public void Method(string a)
+            {
+            }
+
+            public string Function()
+            {
+                return "";
+            }
+
+            public async Task<string> AsyncFunction()
+            {
+                await Task.Delay(0);
+                return "";
+            }
+        }
     }
 }

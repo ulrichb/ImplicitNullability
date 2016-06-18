@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
@@ -21,12 +22,30 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         [Test]
         public void ConvertToAssemblyMetadataAttributeCode_WithAllOptionsEnabled()
         {
-            var configuration = new ImplicitNullabilityConfiguration(true, true, true);
+            var configuration = new ImplicitNullabilityConfiguration(true, true, true, true, true, true);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
-            Assert.That(result, Is.EqualTo("[assembly: System.Reflection.AssemblyMetadataAttribute(\"ImplicitNullability.AppliesTo\", " +
-                                           "\"InputParameters, RefParameters, OutParametersAndResult\")]"));
+            Assert.That(result, Is.EqualTo(
+                "[assembly: System.Reflection.AssemblyMetadataAttribute(\"ImplicitNullability.AppliesTo\"," +
+                " \"InputParameters, RefParameters, OutParametersAndResult, Fields\")]" + Environment.NewLine +
+                "[assembly: System.Reflection.AssemblyMetadataAttribute(\"ImplicitNullability.Fields\"," +
+                " \"RestrictToReadonly, RestrictToReferenceTypes\")]"));
+        }
+
+        [Test]
+        public void ConvertToAssemblyMetadataAttributeCode_WithFieldsSettingButFieldOptionDisabled()
+        {
+            var configuration = new ImplicitNullabilityConfiguration(
+                true, false, false,
+                enableFields: false, fieldsRestrictToReadonly: true, fieldsRestrictToReferenceTypes: true);
+
+            var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
+
+            Assert.That(
+                result,
+                Is.EqualTo("[assembly: System.Reflection.AssemblyMetadataAttribute(\"ImplicitNullability.AppliesTo\", \"InputParameters\")]"),
+                "'ImplicitNullability.Fields'-attribute must not be rendered");
         }
     }
 }

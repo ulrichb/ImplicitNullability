@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Linq.Expressions;
 using JetBrains.Application.UI.Commands;
 using JetBrains.DataFlow;
@@ -9,6 +10,7 @@ using JetBrains.UI.Options;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions.ViewModel;
 using JetBrains.UI.Resources;
+using JetBrains.UI.RichText;
 using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin.Settings
@@ -17,13 +19,19 @@ namespace ImplicitNullability.Plugin.Settings
     [OptionsPage(PageId, PageTitle, typeof(CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]
     public class ImplicitNullabilityOptionsPage : SimpleOptionsPage
     {
-        private readonly Clipboard _clipboard;
         public const string PageTitle = "Implicit Nullability";
         private const string PageId = "ImplicitNullabilityOptions";
+
+        private static readonly TextStyle Italic = new TextStyle(FontStyle.Italic);
+
+        private readonly Clipboard _clipboard;
 
         private readonly BoolOptionViewModel _enableInputParametersOption;
         private readonly BoolOptionViewModel _enableRefParametersOption;
         private readonly BoolOptionViewModel _enableOutParametersAndResultOption;
+        private readonly BoolOptionViewModel _enableFieldsOption;
+        private readonly BoolOptionViewModel _fieldsRestrictToReadonlyOption;
+        private readonly BoolOptionViewModel _fieldsRestrictToReferenceTypes;
 
         public ImplicitNullabilityOptionsPage(Lifetime lifetime, OptionsSettingsSmartContext optionsSettingsSmartContext, Clipboard clipboard)
             : base(lifetime, optionsSettingsSmartContext)
@@ -48,20 +56,44 @@ namespace ImplicitNullability.Plugin.Settings
             _enableInputParametersOption = AddNullabilityBoolOption(
                 s => s.EnableInputParameters,
                 "Input parameters of methods, delegates, and indexers",
-                enabledOption);
-            SetIndent(_enableInputParametersOption, 2);
+                enabledOption,
+                indent: 2);
 
             _enableRefParametersOption = AddNullabilityBoolOption(
                 s => s.EnableRefParameters,
                 "Ref parameters of methods and delegates",
-                enabledOption);
-            SetIndent(_enableRefParametersOption, 2);
+                enabledOption,
+                indent: 2);
 
             _enableOutParametersAndResultOption = AddNullabilityBoolOption(
                 s => s.EnableOutParametersAndResult,
                 "Return values and out parameters of methods and delegates",
-                enabledOption);
-            SetIndent(_enableOutParametersAndResultOption, 2);
+                enabledOption,
+                indent: 2);
+
+            _enableFieldsOption = AddNullabilityBoolOption(
+                s => s.EnableFields,
+                "Fields",
+                enabledOption,
+                indent: 2);
+
+            _fieldsRestrictToReadonlyOption = AddNullabilityBoolOption(
+                s => s.FieldsRestrictToReadonly,
+                new RichText("Restrict to ") +
+                new RichText("readonly", Italic) +
+                new RichText(" fields (because ") +
+                new RichText("readonly", Italic) +
+                new RichText(" fields can be guarded by invariants / constructor checks)"),
+                enabledOption,
+                indent: 3);
+
+            _fieldsRestrictToReferenceTypes = AddNullabilityBoolOption(
+                s => s.FieldsRestrictToReferenceTypes,
+                new RichText("Restrict to fields contained in reference types (because ") +
+                new RichText("struct", Italic) +
+                new RichText("s cannot be guarded by invariants due to their implicit default constructor)"),
+                enabledOption,
+                indent: 3);
 
             var assemblyAttributeInfoText1 =
                 "\n" +
@@ -98,10 +130,21 @@ namespace ImplicitNullability.Plugin.Settings
         private BoolOptionViewModel AddNullabilityBoolOption(
             Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
             string text,
-            BoolOptionViewModel enabledOption)
+            BoolOptionViewModel enabledOption,
+            int indent)
         {
-            var result = AddBoolOption(settingsExpression, text);
+            return AddNullabilityBoolOption(settingsExpression, new RichText(text), enabledOption, indent);
+        }
+
+        private BoolOptionViewModel AddNullabilityBoolOption(
+            Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
+            RichText richText,
+            BoolOptionViewModel enabledOption,
+            int indent)
+        {
+            var result = AddBoolOption(settingsExpression, richText);
             enabledOption.CheckedProperty.FlowInto(myLifetime, result.GetIsEnabledProperty());
+            SetIndent(result, indent);
 
             return result;
         }
@@ -112,7 +155,10 @@ namespace ImplicitNullability.Plugin.Settings
                 new ImplicitNullabilityConfiguration(
                     _enableInputParametersOption.CheckedProperty.Value,
                     _enableRefParametersOption.CheckedProperty.Value,
-                    _enableOutParametersAndResultOption.CheckedProperty.Value));
+                    _enableOutParametersAndResultOption.CheckedProperty.Value,
+                    _enableFieldsOption.CheckedProperty.Value,
+                    _fieldsRestrictToReadonlyOption.CheckedProperty.Value,
+                    _fieldsRestrictToReferenceTypes.CheckedProperty.Value));
 
             _clipboard.SetText(assemblyMetadataCode);
             MessageBox.ShowInfo("The following code has been copied to your clipboard:\n\n\n" + assemblyMetadataCode);

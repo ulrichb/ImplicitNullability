@@ -45,10 +45,6 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 Assert.That(issueCount, Is.GreaterThanOrEqualTo(15));
                 Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("OverrideExternalCodeWithAnnotations.cs"));
                 Assert.That(issueSourceFiles.Select(x => x.Name), Has.Some.EqualTo("OverrideExternalCode.cs"));
-                Assert.That(issueSourceFiles.Select(x => x.DisplayName),
-                    Has.Some.StringMatching(@"<.*Consumer\.OfInternalCodeWithIN>.*\\ExternalUnknownVsImplicitlyNullableCode\.cs"));
-                Assert.That(issueSourceFiles.Select(x => x.DisplayName),
-                    Has.Some.StringMatching(@"<.*Consumer\.OfExternalCodeWithIN>.*\\ExternalUnknownVsImplicitlyNullableCode\.cs"));
             });
         }
 
@@ -90,7 +86,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
         private void TestWithDisabledImplicitNullability()
         {
-            UseSampleSolution(solution =>
+            UseSampleSolution((solution, _) =>
             {
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 
@@ -100,9 +96,9 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
         private void TestWithEnabledImplicitNullability(Action<int, IList<IPsiSourceFile>> assert)
         {
-            UseSampleSolution(solution =>
+            UseSampleSolution((solution, solutionSettings) =>
             {
-                EnableImplicitNullabilityWithAllOptions(solution);
+                solutionSettings.EnableImplicitNullabilityWithAllOptions();
 
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 

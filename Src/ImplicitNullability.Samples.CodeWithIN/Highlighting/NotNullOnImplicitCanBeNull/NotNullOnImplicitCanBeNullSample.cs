@@ -5,6 +5,9 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
 {
     public class NotNullOnImplicitCanBeNullSample
     {
+        [NotNull]
+        public readonly int? Field /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ = 42;
+
         public void MethodWithNullableInt([NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
         {
             // R# ignores the [NotNull] here, but respects it at the call site.

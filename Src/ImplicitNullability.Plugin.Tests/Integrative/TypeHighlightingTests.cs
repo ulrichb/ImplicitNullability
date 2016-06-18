@@ -1,5 +1,6 @@
 using System.IO;
 using ImplicitNullability.Plugin.Settings;
+using ImplicitNullability.Plugin.Tests.Infrastructure;
 using ImplicitNullability.Plugin.TypeHighlighting;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Feature.Services.Daemon;
@@ -42,7 +43,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             protected override void ChangeSettings(IContextBoundSettingsStore store)
             {
                 base.ChangeSettings(store);
-                RunGuarded(() => store.SetValue((ImplicitNullabilitySettings s) => s.EnableTypeHighlighting, false));
+                store.SetValue((ImplicitNullabilitySettings s) => s.EnableTypeHighlighting, false);
             }
 
             protected override string GetGoldTestDataPath(string fileName) => base.GetGoldTestDataPath(fileName + ".DisabledSetting");
@@ -64,14 +65,14 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         {
             ExecuteWithinSettingsTransaction(store =>
             {
-                ChangeSettings(store);
+                RunGuarded(() => ChangeSettings(store));
                 base.DoTestSolution(fileSet);
             });
         }
 
         protected virtual void ChangeSettings(IContextBoundSettingsStore store)
         {
-            RunGuarded(() => store.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true));
+            store.EnableImplicitNullabilityWithAllOptions();
         }
     }
 }

@@ -23,12 +23,12 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             public delegate string SomeNullableDelegate([CanBeNull] string a);
         }
 
-        // Atm. IN doesn't support fields & properties
-
         public class Fields
         {
             [NotNull]
-            public |string|(3) SomeField;
+            public |string|(3) SomeNotNullField;
+
+            public readonly |string|(4) SomeReadonlyField = "";
 
             [CanBeNull]
             public string SomeCanBeNullField;
@@ -37,30 +37,32 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         public abstract class PropertiesBase
         {
             [NotNull]
-            public abstract |string|(4) VirtualPropertyWithExplicitNullabilityInBase { get; set; }
+            public abstract |string|(5) VirtualPropertyWithExplicitNullabilityInBase { get; set; }
         }
+
+        // Atm. IN doesn't support properties/indexers
 
         public class Properties : PropertiesBase
         {
             [NotNull]
-            public |string|(5) SomeProperty { get; set; }
+            public |string|(6) SomeProperty { get; set; }
 
             [CanBeNull]
             public string SomeCanBeNullProperty { get; set; }
 
             [NotNull]
-            public |string|(6) SomeExpresssionBodyProperty => "";
+            public |string|(7) SomeExpresssionBodyProperty => "";
 
             [NotNull]
-            public |string|(7) SomeGetterOnlyProperty { get; } = "";
+            public |string|(8) SomeGetterOnlyProperty { get; } = "";
 
-            public override |string|(8) VirtualPropertyWithExplicitNullabilityInBase { get; set; }
+            public override |string|(9) VirtualPropertyWithExplicitNullabilityInBase { get; set; }
         }
 
         public class Indexers
         {
             [NotNull]
-            public |string|(9) this[|string|(10) a] => "";
+            public |string|(10) this[|string|(11) a] => "";
 
             [CanBeNull]
             public string this[[CanBeNull] object b] => "";
@@ -80,3 +82,4 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 (8): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (9): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (10): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(11): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
