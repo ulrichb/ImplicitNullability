@@ -43,8 +43,9 @@
     <Reference Include="ImplicitNullability.Samples.CodeWithoutIN.External">
       <HintPath>..\ImplicitNullability.Samples.CodeWithoutIN\bin\External\ImplicitNullability.Samples.CodeWithoutIN.External.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations">
-      <HintPath>..\..\packages\JetBrains.Annotations.9.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.10.1.5\lib\net\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NullGuard, Version=1.4.6.0, Culture=neutral, PublicKeyToken=1958ac8092168428, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NullGuard.Fody.1.4.6\lib\dotnet\NullGuard.dll</HintPath>

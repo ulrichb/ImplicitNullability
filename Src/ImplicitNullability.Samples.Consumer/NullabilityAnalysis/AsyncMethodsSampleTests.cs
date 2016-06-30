@@ -129,7 +129,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
-        public async void NonAsyncTaskResultFunctionWithExplicitNotNull()
+        public async Task NonAsyncTaskResultFunctionWithExplicitNotNull()
         {
             var result = await _instance.NonAsyncTaskResultFunctionWithExplicitNotNull(null);
             ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92]*/);
@@ -138,7 +138,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
-        public async void NonAsyncTaskResultFunction()
+        public async Task NonAsyncTaskResultFunction()
         {
             var result = await _instance.NonAsyncTaskResultFunction(null);
             ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92 && MOut]*/);
