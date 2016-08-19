@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R20163", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R20163.csproj", "{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.VsFormatDefinitions", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,5 +115,6 @@ Global
 		{B2619CD9-295A-4436-A83A-26E7AE540FB8} = {67859B65-179D-40D0-80DB-003011824913}
 		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D} = {67859B65-179D-40D0-80DB-003011824913}
 		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E} = {67859B65-179D-40D0-80DB-003011824913}
+		{06B8BCDD-6F91-42C7-A474-C50CD24C397E} = {67859B65-179D-40D0-80DB-003011824913}
 	EndGlobalSection
 EndGlobal

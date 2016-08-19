@@ -87,6 +87,12 @@ namespace ImplicitNullability.Plugin.Settings
                 "cleaning the solution cache (see \"General\" options page) " +
                 "is necessary to update already analyzed code.";
             AddText(cacheInfoText);
+
+            AddText("\n");
+            AddBoolOption(
+                (ImplicitNullabilitySettings s) => s.EnableTypeHighlighting,
+                "Enable type highlighting of explicit or implicit [NotNull] elements " +
+                "(to adapt the color, look for \"Implicit Nullability\" in Visual Studio's \"Fonts and Colors\" options)");
         }
 
         private BoolOptionViewModel AddNullabilityBoolOption(

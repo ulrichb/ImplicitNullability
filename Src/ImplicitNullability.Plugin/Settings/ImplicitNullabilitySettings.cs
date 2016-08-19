@@ -17,5 +17,8 @@ namespace ImplicitNullability.Plugin.Settings
 
         [SettingsEntry(true, "EnableOutParametersAndResult")]
         public readonly bool EnableOutParametersAndResult;
+
+        [SettingsEntry(true, "EnableTypeHighlighting")]
+        public readonly bool EnableTypeHighlighting;
     }
 }

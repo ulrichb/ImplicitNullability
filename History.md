@@ -1,4 +1,5 @@
 ### vNext ###
+- Explicit or implicit [NotNull] element types are now highlighted with a dotted underline (can be enabled/disabled on the Implicit Nullability options page)
 - Ignore methods with [ContractAnnotation] attribute
 
 ### 3.2.0 ###

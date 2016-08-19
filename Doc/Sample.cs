@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-// ReSharper disable UnusedParameter.Local, MemberCanBeMadeStatic.Local, UnusedMember.Global
+// ReSharper disable CheckNamespace, UnusedParameter.Local, MemberCanBeMadeStatic.Local, UnusedMember.Global
 
 public class Sample
 {
@@ -9,7 +9,7 @@ public class Sample
     {
         var str = Bar(null, null);
 
-        Console.WriteLine(str ?? "");
+        Console.WriteLine(str ?? "n/a");
     }
 
 

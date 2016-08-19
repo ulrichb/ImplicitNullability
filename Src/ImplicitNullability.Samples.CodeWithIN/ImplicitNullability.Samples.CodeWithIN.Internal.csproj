@@ -70,6 +70,12 @@
     <Compile Include="Properties\NullGuardConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TypeHighlighting\TypeHighlightingSample.cs" />
+    <None Include="TypeHighlighting\TypeHighlightingSample.cs.gold" />
+    <None Include="TypeHighlighting\TypeHighlightingInvalidDeclarationsSample.cs" />
+    <None Include="TypeHighlighting\TypeHighlightingInvalidDeclarationsSample.cs.gold" />
+  </ItemGroup>
+  <ItemGroup>
     <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
     <Compile Include="NullabilityAnalysis\**\*.cs" />
     <Compile Include="Highlighting\**\*.cs" />

@@ -13,7 +13,7 @@
 
 The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` or `[CanBeNull]` attribute. For example, reference types in method parameters are by default `[NotNull]` (→ they need an explicit `[CanBeNull]` to become nullable).
 
-![Code Sample](/Doc/Sample.png)
+<img src="/Doc/Sample.png" alt="Code Sample" width="647" />
 
 With enabled _Implicit Nullability_ for specific, [configurable](#configuration), syntax elements, the following rules apply.
 
@@ -80,13 +80,19 @@ In the example above _Implicit Nullability_ forces the programmer to fix the mis
 
 ### Fody NullGuard
 
-Another goal of this extension is to bring ReSharper's static analysis in sync with the implicit null checks of [Fody NullGuard](https://github.com/Fody/NullGuard#readme). For example, this [Fody](https://github.com/Fody/Fody#readme) weaver injects `throw new ArgumentNullException​(/*...*/)` statements for method parameters into method bodies using the same rules as _Implicit Nullability_. In other words this weaver adds _runtime_ checks for nullability to ReSharper's _static_ analysis.
+Another goal of this extension is to bring ReSharper's static analysis in sync with the implicit null checks of [Fody NullGuard](https://github.com/Fody/NullGuard#readme). For example, this [Fody](https://github.com/Fody/Fody#readme) weaver injects `throw new ArgumentNullException​(/*...*/)` statements for method parameters into method bodies using the same rules as _Implicit Nullability_. In other words this weaver adds _runtime checks_ for nullability to ReSharper's _static_ analysis.
+
+## Type highlighting
+
+Explicit or implicit `[NotNull]` element types are highlighted with a dotted underline. (See the pink underlines in the `Bar`-method in the sample screenshot [above](#idea).) This helps to recognize all `[NotNull]` elements, especially inferred `[NotNull]` elements from a base class and code elements which are configured as implicitly `[NotNull]`.
+
+The highlighting can be enabled/disabled on the _Implicit Nullability_ options page, and the colors can be configured in Visual Studio's "Fonts and Colors" options.
 
 ## Configuration
 
-_Implicit nullability_ can be enabled or disabled for specific syntax elements in the *Code Inspection | Implicit Nullability* options page.
+Implicit nullability can be enabled or disabled for specific syntax elements in the *Code Inspection | Implicit Nullability* options page.
 
-![Options Page](/Doc/OptionsPage.png)
+<img src="/Doc/OptionsPage.png" alt="Options Page" width="837" />
 
 ### Code configuration
 
@@ -107,3 +113,7 @@ In addition to the behavior change of the nullability analysis the following cod
 * "Implicit CanBeNull element has an explicit NotNull annotation" (Id: `NotNullOnImplicitCanBeNull`)
 
 For more information about these warnings (and their motivation) see their description in the ReSharper *Code Inspection | Inspection Severity* options page.
+
+## Credits
+
+Big thanks to [Fabian Schmied](https://github.com/fschmied) for supporting the design and conception of _Implicit Nullability_.

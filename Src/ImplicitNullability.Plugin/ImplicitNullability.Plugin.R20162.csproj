@@ -284,6 +284,20 @@
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Plugin.R20162.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.csproj">
+      <Project>{06b8bcdd-6f91-42c7-a474-c50cd24c397e}</Project>
+      <Name>ImplicitNullability.Plugin.VsFormatDefinitions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="CopyAdditionalPluginFilesToInstall" AfterTargets="CopyPlugin" Condition="'$(HostFullIdentifier)' != ''">
+    <!-- See JetBrains.CommonSdk.targets -->
+    <ItemGroup>
+      <AdditionalPluginFilesToInstall Include="$(OutDir)ImplicitNullability.Plugin.VsFormatDefinitions.*" />
+    </ItemGroup>
+    <Message Text="Copying additional files ('@(AdditionalPluginFilesToInstall)') into InstallFolder ..." Importance="High" Condition="Exists('@(InstallFolder)')" />
+    <Copy SourceFiles="@(AdditionalPluginFilesToInstall)" DestinationFolder="@(InstallFolder)" Condition="Exists('@(InstallFolder)')" />
+  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
