@@ -11,7 +11,7 @@
 
 ## Idea
 
-The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` or `[CanBeNull]` attribute. For example, reference types in method parameters are by default `[NotNull]` (→ they need an opt-in `[CanBeNull]` to become nullable).
+The basic idea of this extension is to change the behavior of ReSharper's [static nullability analysis](https://www.jetbrains.com/resharper/help/Code_Analysis__Code_Annotations.html) so that specific code elements get a default nullability annotation without specifying an explicit `[NotNull]` or `[CanBeNull]` attribute. For example, reference types in method parameters are by default `[NotNull]` (→ they need an explicit `[CanBeNull]` to become nullable).
 
 ![Code Sample](/Doc/Sample.png)
 
@@ -22,9 +22,9 @@ With enabled _Implicit Nullability_ for specific, [configurable](#configuration)
  * Their nullability can be overridden with an explicit `[CanBeNull]` attribute. 
  * Optional method parameters with a `null` default value are implicitly `[CanBeNull]`.
 
-In a nutshell, the following code ...
+In a nutshell, the code showed in the picture above  ...
 ```C#
-public string M(string a, [CanBeNull] string b, string c = null)
+public string Bar(string a, [CanBeNull] string b, string c = null)
 {
     // ...
 }
@@ -32,7 +32,7 @@ public string M(string a, [CanBeNull] string b, string c = null)
 ... implicitly becomes ...
 ```C#
 [NotNull]
-public string M([NotNull] string a, [CanBeNull] string b, [CanBeNull] string c = null)
+public string Bar([NotNull] string a, [CanBeNull] string b, [CanBeNull] string c = null)
 {
     // ...
 }

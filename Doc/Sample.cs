@@ -1,16 +1,20 @@
+using System;
 using JetBrains.Annotations;
 
 // ReSharper disable UnusedParameter.Local, MemberCanBeMadeStatic.Local, UnusedMember.Global
 
 public class Sample
 {
-    public void Caller()
+    public void Foo()
     {
-        MethodWithImplicitNullability(null, null);
+        var str = Bar(null, null);
+
+        Console.WriteLine(str ?? "");
     }
 
 
-    private void MethodWithImplicitNullability(string a, [CanBeNull] string b)
+    public string Bar(string a, [CanBeNull] string b, string c = null)
     {
+        return null;
     }
 }
