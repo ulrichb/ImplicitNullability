@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using ImplicitNullability.Plugin.Infrastructure;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
 using ReSharperExtensionsShared.Debugging;
-
 #if !RESHARPER92
 using System.Collections.Generic;
 
@@ -15,6 +15,8 @@ namespace ImplicitNullability.Plugin
     /// <summary>
     /// An implementation of ReSharper's <see cref="ICustomCodeAnnotationProvider"/> extension point which uses
     /// the <see cref="ImplicitNullabilityProvider"/> to implement the Implicit Nullability rules.
+    /// 
+    /// Note that these "custom" providers are called by R# at last (basically if there are no (inherited) nullability attributes).
     /// </summary>
     [PsiComponent]
     public class ImplicitNullabilityCustomCodeAnnotationProvider : ICustomCodeAnnotationProvider
@@ -29,7 +31,7 @@ namespace ImplicitNullability.Plugin
             _implicitNullabilityProvider = implicitNullabilityProvider;
         }
 
-        public CodeAnnotationNullableValue? GetNullableAttribute(IDeclaredElement element)
+        public CodeAnnotationNullableValue? GetNullableAttribute([NotNull] IDeclaredElement element)
         {
 #if DEBUG
             var stopwatch = Stopwatch.StartNew();
@@ -43,7 +45,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? GetContainerElementNullableAttribute(IDeclaredElement element)
+        public CodeAnnotationNullableValue? GetContainerElementNullableAttribute([NotNull] IDeclaredElement element)
         {
 #if DEBUG
             var stopwatch = Stopwatch.StartNew();
@@ -59,7 +61,7 @@ namespace ImplicitNullability.Plugin
         }
 
 #if !RESHARPER92
-        public ICollection<IAttributeInstance> GetSpecialAttributeInstances(IClrDeclaredElement element)
+        public ICollection<IAttributeInstance> GetSpecialAttributeInstances([NotNull] IClrDeclaredElement element)
         {
             return EmptyList<IAttributeInstance>.InstanceList;
         }
