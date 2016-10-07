@@ -15,7 +15,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void CallMethodWithDefaultOfT()
             {
-                Method(default(T) /*Expect:AssignNullToNotNullAttribute[RS >= 20161 && MIn]*/);
+                Method(default(T) /*Expect:AssignNullToNotNullAttribute[MIn]*/);
             }
 
             public void Method(T a)

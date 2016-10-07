@@ -1,14 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
 using ReSharperExtensionsShared.Debugging;
-#if !RESHARPER92
-using System.Collections.Generic;
-
-#endif
 
 namespace ImplicitNullability.Plugin
 {
@@ -60,12 +57,10 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-#if !RESHARPER92
         public ICollection<IAttributeInstance> GetSpecialAttributeInstances([NotNull] IClrDeclaredElement element)
         {
             return EmptyList<IAttributeInstance>.InstanceList;
         }
-#endif
 
 #if DEBUG
         private static void LogResult(string messagePrefix, IDeclaredElement element, Stopwatch stopwatch, CodeAnnotationNullableValue? result)

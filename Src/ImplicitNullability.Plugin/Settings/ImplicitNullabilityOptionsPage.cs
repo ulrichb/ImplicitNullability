@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using JetBrains.Application.UI.Commands;
 using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
 using JetBrains.UI;
@@ -9,13 +10,6 @@ using JetBrains.UI.Options.OptionsDialog2.SimpleOptions;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions.ViewModel;
 using JetBrains.UI.Resources;
 using JetBrains.Util;
-#if RESHARPER92 || RESHARPER100
-using JetBrains.UI.Extensions.Commands;
-
-#else
-using JetBrains.Application.UI.Commands;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Settings
 {

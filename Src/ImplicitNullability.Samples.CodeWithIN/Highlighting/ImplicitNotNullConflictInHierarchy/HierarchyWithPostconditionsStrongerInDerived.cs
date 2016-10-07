@@ -26,7 +26,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
         public class Implementation : IInterface
         {
             public void CanBeNullOutParameterInInterfaceExplicitNotNullInDerived(
-                [NotNull] /*Expect:AnnotationConflictInHierarchy[RS < 20161]*/ out string a)
+                [NotNull] out string a)
             {
                 a = "";
             }
@@ -57,7 +57,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             }
 
             public async Task<string> TaskFunctionWithCanBeNullInInterfaceImplicitNotNullInDerived
-                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[RS >= 92 && Implicit]*/()
+                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
                 await Task.Delay(0);
                 return "";

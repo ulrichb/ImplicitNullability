@@ -21,30 +21,6 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             _sut = new AnnotationRedundancyInHierarchyWarningFilteringDecorator(_decorated);
         }
 
-#if RESHARPER92 || RESHARPER100
-        [Test]
-        public void ConsumeHighlighting_ShouldPassCall()
-        {
-            var highlighting = A.Fake<IHighlighting>();
-
-            _sut.ConsumeHighlighting(
-                DocumentRange.InvalidRange,
-                highlighting,
-                Severity.INFO,
-                "overriddenHighlightingAttributeId",
-                OverlapResolveKind.ERROR,
-                overriddenOverloadResolvePriority: 42);
-
-            A.CallTo(() => _decorated.ConsumeHighlighting(
-                DocumentRange.InvalidRange,
-                highlighting,
-                Severity.INFO,
-                "overriddenHighlightingAttributeId",
-                OverlapResolveKind.ERROR,
-                42)).MustHaveHappened();
-        }
-#endif
-
         [Test]
         public void ConsumeHighlighting_WithSomeHighlighting_ShouldPassCall()
         {

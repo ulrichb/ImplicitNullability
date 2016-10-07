@@ -38,14 +38,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             }
 
             public override async Task<string> ItemCanBeNull_WithOverridingAsyncMethod
-                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[RS >= 92 && Implicit]*/()
+                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
                 await Task.Delay(0);
                 return null;
             }
 
             public override Task<string> ItemCanBeNull_WithOverridingNonAsyncMethod
-                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[RS >= 92 && Implicit]*/()
+                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
                 return Task.FromResult<string>(null);
             }

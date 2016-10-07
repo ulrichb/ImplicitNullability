@@ -40,13 +40,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         public async Task<string> FunctionWithExplicitItemNotNull([CanBeNull] string returnValue)
         {
             await Task.Delay(0);
-            return returnValue /*Expect:AssignNullToNotNullAttribute[RS >= 92]*/;
+            return returnValue /*Expect:AssignNullToNotNullAttribute*/;
         }
 
         public async Task<string> Function([CanBeNull] string returnValue)
         {
             await Task.Delay(0);
-            return returnValue /*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/;
+            return returnValue /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         [ItemCanBeNull]

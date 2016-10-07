@@ -80,7 +80,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Func<Task> act = async () =>
             {
                 var result = await _instance.FunctionWithExplicitItemNotNull(returnValue: "");
-                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92]*/);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             };
 
             act.ShouldNotThrow();
@@ -92,7 +92,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Func<Task> act = async () =>
             {
                 var result = await _instance.Function(returnValue: "");
-                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92 && MOut]*/);
+                ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
             act.ShouldNotThrow();
@@ -122,7 +122,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Func<Task> act = async () =>
             {
                 var result = await _instance.FunctionWithNullableInt(returnValue: null);
-                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute[RS >= 92 && MOut]*/, result == null);
+                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute[MOut]*/, result == null);
             };
 
             act.ShouldNotThrow();
@@ -132,7 +132,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         public async Task NonAsyncTaskResultFunctionWithExplicitNotNull()
         {
             var result = await _instance.NonAsyncTaskResultFunctionWithExplicitNotNull(null);
-            ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92]*/);
+            ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
 
             result.Should().BeNull("not NullGuard rewritten");
         }
@@ -141,7 +141,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         public async Task NonAsyncTaskResultFunction()
         {
             var result = await _instance.NonAsyncTaskResultFunction(null);
-            ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS >= 92 && MOut]*/);
+            ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
 
             result.Should().BeNull("not NullGuard rewritten");
         }

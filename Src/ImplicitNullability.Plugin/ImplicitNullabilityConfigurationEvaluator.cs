@@ -1,17 +1,10 @@
+using System;
 using ImplicitNullability.Plugin.Infrastructure;
 using ImplicitNullability.Plugin.Settings;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Tree;
-#if RESHARPER92
-using JetBrains.Util.Lazy;
-using JetBrains.Metadata.Reader.API;
-
-#else
-using System;
-
-#endif
 
 namespace ImplicitNullability.Plugin
 {
@@ -68,14 +61,7 @@ namespace ImplicitNullability.Plugin
 
         private ImplicitNullabilityConfiguration? ParseConfigurationFromAssemblyAttribute(IPsiModule psiModule)
         {
-            var moduleAttributes = _psiServices.Value.Symbols.GetModuleAttributes(psiModule
-
-#if RESHARPER92
-                ,
-                // The generic resolve context (e.g. necessary to resolve the attribute argument types) is sufficient in our case:
-                UniversalModuleReferenceContext.Instance
-#endif
-                );
+            var moduleAttributes = _psiServices.Value.Symbols.GetModuleAttributes(psiModule);
 
             return AssemblyAttributeConfigurationTranslator.ParseAttributes(moduleAttributes);
         }

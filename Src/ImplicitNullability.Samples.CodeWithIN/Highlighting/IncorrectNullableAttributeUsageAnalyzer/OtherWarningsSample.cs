@@ -26,7 +26,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
             [NotNull] /*Expect:AnnotationRedundancyAtValueType*/
             public int AnnotationOnStruct() => 0;
 
-            [ItemNotNull] /*Expect:ContainerAnnotationRedundancy[RS >= 20161]*/
+            [ItemNotNull] /*Expect:ContainerAnnotationRedundancy*/
             public object NonAsyncMethod() => "";
 
             [NotNull, CanBeNull]

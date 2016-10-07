@@ -28,13 +28,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             }
 
             public void ExplicitNotNullRefParameterInInterfaceCanBeNullInDerived(
-                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161]*/ ref string a)
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/ ref string a)
             {
                 ReSharper.SuppressUnusedWarning(a);
             }
 
             public void ImplicitNotNullRefParameterInInterfaceCanBeNullInDerived(
-                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161 && Implicit]*/ ref string a)
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/ ref string a)
             {
                 ReSharper.SuppressUnusedWarning(a);
             }

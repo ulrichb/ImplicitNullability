@@ -25,13 +25,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
         public class Implementation : IInterface
         {
             public void ExplicitNotNullOutParameterInInterfaceCanBeNullInDerived(
-                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161]*/ out string a)
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/ out string a)
             {
-                a = null /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/;
+                a = null /*Expect:AssignNullToNotNullAttribute*/;
             }
 
             public void ImplicitNotNullOutParameterInInterfaceCanBeNullInDerived(
-                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161 && Implicit]*/ out string a)
+                [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/ out string a)
             {
                 a = null;
             }
@@ -40,7 +40,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public string FunctionWithExplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 // The invalid CanBeNull does not override the NotNull:
-                return null /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/;
+                return null /*Expect:AssignNullToNotNullAttribute*/;
             }
 
             [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
@@ -49,14 +49,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 return null;
             }
 
-            [ItemCanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161]*/
+            [ItemCanBeNull] /*Expect:AnnotationConflictInHierarchy*/
             public async Task<string> TaskFunctionWithExplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 await Task.Delay(0);
                 return null;
             }
 
-            [ItemCanBeNull] /*Expect:AnnotationConflictInHierarchy[RS >= 20161 && Implicit]*/
+            [ItemCanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
             public async Task<string> TaskFunctionWithImplicitNotNullInInterfaceCanBeNullInDerived()
             {
                 await Task.Delay(0);

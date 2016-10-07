@@ -46,10 +46,10 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
         }
 
         [ItemNotNull]
-        public async Task<int?> AsyncFunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull[RS >= 92 && Implicit]*/()
+        public async Task<int?> AsyncFunctionWithNullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/()
         {
             await Task.Delay(0);
-            return null /*Expect:AssignNullToNotNullAttribute[RS >= 92]*/; // This warning results from the explicit NotNull
+            return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
         }
 
         [NotNull]

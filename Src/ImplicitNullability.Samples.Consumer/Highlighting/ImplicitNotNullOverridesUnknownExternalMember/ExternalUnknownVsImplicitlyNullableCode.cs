@@ -21,7 +21,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 return "";
             }
 
-            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[RS >= 92 && Implicit]*/()
+            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
             {
                 await Task.Delay(0);
                 return "";

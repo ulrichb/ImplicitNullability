@@ -22,7 +22,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
                 return baseValue;
             }
 
-            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[RS >= 92 && Implicit]*/()
+            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
             {
                 var baseValue = await base.AsyncFunction();
                 // Here we convert an unknown (possibly CanBeNull) value to an implicitly NotNull return value:

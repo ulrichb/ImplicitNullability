@@ -66,14 +66,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public void CanBeNullParameterInInterfaceExplicitNotNullInDerived([NotNull] /*Expect:AnnotationConflictInHierarchy*/ string a)
             {
                 // Since R# 2016.1, the invalid NotNull does not override the CanBeNull:
-                ReSharper.TestValueAnalysis(
-                    a /*Expect:AssignNullToNotNullAttribute[RS >= 20161]*/,
-                    a == null /*Expect:ConditionIsAlwaysTrueOrFalse[RS < 20161]*/);
+                ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
 
             public void CanBeNullParameterInInterfaceImplicitNotNullInDerived(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
-                // Here the inherited explicit CanBeBull overrides the implicit NotNull: 
+                // Here the inherited explicit CanBeBull "overrides" the implicit NotNull: 
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
             }
         }

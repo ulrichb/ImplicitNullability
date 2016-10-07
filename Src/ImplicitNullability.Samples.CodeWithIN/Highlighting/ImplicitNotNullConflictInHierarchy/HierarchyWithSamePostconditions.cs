@@ -66,14 +66,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 return null;
             }
 
-            [ItemNotNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 20161 && not Implicit]*/
+            [ItemNotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public async Task<string> TaskFunctionWithExplicitNotNull()
             {
                 await Task.Delay(0);
                 return "";
             }
 
-            [ItemCanBeNull] /*Expect:AnnotationRedundancyInHierarchy[RS >= 20161 && not Implicit]*/
+            [ItemCanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public async Task<string> TaskFunctionWithExplicitCanBeNull()
             {
                 await Task.Delay(0);

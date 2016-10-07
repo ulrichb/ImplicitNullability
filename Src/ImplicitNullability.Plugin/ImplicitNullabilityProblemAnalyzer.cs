@@ -15,11 +15,6 @@ using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
 using ReSharperExtensionsShared.Debugging;
 
-#if RESHARPER92 || RESHARPER100
-using JetBrains.ReSharper.Daemon.CSharp.Stages;
-
-#endif
-
 namespace ImplicitNullability.Plugin
 {
     [ElementProblemAnalyzer(
@@ -35,9 +30,7 @@ namespace ImplicitNullability.Plugin
                 typeof(AnnotationRedundancyInHierarchyWarning),
                 typeof(AnnotationConflictInHierarchyWarning),
                 typeof(AnnotationRedundancyAtValueTypeWarning),
-#if !(RESHARPER92 || RESHARPER100)
                 typeof(ContainerAnnotationRedundancyWarning),
-#endif
                 typeof(MultipleNullableAttributesUsageWarning),
                 // The own ones:
                 typeof(NotNullOnImplicitCanBeNullHighlighting),

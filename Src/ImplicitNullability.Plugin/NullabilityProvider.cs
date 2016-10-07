@@ -11,51 +11,6 @@ namespace ImplicitNullability.Plugin
     [PsiComponent]
     public class NullabilityProvider
     {
-#if RESHARPER92 || RESHARPER100
-        private readonly CodeAnnotationsCache _codeAnnotationsCache;
-
-        public NullabilityProvider(CodeAnnotationsCache codeAnnotationsCache)
-        {
-            _codeAnnotationsCache = codeAnnotationsCache;
-        }
-
-        public bool ContainsAnyExplicitNullabilityAttributes(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x =>
-                _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.NotNullAttributeShortName) ||
-                _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.CanBeNullAttributeShortName));
-        }
-
-        public bool ContainsExplicitNotNullNullabilityAttribute(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x =>
-                _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.NotNullAttributeShortName));
-        }
-
-        public bool ContainsAnyExplicitItemNullabilityAttributes(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x =>
-                _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemNotNullAttributeShortName) ||
-                _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemCanBeNullAttributeShortName));
-        }
-
-        public bool ContainsExplicitItemNotNullNullabilityAttribute(IEnumerable<IAttributeInstance> attributeInstances)
-        {
-            return attributeInstances.Any(x =>
-                _codeAnnotationsCache.IsAnnotationAttribute(x, CodeAnnotationsCache.ItemNotNullAttributeShortName));
-        }
-
-        public CodeAnnotationNullableValue? GetElementNullability(IAttributesOwner attributesOwner)
-        {
-            return _codeAnnotationsCache.GetNullableAttribute(attributesOwner);
-        }
-
-        public CodeAnnotationNullableValue? GetContainerElementNullability(IAttributesOwner attributesOwner)
-        {
-            return _codeAnnotationsCache.GetContainerElementNullableAttribute(attributesOwner);
-        }
-
-#else
         private readonly CodeAnnotationsConfiguration _codeAnnotationsConfiguration;
         private readonly NullnessProvider _nullnessProvider;
         private readonly ContainerElementNullnessProvider _containerElementNullnessProvider;
@@ -105,6 +60,5 @@ namespace ImplicitNullability.Plugin
         {
             return _containerElementNullnessProvider.GetInfo(attributesOwner);
         }
-#endif
     }
 }

@@ -16,11 +16,8 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NCalc;
 using NUnit.Framework;
-
-#if !(RESHARPER92 || RESHARPER100)
 using FakeItEasy;
 using JetBrains.DataFlow;
-#endif
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
@@ -121,18 +118,6 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         {
             var issues = new List<IIssue>();
 
-#if RESHARPER92 || RESHARPER100
-            Assert.IsTrue(
-                CollectInspectionResults.Do(
-                    solution,
-                    sourceFiles,
-                    SimpleTaskExecutor.Instance,
-                    x =>
-                    {
-                        lock (issues)
-                            issues.Add(x);
-                    }));
-#else
             using (var lifetime = Lifetimes.Define(solution.GetLifetime()))
             {
                 var collectInspectionResults = new CollectInspectionResults(solution, lifetime, A.Dummy<IProgressIndicator>());
@@ -140,7 +125,6 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 collectInspectionResults.RunLocalInspections(new Stack<IPsiSourceFile>(sourceFiles),
                     issuePointers => issues.AddRange(issuePointers));
             }
-#endif
 
             return issues;
         }
