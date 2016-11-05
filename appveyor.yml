@@ -11,6 +11,7 @@ cache:
   - Src\ImplicitNullability.Plugin.Tests\Packages
 artifacts:
   - path: Build\Output\TestCoverage
+  - path: Build\Output\TestCoverage\Summary.mht
 install:
   - git submodule update --init --recursive
 build_script:
