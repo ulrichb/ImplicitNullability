@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using ImplicitNullability.Samples.CodeWithIN;
 using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
@@ -54,11 +55,48 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
+        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+        public void SomeIteratorResult()
+        {
+            var someIterator = _instance.SomeIterator("");
+
+            // Note that MOut also applies here (and NotNull is satisfied by definition):
+            ReSharper.TestValueAnalysis(someIterator, someIterator == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
+
+            someIterator.Should().NotBeNull();
+        }
+
+        [Test]
         public void SomeIteratorReturningNullItem()
         {
-            var result = _instance.SomeIteratorReturningNullItem();
+            foreach (var item in _instance.SomeIteratorReturningNullItem())
+            {
+                ReSharper.TestValueAnalysis(item, item == null);
 
-            result.Should().Equal(new object[] { null });
+                item.Should().BeNull();
+            }
+        }
+
+        [Test]
+        public void SomeIteratorWithItemCanBeNull()
+        {
+            foreach (var item in _instance.SomeIteratorWithItemCanBeNull())
+            {
+                ReSharper.TestValueAnalysis(item /*Expect:AssignNullToNotNullAttribute*/, item == null);
+
+                item.Should().BeNull();
+            }
+        }
+
+        [Test]
+        public void SomeIteratorWithItemNotNull()
+        {
+            foreach (var item in _instance.SomeIteratorWithItemNotNull())
+            {
+                ReSharper.TestValueAnalysis(item, item == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
+
+                item.Should().BeNull();
+            }
         }
     }
 }

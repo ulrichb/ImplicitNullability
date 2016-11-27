@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using NullGuard;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
@@ -23,6 +24,18 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         public IEnumerable<object> SomeIteratorReturningNullItem()
         {
             yield return null;
+        }
+
+        [ItemCanBeNull]
+        public IEnumerable<object> SomeIteratorWithItemCanBeNull()
+        {
+            yield return null;
+        }
+
+        [ItemNotNull]
+        public IEnumerable<object> SomeIteratorWithItemNotNull()
+        {
+            yield return null /*Expect:AssignNullToNotNullAttribute*/;
         }
     }
 }
