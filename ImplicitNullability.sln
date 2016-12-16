@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -36,6 +36,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R20162", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R20162.csproj", "{AB1C2F7C-E1AD-40B4-B2C2-8E5CA55B462F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R20162", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R20162.csproj", "{B2619CD9-295A-4436-A83A-26E7AE540FB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R20163", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R20163.csproj", "{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R20163", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R20163.csproj", "{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,14 @@ Global
 		{B2619CD9-295A-4436-A83A-26E7AE540FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2619CD9-295A-4436-A83A-26E7AE540FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2619CD9-295A-4436-A83A-26E7AE540FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +107,7 @@ Global
 		{CB994F0F-BB93-468B-BC72-CBB1A3FBA6F1} = {67859B65-179D-40D0-80DB-003011824913}
 		{AB1C2F7C-E1AD-40B4-B2C2-8E5CA55B462F} = {67859B65-179D-40D0-80DB-003011824913}
 		{B2619CD9-295A-4436-A83A-26E7AE540FB8} = {67859B65-179D-40D0-80DB-003011824913}
+		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D} = {67859B65-179D-40D0-80DB-003011824913}
+		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E} = {67859B65-179D-40D0-80DB-003011824913}
 	EndGlobalSection
 EndGlobal

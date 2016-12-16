@@ -1,3 +1,6 @@
+### vNext ###
+- ReSharper 2016.3 support
+
 ### 3.1.0 ###
 - ReSharper 2016.2 support
 
