@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using FakeItEasy;
 using JetBrains.Annotations;
 using JetBrains.Application.Progress;
+using JetBrains.DataFlow;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.SolutionAnalysis;
 using JetBrains.ReSharper.Feature.Services.Daemon;
@@ -16,8 +18,6 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NCalc;
 using NUnit.Framework;
-using FakeItEasy;
-using JetBrains.DataFlow;
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {

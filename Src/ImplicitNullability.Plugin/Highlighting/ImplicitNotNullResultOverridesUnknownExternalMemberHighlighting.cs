@@ -4,16 +4,16 @@ using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
-               ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.SeverityId,
-               null,
-               HighlightingGroupIds.CodeSmell,
-               ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.Message,
-               ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.Description,
-               Severity.HINT
+    ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.SeverityId,
+    null,
+    HighlightingGroupIds.CodeSmell,
+    ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.Message,
+    ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.Description,
+    Severity.HINT
 #if RESHARPER20161 || RESHARPER20162
-               , SolutionAnalysisRequired: false
+    , SolutionAnalysisRequired: false
 #endif
-           )]
+)]
 
 namespace ImplicitNullability.Plugin.Highlighting
 {
