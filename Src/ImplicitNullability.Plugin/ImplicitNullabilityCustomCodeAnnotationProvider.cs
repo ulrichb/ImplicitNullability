@@ -65,7 +65,7 @@ namespace ImplicitNullability.Plugin
 #if DEBUG
         private static void LogResult(string messagePrefix, IDeclaredElement element, Stopwatch stopwatch, CodeAnnotationNullableValue? result)
         {
-            var resultText = (result.IsUnknown() ? "UNKNOWN" : result.ToString());
+            var resultText = result.IsUnknown() ? "UNKNOWN" : result.ToString();
             var message = messagePrefix + DebugUtility.FormatIncludingContext(element) + " => " + resultText;
             Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
         }
