@@ -44,18 +44,22 @@ namespace ImplicitNullability.Plugin
     {
         private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityProblemAnalyzer));
 
+        private readonly CodeAnnotationAttributesChecker _annotationAttributesChecker;
+        private readonly NullnessProvider _nullnessProvider;
+        private readonly ContainerElementNullnessProvider _containerElementNullnessProvider;
         private readonly ImplicitNullabilityProvider _implicitNullabilityProvider;
         private readonly IncorrectNullableAttributeUsageAnalyzer _incorrectNullableAttributeUsageAnalyzer;
-        private readonly NullabilityProvider _nullabilityProvider;
 
         public ImplicitNullabilityProblemAnalyzer(
-            NullabilityProvider nullabilityProvider,
+            CodeAnnotationAttributesChecker annotationAttributesChecker,
             CodeAnnotationsCache codeAnnotationsCache,
             ImplicitNullabilityProvider implicitNullabilityProvider)
         {
             Logger.Verbose(".ctor");
 
-            _nullabilityProvider = nullabilityProvider;
+            _annotationAttributesChecker = annotationAttributesChecker;
+            _nullnessProvider = codeAnnotationsCache.GetProvider<NullnessProvider>();
+            _containerElementNullnessProvider = codeAnnotationsCache.GetProvider<ContainerElementNullnessProvider>();
             _implicitNullabilityProvider = implicitNullabilityProvider;
 
             _incorrectNullableAttributeUsageAnalyzer = new IncorrectNullableAttributeUsageAnalyzer(codeAnnotationsCache);
@@ -111,11 +115,11 @@ namespace ImplicitNullability.Plugin
                 highlightingList.ForEach(x => consumer.AddHighlighting(x));
 
                 hasOveriddenImplicitNullability |=
-                    _nullabilityProvider.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
+                    _annotationAttributesChecker.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
                     _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) != null;
 
                 hasOveriddenImplicitNullability |=
-                    _nullabilityProvider.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
+                    _annotationAttributesChecker.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
                     _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) != null;
             }
 
@@ -198,13 +202,13 @@ namespace ImplicitNullability.Plugin
 
         private bool IsImplicitlyNotNull(IDeclaredElement declaredElement, IEnumerable<IAttributeInstance> attributeInstances)
         {
-            return !_nullabilityProvider.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
+            return !_annotationAttributesChecker.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
         private bool IsContainerElementImplicitlyNotNull(IDeclaredElement declaredElement, IEnumerable<IAttributeInstance> attributeInstances)
         {
-            return !_nullabilityProvider.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
+            return !_annotationAttributesChecker.ContainsAnyExplicitItemNullabilityAttributes(attributeInstances) &&
                    _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
@@ -224,13 +228,13 @@ namespace ImplicitNullability.Plugin
             ITreeNode highlightingNode,
             ICollection<IHighlighting> highlightingList)
         {
-            if (_nullabilityProvider.ContainsExplicitNotNullNullabilityAttribute(attributeInstances) &&
+            if (_annotationAttributesChecker.ContainsExplicitNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
                 highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
             }
 
-            if (_nullabilityProvider.ContainsExplicitItemNotNullNullabilityAttribute(attributeInstances) &&
+            if (_annotationAttributesChecker.ContainsExplicitItemNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
                 highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
@@ -271,7 +275,7 @@ namespace ImplicitNullability.Plugin
                     {
                         SuperMember = x.Element,
                         // We assume that the super members of a parameter owner are also parameter owners with the same number of parameters:
-                        NullableAttribute = _nullabilityProvider.GetElementNullability(((IParametersOwner) x.Element).Parameters[parameterIndex])
+                        NullableAttribute = _nullnessProvider.GetInfo(((IParametersOwner) x.Element).Parameters[parameterIndex])
                     });
 
             return result;
@@ -282,7 +286,7 @@ namespace ImplicitNullability.Plugin
             return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
             {
                 SuperMember = x.Element,
-                NullableAttribute = _nullabilityProvider.GetElementNullability(x.Member)
+                NullableAttribute = _nullnessProvider.GetInfo(x.Member)
             });
         }
 
@@ -291,7 +295,7 @@ namespace ImplicitNullability.Plugin
             return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
             {
                 SuperMember = x.Element,
-                NullableAttribute = _nullabilityProvider.GetContainerElementNullability(x.Member)
+                NullableAttribute = _containerElementNullnessProvider.GetInfo(x.Member)
             });
         }
 

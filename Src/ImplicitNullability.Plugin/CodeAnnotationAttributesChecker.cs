@@ -6,22 +6,16 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 namespace ImplicitNullability.Plugin
 {
     /// <summary>
-    /// An accessor for ReSharper's nullability information of declared elements (using <see cref="CodeAnnotationsCache"/>)
+    /// A service which checks for specific code annotations attributes.
     /// </summary>
     [PsiComponent]
-    public class NullabilityProvider
+    public class CodeAnnotationAttributesChecker
     {
         private readonly CodeAnnotationsConfiguration _codeAnnotationsConfiguration;
-        private readonly NullnessProvider _nullnessProvider;
-        private readonly ContainerElementNullnessProvider _containerElementNullnessProvider;
 
-        public NullabilityProvider(
-            CodeAnnotationsConfiguration codeAnnotationsConfiguration,
-            CodeAnnotationsCache codeAnnotationsCache)
+        public CodeAnnotationAttributesChecker(CodeAnnotationsConfiguration codeAnnotationsConfiguration)
         {
             _codeAnnotationsConfiguration = codeAnnotationsConfiguration;
-            _nullnessProvider = codeAnnotationsCache.GetProvider<NullnessProvider>();
-            _containerElementNullnessProvider = codeAnnotationsCache.GetProvider<ContainerElementNullnessProvider>();
         }
 
 
@@ -49,16 +43,6 @@ namespace ImplicitNullability.Plugin
         {
             return attributeInstances.Any(x =>
                 _codeAnnotationsConfiguration.IsAnnotationAttribute(x, ContainerElementNullnessProvider.ItemNotNullAttributeShortName));
-        }
-
-        public CodeAnnotationNullableValue? GetElementNullability(IAttributesOwner attributesOwner)
-        {
-            return _nullnessProvider.GetInfo(attributesOwner);
-        }
-
-        public CodeAnnotationNullableValue? GetContainerElementNullability(IAttributesOwner attributesOwner)
-        {
-            return _containerElementNullnessProvider.GetInfo(attributesOwner);
         }
     }
 }
