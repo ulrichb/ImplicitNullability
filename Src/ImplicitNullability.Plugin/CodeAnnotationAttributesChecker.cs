@@ -44,5 +44,11 @@ namespace ImplicitNullability.Plugin
             return attributeInstances.Any(x =>
                 _codeAnnotationsConfiguration.IsAnnotationAttribute(x, ContainerElementNullnessProvider.ItemNotNullAttributeShortName));
         }
+
+        public bool ContainsContractAnnotationAttribute(IEnumerable<IAttributeInstance> attributeInstances)
+        {
+            return attributeInstances.Any(x =>
+                _codeAnnotationsConfiguration.IsAnnotationAttribute(x, ContractAnnotationProvider.ContractAnnotationAttributeShortName));
+        }
     }
 }

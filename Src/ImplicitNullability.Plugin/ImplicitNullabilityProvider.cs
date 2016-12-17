@@ -17,10 +17,15 @@ namespace ImplicitNullability.Plugin
         private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityProvider));
 
         private readonly ImplicitNullabilityConfigurationEvaluator _configurationEvaluator;
+        private readonly CodeAnnotationAttributesChecker _codeAnnotationAttributesChecker;
 
-        public ImplicitNullabilityProvider(ImplicitNullabilityConfigurationEvaluator configurationEvaluator)
+        public ImplicitNullabilityProvider(
+            ImplicitNullabilityConfigurationEvaluator configurationEvaluator,
+            CodeAnnotationAttributesChecker codeAnnotationAttributesChecker
+        )
         {
             _configurationEvaluator = configurationEvaluator;
+            _codeAnnotationAttributesChecker = codeAnnotationAttributesChecker;
         }
 
         public CodeAnnotationNullableValue? AnalyzeDeclaredElement(IDeclaredElement declaredElement)
@@ -78,7 +83,10 @@ namespace ImplicitNullability.Plugin
             {
                 if (_configurationEvaluator.EvaluateFor(function.Module).EnableOutParametersAndResult)
                 {
-                    result = GetNullabilityForType(function.ReturnType);
+                    if (!ContainsContractAnnotationAttribute(function))
+                    {
+                        result = GetNullabilityForType(function.ReturnType);
+                    }
                 }
             }
 
@@ -114,10 +122,13 @@ namespace ImplicitNullability.Plugin
 
             if (_configurationEvaluator.EvaluateFor(method.Module).EnableOutParametersAndResult)
             {
-                var taskUnderlyingType = method.ReturnType.GetTaskUnderlyingType();
+                if (!ContainsContractAnnotationAttribute(method))
+                {
+                    var taskUnderlyingType = method.ReturnType.GetTaskUnderlyingType();
 
-                if (taskUnderlyingType != null)
-                    result = GetNullabilityForType(taskUnderlyingType);
+                    if (taskUnderlyingType != null)
+                        result = GetNullabilityForType(taskUnderlyingType);
+                }
             }
 
             return result;
@@ -215,6 +226,14 @@ namespace ImplicitNullability.Plugin
             var isNullConstantExpression = defaultValue.IsConstant && defaultValue.ConstantValue.Value == null;
 
             return isNullDefaultExpression || isNullConstantExpression;
+        }
+
+        private bool ContainsContractAnnotationAttribute(IFunction function)
+        {
+            var attributeInstances = function.GetAttributeInstances(inherit: true);
+
+            // Can't use the CodeAnnotationsCache here because we would get an endless recursion:
+            return _codeAnnotationAttributesChecker.ContainsContractAnnotationAttribute(attributeInstances);
         }
     }
 }

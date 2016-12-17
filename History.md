@@ -1,3 +1,6 @@
+### vNext ###
+- Ignore methods with [ContractAnnotation] attribute
+
 ### 3.2.0 ###
 - ReSharper 2016.3 support
 
