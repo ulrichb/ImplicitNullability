@@ -9,6 +9,7 @@
     <projectUrl>https://github.com/ulrichb/ImplicitNullability#readme</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Extends the static analysis by changing specific, configurable elements to be [NotNull] by default.</description>
+    <iconUrl>https://raw.githubusercontent.com/ulrichb/ImplicitNullability/Logo/Doc/icon128.png</iconUrl>
     <releaseNotes>$ReleaseNotes$</releaseNotes>
     <tags>nullability analysis implicit annotation default notnull canbenull</tags>
     <dependencies>
