@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/7st3drnudnk7lplu/branch/master?svg=true)](https://ci.appveyor.com/project/ulrichb/implicitnullability/branch/master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ulrichb/ImplicitNullability?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <a href="https://ci.appveyor.com/api/projects/ulrichb/implicitnullability/artifacts/Build/Output/TestCoverage.zip?branch=master"><img src="https://dl.dropbox.com/s/tz8rhb0ucv3lruo/master-linecoverage.svg" alt="Line Coverage" title="Line Coverage"></a>
-<a href="https://ci.appveyor.com/api/projects/ulrichb/implicitnullability/artifacts/Build/Output/TestCoverage.zip?branch=master"><img src="https://dl.dropbox.com/s/4pmdllotpgd46kj/master-branchcoverage.svg" alt="Branch Coverage" title="Branch Coverage"></a>
+<a href="https://ci.appveyor.com/api/projects/ulrichb/implicitnullability/artifacts/Build/Output/TestCoverage.zip?branch=master"><img src="https://dl.dropbox.com/s/4pmdllotpgd46kj/master-branchcoverage.svg" alt="Branch Coverage" title="Branch Coverage"></a>⬅️😱
 
 [ReSharper Gallery Page](https://resharper-plugins.jetbrains.com/packages/ReSharper.ImplicitNullability/)
 
