@@ -6,12 +6,12 @@ The methods arguments *are* implicitly nullable. -> Principle: "Wherever a CanBe
 
 ## Disadvantages
 
-* Doesn't match Fody NullGuard plugin. But: Static analysis needn't completely match runtime null checks added by weaver; the main purpose of the rewriter is a good API exception contract paired with fail fast. Developer must know details of NullGuard anyway, and it's clear that NullGuard can go only so far (with realistic effort).
-* Delegates: doesn't match anonymous methods/lambdas. But: Delegates are callable, and it makes sense to make use of static analysis at least at the call sites. Additionally, with lambdas/anonymous methods, C# doesn't allow placing CanBeNull/NotNull attributes on the parameters, but it does allow it on delegate declarations.
+* Doesn't match Fody NullGuard plugin. But: Static analysis doesn't completely match runtime null checks added by weaver; the main purpose of the rewriter is a good API exception contract paired with fail fast. Developer must know details of NullGuard anyway, and it's clear that NullGuard can help only this far (with realistic effort).
+* Delegates: doesn't match anonymous methods/lambdas. But: Delegates are invocable, and it makes sense to make use of static analysis at least at call sites. Additionally, with lambdas/anonymous methods, C# doesn't allow adding CanBeNull/NotNull attributes for parameters, but it does allow on delegate declarations.
 
 ## Advantages
 
-* Symmetry with "regular" methods parameters
+* Symmetry with "regular" method parameters
 * Simple rule, easy to understand
 * For input parameters it makes the calls *safer*, not more unsafe (i.e., safer default than "Unknown" nullability)
 
