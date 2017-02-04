@@ -18,6 +18,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             public static Simple operator ++(Simple value)
             {
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+
+                return new Simple();
+            }
+
+            public static explicit operator Simple(string s)
+            {
+                TestValueAnalysis(s, s == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
+
                 return new Simple();
             }
         }
@@ -37,11 +45,24 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
                 TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
                 return null;
             }
+
+            [CanBeNull]
+            public static explicit operator CanBeNull([CanBeNull] string s)
+            {
+                TestValueAnalysis(s /*Expect:AssignNullToNotNullAttribute*/, s == null);
+
+                return null;
+            }
         }
 
         public class NotNullReturnValue
         {
             public static NotNullReturnValue operator ++(NotNullReturnValue value)
+            {
+                return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+            }
+
+            public static explicit operator NotNullReturnValue(string s)
             {
                 return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
             }
