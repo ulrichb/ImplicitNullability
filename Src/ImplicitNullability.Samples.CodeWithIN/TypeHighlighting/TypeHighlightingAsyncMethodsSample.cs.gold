@@ -1,0 +1,52 @@
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
+
+namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
+{
+    public class TypeHighlightingAsyncMethodsSample
+    {
+        public async |Task|(0)<|string|(1)> AsyncMethod()
+        {
+            await Task.Delay(0);
+            return "";
+        }
+
+        public async |Task|(2) VoidAsyncMethod()
+        {
+            await Task.Delay(0);
+        }
+
+        [ItemCanBeNull]
+        public async |Task|(3)<string> NullableAsyncMethod()
+        {
+            await Task.Delay(0);
+            return null;
+        }
+
+        public |Task|(4)<|string|(5)> NonAsyncButTaskResult()
+        {
+            return Task.FromResult("");
+        }
+
+        [ItemCanBeNull]
+        public |Task|(6)<string> NonAsyncButNullableTaskResult()
+        {
+            return Task.FromResult<string>(null);
+        }
+
+        [CanBeNull]
+        [ItemCanBeNull]
+        public Task<string> NonAsyncCanBeNullAndItemCanBeNullMethod()
+        {
+            return null;
+        }
+    }
+}
+---------------------------------------------------------
+(0): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(1): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
+(2): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(3): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(4): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(5): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
+(6): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]

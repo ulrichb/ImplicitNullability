@@ -26,13 +26,19 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         public class TypeHighlightingTestsDefault : TypeHighlightingTests
         {
             [Test]
-            public void TestTypeHighlightingSample() => DoNamedTest2();
+            public void TestTypeHighlightingMethodsSample() => DoNamedTest2();
+
+            [Test]
+            public void TestTypeHighlightingAsyncMethodsSample() => DoNamedTest2();
+
+            [Test]
+            public void TestTypeHighlightingOtherElementsSample() => DoNamedTest2();
         }
 
         public class TypeHighlightingTestsWithDisabledSetting : TypeHighlightingTests
         {
             [Test]
-            public void TestTypeHighlightingSample() => DoNamedTest2();
+            public void TestTypeHighlightingMethodsSample() => DoNamedTest2();
 
             protected override void ChangeSettings(IContextBoundSettingsStore store)
             {
