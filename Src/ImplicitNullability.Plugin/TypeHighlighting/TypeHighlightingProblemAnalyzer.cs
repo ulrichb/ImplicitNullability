@@ -8,15 +8,17 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
-using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin.TypeHighlighting
 {
     [ElementProblemAnalyzer(
-        typeof(IMethodDeclaration),
         typeof(IRegularParameterDeclaration),
+        typeof(IMethodDeclaration),
         typeof(IOperatorDeclaration),
         typeof(IDelegateDeclaration),
+        typeof(IFieldDeclaration),
+        typeof(IPropertyDeclaration),
+        typeof(IIndexerDeclaration),
         HighlightingTypes = new[] { typeof(StaticNullabilityTypeHighlighting), typeof(StaticNullabilityItemTypeHighlighting) })]
     public sealed class TypeHighlightingProblemAnalyzer : ElementProblemAnalyzer<IDeclaration>
     {
@@ -67,8 +69,7 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
             var operatorDeclaration = declaration as IOperatorDeclaration;
             if (operatorDeclaration != null)
             {
-                var function = operatorDeclaration.DeclaredElement.NotNull("Unexpected null operator's declated element");
-                HandleElement(consumer, function, operatorDeclaration.TypeUsage);
+                HandleElement(consumer, operatorDeclaration.DeclaredElement, operatorDeclaration.TypeUsage);
             }
 
             var delegateDeclaration = declaration as IDelegateDeclaration;
@@ -76,15 +77,39 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
             {
                 HandleElement(consumer, delegateDeclaration.DeclaredElement, delegateDeclaration.TypeUsage);
             }
+
+            var fieldDeclaration = declaration as IFieldDeclaration;
+            if (fieldDeclaration != null)
+            {
+                HandleElement(consumer, fieldDeclaration.DeclaredElement, fieldDeclaration.TypeUsage);
+            }
+
+            var propertyDeclaration = declaration as IPropertyDeclaration;
+            if (propertyDeclaration != null)
+            {
+                HandleElement(consumer, propertyDeclaration.DeclaredElement, propertyDeclaration.TypeUsage);
+            }
+
+            var indexerDeclaration = declaration as IIndexerDeclaration;
+            if (indexerDeclaration != null)
+            {
+                HandleElement(consumer, indexerDeclaration.DeclaredElement, indexerDeclaration.TypeUsage);
+            }
         }
 
-        private void HandleElement(IHighlightingConsumer consumer, IAttributesOwner element, [CanBeNull] ITreeNode typeNodeForHighlighting)
+        private void HandleElement(
+            IHighlightingConsumer consumer,
+            [CanBeNull] IAttributesOwner element,
+            [CanBeNull] ITreeNode typeNodeForHighlighting)
         {
             if (typeNodeForHighlighting != null && IsNotNull(element))
                 consumer.AddHighlighting(new StaticNullabilityTypeHighlighting(typeNodeForHighlighting, "[NotNull]"));
         }
 
-        private void HandleContainerElement(IHighlightingConsumer consumer, IAttributesOwner element, [CanBeNull] ITypeUsage typeNodeForHighlighting)
+        private void HandleContainerElement(
+            IHighlightingConsumer consumer,
+            [CanBeNull] IAttributesOwner element,
+            [CanBeNull] ITypeUsage typeNodeForHighlighting)
         {
             if (typeNodeForHighlighting != null && IsItemNotNull(element))
                 consumer.AddHighlighting(new StaticNullabilityItemTypeHighlighting(typeNodeForHighlighting, "[ItemNotNull]"));
@@ -93,10 +118,10 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
         private bool IsTypeHighlightingEnabled(IContextBoundSettingsStore settingsStore) =>
             settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableTypeHighlighting);
 
-        private bool IsNotNull(IAttributesOwner attributesOwner) =>
+        private bool IsNotNull([CanBeNull] IAttributesOwner attributesOwner) =>
             _nullnessProvider.GetInfo(attributesOwner) == CodeAnnotationNullableValue.NOT_NULL;
 
-        private bool IsItemNotNull(IAttributesOwner attributesOwner) =>
+        private bool IsItemNotNull([CanBeNull] IAttributesOwner attributesOwner) =>
             _containerElementNullnessProvider.GetInfo(attributesOwner) == CodeAnnotationNullableValue.NOT_NULL;
     }
 }

@@ -1,3 +1,6 @@
+### vNext ###
+- Extented "type highlighting" for fields and properties
+
 ### 3.3.0 ###
 - Explicit or implicit [NotNull] element types are now highlighted with a dotted underline (can be enabled/disabled on the Implicit Nullability options page)
 - Ignore methods with [ContractAnnotation] attribute
