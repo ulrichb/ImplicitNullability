@@ -28,7 +28,7 @@ namespace ImplicitNullability.Plugin
             _implicitNullabilityProvider = implicitNullabilityProvider;
         }
 
-        public CodeAnnotationNullableValue? GetNullableAttribute([NotNull] IDeclaredElement element)
+        public CodeAnnotationNullableValue? GetNullableAttribute([CanBeNull] IDeclaredElement element)
         {
 #if DEBUG
             var stopwatch = Stopwatch.StartNew();
@@ -42,7 +42,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? GetContainerElementNullableAttribute([NotNull] IDeclaredElement element)
+        public CodeAnnotationNullableValue? GetContainerElementNullableAttribute([CanBeNull] IDeclaredElement element)
         {
 #if DEBUG
             var stopwatch = Stopwatch.StartNew();
@@ -57,13 +57,17 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public ICollection<IAttributeInstance> GetSpecialAttributeInstances([NotNull] IClrDeclaredElement element)
+        public ICollection<IAttributeInstance> GetSpecialAttributeInstances([CanBeNull] IClrDeclaredElement element)
         {
             return EmptyList<IAttributeInstance>.InstanceList;
         }
 
 #if DEBUG
-        private static void LogResult(string messagePrefix, IDeclaredElement element, Stopwatch stopwatch, CodeAnnotationNullableValue? result)
+        private static void LogResult(
+            string messagePrefix,
+            [CanBeNull] IDeclaredElement element,
+            Stopwatch stopwatch,
+            CodeAnnotationNullableValue? result)
         {
             var resultText = result.IsUnknown() ? "UNKNOWN" : result.ToString();
             var message = messagePrefix + DebugUtility.FormatIncludingContext(element) + " => " + resultText;

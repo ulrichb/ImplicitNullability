@@ -1,4 +1,5 @@
 using ImplicitNullability.Plugin.Infrastructure;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
@@ -28,7 +29,7 @@ namespace ImplicitNullability.Plugin
             _codeAnnotationAttributesChecker = codeAnnotationAttributesChecker;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeDeclaredElement(IDeclaredElement declaredElement)
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElement([CanBeNull] IDeclaredElement declaredElement)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -105,7 +106,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement(IDeclaredElement element)
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([CanBeNull] IDeclaredElement element)
         {
             CodeAnnotationNullableValue? result = null;
 
