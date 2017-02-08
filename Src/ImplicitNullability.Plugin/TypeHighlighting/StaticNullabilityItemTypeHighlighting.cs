@@ -1,5 +1,4 @@
 using ImplicitNullability.Plugin.VsFormatDefinitions;
-using JetBrains.Annotations;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
@@ -23,7 +22,7 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
     {
         private const string Message = "Inner type '{0}' is (explicitly or implicitly) {1}";
 
-        public StaticNullabilityItemTypeHighlighting([NotNull] ITreeNode typeNode, string nullabilityKind)
+        public StaticNullabilityItemTypeHighlighting(ITreeNode typeNode, string nullabilityKind)
             : base(typeNode, string.Format(Message, typeNode.GetText(), nullabilityKind))
         {
         }
