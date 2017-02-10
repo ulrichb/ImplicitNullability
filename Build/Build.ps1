@@ -20,6 +20,7 @@ $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
     "Src\ImplicitNullability.Plugin.Tests\bin\R20162\$Configuration\ImplicitNullability.Plugin.Tests.R20162.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\R20163\$Configuration\ImplicitNullability.Plugin.Tests.R20163.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\R20171\$Configuration\ImplicitNullability.Plugin.Tests.R20171.dll"
     "Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"
@@ -28,6 +29,7 @@ $NuspecPath = "Src\ImplicitNullability.nuspec"
 $NugetPackProperties = @(
     "Version=$(CalcNuGetPackageVersion 20162);Configuration=$Configuration;DependencyVer=[6.0];BinDirInclude=bin\R20162"
     "Version=$(CalcNuGetPackageVersion 20163);Configuration=$Configuration;DependencyVer=[7.0];BinDirInclude=bin\R20163"
+    "Version=$(CalcNuGetPackageVersion 20171);Configuration=$Configuration;DependencyVer=[8.0];BinDirInclude=bin\R20171"
 )
 $NugetPushServer = "https://www.myget.org/F/ulrichb/api/v2/package"
 

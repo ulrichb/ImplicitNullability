@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.VsFormatDefinitions", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.R20171", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R20171.csproj", "{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Plugin.Tests.R20171", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R20171.csproj", "{1C93B659-62A2-4539-815D-D20BABB47451}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C93B659-62A2-4539-815D-D20BABB47451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C93B659-62A2-4539-815D-D20BABB47451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C93B659-62A2-4539-815D-D20BABB47451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C93B659-62A2-4539-815D-D20BABB47451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,5 +114,7 @@ Global
 		{DB452FAF-D3A5-4CE9-AA1B-A738CB79F50D} = {67859B65-179D-40D0-80DB-003011824913}
 		{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E} = {67859B65-179D-40D0-80DB-003011824913}
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E} = {67859B65-179D-40D0-80DB-003011824913}
+		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A} = {67859B65-179D-40D0-80DB-003011824913}
+		{1C93B659-62A2-4539-815D-D20BABB47451} = {67859B65-179D-40D0-80DB-003011824913}
 	EndGlobalSection
 EndGlobal

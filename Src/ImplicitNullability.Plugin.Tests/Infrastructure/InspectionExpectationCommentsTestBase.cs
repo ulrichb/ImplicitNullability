@@ -111,7 +111,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         [CanBeNull]
         private ITreeNode FindPreviousNonWhiteSpaceNode(ITreeNode currentNode)
         {
-            return currentNode.FindPrevNode(x => x is IWhitespaceNode ? TreeNodeActionType.CONTINUE : TreeNodeActionType.ACCEPT);
+            return currentNode.FindPreviousNode(x => x is IWhitespaceNode ? TreeNodeActionType.CONTINUE : TreeNodeActionType.ACCEPT);
         }
 
         private static IReadOnlyCollection<IIssue> RunInspections(ISolution solution, ICollection<IPsiSourceFile> sourceFiles)

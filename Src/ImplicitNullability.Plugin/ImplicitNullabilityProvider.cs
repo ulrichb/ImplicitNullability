@@ -7,6 +7,10 @@ using JetBrains.ReSharper.Psi.CSharp.Util;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
+#if !(RESHARPER20162 || RESHARPER20163)
+using JetBrains.ReSharper.Psi.CSharp;
+
+#endif
 
 namespace ImplicitNullability.Plugin
 {
@@ -148,7 +152,13 @@ namespace ImplicitNullability.Plugin
             {
                 if (!ContainsContractAnnotationAttribute(method))
                 {
+#if RESHARPER20162 || RESHARPER20163
                     var taskUnderlyingType = method.ReturnType.GetTaskUnderlyingType();
+#else
+                    // Use "latest" language level because this just includes _more_ types (C# 7 "task-like" types) and the nullability
+                    // value we return here also effects _callers_ (whose C# language level we do not know).
+                    var taskUnderlyingType = method.ReturnType.GetTasklikeUnderlyingType(CSharpLanguageLevel.Latest);
+#endif
 
                     if (taskUnderlyingType != null)
                         result = GetNullabilityForType(taskUnderlyingType);
