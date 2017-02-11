@@ -32,12 +32,12 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 typeof(ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(false).HighlightingTypes;
 
             return new[]
-            {
-                typeof(AssignNullToNotNullAttributeWarning),
-                typeof(ConditionIsAlwaysTrueOrFalseWarning),
-                typeof(PossibleNullReferenceExceptionWarning),
-                typeof(PossibleInvalidOperationExceptionWarning)
-            }
+                {
+                    typeof(AssignNullToNotNullAttributeWarning),
+                    typeof(ConditionIsAlwaysTrueOrFalseWarning),
+                    typeof(PossibleNullReferenceExceptionWarning),
+                    typeof(PossibleInvalidOperationExceptionWarning)
+                }
                 .Concat(implicitNullabilityProblemAnalyzerHighlightingTypes);
         }
 

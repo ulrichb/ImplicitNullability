@@ -17,9 +17,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         {
             return
                 (from project in projects
-                    from file in project.GetAllProjectFiles()
-                    where ProjectUtil.GetRelativePresentableProjectPath(file, project).StartsWith(prefix)
-                    select file).ToList();
+                 from file in project.GetAllProjectFiles()
+                 where ProjectUtil.GetRelativePresentableProjectPath(file, project).StartsWith(prefix)
+                 select file).ToList();
         }
 
         public static IPsiSourceFile GetSourceFile(this IIssue issue)

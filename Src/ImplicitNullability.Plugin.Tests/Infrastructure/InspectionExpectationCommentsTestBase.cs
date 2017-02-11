@@ -34,18 +34,18 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
             var expectedWarningComments =
                 (from sourceFile in sourceFilesToAnalyze
-                    let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
-                    from commentNode in rootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
-                    let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbols)
-                    where expectedWarningId != null
-                    let documentRange = FindPreviousNonWhiteSpaceNode(commentNode).NotNull().GetDocumentRange()
-                    select new
-                    {
-                        ExpectedWarningId = expectedWarningId,
-                        File = sourceFile,
-                        Range = documentRange.TextRange,
-                        Coords = documentRange.Document.GetCoordsByOffset(documentRange.TextRange.StartOffset)
-                    }).ToList();
+                 let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
+                 from commentNode in rootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
+                 let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbols)
+                 where expectedWarningId != null
+                 let documentRange = FindPreviousNonWhiteSpaceNode(commentNode).NotNull().GetDocumentRange()
+                 select new
+                 {
+                     ExpectedWarningId = expectedWarningId,
+                     File = sourceFile,
+                     Range = documentRange.TextRange,
+                     Coords = documentRange.Document.GetCoordsByOffset(documentRange.TextRange.StartOffset)
+                 }).ToList();
 
             var issues = RunInspections(solution, sourceFilesToAnalyze);
 

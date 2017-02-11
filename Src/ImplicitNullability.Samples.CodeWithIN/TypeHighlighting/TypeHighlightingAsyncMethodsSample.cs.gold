@@ -42,6 +42,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
         }
     }
 }
+
 ---------------------------------------------------------
 (0): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
 (1): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]

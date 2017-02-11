@@ -23,7 +23,8 @@ namespace ImplicitNullability.Plugin.VsFormatDefinitions
         }
 
 #pragma warning disable 0649
-        [Export, Name(HighlightingId), BaseDefinition("formal language")] internal ClassificationTypeDefinition ClassificationTypeDefinition;
+        [Export, Name(HighlightingId), BaseDefinition("formal language")]
+        internal ClassificationTypeDefinition ClassificationTypeDefinition;
 #pragma warning restore 0649
     }
 }

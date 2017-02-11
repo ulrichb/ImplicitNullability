@@ -37,7 +37,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Action act = () => instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
             act.ShouldThrow<ArgumentNullException>(
-                "known issue for generics without constraint (it's a trade-off between this false positive and a false-negative if T is a reference type")
+                    "known issue for generics without constraint (it's a trade-off between this false positive and a false-negative if T is a reference type")
                 .And.ParamName.Should().Be("a");
         }
 

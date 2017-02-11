@@ -15,9 +15,9 @@ using System.Reflection;
 internal static class AssemblyConsts
 {
     public const string Title =
-        "Implicit Nullability"
+            "Implicit Nullability"
 #if DEBUG
-        + " (Debug Build)"
+            + " (Debug Build)"
 #endif
         ;
 

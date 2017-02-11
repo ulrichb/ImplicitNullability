@@ -63,6 +63,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
         }
     }
 }
+
 ---------------------------------------------------------
 (0): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (1): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]

@@ -63,6 +63,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
         }
     }
 }
+
 ---------------------------------------------------------
 (0): ReSharper Warning: Expression is always false
 (1): ReSharper Warning: Possible 'null' assignment to entity marked with 'NotNull' attribute
