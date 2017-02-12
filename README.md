@@ -19,7 +19,7 @@ With enabled _Implicit Nullability_ for specific, [configurable](#configuration)
 
 <!-- duplicated in the options page -->
  * Reference types are by default implicitly `[NotNull]`.
- * Their nullability can be overridden with an explicit `[CanBeNull]` attribute. 
+ * Their nullability can be overridden with an explicit `[CanBeNull]` attribute.
  * Optional method parameters with a `null` default value are implicitly `[CanBeNull]`.
 
 In a nutshell, the code showed in the picture above  ...
@@ -122,13 +122,73 @@ Example:
 
 In addition to the behavior change of the nullability analysis the following code inspection warnings are provided by this extension.
 
-* "Implicit NotNull conflicts with nullability in base type" (Id: `ImplicitNotNullConflictInHierarchy`)
-* "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit" (Id: `ImplicitNotNullElementCannotOverrideCanBeNull`)
-* "Implicit NotNull overrides unknown nullability of external code" (Id: `ImplicitNotNullOverridesUnknownExternalMember`)
-* "Implicit NotNull result or out parameter overrides unknown nullability of external code" (Id: `ImplicitNotNullResultOverridesUnknownExternalMember`)
-* "Implicit CanBeNull element has an explicit NotNull annotation" (Id: `NotNullOnImplicitCanBeNull`)
-
 For more information about these warnings (and their motivation) see their description in the ReSharper *Code Inspection | Inspection Severity* options page.
+
+### "Implicit NotNull conflicts with nullability in base type"
+Id: `ImplicitNotNullConflictInHierarchy`
+
+<!-- Doc/Sample.cs -->
+```C#
+abstract class Base
+{
+    public abstract void Method([CanBeNull] string a);
+}
+
+class Derived : Base
+{
+    // "Implicit NotNull conflicts with nullability in base type":
+    public override void Method(string a)
+    {
+    }
+}
+```
+
+### "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit"
+Id: `ImplicitNotNullElementCannotOverrideCanBeNull`
+
+<!-- Doc/Sample.cs -->
+```C#
+abstract class Base
+{
+    [CanBeNull]
+    public abstract string Method();
+}
+
+class Derived : Base
+{
+    // "Implicit NotNull element cannot override CanBeNull in base type, nullability should be explicit":
+    public override string Method() => "";
+}
+```
+
+### "Implicit NotNull overrides unknown nullability of base member, nullability should be explicit" resp. hint "Implicit NotNull result or out parameter overrides unknown nullability of base member, nullability should be explicit"
+Ids: `ImplicitNotNullOverridesUnknownBaseMemberNullability` resp. `ImplicitNotNullResultOverridesUnknownBaseMemberNullability`
+
+<!-- Doc/Sample.cs -->
+```C#
+class Derived : External.Class /* (external code with unannotated 'Method' and 'Function') */
+{
+    // "Implicit NotNull overrides unknown nullability of base member, nullability should be explicit":
+    public override void Method(string a)
+    {
+    }
+
+    // "Implicit NotNull result or out parameter overrides unknown nullability of base member,
+    // nullability should be explicit":
+    public override string Function() => "";
+}
+```
+
+### "Implicit CanBeNull element has an explicit NotNull annotation"
+Id: `NotNullOnImplicitCanBeNull`
+
+<!-- Doc/Sample.cs -->
+```C#
+// "Implicit CanBeNull element has an explicit NotNull annotation":
+void Foo([NotNull] int? a)
+{
+}
+```
 
 ## Credits
 

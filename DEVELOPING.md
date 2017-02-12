@@ -49,7 +49,7 @@ aren't included in the SDK package.
 ## Test data
 
 Test data used for the integrative tests (in ImplicitNullability.Plugin.Tests) and for manual tests consists of the following projects:
-* Samples.CodeWithoutIN.External: Simulates external code which does not use Implicit Nullability (unannotated  members have default nullability).
+* Samples.CodeWithoutIN.External: Simulates external code which does not use Implicit Nullability (unannotated members have default/unknown nullability).
 * Samples.CodeWithIN.Internal: Simulates a library project which is part of the own solution with configured Implicit Nullability.
 * Samples.Consumer.OfInternalCodeWithIN: Code which uses Samples.CodeWithIN.Internal _as project reference_ (simulates a consumer of internal IN code).
 * Samples.CodeWithIN.External: Simulates an external library with configured Implicit Nullability. Contains parts of Samples.CodeWithIN.Internal + an `[AssemblyMetadata]` configuration.
@@ -63,13 +63,13 @@ Test data used for the integrative tests (in ImplicitNullability.Plugin.Tests) a
                                                  |
                          +-----------------------+----------------------+
                          |                                              |
- /-----------------------------------------------\                      |
+ /-----------------------|-----------------------\                      |
  |                       |                       |                      |
  |       +---------------+---------------+       |      +---------------+---------------+
  |       |  Samples.CodeWithIN.Internal  |       |      |  Samples.CodeWithIN.External  |
  |       +---------------+---------------+       |      +---------------+---------------+
  |                       ^                       |                      ^
- |                       |                       \----------------------------------------------\
+ |                       |                       \----------------------|-----------------------\
  |                       |                                              |                       |
  |  +--------------------+--------------------+    +--------------------+--------------------+  |
  |  |  Samples.Consumer.OfInternalCodeWithIN  |    |  Samples.Consumer.OfExternalCodeWithIN  |  |

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ImplicitNullability.Samples.CodeWithoutIN;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownBaseMemberNullability
 {
     public class OverrideExternalCodeWithAnnotations
     {
@@ -63,7 +63,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             }
         }
 
-        public class OneOfThreeBaseTypesIsUnknownExternalMember :
+        public class OneOfThreeBaseTypesIsUnknownExternalCode :
             // OK because of the NotNull annotation:
             External.BaseClassWithNotNull,
             // The bad ones:
@@ -71,16 +71,16 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             // OK because implicitly NotNull:
             IImplicitlyNullableInterface
         {
-            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
             }
 
-            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 return "";
             }
 
-            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 await Task.Delay(0);
                 return "";

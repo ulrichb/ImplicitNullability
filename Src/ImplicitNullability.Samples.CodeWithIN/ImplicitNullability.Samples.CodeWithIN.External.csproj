@@ -73,7 +73,7 @@
   <ItemGroup>
     <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
     <Compile Include="NullabilityAnalysis\**\*.cs" />
-    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownExternalMember\IImplicitlyNullableInterface.cs" />
+    <Compile Include="Highlighting\ImplicitNotNullOverridesUnknownBaseMemberNullability\IImplicitlyNullableInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Samples.CodeWithIN.External.config" />

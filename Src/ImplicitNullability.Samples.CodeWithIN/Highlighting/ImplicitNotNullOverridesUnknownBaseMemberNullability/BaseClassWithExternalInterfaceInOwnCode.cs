@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using ImplicitNullability.Samples.CodeWithoutIN;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownBaseMemberNullability
 {
     public class BaseClassWithExternalInterfaceInOwnCode
     {
@@ -9,11 +9,11 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
         public abstract class Base : External.IInterfaceWithMethod<string>, External.IInterfaceWithFunction<string>
         {
-            public virtual void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            public virtual void Method(string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
             }
 
-            public virtual string Function /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            public virtual string Function /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 return "";
             }
@@ -35,11 +35,11 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
         public class DerivedAndImplementingTheInterface :
             Base, External.IInterfaceWithMethod<string>, External.IInterfaceWithFunction<string>
         {
-            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
             }
 
-            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 return "";
             }
@@ -52,11 +52,11 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
             }
 
-            void External.IInterfaceWithMethod<string>.Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            void External.IInterfaceWithMethod<string>.Method(string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
             }
 
-            string External.IInterfaceWithFunction<string>.Function /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            string External.IInterfaceWithFunction<string>.Function /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 return "";
             }

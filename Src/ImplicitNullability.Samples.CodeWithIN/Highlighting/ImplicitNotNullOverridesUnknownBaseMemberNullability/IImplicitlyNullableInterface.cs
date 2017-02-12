@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownBaseMemberNullability
 {
     public interface IImplicitlyNullableInterface
     {

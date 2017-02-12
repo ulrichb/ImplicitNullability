@@ -35,8 +35,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
                     typeof(NotNullOnImplicitCanBeNullHighlighting),
                     typeof(ImplicitNotNullConflictInHierarchyHighlighting),
                     typeof(ImplicitNotNullElementCannotOverrideCanBeNullHighlighting),
-                    typeof(ImplicitNotNullOverridesUnknownExternalMemberHighlighting),
-                    typeof(ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting))));
+                    typeof(ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting),
+                    typeof(ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting))));
         }
 
         [Test]

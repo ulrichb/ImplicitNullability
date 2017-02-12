@@ -6,11 +6,6 @@ namespace ImplicitNullability.Plugin.Infrastructure
 {
     public static class PsiExtensions
     {
-        public static bool IsPartOfSolutionCode(this IClrDeclaredElement declaredElement)
-        {
-            return declaredElement.Module.IsPartOfSolutionCode();
-        }
-
         /// <summary>
         /// Check if this module is part of the solution code (see https://resharper-support.jetbrains.com/hc/en-us/community/posts/205991209).
         /// </summary>

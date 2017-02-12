@@ -36,8 +36,8 @@ namespace ImplicitNullability.Plugin
                 typeof(NotNullOnImplicitCanBeNullHighlighting),
                 typeof(ImplicitNotNullConflictInHierarchyHighlighting),
                 typeof(ImplicitNotNullElementCannotOverrideCanBeNullHighlighting),
-                typeof(ImplicitNotNullOverridesUnknownExternalMemberHighlighting),
-                typeof(ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting)
+                typeof(ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting),
+                typeof(ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting)
             })]
     public class ImplicitNullabilityProblemAnalyzer : ElementProblemAnalyzer<IDeclaration>,
         IHideImplementation<IncorrectNullableAttributeUsageAnalyzer>
@@ -186,8 +186,8 @@ namespace ImplicitNullability.Plugin
             if (ContainsCanBeNull(superMembersNullability))
                 highlightingList.Add(new ImplicitNotNullConflictInHierarchyHighlighting(highlightingNode));
 
-            if (ContainsExternalUnknownNullability(superMembersNullability))
-                highlightingList.Add(new ImplicitNotNullOverridesUnknownExternalMemberHighlighting(highlightingNode));
+            if (ContainsUnknownNullability(superMembersNullability))
+                highlightingList.Add(new ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting(highlightingNode));
         }
 
         private static void CheckForOutputElementSuperMemberConflicts(
@@ -198,8 +198,8 @@ namespace ImplicitNullability.Plugin
             if (ContainsCanBeNull(superMembersNullability))
                 highlightingList.Add(new ImplicitNotNullElementCannotOverrideCanBeNullHighlighting(highlightingNode));
 
-            if (ContainsExternalUnknownNullability(superMembersNullability))
-                highlightingList.Add(new ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting(highlightingNode));
+            if (ContainsUnknownNullability(superMembersNullability))
+                highlightingList.Add(new ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting(highlightingNode));
         }
 
         private bool IsImplicitlyNotNull(IDeclaredElement declaredElement, IEnumerable<IAttributeInstance> attributeInstances)
@@ -219,9 +219,9 @@ namespace ImplicitNullability.Plugin
             return superMembersNullability.Any(x => x.NullableAttribute == CodeAnnotationNullableValue.CAN_BE_NULL);
         }
 
-        private static bool ContainsExternalUnknownNullability(IEnumerable<SuperMemberNullability> superMembersNullability)
+        private static bool ContainsUnknownNullability(IEnumerable<SuperMemberNullability> superMembersNullability)
         {
-            return superMembersNullability.Any(x => !x.SuperMember.IsPartOfSolutionCode() && x.NullableAttribute.IsUnknown());
+            return superMembersNullability.Any(x => x.NullableAttribute.IsUnknown());
         }
 
         private void CheckForNotNullOnImplicitCanBeNull(

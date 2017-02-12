@@ -1,15 +1,15 @@
 ﻿using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownBaseMemberNullability
 {
     public class OverrideExternalCodeWithRefAndOutParameter
     {
         public class Implementation : External.IInterfaceWithRefAndOutParameterMethod
         {
             public void Method(
-                ref string refParam /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/,
-                out string outParam /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/)
+                ref string refParam /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/,
+                out string outParam /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
                 outParam = "";
             }

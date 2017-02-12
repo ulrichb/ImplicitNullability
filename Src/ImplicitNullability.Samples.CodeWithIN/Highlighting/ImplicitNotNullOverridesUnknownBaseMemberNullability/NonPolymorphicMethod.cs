@@ -1,6 +1,6 @@
 using ImplicitNullability.Samples.CodeWithoutIN;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownBaseMemberNullability
 {
     public class NonPolymorphicMethod
     {

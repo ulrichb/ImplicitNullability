@@ -3,26 +3,26 @@ using System.Threading.Tasks;
 using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownExternalMember
+namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOverridesUnknownBaseMemberNullability
 {
     public class OverrideExternalCode
     {
         public class DerivedClassInOwnCode : External.Class
         {
-            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/] => null;
+            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/] => null;
 
-            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            public override void Method(string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
             }
 
-            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            public override string Function /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 var baseValue = base.Function();
                 // Here we convert an unknown (possibly CanBeNull) value to an implicitly NotNull return value:
                 return baseValue;
             }
 
-            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownExternalMember[Implicit]*/()
+            public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
                 var baseValue = await base.AsyncFunction();
                 // Here we convert an unknown (possibly CanBeNull) value to an implicitly NotNull return value:
@@ -78,7 +78,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
         public class OverrideWithDefaultValue : External.IInterfaceWithMethod<string>
         {
-            public void Method(string a = "default" /*Expect:ImplicitNotNullOverridesUnknownExternalMember[Implicit]*/)
+            public void Method(string a = "default" /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/)
             {
             }
         }

@@ -31,13 +31,13 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         }
 
         [Test]
-        public void ImplicitNotNullOverridesUnknownExternalMember_WithDisabledImplicitNullability()
+        public void ImplicitNotNullOverridesUnknownBaseMemberNullability_WithDisabledImplicitNullability()
         {
             TestWithDisabledImplicitNullability();
         }
 
         [Test]
-        public void ImplicitNotNullOverridesUnknownExternalMember_TestWithEnabledImplicitNullability()
+        public void ImplicitNotNullOverridesUnknownBaseMemberNullability_TestWithEnabledImplicitNullability()
         {
             TestWithEnabledImplicitNullability((issueCount, issueSourceFiles) =>
             {

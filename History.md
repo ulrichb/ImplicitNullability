@@ -1,3 +1,6 @@
+### vNext ###
+- Changed "overrides unknown base member" warnings to include also non-external (solution) code with unknown nullability (=> new highlighting IDs for ImplicitNotNullOverridesUnknownBaseMemberNullability and ImplicitNotNullResultOverridesUnknownBaseMemberNullability)
+
 ### 3.5.1 ###
 - Implicit nullable fields: Added exemption for property backing fields (issue #10)
 
@@ -30,7 +33,7 @@
 - Dropped ReSharper 8.2 support
 
 ### 2.1.0 ###
-- Support for Task<T> method return types (big thanks to Ivan Serdiuk) [ReSharper 9.2+]
+- Support for Task<T> method return types (big thanks to Ivan Serduk) [ReSharper 9.2+]
 - Fixed extension meta data to enable running Implicit Nullability in InspectCode (ReSharper Command Line Tools)
 
 ### 2.0.0 ###

@@ -4,15 +4,16 @@ using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
-    ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.SeverityId,
+    ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.SeverityId,
     null,
     HighlightingGroupIds.CodeSmell,
-    ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.Message,
-    ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting.Description,
+    ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Message,
+    ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Description,
     Severity.HINT
 #if RESHARPER20162
     , SolutionAnalysisRequired: false
 #endif
+    , AlternativeIDs = "ImplicitNotNullResultOverridesUnknownExternalMember"
 )]
 
 namespace ImplicitNullability.Plugin.Highlighting
@@ -22,13 +23,15 @@ namespace ImplicitNullability.Plugin.Highlighting
         "CSHARP",
         OverlapResolve = OverlapResolveKind.WARNING,
         ToolTipFormatString = Message)]
-    public class ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
+    public class ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
     {
-        public const string SeverityId = "ImplicitNotNullResultOverridesUnknownExternalMember";
-        public const string Message = "Implicit NotNull result or out parameter overrides unknown nullability of external code";
+        public const string SeverityId = "ImplicitNotNullResultOverridesUnknownBaseMemberNullability";
+
+        public const string Message = "Implicit NotNull result or out parameter overrides unknown nullability of base member, " +
+                                      "nullability should be explicit";
 
         public const string Description =
-            "Warns about implicit [NotNull] results or out parameters that override an external base class/interface member " +
+            "Warns about implicit [NotNull] results or out parameters that override a base class/interface member " +
             "which has no corresponding nullability annotations (neither by attributes nor by external XML annotations). " +
             "As the the base member's nullability is unknown, we implicitly convert a possibly [CanBeNull] result to [NotNull] if " +
             "the base calls' return value is returned. " +
@@ -36,7 +39,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "the nullability of the base member. " +
             SharedHighlightingTexts.NeedsSettingNoteText;
 
-        public ImplicitNotNullResultOverridesUnknownExternalMemberHighlighting(ITreeNode treeNode)
+        public ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)
         {
         }
