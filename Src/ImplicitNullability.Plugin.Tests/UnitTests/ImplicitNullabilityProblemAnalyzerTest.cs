@@ -14,6 +14,7 @@ using NUnit.Framework;
 namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
     [TestFixture]
+    [TestNetFramework4]
     public class ImplicitNullabilityProblemAnalyzerTest : BaseTestWithSolution
     {
         [Test]
