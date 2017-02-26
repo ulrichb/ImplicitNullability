@@ -68,17 +68,6 @@
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
     <Compile Include="ReSharper.cs" />
     <Compile Include="Properties\NullGuardConfiguration.cs" />
-    <None Include="TypeHighlighting\TypeHighlightingAsyncMethodsSample.cs.gold" />
-    <None Include="TypeHighlighting\TypeHighlightingMethodsSample.cs.DisabledSetting.gold" />
-    <None Include="TypeHighlighting\TypeHighlightingOtherElementsSample.cs.gold" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TypeHighlighting\TypeHighlightingAsyncMethodsSample.cs" />
-    <Compile Include="TypeHighlighting\TypeHighlightingOtherElementsSample.cs" />
-    <Compile Include="TypeHighlighting\TypeHighlightingMethodsSample.cs" />
-    <None Include="TypeHighlighting\TypeHighlightingMethodsSample.cs.gold" />
-    <None Include="TypeHighlighting\TypeHighlightingInvalidDeclarationsSample.cs" />
-    <None Include="TypeHighlighting\TypeHighlightingInvalidDeclarationsSample.cs.gold" />
   </ItemGroup>
   <ItemGroup>
     <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->

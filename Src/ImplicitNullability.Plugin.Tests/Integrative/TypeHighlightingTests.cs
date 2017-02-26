@@ -1,5 +1,5 @@
+using System.IO;
 using ImplicitNullability.Plugin.Settings;
-using ImplicitNullability.Plugin.Tests.Infrastructure;
 using ImplicitNullability.Plugin.TypeHighlighting;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Feature.Services.Daemon;
@@ -20,8 +20,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         // Use the ReSharper SDK's gold-file approach instead of InspectionExpectationCommentsTestBase because
         // atm. it doesn't support "static highlightings" or VISIBLE_DOCUMENT-only highlightings.
 
-        protected override string RelativeTestDataPath =>
-            TestDataPathUtility.GetPathRelativeToSolution(@"Src\ImplicitNullability.Samples.CodeWithIN\TypeHighlighting");
+        protected override string RelativeTestDataPath => Path.Combine(base.RelativeTestDataPath, "..", "TypeHighlightingTests");
 
         public class TypeHighlightingTestsDefault : TypeHighlightingTests
         {

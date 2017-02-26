@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
 {
     public abstract class TypeHighlightingMethodsSampleBase
     {

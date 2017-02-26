@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
 {
     public class TypeHighlightingAsyncMethodsSample
     {

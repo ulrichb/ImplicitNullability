@@ -169,8 +169,9 @@
     <Compile Include="**\*.cs" Exclude="obj\**;Packages\**;test\data\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\data\**\*.cs" />
     <None Include="test\data\nuget.config" />
+    <None Include="test\data\**\*.cs" />
+    <None Include="test\data\**\*.gold" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R20161.csproj">

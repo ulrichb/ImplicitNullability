@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 // ReSharper disable NotNullMemberIsNotInitialized
 
-namespace ImplicitNullability.Samples.CodeWithIN.TypeHighlighting
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
 {
     public class TypeHighlightingOtherElementsSample
     {
