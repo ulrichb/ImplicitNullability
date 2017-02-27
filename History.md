@@ -1,5 +1,6 @@
 ### vNext ###
-- Extented "type highlighting" for fields and properties
+- Extended "type highlighting" for fields and properties
+- Fixed wrong highlighting of async void method results (issue #8)
 
 ### 3.3.0 ###
 - Explicit or implicit [NotNull] element types are now highlighted with a dotted underline (can be enabled/disabled on the Implicit Nullability options page)

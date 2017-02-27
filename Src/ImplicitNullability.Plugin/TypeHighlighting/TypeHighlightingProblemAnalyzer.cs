@@ -1,4 +1,5 @@
 using System.Linq;
+using ImplicitNullability.Plugin.Infrastructure;
 using ImplicitNullability.Plugin.Settings;
 using JetBrains.Annotations;
 using JetBrains.Application.Settings;
@@ -62,7 +63,11 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
                 }
                 else
                 {
-                    HandleElement(consumer, method, methodDeclaration.TypeUsage);
+                    // The following check is a workaround for R#'s CSharpCodeAnnotationProvider returning NOT_NULL also for async void methods
+                    if (!method.IsAsyncVoid())
+                    {
+                        HandleElement(consumer, method, methodDeclaration.TypeUsage);
+                    }
                 }
             }
 

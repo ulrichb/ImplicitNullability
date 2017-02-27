@@ -38,5 +38,10 @@ namespace ImplicitNullability.Plugin.Infrastructure
         {
             return parameter.Kind == ParameterKind.OUTPUT;
         }
+
+        public static bool IsAsyncVoid(this IMethod method)
+        {
+            return method.IsAsync && method.ReturnType.IsVoid();
+        }
     }
 }

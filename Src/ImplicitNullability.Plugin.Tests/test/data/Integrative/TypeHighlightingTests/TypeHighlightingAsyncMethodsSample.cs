@@ -40,5 +40,11 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         {
             return null;
         }
+
+        // Prove the exemption for async void (see TypeHighlightingProblemAnalyzer):
+        public async void AsyncVoidResult()
+        {
+            await Task.Delay(0);
+        }
     }
 }
