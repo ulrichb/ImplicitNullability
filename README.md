@@ -82,6 +82,17 @@ In the example above _Implicit Nullability_ forces the programmer to fix the mis
 
 Another goal of this extension is to bring ReSharper's static analysis in sync with the implicit null checks of [Fody NullGuard](https://github.com/Fody/NullGuard#readme). For example, this [Fody](https://github.com/Fody/Fody#readme) weaver injects `throw new ArgumentNullException​(/*...*/)` statements for method parameters into method bodies using the same rules as _Implicit Nullability_. In other words this weaver adds _runtime checks_ for nullability to ReSharper's _static_ analysis.
 
+### Differences to ReSharper's "Implicit [NotNull] Value Analysis Mode"
+
+Since version 2016.1 ReSharper supports a comparable feature (see *Code Inspection | Settings*) with the following differences.
+
+_Implicit Nullability_ ...
+* ... rules can be enabled / disabled for _specific_ code elements like parameters or (readonly) fields.
+* ... supports (project specific) [configuration by code](#code-configuration).
+* ... adds additional [warnings](#code-inspection-warnings).
+* ... adds [type highlighting](#type-highlighting) for explicit or implicit `[NotNull]` elements.
+* ... does not support properties at the moment.
+
 ## Type highlighting
 
 Explicit or implicit `[NotNull]` element types are highlighted with a dotted underline. (See the pink underlines in the `Bar`-method in the sample screenshot [above](#idea).) This helps to recognize all `[NotNull]` elements, especially inferred `[NotNull]` elements from a base class and code elements which are configured as implicitly `[NotNull]`.
