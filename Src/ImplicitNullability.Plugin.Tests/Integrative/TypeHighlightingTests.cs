@@ -4,15 +4,9 @@ using ImplicitNullability.Plugin.Tests.Infrastructure;
 using ImplicitNullability.Plugin.TypeHighlighting;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Feature.Services.Daemon;
+using JetBrains.ReSharper.FeaturesTestFramework.Daemon;
 using JetBrains.ReSharper.Psi;
 using NUnit.Framework;
-#if RESHARPER20161
-using CSharpHighlightingTestBase = JetBrains.ReSharper.FeaturesTestFramework.Daemon.CSharpHighlightingTestNet45Base;
-
-#else
-using JetBrains.ReSharper.FeaturesTestFramework.Daemon;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
 {

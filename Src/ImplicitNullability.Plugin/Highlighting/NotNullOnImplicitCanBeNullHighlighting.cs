@@ -10,7 +10,7 @@ using ReSharperExtensionsShared.Highlighting;
     NotNullOnImplicitCanBeNullHighlighting.Message,
     NotNullOnImplicitCanBeNullHighlighting.Description,
     Severity.WARNING
-#if RESHARPER20161 || RESHARPER20162
+#if RESHARPER20162
     , SolutionAnalysisRequired: false
 #endif
 )]
