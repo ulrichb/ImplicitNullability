@@ -7,8 +7,6 @@ environment:
     secure: Fr6Et35ii82/P5ZjfsKoIomda8gim+SKJkklwChGm5Jm2+wd/5uyQYbwAP4M7UTv
   CoverageBadgeUploadToken:
     secure: /NFXyIKW45Q39yQFvB+0aJ1xGynLzg2bdJYDCyhhLH1l718N0vB1qt42hVxdv4GCGleHV4wHy1Efj1xNdNANpKlxPP/yrJrKtBLCYuEciAU=
-cache:
-  - packages -> **\packages.config
 artifacts:
   - path: Build\Output\TestCoverage
   - path: Build\Output\TestCoverage\Summary.mht
