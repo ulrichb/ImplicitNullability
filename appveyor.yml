@@ -1,6 +1,7 @@
 version: 3.5.1.{build}
 branches:
   except: [/spike.*/]
+image: Visual Studio 2017
 environment:
   NugetPushKey:
     secure: Fr6Et35ii82/P5ZjfsKoIomda8gim+SKJkklwChGm5Jm2+wd/5uyQYbwAP4M7UTv
@@ -8,7 +9,6 @@ environment:
     secure: /NFXyIKW45Q39yQFvB+0aJ1xGynLzg2bdJYDCyhhLH1l718N0vB1qt42hVxdv4GCGleHV4wHy1Efj1xNdNANpKlxPP/yrJrKtBLCYuEciAU=
 cache:
   - packages -> **\packages.config
-  - Src\ImplicitNullability.Plugin.Tests\Packages
 artifacts:
   - path: Build\Output\TestCoverage
   - path: Build\Output\TestCoverage\Summary.mht
