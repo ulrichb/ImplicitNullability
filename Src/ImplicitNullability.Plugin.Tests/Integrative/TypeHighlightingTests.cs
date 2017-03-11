@@ -2,6 +2,7 @@ using System.IO;
 using ImplicitNullability.Plugin.Settings;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using ImplicitNullability.Plugin.TypeHighlighting;
+using JetBrains.Annotations;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.FeaturesTestFramework.Daemon;
@@ -40,7 +41,8 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 store.SetValue((ImplicitNullabilitySettings s) => s.EnableTypeHighlighting, false);
             }
 
-            protected override string GetGoldTestDataPath(string fileName) => base.GetGoldTestDataPath(fileName + ".DisabledSetting");
+            protected override string GetGoldTestDataPath([NotNull] string fileName) =>
+                base.GetGoldTestDataPath(fileName + ".DisabledSetting");
         }
 
         public class TypeHighlightingTestsWithInvalidDeclarations : TypeHighlightingTests
@@ -48,14 +50,14 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             [Test]
             public void TestTypeHighlightingInvalidDeclarationsSample() => DoNamedTest2();
 
-            protected override bool HighlightingPredicate(IHighlighting highlighting, IPsiSourceFile sourceFile) =>
+            protected override bool HighlightingPredicate(IHighlighting highlighting, [CanBeNull] IPsiSourceFile sourceFile) =>
                 highlighting is StaticNullabilityTypeHighlightingBase; // Do not render errors
         }
 
-        protected override bool HighlightingPredicate(IHighlighting highlighting, IPsiSourceFile sourceFile) =>
+        protected override bool HighlightingPredicate([NotNull] IHighlighting highlighting, [CanBeNull] IPsiSourceFile sourceFile) =>
             highlighting is StaticNullabilityTypeHighlightingBase || base.HighlightingPredicate(highlighting, sourceFile);
 
-        protected override void DoTestSolution(params string[] fileSet)
+        protected override void DoTestSolution([NotNull] params string[] fileSet)
         {
             ExecuteWithinSettingsTransaction(store =>
             {

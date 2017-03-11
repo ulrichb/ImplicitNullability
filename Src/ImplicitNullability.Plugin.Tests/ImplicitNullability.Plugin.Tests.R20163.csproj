@@ -361,6 +361,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ImplicitNullability.Plugin\Properties\ImplicitNullabilityConfiguration.cs">
+      <Link>Properties\ImplicitNullabilityConfiguration.cs</Link>
+    </Compile>
     <Compile Include="**\*.cs" Exclude="obj\**;Packages\**;test\data\**" />
   </ItemGroup>
   <ItemGroup>
@@ -373,9 +376,6 @@
       <Project>{db452faf-d3a5-4ce9-aa1b-a738cb79f50d}</Project>
       <Name>ImplicitNullability.Plugin.R20163</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Plugin.Tests.R20163.config" />

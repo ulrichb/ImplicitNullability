@@ -14,7 +14,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
         private static string GetDirectoryOfThisSoureFile([CallerFilePath] string filePath = null)
         {
-            return Path.GetDirectoryName(filePath);
+            return Path.GetDirectoryName(filePath).NotNull();
         }
     }
 }
