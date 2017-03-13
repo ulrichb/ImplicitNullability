@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
+using JetBrains.ReSharper.Psi.CSharp.Util;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
@@ -112,14 +113,17 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            var configuration = _configurationEvaluator.EvaluateFor(field.Module);
-
-            if (configuration.EnableFields)
+            if (!field.IsAutoPropertyBackingField())
             {
-                if ((!configuration.FieldsRestrictToReadonly || field.IsReadonly) &&
-                    (!configuration.FieldsRestrictToReferenceTypes || field.IsMemberOfReferenceType()))
+                var configuration = _configurationEvaluator.EvaluateFor(field.Module);
+
+                if (configuration.EnableFields)
                 {
-                    result = GetNullabilityForType(field.Type);
+                    if ((!configuration.FieldsRestrictToReadonly || field.IsReadonly) &&
+                        (!configuration.FieldsRestrictToReferenceTypes || field.IsMemberOfReferenceType()))
+                    {
+                        result = GetNullabilityForType(field.Type);
+                    }
                 }
             }
 

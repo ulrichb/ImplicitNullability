@@ -1,3 +1,6 @@
+### vNext ###
+- Implicit nullable fields: Added exemption for property backing fields (issue #10)
+
 ### 3.5.0 ###
 - Added support for fields (including the option to restrict to readonly fields / fields in reference types)
 - Extended "type highlighting" for fields and properties

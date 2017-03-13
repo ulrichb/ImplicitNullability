@@ -8,12 +8,12 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
     [TestFixture]
     public class PropertiesSampleTests
     {
-        private PropertiesSample _instance;
+        private PropertiesSample.Properties _instance;
 
         [SetUp]
         public void SetUp()
         {
-            _instance = new PropertiesSample();
+            _instance = new PropertiesSample.Properties();
         }
 
         [Test]
