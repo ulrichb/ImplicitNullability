@@ -1,4 +1,4 @@
-### vNext ###
+### 3.5.1 ###
 - Implicit nullable fields: Added exemption for property backing fields (issue #10)
 
 ### 3.5.0 ###
