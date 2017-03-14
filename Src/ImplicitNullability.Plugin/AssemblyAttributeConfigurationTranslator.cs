@@ -52,12 +52,10 @@ namespace ImplicitNullability.Plugin
             if (configuration.EnableFields)
                 appliesToList.Add(FieldsAssemblyAttributeOption);
 
-            List<string> fieldsList = null;
+            var fieldsList = new List<string>();
 
             if (configuration.EnableFields)
             {
-                fieldsList = new List<string>();
-
                 if (configuration.FieldsRestrictToReadonly)
                     fieldsList.Add(FieldsRestrictToReadonlyOption);
 
@@ -65,7 +63,9 @@ namespace ImplicitNullability.Plugin
                     fieldsList.Add(FieldsRestrictToReferenceTypesOption);
             }
 
-            return new AssemblyMetadataAttributeValues(JoinParts(appliesToList), JoinParts(fieldsList)).GenerateAttributeCode();
+            var fields = !fieldsList.Any() ? null : JoinParts(fieldsList);
+
+            return new AssemblyMetadataAttributeValues(JoinParts(appliesToList), fields).GenerateAttributeCode();
         }
 
         private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(AssemblyMetadataAttributeValues attributeValues)
@@ -90,10 +90,9 @@ namespace ImplicitNullability.Plugin
             return text.Split(',').Select(x => x.Trim()).ToList();
         }
 
-        [CanBeNull]
-        private static string JoinParts([CanBeNull] IEnumerable<string> parts)
+        private static string JoinParts(IEnumerable<string> parts)
         {
-            return parts?.Join(", ");
+            return parts.Join(", ");
         }
 
         private struct AssemblyMetadataAttributeValues

@@ -6,11 +6,11 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
     [TestFixture]
     public class AssemblyAttributeConfigurationTranslatorTest
     {
-        // This fixture specifically tests GenerateAttributeCode(), the remaining stuff is tested in 
+        // This fixture specifically tests GenerateAttributeCode(), the remaining stuff is tested in
         // ImplicitNullabilityConfigurationEvaluatorTest.
 
         [Test]
-        public void ConvertToAssemblyMetadataAttributeCode_WithAllOptionsDisabled()
+        public void GenerateAttributeCode_WithAllOptionsDisabled()
         {
             var configuration = ImplicitNullabilityConfiguration.AllDisabled;
 
@@ -20,7 +20,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         }
 
         [Test]
-        public void ConvertToAssemblyMetadataAttributeCode_WithAllOptionsEnabled()
+        public void GenerateAttributeCode_WithAllOptionsEnabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(true, true, true, true, true, true);
 
@@ -34,7 +34,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         }
 
         [Test]
-        public void ConvertToAssemblyMetadataAttributeCode_WithFieldsSettingButFieldOptionDisabled()
+        public void GenerateAttributeCode_WithFieldsSettingsButAppliesToFieldsDisabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(
                 true, false, false,
@@ -45,6 +45,21 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             Assert.That(
                 result,
                 Is.EqualTo("[assembly: System.Reflection.AssemblyMetadataAttribute(\"ImplicitNullability.AppliesTo\", \"InputParameters\")]"),
+                "'ImplicitNullability.Fields'-attribute must not be rendered");
+        }
+
+        [Test]
+        public void GenerateAttributeCode_WithoutFieldsSettingsButAppliesToFieldsEnabled()
+        {
+            var configuration = new ImplicitNullabilityConfiguration(
+                true, false, false,
+                enableFields: true, fieldsRestrictToReadonly: false, fieldsRestrictToReferenceTypes: false);
+
+            var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
+
+            Assert.That(
+                result,
+                Is.EqualTo("[assembly: System.Reflection.AssemblyMetadataAttribute(\"ImplicitNullability.AppliesTo\", \"InputParameters, Fields\")]"),
                 "'ImplicitNullability.Fields'-attribute must not be rendered");
         }
     }

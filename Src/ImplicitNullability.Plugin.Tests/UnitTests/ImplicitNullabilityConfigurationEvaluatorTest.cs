@@ -113,8 +113,9 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         }
 
         [Test]
-        [TestCase("AttributeWithFieldsNullValue", Dis)]
-        [TestCase("AttributeWithFieldsInvalidValue", Dis)]
+        [TestCase("AttributeWithFieldsWithNullValue", Dis)]
+        [TestCase("AttributeWithFieldsWithNoOption", Dis)]
+        [TestCase("AttributeWithFieldsWithInvalidValue", Dis)]
         [TestCase("AttributeWithFieldsWithAllOptions", Ena)]
         public void TestAssemblyMetadataAttributeFieldsConfiguration(string testInput, bool expectedOptionValue)
         {
