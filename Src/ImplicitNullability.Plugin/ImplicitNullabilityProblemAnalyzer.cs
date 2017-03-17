@@ -179,7 +179,7 @@ namespace ImplicitNullability.Plugin
         }
 
         private static void CheckForInputOrRefElementSuperMemberConflicts(
-            SuperMemberNullability[] superMembersNullability,
+            CodeAnnotationNullableValue?[] superMembersNullability,
             ITreeNode highlightingNode,
             ICollection<IHighlighting> highlightingList)
         {
@@ -191,7 +191,7 @@ namespace ImplicitNullability.Plugin
         }
 
         private static void CheckForOutputElementSuperMemberConflicts(
-            SuperMemberNullability[] superMembersNullability,
+            CodeAnnotationNullableValue?[] superMembersNullability,
             ITreeNode highlightingNode,
             ICollection<IHighlighting> highlightingList)
         {
@@ -214,14 +214,14 @@ namespace ImplicitNullability.Plugin
                    _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) == CodeAnnotationNullableValue.NOT_NULL;
         }
 
-        private static bool ContainsCanBeNull(IEnumerable<SuperMemberNullability> superMembersNullability)
+        private static bool ContainsCanBeNull(IEnumerable<CodeAnnotationNullableValue?> superMembersNullability)
         {
-            return superMembersNullability.Any(x => x.NullableAttribute == CodeAnnotationNullableValue.CAN_BE_NULL);
+            return superMembersNullability.Any(x => x == CodeAnnotationNullableValue.CAN_BE_NULL);
         }
 
-        private static bool ContainsUnknownNullability(IEnumerable<SuperMemberNullability> superMembersNullability)
+        private static bool ContainsUnknownNullability(IEnumerable<CodeAnnotationNullableValue?> superMembersNullability)
         {
-            return superMembersNullability.Any(x => x.NullableAttribute.IsUnknown());
+            return superMembersNullability.Any(x => x.IsUnknown());
         }
 
         private void CheckForNotNullOnImplicitCanBeNull(
@@ -260,51 +260,32 @@ namespace ImplicitNullability.Plugin
             }
         }
 
-        private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersNullability(IParameter parameter)
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersNullability(IParameter parameter)
         {
             var overridableMember = parameter.ContainingParametersOwner as IOverridableMember;
 
             if (overridableMember == null)
-                return EmptyList<SuperMemberNullability>.InstanceList;
+                return EmptyList<CodeAnnotationNullableValue?>.InstanceList;
 
             var superMembers = overridableMember.GetImmediateSuperMembers();
 
             var parameterIndex = parameter.IndexOf();
 
-            var result =
-                superMembers.Select(
-                    x => new SuperMemberNullability
-                    {
-                        SuperMember = x.Element,
-                        // We assume that the super members of a parameter owner are also parameter owners with the same number of parameters:
-                        NullableAttribute = _nullnessProvider.GetInfo(((IParametersOwner) x.Element).Parameters[parameterIndex])
-                    });
+            var result = superMembers
+                // We assume that the super members of a parameter owner are also parameter owners with the same number of parameters:
+                .Select(x => _nullnessProvider.GetInfo(((IParametersOwner) x.Element).Parameters[parameterIndex]));
 
             return result;
         }
 
-        private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersNullability(IOverridableMember method)
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersNullability(IOverridableMember method)
         {
-            return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
-            {
-                SuperMember = x.Element,
-                NullableAttribute = _nullnessProvider.GetInfo(x.Member)
-            });
+            return method.GetImmediateSuperMembers().Select(x => _nullnessProvider.GetInfo(x.Member));
         }
 
-        private IEnumerable<SuperMemberNullability> GetImmediateSuperMembersContainerElementNullability(IOverridableMember method)
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersContainerElementNullability(IOverridableMember method)
         {
-            return method.GetImmediateSuperMembers().Select(x => new SuperMemberNullability
-            {
-                SuperMember = x.Element,
-                NullableAttribute = _containerElementNullnessProvider.GetInfo(x.Member)
-            });
-        }
-
-        private struct SuperMemberNullability
-        {
-            public IOverridableMember SuperMember;
-            public CodeAnnotationNullableValue? NullableAttribute;
+            return method.GetImmediateSuperMembers().Select(x => _containerElementNullnessProvider.GetInfo(x.Member));
         }
     }
 }
