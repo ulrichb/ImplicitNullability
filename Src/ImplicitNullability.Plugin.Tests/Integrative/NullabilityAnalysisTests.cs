@@ -124,11 +124,12 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 var projectFilesToAnalyze = solution.GetAllProjects()
                     // By default exclude the "external code consumer" project (which consumes "hard-coded" implicit nullability settings):
                     .Where(projectFilter ?? (x => x.Name != ExternalCodeConsumerProjectName))
-                    .GetAllProjectFilesWithPathPrefix("NullabilityAnalysis\\").ToList();
+                    .GetAllProjectFilesWithPathPrefix("NullabilityAnalysis\\")
+                    .ToList();
                 Assert.That(projectFilesToAnalyze, Is.Not.Empty);
 
-                var highlightingTypesToAnalyze = GetNullabilityAnalysisHighlightingTypes();
-                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, highlightingTypesToAnalyze, definedExpectedWarningSymbols);
+                var highlightingTypes = GetNullabilityAnalysisHighlightingTypes();
+                var issues = TestExpectedInspectionComments(solution, projectFilesToAnalyze, highlightingTypes, definedExpectedWarningSymbols);
 
                 assert?.Invoke(issues.Select(x => x.GetSourceFile().Name).ToList());
             });
