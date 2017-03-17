@@ -5,6 +5,7 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="appveyor.yml" />
     <None Include="Build\Build.ps1" />
     <None Include="DEVELOPING.md" />
