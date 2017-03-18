@@ -80,43 +80,38 @@ namespace ImplicitNullability.Plugin
 
             if (attributesSet != null)
             {
+                Assertion.Assert(declaredElement != null, "declaredElement != null");
+
                 var attributeInstances = attributesSet.GetAttributeInstances(inherit: false);
 
-                var parameterDeclaration = declaration as IParameterDeclaration;
-                if (parameterDeclaration?.DeclaredElement != null)
+                switch (declaration)
                 {
-                    var parameter = parameterDeclaration.DeclaredElement;
-                    CheckForNotNullOnImplicitCanBeNull(parameter, attributeInstances, parameterDeclaration, highlightingList);
-                    CheckForParameterSuperMemberConflicts(parameter, attributeInstances, parameterDeclaration, highlightingList);
-                }
+                    case IParameterDeclaration parameterDeclaration:
+                        var parameter = parameterDeclaration.DeclaredElement.NotNull();
+                        CheckForNotNullOnImplicitCanBeNull(parameter, attributeInstances, declaration, highlightingList);
+                        CheckForParameterSuperMemberConflicts(parameter, attributeInstances, declaration, highlightingList);
+                        break;
 
-                var methodDeclaration = declaration as IMethodDeclaration;
-                if (methodDeclaration?.DeclaredElement != null)
-                {
-                    var method = methodDeclaration.DeclaredElement;
-                    CheckForNotNullOnImplicitCanBeNull(method, attributeInstances, methodDeclaration.NameIdentifier, highlightingList);
-                    CheckForMethodSuperMemberConflicts(method, attributeInstances, methodDeclaration.NameIdentifier, highlightingList);
-                }
+                    case IMethodDeclaration methodDeclaration:
+                        var method = methodDeclaration.DeclaredElement.NotNull();
+                        CheckForNotNullOnImplicitCanBeNull(method, attributeInstances, methodDeclaration.NameIdentifier, highlightingList);
+                        CheckForMethodSuperMemberConflicts(method, attributeInstances, methodDeclaration.NameIdentifier, highlightingList);
+                        break;
 
-                var operatorDeclaration = declaration as IOperatorDeclaration;
-                if (operatorDeclaration != null)
-                {
-                    var operatorKeyword = operatorDeclaration.OperatorKeyword;
-                    CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, operatorKeyword, highlightingList);
-                }
+                    case IOperatorDeclaration operatorDeclaration:
+                        var operatorKeyword = operatorDeclaration.OperatorKeyword;
+                        CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, operatorKeyword, highlightingList);
+                        break;
 
-                var delegateDeclaration = declaration as IDelegateDeclaration;
-                if (delegateDeclaration != null)
-                {
-                    var nameIdentifier = delegateDeclaration.NameIdentifier;
-                    CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, nameIdentifier, highlightingList);
-                }
+                    case IDelegateDeclaration delegateDeclaration:
+                        var delegateName = delegateDeclaration.NameIdentifier;
+                        CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, delegateName, highlightingList);
+                        break;
 
-                var fieldDeclaration = declaration as IFieldDeclaration;
-                if (fieldDeclaration != null)
-                {
-                    var nameIdentifier = fieldDeclaration.NameIdentifier;
-                    CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, nameIdentifier, highlightingList);
+                    case IFieldDeclaration fieldDeclaration:
+                        var fieldName = fieldDeclaration.NameIdentifier;
+                        CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, fieldName, highlightingList);
+                        break;
                 }
 
                 highlightingList.ForEach(x => consumer.AddHighlighting(x));

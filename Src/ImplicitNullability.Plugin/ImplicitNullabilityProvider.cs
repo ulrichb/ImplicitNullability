@@ -34,21 +34,21 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            var parameter = declaredElement as IParameter;
-            if (parameter != null)
-                result = AnalyzeParameter(parameter);
-
-            var function = declaredElement as IFunction /* methods and operators */;
-            if (function != null)
-                result = AnalyzeFunction(function);
-
-            var @delegate = declaredElement as IDelegate;
-            if (@delegate != null)
-                result = AnalyzeDelegate(@delegate);
-
-            var field = declaredElement as IField;
-            if (field != null)
-                result = AnalyzeField(field);
+            switch (declaredElement)
+            {
+                case IParameter parameter:
+                    result = AnalyzeParameter(parameter);
+                    break;
+                case IFunction function /* methods and operators */:
+                    result = AnalyzeFunction(function);
+                    break;
+                case IDelegate @delegate:
+                    result = AnalyzeDelegate(@delegate);
+                    break;
+                case IField field:
+                    result = AnalyzeField(field);
+                    break;
+            }
 
             return result;
         }
@@ -134,8 +134,7 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            var method = element as IMethod;
-            if (method != null)
+            if (element is IMethod method)
                 result = AnalyzeMethodContainerElement(method);
 
             return result;

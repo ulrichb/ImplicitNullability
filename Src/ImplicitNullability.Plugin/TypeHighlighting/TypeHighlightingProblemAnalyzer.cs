@@ -40,8 +40,7 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
 
         private void RunForVisibleDocument(IDeclaration declaration, IHighlightingConsumer consumer)
         {
-            var parameterDeclaration = declaration as IRegularParameterDeclaration;
-            if (parameterDeclaration?.DeclaredElement != null)
+            if (declaration is IRegularParameterDeclaration parameterDeclaration)
             {
                 HandleElement(consumer, parameterDeclaration.DeclaredElement, parameterDeclaration.TypeUsage);
             }
@@ -50,55 +49,54 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
             if (methodDeclaration?.DeclaredElement != null)
             {
                 var method = methodDeclaration.DeclaredElement;
-
-                if (method.ReturnType.IsGenericTask())
-                {
-                    var userTypeUsage = (IUserTypeUsage) methodDeclaration.TypeUsage;
-
-                    var typeIdentifier = userTypeUsage.ScalarTypeName.NameIdentifier;
-                    var innerTypeUsage = userTypeUsage.ScalarTypeName.TypeArgumentList.TypeArgumentNodes.FirstOrDefault();
-
-                    HandleElement(consumer, method, typeIdentifier);
-                    HandleContainerElement(consumer, method, innerTypeUsage);
-                }
-                else
-                {
-                    // The following check is a workaround for R#'s CSharpCodeAnnotationProvider returning NOT_NULL also for async void methods
-                    if (!method.IsAsyncVoid())
-                    {
-                        HandleElement(consumer, method, methodDeclaration.TypeUsage);
-                    }
-                }
+                HandleMethod(consumer, methodDeclaration, method);
             }
 
-            var operatorDeclaration = declaration as IOperatorDeclaration;
-            if (operatorDeclaration != null)
+            if (declaration is IOperatorDeclaration operatorDeclaration)
             {
                 HandleElement(consumer, operatorDeclaration.DeclaredElement, operatorDeclaration.TypeUsage);
             }
 
-            var delegateDeclaration = declaration as IDelegateDeclaration;
-            if (delegateDeclaration != null)
+            if (declaration is IDelegateDeclaration delegateDeclaration)
             {
                 HandleElement(consumer, delegateDeclaration.DeclaredElement, delegateDeclaration.TypeUsage);
             }
 
-            var fieldDeclaration = declaration as IFieldDeclaration;
-            if (fieldDeclaration != null)
+            if (declaration is IFieldDeclaration fieldDeclaration)
             {
                 HandleElement(consumer, fieldDeclaration.DeclaredElement, fieldDeclaration.TypeUsage);
             }
 
-            var propertyDeclaration = declaration as IPropertyDeclaration;
-            if (propertyDeclaration != null)
+            if (declaration is IPropertyDeclaration propertyDeclaration)
             {
                 HandleElement(consumer, propertyDeclaration.DeclaredElement, propertyDeclaration.TypeUsage);
             }
 
-            var indexerDeclaration = declaration as IIndexerDeclaration;
-            if (indexerDeclaration != null)
+            if (declaration is IIndexerDeclaration indexerDeclaration)
             {
                 HandleElement(consumer, indexerDeclaration.DeclaredElement, indexerDeclaration.TypeUsage);
+            }
+        }
+
+        private void HandleMethod(IHighlightingConsumer consumer, IMethodDeclaration methodDeclaration, IMethod method)
+        {
+            if (method.ReturnType.IsGenericTask())
+            {
+                var userTypeUsage = (IUserTypeUsage) methodDeclaration.TypeUsage;
+
+                var typeIdentifier = userTypeUsage.ScalarTypeName.NameIdentifier;
+                var innerTypeUsage = userTypeUsage.ScalarTypeName.TypeArgumentList.TypeArgumentNodes.FirstOrDefault();
+
+                HandleElement(consumer, method, typeIdentifier);
+                HandleContainerElement(consumer, method, innerTypeUsage);
+            }
+            else
+            {
+                // The following check is a workaround for R#'s CSharpCodeAnnotationProvider returning NOT_NULL also for async void methods
+                if (!method.IsAsyncVoid())
+                {
+                    HandleElement(consumer, method, methodDeclaration.TypeUsage);
+                }
             }
         }
 

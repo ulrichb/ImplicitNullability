@@ -42,21 +42,21 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             string testInput,
             bool expectedEnableOption)
         {
-            Action<IContextBoundSettingsStore> changeSolutionSettings = settingsStore =>
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInSolution);
 
-            Action<IContextBoundSettingsStore> changeProjectSettings = settingsStore =>
+            void ChangeProjectSettings(IContextBoundSettingsStore settingsStore)
             {
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableInputParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableRefParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableOutParametersAndResult, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, enableOptionInProject);
-            };
+            }
 
             //
 
-            var configuration = GetImplicitNullabilityConfigurationFor(testInput, changeSolutionSettings, changeProjectSettings);
+            var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings, ChangeProjectSettings);
 
             //
 
@@ -93,16 +93,16 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             bool expectedEnableFields
         )
         {
-            Action<IContextBoundSettingsStore> changeSolutionSettings = settingsStore =>
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
             {
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, Ena);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableInputParameters, Ena);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableRefParameters, Dis);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableOutParametersAndResult, Ena);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, Dis);
-            };
+            }
 
-            var configuration = GetImplicitNullabilityConfigurationFor(testInput, changeSolutionSettings);
+            var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
             AssertImplicitNullabilityConfiguration(
                 configuration,
@@ -119,13 +119,13 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         [TestCase("AttributeWithFieldsWithAllOptions", Ena)]
         public void TestAssemblyMetadataAttributeFieldsConfiguration(string testInput, bool expectedOptionValue)
         {
-            Action<IContextBoundSettingsStore> changeSolutionSettings = settingsStore =>
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
             {
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, Ena);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, Dis);
-            };
+            }
 
-            var configuration = GetImplicitNullabilityConfigurationFor(testInput, changeSolutionSettings);
+            var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
             Assert.That(configuration.EnableFields, Is.EqualTo(true));
             Assert.That(configuration.FieldsRestrictToReadonly, Is.EqualTo(expectedOptionValue));
