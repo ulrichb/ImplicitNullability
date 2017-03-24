@@ -53,26 +53,25 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ReSharper.cs" />
+    <Compile Include="Properties\NullGuardConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
+    <Compile Include="Highlighting\**\*.cs" />
+    <Compile Include="NullabilityAnalysis\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </None>
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
-    <Compile Include="ReSharper.cs" />
-    <Compile Include="Properties\NullGuardConfiguration.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
-    <Compile Include="NullabilityAnalysis\**\*.cs" />
-    <Compile Include="Highlighting\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.ImplicitNullability.Samples.CodeWithIN.Internal.config" />
