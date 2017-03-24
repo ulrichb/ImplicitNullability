@@ -5,13 +5,9 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
-    <None Include="appveyor.yml" />
-    <None Include="Build\Build.ps1" />
-    <None Include="DEVELOPING.md" />
-    <None Include="History.md" />
-    <None Include="LICENSE" />
-    <None Include="packages.config" />
-    <None Include="README.md" />
+    <None Include="*" />
+    <None Include="Build\*" />
+    <None Include="Shared\Build\**\*" />
+    <None Include="Doc\**\*" />
   </ItemGroup>
 </Project>
