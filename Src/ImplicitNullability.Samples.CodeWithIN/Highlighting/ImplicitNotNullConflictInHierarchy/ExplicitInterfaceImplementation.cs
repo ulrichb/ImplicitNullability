@@ -13,7 +13,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             string Function();
         }
 
-        public class Implementation : IInterface
+        public sealed class Implementation : IInterface
         {
             void IInterface.Method(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
