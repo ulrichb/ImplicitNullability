@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
 {
+    [Category("Nullability Analysis")]
     public class NullabilityAnalysisTests : SampleSolutionTestBase
     {
         private const string ExternalCodeConsumerProjectName = "ImplicitNullability.Samples.Consumer.OfExternalCodeWithIN";
