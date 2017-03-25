@@ -18,5 +18,4 @@
 
 /Build/Output/
 
-/Src/InspectCodeTest/_ReSharperInspectCodeCache
-/Src/InspectCodeTest/JetBrains.ReSharper.CommandLineTools
+/Src/InspectCodeTest/RSAT*/*
