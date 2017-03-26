@@ -357,6 +357,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Debugging\DebugUtility.cs">
       <Link>ReSharperExtensionsShared\DebugUtility.cs</Link>
     </Compile>
