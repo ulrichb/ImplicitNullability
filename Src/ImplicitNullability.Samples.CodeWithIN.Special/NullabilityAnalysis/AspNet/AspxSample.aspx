@@ -1,6 +1,8 @@
-﻿@using ImplicitNullability.Samples.CodeWithIN
-@using JetBrains.Annotations
-@functions{
+﻿<%@ Page Language="C#" %>
+<%@ Import Namespace="ImplicitNullability.Samples.CodeWithIN.Special" %>
+<%@ Import Namespace="JetBrains.Annotations" %>
+
+<script runat="server">
 
     [CanBeNull]
     private readonly string _nullString = null;
@@ -33,16 +35,29 @@
         ReSharper.TestValueAnalysis(_field, _field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
     }
 
-}
+</script>
 
-@* Write method *@
-@null
-@_nullString
-@_nullableInt
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<%-- Render method --%>
+<%= null %>
+<%= _nullString %>
+<%= _nullableInt %>
 
-@SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/)
-@SomeNullableMethod(null, null, optional: null)
-@{
-    string outParam;
-}
-@SomeFunction(out outParam)
+<%= SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/) %>
+<%= SomeNullableMethod(null, null, optional: null) %>
+<% string outParam; %><%= SomeFunction(out outParam) %>
+
+<%-- Data binding --%>
+<%# null %>
+<%# Bind(null, null) %> <%-- this handled specially by R# (AspBindMethod declared element)--%>
+
+<%-- Note that the following warnings need external annotations for TemplateControl.Eval() --%>
+<%# Eval(null /*Expect:AssignNullToNotNullAttribute*/) %>
+<%# Eval(null /*Expect:AssignNullToNotNullAttribute*/, null /*Expect:AssignNullToNotNullAttribute*/) %>
+</body>
+</html>

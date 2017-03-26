@@ -22,10 +22,11 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 assert: issueFilePaths =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSample.cs"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
+
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
                 });
         }
 
@@ -51,10 +52,11 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 assert: issueFilePaths =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSample.cs"));
                     Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
+
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
                 });
         }
 
@@ -125,7 +127,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 var projectFilesToAnalyze = solution.GetAllProjects()
                     // By default exclude the "external code consumer" project (which consumes "hard-coded" implicit nullability settings):
                     .Where(projectFilter ?? (x => x.Name != ExternalCodeConsumerProjectName))
-                    .GetAllProjectFilesWithPathPrefix("NullabilityAnalysis\\")
+                    .GetAllProjectFilesWithPathPrefix(@"NullabilityAnalysis\")
                     .ToList();
                 Assert.That(projectFilesToAnalyze, Is.Not.Empty);
 
