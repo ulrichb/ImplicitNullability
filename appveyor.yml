@@ -12,6 +12,7 @@ cache:
 artifacts:
   - path: Build\Output\TestCoverage
   - path: Build\Output\TestCoverage\Summary.mht
+  - path: Build\Output\*.nupkg
 install:
   - git submodule update --init --recursive
 build_script:
