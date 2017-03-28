@@ -34,9 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <ReSharperInstallationsDirectoryInstancePart>ExpRS20163</ReSharperInstallationsDirectoryInstancePart>
     <StartAction>Program</StartAction>
     <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
-    <StartArguments>/RootSuffix ExpRS20163 /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln</StartArguments>
+    <StartArguments>/RootSuffix $(ReSharperInstallationsDirectoryInstancePart) /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln</StartArguments>
     <StartWorkingDirectory>$(MSBuildProjectDirectory)\$(OutputPath)</StartWorkingDirectory>
   </PropertyGroup>
   <ItemGroup>
@@ -377,14 +378,10 @@
       <Name>ImplicitNullability.Plugin.VsFormatDefinitions</Name>
     </ProjectReference>
   </ItemGroup>
-  <Target Name="CopyAdditionalPluginFilesToInstall" AfterTargets="CopyPlugin" Condition="'$(HostFullIdentifier)' != ''">
-    <!-- See JetBrains.CommonSdk.targets -->
-    <ItemGroup>
-      <AdditionalPluginFilesToInstall Include="$(OutDir)ImplicitNullability.Plugin.VsFormatDefinitions.*" />
-    </ItemGroup>
-    <Message Text="Copying additional files ('@(AdditionalPluginFilesToInstall)') into InstallFolder ..." Importance="High" Condition="Exists('@(InstallFolder)')" />
-    <Copy SourceFiles="@(AdditionalPluginFilesToInstall)" DestinationFolder="@(InstallFolder)" Condition="Exists('@(InstallFolder)')" />
-  </Target>
+  <Import Project="$(SolutionDir)\Shared\Build\CopyToReSharperInstallationsDirectory.targets" />
+  <ItemGroup>
+    <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.Plugin.VsFormatDefinitions.*" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

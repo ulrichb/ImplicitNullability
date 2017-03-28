@@ -81,12 +81,6 @@ Test data used for the integrative tests (in ImplicitNullability.Plugin.Tests) a
 
 # Local development / manual testing
 
-1. Install ReSharper into an `Exp` VisualStudio instance.
-2. Install the extension package (`Build.ps1` artifact).
-3. Copy the following property into `ImplicitNullability.Plugin.RXX.csproj.user`.
-
-```xml
-<PropertyGroup>
-  <HostFullIdentifier>ReSharperPlatformVs(version of VS)Exp</HostFullIdentifier>
-</PropertyGroup>
-```
+1. Install ReSharper into an `ExpRS20XXX` VisualStudio instance.
+2. Install the extension package (`Build.ps1` artifact) in this instance.
+3. Start the `ImplicitNullability.Plugin.R20XXX` project (Debug configuration).
