@@ -22,6 +22,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableOutParametersAndResult), Is.True);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableFields), Is.True);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly), Is.False);
+            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes), Is.False);
 
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, enableInputParameters);
@@ -32,9 +33,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes, fieldsRestrictToReferenceTypes);
         }
 
-        public static void EnableImplicitNullabilityWithAllOptions(this IContextBoundSettingsStore settingsStore)
+        public static void EnableImplicitNullabilityForAllCodeElements(this IContextBoundSettingsStore settingsStore)
         {
-            EnableImplicitNullability(settingsStore, true, true, true, true, true);
+            EnableImplicitNullability(settingsStore, true, true, true, true);
         }
     }
 }

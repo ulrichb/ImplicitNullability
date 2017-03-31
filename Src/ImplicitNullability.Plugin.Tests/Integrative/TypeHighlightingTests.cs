@@ -68,7 +68,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
         protected virtual void ChangeSettings(IContextBoundSettingsStore store)
         {
-            store.EnableImplicitNullabilityWithAllOptions();
+            store.EnableImplicitNullabilityForAllCodeElements();
         }
     }
 }
