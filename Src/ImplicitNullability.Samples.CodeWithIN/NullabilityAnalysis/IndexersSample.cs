@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis

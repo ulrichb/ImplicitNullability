@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 // ReSharper disable AssignNullToNotNullAttribute - because not relevant for this test case
 // ReSharper disable NotNullOnImplicitCanBeNull - because not relevant for this test case
