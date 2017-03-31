@@ -7,6 +7,7 @@ using JetBrains.ReSharper.Psi.CSharp.Util;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
+
 #if !(RESHARPER20162 || RESHARPER20163)
 using JetBrains.ReSharper.Psi.CSharp;
 
@@ -43,7 +44,7 @@ namespace ImplicitNullability.Plugin
                 case IParameter parameter:
                     result = AnalyzeParameter(parameter);
                     break;
-                case IFunction function /* methods and operators */:
+                case IFunction function /* methods, constructors, and operators */:
                     result = AnalyzeFunction(function);
                     break;
                 case IDelegate @delegate:
@@ -61,7 +62,9 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (IsImplicitNullabilityApplicableToParameter(parameter))
+            var containingParametersOwner = parameter.ContainingParametersOwner;
+
+            if (IsImplicitNullabilityApplicableToParameterOwner(containingParametersOwner))
             {
                 var configuration = _configurationEvaluator.EvaluateFor(parameter.Module);
 
@@ -121,13 +124,9 @@ namespace ImplicitNullability.Plugin
             {
                 var configuration = _configurationEvaluator.EvaluateFor(field.Module);
 
-                if (configuration.EnableFields)
+                if (configuration.EnableFields && IsFieldMatchingConfigurationOptions(field, configuration))
                 {
-                    if ((!configuration.FieldsRestrictToReadonly || field.IsReadonly) &&
-                        (!configuration.FieldsRestrictToReferenceTypes || field.IsMemberOfReferenceType()))
-                    {
-                        result = GetNullabilityForType(field.Type);
-                    }
+                    result = GetNullabilityForType(field.Type);
                 }
             }
 
@@ -187,25 +186,31 @@ namespace ImplicitNullability.Plugin
             return null;
         }
 
-        private bool IsImplicitNullabilityApplicableToParameter(IParameter parameter)
+        private static bool IsImplicitNullabilityApplicableToParameterOwner([CanBeNull] IParametersOwner parametersOwner)
         {
-            var parametersOwner = parameter.ContainingParametersOwner;
-
-            // IFunction includes methods, constructors, operator overloads, delegates, but also implicitly defined ASP.NET methods, e.g. Bind()
-            // which we want to exclude, because the developer cannot override the implicit annotation.
+            // IFunction includes methods, constructors, operator overloads, delegate (methods), but also implicitly
+            // defined ASP.NET methods, e.g. Bind()  which we want to exclude, because the developer cannot
+            // override the implicit annotation.
             // IProperty includes indexer parameters.
-            var isParametersOwnerRegularFunctionOrIndexer = (parametersOwner is IFunction && !(parametersOwner is AspImplicitTypeMember)) ||
-                                                            parametersOwner is IProperty;
 
-            return isParametersOwnerRegularFunctionOrIndexer &&
-                   !IsDelegateBeginInvokeMethod(parametersOwner) &&
-                   IsParametersOwnerNotSynthetic(parametersOwner);
+            switch (parametersOwner)
+            {
+                case IFunction _:
+                    return !(parametersOwner is AspImplicitTypeMember) &&
+                           !IsDelegateBeginInvokeMethod(parametersOwner) &&
+                           IsParametersOwnerNotSynthetic(parametersOwner);
+                case IProperty _:
+                    return true;
+            }
+
+            return false;
         }
 
         private static bool IsDelegateBeginInvokeMethod(IParametersOwner parametersOwner)
         {
             // Delegate BeginInvoke() methods must be excluded for *parameters*, because ReSharper doesn't pass the parameter attributes to
             // the DelegateBeginInvokeMethod => implicit nullability could not be overridden with explicit annotations.
+            // We can't use R#'s DelegateMethod subtypes to implement this predicate because they don't work for compiled code.
 
             if (parametersOwner.ShortName != DELEGATE_BEGIN_INVOKE_METHOD_NAME)
                 return false;
@@ -217,6 +222,7 @@ namespace ImplicitNullability.Plugin
         {
             // Delegate Invoke() and EndInvoke() methods must be excluded for *result values*, because of 
             // an R# issue, see DelegatesSampleTests.SomeFunctionDelegate.
+            // We can't use R#'s DelegateMethod subtypes to implement this predicate because they don't work for compiled code.
 
             if (!(function.ShortName == DELEGATE_INVOKE_METHOD_NAME || function.ShortName == DELEGATE_END_INVOKE_METHOD_NAME))
                 return false;
@@ -268,6 +274,12 @@ namespace ImplicitNullability.Plugin
 
             // Can't use the CodeAnnotationsCache here because we would get an endless recursion:
             return _codeAnnotationAttributesChecker.ContainsContractAnnotationAttribute(attributeInstances);
+        }
+
+        private static bool IsFieldMatchingConfigurationOptions(IField field, ImplicitNullabilityConfiguration configuration)
+        {
+            return (!configuration.FieldsRestrictToReadonly || field.IsReadonly) &&
+                   (!configuration.FieldsRestrictToReferenceTypes || field.IsMemberOfReferenceType());
         }
     }
 }
