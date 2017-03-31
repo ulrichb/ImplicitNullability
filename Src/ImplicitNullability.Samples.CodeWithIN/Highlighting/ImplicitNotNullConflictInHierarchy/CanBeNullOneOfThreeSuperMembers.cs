@@ -43,8 +43,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             public async Task<string> AsyncFunction /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                await Task.Delay(0);
-                return null;
+                return await Async.CanBeNullResult<string>();
             }
         }
     }

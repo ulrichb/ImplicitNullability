@@ -18,8 +18,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
             public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                await Task.Delay(0);
-                return null;
+                return await Async.CanBeNullResult<string>();
             }
         }
 
@@ -36,8 +35,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
             public override async Task<string> AsyncFunction /*Expect no warning*/()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
         }
 
@@ -58,8 +56,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
             public override async Task<string> AsyncFunction()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
         }
 
@@ -82,8 +79,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
             public override async Task<string> AsyncFunction /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
         }
     }

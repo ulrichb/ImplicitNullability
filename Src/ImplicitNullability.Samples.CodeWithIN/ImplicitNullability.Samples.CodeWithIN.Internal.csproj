@@ -60,7 +60,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ReSharper.cs" />
+    <Compile Include="*.cs" />
     <Compile Include="Properties\NullGuardConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>

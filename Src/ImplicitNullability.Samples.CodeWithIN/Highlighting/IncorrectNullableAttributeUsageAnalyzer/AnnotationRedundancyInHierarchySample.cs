@@ -79,7 +79,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
             [ItemCanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public async Task<string> ExplicitItemCanBeNullInBaseAndDerived()
             {
-                return await Task.FromResult<string>(null);
+                return await Async.CanBeNullResult<string>();
             }
         }
 

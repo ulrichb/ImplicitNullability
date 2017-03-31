@@ -52,15 +52,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             [ItemNotNull]
             public async Task<string> TaskFunctionWithCanBeNullInInterfaceExplicitNotNullInDerived()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
 
             public async Task<string> TaskFunctionWithCanBeNullInInterfaceImplicitNotNullInDerived
                 /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
         }
     }

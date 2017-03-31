@@ -69,15 +69,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             [ItemNotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public async Task<string> TaskFunctionWithExplicitNotNull()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
 
             [ItemCanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
             public async Task<string> TaskFunctionWithExplicitCanBeNull()
             {
-                await Task.Delay(0);
-                return null;
+                return await Async.CanBeNullResult<string>();
             }
         }
     }

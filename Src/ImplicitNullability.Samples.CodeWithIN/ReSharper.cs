@@ -1,9 +1,8 @@
 using JetBrains.Annotations;
-using NullGuard;
 
 namespace ImplicitNullability.Samples.CodeWithIN
 {
-    [NullGuard(ValidationFlags.None)]
+    [NullGuard.NullGuard(NullGuard.ValidationFlags.None)]
     public static class ReSharper
     {
         public static T TestValueAnalysis<T>([NotNull] T testNotNull, bool conditionToTestCanBeNull)

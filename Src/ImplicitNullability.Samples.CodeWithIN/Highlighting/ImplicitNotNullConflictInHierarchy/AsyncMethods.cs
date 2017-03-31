@@ -25,8 +25,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             // Prove that the "non-ItemCanBeNull version" of this warning *is not* emitted for async Task<T> methods:
             public override async Task<string> CanBeNull_WithOverridingAsyncMethod /*Expect no warning*/()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
 
             // Prove that the "non-ItemCanBeNull version" of this warning *is* emitted for non-async Task<T> methods:
@@ -39,14 +38,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public override async Task<string> ItemCanBeNull_WithOverridingAsyncMethod
                 /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                await Task.Delay(0);
-                return null;
+                return await Async.CanBeNullResult<string>();
             }
 
             public override Task<string> ItemCanBeNull_WithOverridingNonAsyncMethod
                 /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                return Task.FromResult<string>(null);
+                return Async.CanBeNullResult<string>();
             }
         }
     }

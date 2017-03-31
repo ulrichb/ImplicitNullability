@@ -109,8 +109,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
             public async Task<string> AsyncFunction()
             {
-                await Task.Delay(0);
-                return "";
+                return await Async.NotNullResult("");
             }
         }
     }

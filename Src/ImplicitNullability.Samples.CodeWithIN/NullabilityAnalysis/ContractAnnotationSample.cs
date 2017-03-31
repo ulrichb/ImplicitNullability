@@ -30,14 +30,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         [ContractAnnotation("=> notnull")]
         public async Task<string> FunctionWithNotNullAsync()
         {
-            await Task.Delay(0);
-            return null;
+            return await Async.CanBeNullResult<string>();
         }
 
         public async Task<string> FunctionWithoutContractAsync()
         {
-            await Task.Delay(0);
-            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+            return await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute[MOut]*/;
         }
 
         public async Task ConsumeAsnc()

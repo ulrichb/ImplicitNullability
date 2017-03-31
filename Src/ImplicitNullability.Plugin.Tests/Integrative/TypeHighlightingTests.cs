@@ -24,7 +24,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             public void TestTypeHighlightingMethodsSample() => DoNamedTest2();
 
             [Test]
-            public void TestTypeHighlightingAsyncMethodsSample() => DoNamedTest2();
+            public void TestTypeHighlightingAsyncMethodsSample() => DoNamedTest2("Async.cs");
 
             [Test]
             public void TestTypeHighlightingOtherElementsSample() => DoNamedTest2();
@@ -48,7 +48,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         public class TypeHighlightingTestsWithInvalidDeclarations : TypeHighlightingTests
         {
             [Test]
-            public void TestTypeHighlightingInvalidDeclarationsSample() => DoNamedTest2();
+            public void TestTypeHighlightingInvalidDeclarationsSample() => DoNamedTest2("Async.cs");
 
             protected override bool HighlightingPredicate(IHighlighting highlighting, [CanBeNull] IPsiSourceFile sourceFile) =>
                 highlighting is StaticNullabilityTypeHighlightingBase; // Do not render errors

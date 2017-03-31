@@ -62,21 +62,18 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
         {
             public async Task<string> ExplicitNotNullInBase()
             {
-                await Task.Delay(0);
-                return null /*Expect:AssignNullToNotNullAttribute*/;
+                return await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute*/;
             }
 
             public async Task<string> ExplicitCanBeNullInBase /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                await Task.Delay(0);
-                return null;
+                return await Async.CanBeNullResult<string>();
             }
 
             [ItemNotNull]
             public async Task<string> OverriddenNullabilityInDerived()
             {
-                await Task.Delay(0);
-                return null /*Expect:AssignNullToNotNullAttribute*/;
+                return await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute*/;
             }
         }
     }

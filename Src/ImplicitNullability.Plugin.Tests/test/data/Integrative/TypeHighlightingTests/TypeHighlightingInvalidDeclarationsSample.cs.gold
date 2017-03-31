@@ -15,8 +15,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
     {
         public async |Task|(2)< /* missing type triggers null item "type usage" */ > AsyncMethod()
         {
-            await Task.Delay(0);
-            return "";
+            return await Async.NotNullResult("");
         }
     }
 }

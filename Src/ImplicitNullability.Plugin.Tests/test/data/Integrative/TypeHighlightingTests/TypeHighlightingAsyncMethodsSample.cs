@@ -7,31 +7,29 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
     {
         public async Task<string> AsyncMethod()
         {
-            await Task.Delay(0);
-            return "";
+            return await Async.NotNullResult("");
         }
 
         public async Task VoidAsyncMethod()
         {
-            await Task.Delay(0);
+            await Async.NopTask;
         }
 
         [ItemCanBeNull]
         public async Task<string> NullableAsyncMethod()
         {
-            await Task.Delay(0);
-            return null;
+            return await Async.CanBeNullResult<string>();
         }
 
         public Task<string> NonAsyncButTaskResult()
         {
-            return Task.FromResult("");
+            return Async.NotNullResult("");
         }
 
         [ItemCanBeNull]
         public Task<string> NonAsyncButNullableTaskResult()
         {
-            return Task.FromResult<string>(null);
+            return Async.CanBeNullResult<string>();
         }
 
         [CanBeNull]
@@ -44,7 +42,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         // Prove the exemption for async void (see TypeHighlightingProblemAnalyzer):
         public async void AsyncVoidResult()
         {
-            await Task.Delay(0);
+            await Async.NopTask;
         }
     }
 }
