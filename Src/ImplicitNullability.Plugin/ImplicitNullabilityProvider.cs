@@ -37,25 +37,27 @@ namespace ImplicitNullability.Plugin
 
         public CodeAnnotationNullableValue? AnalyzeDeclaredElement([CanBeNull] IDeclaredElement declaredElement)
         {
-            CodeAnnotationNullableValue? result = null;
-
             switch (declaredElement)
             {
                 case IParameter parameter:
-                    result = AnalyzeParameter(parameter);
-                    break;
+                    return AnalyzeParameter(parameter);
                 case IFunction function /* methods, constructors, and operators */:
-                    result = AnalyzeFunction(function);
-                    break;
+                    return AnalyzeFunction(function);
                 case IDelegate @delegate:
-                    result = AnalyzeDelegate(@delegate);
-                    break;
+                    return AnalyzeDelegate(@delegate);
                 case IField field:
-                    result = AnalyzeField(field);
-                    break;
+                    return AnalyzeField(field);
             }
 
-            return result;
+            return null;
+        }
+
+        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([CanBeNull] IDeclaredElement declaredElement)
+        {
+            if (declaredElement is IMethod method)
+                return AnalyzeMethodContainerElement(method);
+
+            return null;
         }
 
         private CodeAnnotationNullableValue? AnalyzeParameter(IParameter parameter)
@@ -133,16 +135,6 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([CanBeNull] IDeclaredElement element)
-        {
-            CodeAnnotationNullableValue? result = null;
-
-            if (element is IMethod method)
-                result = AnalyzeMethodContainerElement(method);
-
-            return result;
-        }
-
         private CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
         {
             CodeAnnotationNullableValue? result = null;
@@ -195,9 +187,9 @@ namespace ImplicitNullability.Plugin
 
             switch (parametersOwner)
             {
-                case IFunction _:
+                case IFunction function:
                     return !(parametersOwner is AspImplicitTypeMember) &&
-                           !IsDelegateBeginInvokeMethod(parametersOwner) &&
+                           !IsDelegateBeginInvokeFunction(function) &&
                            IsParametersOwnerNotSynthetic(parametersOwner);
                 case IProperty _:
                     return true;
@@ -206,16 +198,16 @@ namespace ImplicitNullability.Plugin
             return false;
         }
 
-        private static bool IsDelegateBeginInvokeMethod(IParametersOwner parametersOwner)
+        private static bool IsDelegateBeginInvokeFunction(IFunction function)
         {
             // Delegate BeginInvoke() methods must be excluded for *parameters*, because ReSharper doesn't pass the parameter attributes to
             // the DelegateBeginInvokeMethod => implicit nullability could not be overridden with explicit annotations.
             // We can't use R#'s DelegateMethod subtypes to implement this predicate because they don't work for compiled code.
 
-            if (parametersOwner.ShortName != DELEGATE_BEGIN_INVOKE_METHOD_NAME)
+            if (function.ShortName != DELEGATE_BEGIN_INVOKE_METHOD_NAME)
                 return false;
 
-            return parametersOwner.GetContainingType() is IDelegate;
+            return function.GetContainingType() is IDelegate;
         }
 
         private static bool IsDelegateInvokeOrEndInvokeFunction(IFunction function)
