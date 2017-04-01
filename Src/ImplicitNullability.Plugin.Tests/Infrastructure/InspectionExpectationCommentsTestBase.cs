@@ -11,7 +11,6 @@ using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.SolutionAnalysis;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.TestFramework;
@@ -32,7 +31,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             var filesToAnalyze =
                 (from projectFile in projectFilesToAnalyze
                  let sourceFile = projectFile.ToSourceFiles().Single()
-                 let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
+                 from rootNode in sourceFile.GetPsiFiles<KnownLanguage>()
                  where !IsExcludedByComment(rootNode)
                  select (SourceFile: sourceFile, RootNode: rootNode)).ToList();
 

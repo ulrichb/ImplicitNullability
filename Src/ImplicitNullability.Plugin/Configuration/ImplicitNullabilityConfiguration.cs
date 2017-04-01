@@ -8,7 +8,7 @@ namespace ImplicitNullability.Plugin.Configuration
     public struct ImplicitNullabilityConfiguration
     {
         public static readonly ImplicitNullabilityConfiguration AllDisabled =
-            new ImplicitNullabilityConfiguration(ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.None);
+            new ImplicitNullabilityConfiguration(ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.None, false);
 
         public static ImplicitNullabilityConfiguration CreateFromSettings(ImplicitNullabilitySettings implicitNullabilitySettings)
         {
@@ -20,20 +20,25 @@ namespace ImplicitNullability.Plugin.Configuration
                 (implicitNullabilitySettings.EnableOutParametersAndResult ? ImplicitNullabilityAppliesTo.OutParametersAndResult : 0) |
                 (implicitNullabilitySettings.EnableFields ? ImplicitNullabilityAppliesTo.Fields : 0),
                 (implicitNullabilitySettings.FieldsRestrictToReadonly ? ImplicitNullabilityFieldOptions.RestrictToReadonly : 0) |
-                (implicitNullabilitySettings.FieldsRestrictToReferenceTypes ? ImplicitNullabilityFieldOptions.RestrictToReferenceTypes : 0));
+                (implicitNullabilitySettings.FieldsRestrictToReferenceTypes ? ImplicitNullabilityFieldOptions.RestrictToReferenceTypes : 0),
+                implicitNullabilitySettings.ExcludeGeneratedCode);
         }
 
         public ImplicitNullabilityConfiguration(
             ImplicitNullabilityAppliesTo appliesTo,
-            ImplicitNullabilityFieldOptions fieldOptions)
+            ImplicitNullabilityFieldOptions fieldOptions,
+            bool excludeGeneratedCode)
         {
             AppliesTo = appliesTo;
             FieldOptions = fieldOptions;
+            ExcludeGeneratedCode = excludeGeneratedCode;
         }
 
         public ImplicitNullabilityAppliesTo AppliesTo { get; }
 
         public ImplicitNullabilityFieldOptions FieldOptions { get; }
+
+        public bool ExcludeGeneratedCode { get; }
 
         public bool HasAppliesTo(ImplicitNullabilityAppliesTo flag) => (AppliesTo & flag) > 0;
 

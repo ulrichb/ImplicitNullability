@@ -6,6 +6,7 @@ using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Util;
 using JetBrains.ReSharper.Psi.Util;
+using JetBrains.ReSharper.Psi.Xaml.DeclaredElements;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
 
@@ -25,14 +26,17 @@ namespace ImplicitNullability.Plugin
         private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityProvider));
 
         private readonly ImplicitNullabilityConfigurationEvaluator _configurationEvaluator;
+        private readonly GeneratedCodeProvider _generatedCodeProvider;
         private readonly CodeAnnotationAttributesChecker _codeAnnotationAttributesChecker;
 
         public ImplicitNullabilityProvider(
             ImplicitNullabilityConfigurationEvaluator configurationEvaluator,
+            GeneratedCodeProvider generatedCodeProvider,
             CodeAnnotationAttributesChecker codeAnnotationAttributesChecker
         )
         {
             _configurationEvaluator = configurationEvaluator;
+            _generatedCodeProvider = generatedCodeProvider;
             _codeAnnotationAttributesChecker = codeAnnotationAttributesChecker;
         }
 
@@ -74,21 +78,28 @@ namespace ImplicitNullability.Plugin
 
             if (IsImplicitNullabilityApplicableToParameterOwner(containingParametersOwner))
             {
+                Assertion.Assert(
+                    containingParametersOwner != null && (containingParametersOwner is IFunction || containingParametersOwner is IProperty),
+                    "containingParametersOwner is function or property");
+
                 var configuration = _configurationEvaluator.EvaluateFor(parameter.Module);
 
-                if (parameter.IsInput() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.InputParameters))
+                if (!IsGeneratedOrSynthetic(configuration, (ITypeMember) containingParametersOwner))
                 {
-                    if (IsOptionalArgumentWithNullDefaultValue(parameter))
-                        result = CodeAnnotationNullableValue.CAN_BE_NULL;
-                    else
+                    if (parameter.IsInput() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.InputParameters))
+                    {
+                        if (IsOptionalArgumentWithNullDefaultValue(parameter))
+                            result = CodeAnnotationNullableValue.CAN_BE_NULL;
+                        else
+                            result = GetNullabilityForType(parameter.Type);
+                    }
+
+                    if (parameter.IsRef() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.RefParameters))
+                        result = GetNullabilityForType(parameter.Type);
+
+                    if (parameter.IsOut() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
                         result = GetNullabilityForType(parameter.Type);
                 }
-
-                if (parameter.IsRef() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.RefParameters))
-                    result = GetNullabilityForType(parameter.Type);
-
-                if (parameter.IsOut() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
-                    result = GetNullabilityForType(parameter.Type);
             }
 
             return result;
@@ -104,7 +115,7 @@ namespace ImplicitNullability.Plugin
 
                 if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
                 {
-                    if (!ContainsContractAnnotationAttribute(function))
+                    if (!(ContainsContractAnnotationAttribute(function) || IsGeneratedOrSynthetic(configuration, function)))
                     {
                         result = GetNullabilityForTypeOrTaskUnderlyingType(function.ReturnType, useTaskUnderlyingType);
                     }
@@ -122,7 +133,10 @@ namespace ImplicitNullability.Plugin
 
             if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
             {
-                result = GetNullabilityForTypeOrTaskUnderlyingType(@delegate.InvokeMethod.ReturnType, useTaskUnderlyingType);
+                if (!IsGeneratedOrSynthetic(configuration, @delegate))
+                {
+                    result = GetNullabilityForTypeOrTaskUnderlyingType(@delegate.InvokeMethod.ReturnType, useTaskUnderlyingType);
+                }
             }
 
             return result;
@@ -132,18 +146,29 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (!field.IsAutoPropertyBackingField())
+            if (!field.IsAutoPropertyBackingField() && !(field is IXamlField))
             {
                 var configuration = _configurationEvaluator.EvaluateFor(field.Module);
 
                 if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields) &&
                     IsFieldMatchingConfigurationOptions(field, configuration))
                 {
-                    result = GetNullabilityForType(field.Type);
+                    if (!IsGeneratedOrSynthetic(configuration, field))
+                    {
+                        result = GetNullabilityForType(field.Type);
+                    }
                 }
             }
 
             return result;
+        }
+
+        private bool IsGeneratedOrSynthetic(ImplicitNullabilityConfiguration configuration, ITypeMember typeMember)
+        {
+            if (configuration.ExcludeGeneratedCode)
+                return _generatedCodeProvider.IsGeneratedOrSynthetic(typeMember);
+
+            return false;
         }
 
         private static CodeAnnotationNullableValue? GetNullabilityForTypeOrTaskUnderlyingType(IType type, bool useTaskUnderlyingType)
@@ -196,15 +221,15 @@ namespace ImplicitNullability.Plugin
         private static bool IsImplicitNullabilityApplicableToParameterOwner([CanBeNull] IParametersOwner parametersOwner)
         {
             // IFunction includes methods, constructors, operator overloads, delegate (methods), but also implicitly
-            // defined ASP.NET methods, e.g. Bind()  which we want to exclude, because the developer cannot
+            // defined ASP.NET methods, e.g. Bind(), which we want to exclude because the developer cannot
             // override the implicit annotation.
             // IProperty includes indexer parameters.
 
             switch (parametersOwner)
             {
                 case IFunction function:
-                    return !(parametersOwner is AspImplicitTypeMember) &&
-                           !IsDelegateBeginInvokeFunction(function) &&
+                    return !IsDelegateBeginInvokeFunction(function) &&
+                           !(parametersOwner is AspImplicitTypeMember) &&
                            IsParametersOwnerNotSynthetic(parametersOwner);
                 case IProperty _:
                     return true;

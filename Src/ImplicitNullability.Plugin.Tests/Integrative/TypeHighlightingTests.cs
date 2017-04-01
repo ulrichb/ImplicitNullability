@@ -32,6 +32,14 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
             [Test]
             public void TestTypeHighlightingOtherElementsSample() => DoNamedTest2();
+
+            [Test]
+            public void TestTypeHighlightingWithGeneratedCode_Generated() =>
+                DoTestSolution(TestName2.Replace('_', '.'), "TypeHighlightingWithGeneratedCode.partial.cs", "Async.cs");
+
+            [Test]
+            public void TestTypeHighlightingWithGeneratedCode_partial() =>
+                DoTestSolution(TestName2.Replace('_', '.'), "TypeHighlightingWithGeneratedCode.Generated.cs", "Async.cs");
         }
 
         public class TypeHighlightingTestsWithDisabledSetting : TypeHighlightingTests

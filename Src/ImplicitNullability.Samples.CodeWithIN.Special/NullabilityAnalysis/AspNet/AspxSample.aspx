@@ -54,6 +54,7 @@
 
 <%-- Data binding --%>
 <%# null %>
+<%# Bind(null) %> <%-- this handled specially by R# (AspBindMethod declared element)--%>
 <%# Bind(null, null) %> <%-- this handled specially by R# (AspBindMethod declared element)--%>
 
 <%-- Note that the following warnings need external annotations for TemplateControl.Eval() --%>

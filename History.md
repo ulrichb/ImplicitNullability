@@ -1,3 +1,7 @@
+### vNext ###
+- Added exclusion for generated code, configurable by a new setting (on by default)
+- Added exclusion of "XAML fields" (fixes issue #11)
+
 ### 3.6.0 ###
 - Changed "overrides unknown base member" warnings to include also non-external (solution) code with unknown nullability (=> new highlighting IDs for ImplicitNotNullOverridesUnknownBaseMemberNullability and ImplicitNotNullResultOverridesUnknownBaseMemberNullability)
 - Added support for named delegates with (async) Task<T> results
@@ -8,7 +12,7 @@
 - Implicit nullable fields: Added exemption for property backing fields (issue #10)
 
 ### 3.5.0 ###
-- Added support for fields (including the option to restrict to readonly fields / fields in reference types)
+- Added support for fields (including the option to restrict to `readonly` fields / fields in reference types)
 - Extended "type highlighting" for fields and properties
 - Fixed wrong highlighting of async void method results (issue #8)
 

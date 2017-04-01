@@ -54,6 +54,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () =>
             {
+                // ReSharper disable once ConvertToLocalFunction
                 External.SomeFunctionDelegate @delegate = () => null /*Expect no warning*/;
                 var result = @delegate();
                 ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);

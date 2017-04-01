@@ -18,7 +18,6 @@ namespace ImplicitNullability.Plugin
             _codeAnnotationsConfiguration = codeAnnotationsConfiguration;
         }
 
-
         public bool ContainsAnyExplicitNullabilityAttributes(IEnumerable<IAttributeInstance> attributeInstances)
         {
             return attributeInstances.Any(x =>

@@ -43,5 +43,10 @@ namespace ImplicitNullability.Plugin.Infrastructure
         {
             return method.IsAsync && method.ReturnType.IsVoid();
         }
+
+        public static bool HasGeneratedCodeAttribute(this IAttributesOwner attributesOwner)
+        {
+            return attributesOwner.HasAttributeInstance(PredefinedType.CODEDOM_GENERATED_CODE_ATTRIBUTE_CLASS, false);
+        }
     }
 }

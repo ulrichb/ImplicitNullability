@@ -18,6 +18,7 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private const string AppliesToAttributeKey = "ImplicitNullability.AppliesTo";
         private const string FieldsAttributeKey = "ImplicitNullability.Fields";
+        private const string ExcludeGeneratedCodeKey = "ImplicitNullability.ExcludeGeneratedCode";
 
         private static readonly IDictionary<string, int> AppliesToNamesToValue = CreateNamesToValueDictionary<ImplicitNullabilityAppliesTo>();
         private static readonly IDictionary<string, int> FieldOptionsNamesToValue = CreateNamesToValueDictionary<ImplicitNullabilityFieldOptions>();
@@ -44,7 +45,10 @@ namespace ImplicitNullability.Plugin.Configuration
                     fieldsText = configuration.FieldOptions.ToString();
             }
 
-            return new AssemblyMetadataAttributeValues(appliesToText, fieldsText).GenerateAttributeCode();
+            var excludeGeneratedCodeText =
+                configuration.AppliesTo == ImplicitNullabilityAppliesTo.None ? null : configuration.ExcludeGeneratedCode.ToString();
+
+            return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, excludeGeneratedCodeText).GenerateAttributeCode();
         }
 
         private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(AssemblyMetadataAttributeValues attributeValues)
@@ -52,7 +56,10 @@ namespace ImplicitNullability.Plugin.Configuration
             var appliesTo = (ImplicitNullabilityAppliesTo) ParseFlags(attributeValues.AppliesTo, AppliesToNamesToValue);
             var fieldOptions = (ImplicitNullabilityFieldOptions) ParseFlags(attributeValues.Fields, FieldOptionsNamesToValue);
 
-            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions);
+            // Fall back to `false` if `null` (versus default = `true` in the UI) for backwards compatibility with IN <= 3.6.0:
+            var excludeGeneratedCode = ParseBoolean(attributeValues.ExcludeGeneratedCode);
+
+            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions, excludeGeneratedCode);
         }
 
         private static Dictionary<string, int> CreateNamesToValueDictionary<T>()
@@ -76,6 +83,8 @@ namespace ImplicitNullability.Plugin.Configuration
             return result;
         }
 
+        private static bool ParseBoolean([CanBeNull] string text) => text == "True" || text == "true";
+
         private struct AssemblyMetadataAttributeValues
         {
             [CanBeNull]
@@ -84,10 +93,14 @@ namespace ImplicitNullability.Plugin.Configuration
             [CanBeNull]
             public readonly string Fields;
 
-            public AssemblyMetadataAttributeValues([CanBeNull] string appliesTo, [CanBeNull] string fields)
+            [CanBeNull]
+            public readonly string ExcludeGeneratedCode;
+
+            public AssemblyMetadataAttributeValues([CanBeNull] string appliesTo, [CanBeNull] string fields, [CanBeNull] string excludeGeneratedCode)
             {
                 AppliesTo = appliesTo;
                 Fields = fields;
+                ExcludeGeneratedCode = excludeGeneratedCode;
             }
 
             public static AssemblyMetadataAttributeValues Parse(IAttributesSet attributes)
@@ -106,7 +119,8 @@ namespace ImplicitNullability.Plugin.Configuration
 
                 return new AssemblyMetadataAttributeValues(
                     attributeValuesDictionary.TryGetValue(AppliesToAttributeKey),
-                    attributeValuesDictionary.TryGetValue(FieldsAttributeKey));
+                    attributeValuesDictionary.TryGetValue(FieldsAttributeKey),
+                    attributeValuesDictionary.TryGetValue(ExcludeGeneratedCodeKey));
             }
 
             public string GenerateAttributeCode()
@@ -117,6 +131,7 @@ namespace ImplicitNullability.Plugin.Configuration
                 {
                     { AppliesToAttributeKey, AppliesTo },
                     { FieldsAttributeKey, Fields },
+                    { ExcludeGeneratedCodeKey, ExcludeGeneratedCode },
                 };
 
                 return string.Join(

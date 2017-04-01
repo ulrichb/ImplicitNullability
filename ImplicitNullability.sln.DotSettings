@@ -10,6 +10,12 @@
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8180D39E8F16764B90221B1534307E85/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8180D39E8F16764B90221B1534307E85/RelativePriority/@EntryValue">1</s:Double>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=ConvertClosureToMethodGroup/@EntryIndexedValue">DO_NOT_SHOW</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=1A1F3D486A9E2841BB2DB59EF8FE603B/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=1A1F3D486A9E2841BB2DB59EF8FE603B/Color/@EntryValue">255, 128, 0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=1A1F3D486A9E2841BB2DB59EF8FE603B/MatchComments/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=1A1F3D486A9E2841BB2DB59EF8FE603B/Name/@EntryValue">Property Support</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=1A1F3D486A9E2841BB2DB59EF8FE603B/Pattern/@EntryValue">(?&lt;=\W|^)(?&lt;TAG&gt;PROP_SUPPORT)(\W|$)(.*)</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=1A1F3D486A9E2841BB2DB59EF8FE603B/TodoIconStyle/@EntryValue">Normal</s:String>
 	<s:Boolean x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/DefaultAction/@EntryValue">run</s:String>
 	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/Exe/Arguments/@EntryValue">/c "powershell Build\Build.ps1 -Configuration Release &amp; PAUSE"</s:String>

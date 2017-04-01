@@ -1,0 +1,39 @@
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
+
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
+{
+    public partial class TypeHighlightingWithGeneratedCode
+    {
+        // Proves exclusion of (non-implemented) generated code and their type highlighting.
+        // See also the other "generated code" samples.
+
+        public string Field;
+
+        public void Method(string a) { }
+
+        public void MethodExplicit([NotNull] |string|(0) a) { }
+
+        public string Function() => "";
+
+        public delegate string SomeDelegate(string a);
+
+        public async |Task|(1)<string> AsyncFunction()
+        {
+            return await Async.CanBeNullResult<string>();
+        }
+
+        //
+
+        partial void PartialMethodWithImplementation(|string|(2) a);
+
+        partial void PartialMethodWithCanBeNullInImplementation(string a);
+
+        partial void PartialMethodWithoutImplementation(string a);
+    }
+}
+
+---------------------------------------------------------
+(0): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(1): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(2): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]

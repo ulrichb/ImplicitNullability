@@ -33,12 +33,16 @@
     <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -50,6 +54,44 @@
       <SubType>ASPXCodeBehind</SubType>
     </None>
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
+    <EmbeddedResource Include="NullabilityAnalysis\GeneratedCode\SomeResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SomeResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="NullabilityAnalysis\GeneratedCode\SomeResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SomeResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="NullabilityAnalysis\GeneratedCode\SomeResourcesConsumer.cs" />
+    <Content Include="NullabilityAnalysis\GeneratedCode\SomeT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SomeT4.Generated.cs</LastGenOutput>
+    </Content>
+    <Compile Include="NullabilityAnalysis\GeneratedCode\SomeT4.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SomeT4.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NullabilityAnalysis\GeneratedCode\SomeT4GeneratedClass.partial.cs" />
+    <Page Include="NullabilityAnalysis\Wpf\SomeControlWithInitializedField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="NullabilityAnalysis\Wpf\SomeControlWithInitializedField.xaml.cs">
+      <DependentUpon>SomeControlWithInitializedField.xaml</DependentUpon>
+    </Compile>
+    <Page Include="NullabilityAnalysis\Wpf\SomeControlWithUninitializedField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="NullabilityAnalysis\Wpf\SomeControlWithUninitializedField.xaml.cs">
+      <DependentUpon>SomeControlWithUninitializedField.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

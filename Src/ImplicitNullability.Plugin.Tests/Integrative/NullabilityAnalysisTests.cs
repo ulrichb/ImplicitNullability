@@ -27,6 +27,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
                     Assert.That(issueFiles, Has.Some.EqualTo("AspxSample.aspx"));
                     Assert.That(issueFiles, Has.Some.EqualTo("RazorSample.cshtml"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("SomeT4GeneratedClass.partial.cs"));
                 });
         }
 
@@ -57,6 +58,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
                     Assert.That(issueFiles, Has.Some.EqualTo("AspxSample.aspx"));
                     Assert.That(issueFiles, Has.Some.EqualTo("RazorSample.cshtml"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("SomeT4GeneratedClass.partial.cs"));
                 });
         }
 
@@ -71,6 +73,8 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                     // Fixation of selected files
                     Assert.That(issueFiles, Has.Some.EqualTo("FieldsSample.cs"));
                     Assert.That(issueFiles, Has.Some.EqualTo("FieldsSampleTests.cs"));
+
+                    Assert.That(issueFiles, Has.Some.EqualTo("SomeControlWithUninitializedField.xaml.cs"));
                 });
         }
 
@@ -97,6 +101,21 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         }
 
         [Test]
+        public void WithEnabledImplicitNullabilityAndWithoutExcludeGeneratedCode()
+        {
+            Test(changeSettings: x => x.EnableImplicitNullabilityForAllCodeElements(excludeGeneratedCode: false),
+                definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut", "Flds", "InclGenCode" },
+                //
+                assert: issueFiles =>
+                {
+                    // Fixation of selected files
+                    Assert.That(issueFiles, Has.Some.EqualTo("GeneratedCodeSample.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("GeneratedCodeSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("SomeT4GeneratedClass.partial.cs"));
+                });
+        }
+
+        [Test]
         public void WithEnabledImplicitNullabilityUsingAssemblyMetadataAttributeInExternalCode()
         {
             Test(changeSettings: x => x.EnableImplicitNullability( /* no options*/),
@@ -111,6 +130,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                     Assert.That(issueFiles, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
                     Assert.That(issueFiles, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
                     Assert.That(issueFiles, Has.Some.EqualTo("FieldsSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("GeneratedCodeSampleTests.cs"));
                 });
         }
 

@@ -13,7 +13,8 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             bool enableOutParametersAndResult = false,
             bool enableFields = false,
             bool fieldsRestrictToReadonly = false,
-            bool fieldsRestrictToReferenceTypes = false)
+            bool fieldsRestrictToReferenceTypes = false,
+            bool excludeGeneratedCode = true)
         {
             // Fixate default values:
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False);
@@ -23,6 +24,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableFields), Is.True);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly), Is.False);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes), Is.False);
+            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.ExcludeGeneratedCode), Is.True);
 
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, enableInputParameters);
@@ -31,11 +33,20 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableFields, enableFields);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly, fieldsRestrictToReadonly);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes, fieldsRestrictToReferenceTypes);
+            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.ExcludeGeneratedCode, excludeGeneratedCode);
         }
 
-        public static void EnableImplicitNullabilityForAllCodeElements(this IContextBoundSettingsStore settingsStore)
+        public static void EnableImplicitNullabilityForAllCodeElements(
+            this IContextBoundSettingsStore settingsStore,
+            bool excludeGeneratedCode = true)
         {
-            EnableImplicitNullability(settingsStore, true, true, true, true);
+            EnableImplicitNullability(
+                settingsStore,
+                enableInputParameters: true,
+                enableRefParameters: true,
+                enableOutParametersAndResult: true,
+                enableFields: true,
+                excludeGeneratedCode: excludeGeneratedCode);
         }
     }
 }

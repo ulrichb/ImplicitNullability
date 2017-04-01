@@ -95,6 +95,13 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 enabledOption,
                 indent: 3);
 
+            AddText("");
+            AddNullabilityBoolOption(s => s.ExcludeGeneratedCode,
+                new RichText("Exclude generated code (decorated with ") +
+                new RichText("[GeneratedCode]", Italic) +
+                new RichText(" attribute or configured on the \"Code Inspection | Generated Code\" options page)"),
+                enabledOption, indent: 2);
+
             var assemblyAttributeInfoText1 =
                 "\n" +
                 "2. Recommended for library authors: By defining an [AssemblyMetadata] attribute in all concerned assemblies. "
