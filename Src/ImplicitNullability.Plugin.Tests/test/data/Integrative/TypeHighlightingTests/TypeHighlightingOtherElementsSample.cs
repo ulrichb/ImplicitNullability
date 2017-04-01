@@ -17,7 +17,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 
         public class Delegates
         {
-            public delegate string SomeDelegate(string a);
+            public delegate string SomeDelegate(string a, ref string refParam, out string outParam, params object[] values);
 
             [CanBeNull]
             public delegate string SomeNullableDelegate([CanBeNull] string a);

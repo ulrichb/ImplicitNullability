@@ -18,19 +18,19 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             return a;
         }
 
-        public |string|(4) MethodImplicit(|string|(5) a, ref |string|(6) refParam, out |string|(7) outParam, params |object[]|(8) values)
+        public |string|(4) Method(|string|(5) a, ref |string|(6) refParam, out |string|(7) outParam, params |object[]|(8) values)
         {
             Console.WriteLine(|a == null|(9));
             outParam = |null|(10);
             return |null|(11);
         }
 
-        public void NonReferenceTypes(int a, DateTime b)
+        public void MethodWithNonReferenceTypes(int a, DateTime b)
         {
         }
 
         [CanBeNull]
-        public string Nullable([CanBeNull] string a)
+        public string MethodWithCanBeNull([CanBeNull] string a)
         {
             return a;
         }

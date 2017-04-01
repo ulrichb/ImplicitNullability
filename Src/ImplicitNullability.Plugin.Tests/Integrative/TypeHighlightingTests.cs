@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
 {
+    [Category("Type Highlighting")]
     public abstract class TypeHighlightingTests : CSharpHighlightingTestBase
     {
         // Use the ReSharper SDK's gold-file approach instead of InspectionExpectationCommentsTestBase because

@@ -16,9 +16,15 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         }
 
         [ItemCanBeNull]
-        public async Task<string> NullableAsyncMethod()
+        public async Task<string> AsyncMethodWithItemCanBeNull()
         {
             return await Async.CanBeNullResult<string>();
+        }
+
+        [CanBeNull]
+        public async Task<string> AsyncMethodWithCanBeNull()
+        {
+            return await Async.NotNullResult("");
         }
 
         public Task<string> NonAsyncButTaskResult()
@@ -27,14 +33,14 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         }
 
         [ItemCanBeNull]
-        public Task<string> NonAsyncButNullableTaskResult()
+        public Task<string> NonAsyncButTaskResultWithItemCanBeNull()
         {
             return Async.CanBeNullResult<string>();
         }
 
         [CanBeNull]
         [ItemCanBeNull]
-        public Task<string> NonAsyncCanBeNullAndItemCanBeNullMethod()
+        public Task<string> NonAsyncButTaskResultWithCanBeNullAndItemCanBeNull()
         {
             return null;
         }

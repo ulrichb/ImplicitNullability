@@ -16,25 +16,31 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         }
 
         [ItemCanBeNull]
-        public async |Task|(3)<string> NullableAsyncMethod()
+        public async |Task|(3)<string> AsyncMethodWithItemCanBeNull()
         {
             return await Async.CanBeNullResult<string>();
         }
 
-        public |Task|(4)<|string|(5)> NonAsyncButTaskResult()
+        [CanBeNull]
+        public async Task<|string|(4)> AsyncMethodWithCanBeNull()
+        {
+            return await Async.NotNullResult("");
+        }
+
+        public |Task|(5)<|string|(6)> NonAsyncButTaskResult()
         {
             return Async.NotNullResult("");
         }
 
         [ItemCanBeNull]
-        public |Task|(6)<string> NonAsyncButNullableTaskResult()
+        public |Task|(7)<string> NonAsyncButTaskResultWithItemCanBeNull()
         {
             return Async.CanBeNullResult<string>();
         }
 
         [CanBeNull]
         [ItemCanBeNull]
-        public Task<string> NonAsyncCanBeNullAndItemCanBeNullMethod()
+        public Task<string> NonAsyncButTaskResultWithCanBeNullAndItemCanBeNull()
         {
             return null;
         }
@@ -52,6 +58,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 (1): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
 (2): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
 (3): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
-(4): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
-(5): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
-(6): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(4): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
+(5): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(6): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
+(7): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
