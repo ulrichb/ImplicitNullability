@@ -28,6 +28,9 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             public void TestTypeHighlightingAsyncMethodsSample() => DoNamedTest2("Async.cs");
 
             [Test]
+            public void TestTypeHighlightingTaskResultDelegatesSample() => DoNamedTest2();
+
+            [Test]
             public void TestTypeHighlightingOtherElementsSample() => DoNamedTest2();
         }
 

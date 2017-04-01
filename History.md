@@ -1,5 +1,6 @@
 ### vNext ###
 - Changed "overrides unknown base member" warnings to include also non-external (solution) code with unknown nullability (=> new highlighting IDs for ImplicitNotNullOverridesUnknownBaseMemberNullability and ImplicitNotNullResultOverridesUnknownBaseMemberNullability)
+- Added support for named delegates with (async) Task<T> results
 - ReSharper 2017.1 support
 
 ### 3.5.1 ###

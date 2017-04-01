@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ImplicitNullability.Samples.CodeWithoutIN;
 using JetBrains.Annotations;
 using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
@@ -26,6 +27,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             return delegate(string s) { TestValueAnalysis(s, s == null); };
         }
+
+        //
 
         public delegate void SomeDelegate(string s);
 
@@ -62,6 +65,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             return NamedMethodWithCanBeNull;
         }
 
+        //
+
         [NotNull]
         public delegate string SomeFunctionDelegateWithNotNull();
 
@@ -91,6 +96,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             return () => null;
         }
 
+        //
+
         public static External.SomeNotNullDelegate GetSomeNotNullDelegateOfExternalCode()
         {
             return s => TestValueAnalysis(s, s == null);
@@ -100,6 +107,33 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             return s => TestValueAnalysis(s, s == null);
         }
+
+        //
+
+        [ItemNotNull]
+        public delegate Task<string> SomeAsyncFunctionDelegateWithNotNull();
+
+        public static SomeAsyncFunctionDelegateWithNotNull GetSomeAsyncFunctionDelegateWithNotNull()
+        {
+            return async () => await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute*/;
+        }
+
+        public delegate Task<string> SomeAsyncFunctionDelegate();
+
+        public static SomeAsyncFunctionDelegate GetSomeAsyncFunctionDelegate()
+        {
+            return async () => await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+        }
+
+        [ItemCanBeNull]
+        public delegate Task<string> SomeAsyncFunctionDelegateWithCanBeNull();
+
+        public static SomeAsyncFunctionDelegateWithCanBeNull GetSomeAsyncFunctionDelegateWithCanBeNull()
+        {
+            return async () => await Async.CanBeNullResult<string>();
+        }
+
+        //
 
         public delegate void SomeDelegateWithRefAndOut(ref string refParam, out string outParam);
 
@@ -115,6 +149,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             };
         }
 
+        //
+
         private static void NamedMethod(string a)
         {
         }
@@ -128,6 +164,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             return null;
         }
+
+        //
 
         public static void ActionDelegateConstructor()
         {

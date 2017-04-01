@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Remoting;
 using FluentAssertions;
 using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
@@ -9,12 +10,14 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
     [TestFixture]
     public class DelegatesSampleTests
     {
+        private string BecauseDelegateMethodIsAnonymous = "because the delegate *method* is an anonymous method";
+
         [Test]
         public void SomeAction()
         {
             Action act = () => DelegatesSample.GetSomeAction()(null);
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -22,7 +25,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeActionWithClosedValues()(null);
 
-            act.ShouldNotThrow("because the delegate *method*  is an anonymous method (implemented using a display class)");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous + " (implemented using a display class)");
         }
 
         [Test]
@@ -30,7 +33,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeActionToAnonymousMethod()(null);
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -38,7 +41,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegate()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -85,7 +88,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -96,11 +99,11 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 DelegatesSample.SomeFunctionDelegate @delegate = DelegatesSample.GetSomeFunctionDelegate();
                 var result = @delegate();
                 // This false negative is analog to SomeFunctionDelegateWithNotNull and even requires an exemption for the delegate Invoke() method,
-                // but it is necessary because this implicit annotation wouldn't be invertible with [CanBeNull]:
-                TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+                // but it is necessary because the developer can't opt out of the implicit annotation with [CanBeNull]:
+                TestValueAnalysis(result, result == null);
             };
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -121,7 +124,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeNotNullDelegateOfExternalCode()(null /*Expect:AssignNullToNotNullAttribute*/);
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -129,7 +132,48 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateOfExternalCode()(null /* no warning because the delegate is external */);
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+        }
+
+        [Test]
+        public void SomeAsyncFunctionDelegateWithNotNull()
+        {
+            Action act = () =>
+            {
+                DelegatesSample.SomeAsyncFunctionDelegateWithNotNull @delegate = DelegatesSample.GetSomeAsyncFunctionDelegateWithNotNull();
+                var result = @delegate();
+                TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
+            };
+
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+        }
+
+        [Test]
+        public void SomeAsyncFunctionDelegate()
+        {
+            Action act = () =>
+            {
+                DelegatesSample.SomeAsyncFunctionDelegate @delegate = DelegatesSample.GetSomeAsyncFunctionDelegate();
+                var result = @delegate();
+                // This false negative is analog to SomeAsyncFunctionDelegateWithNotNull and even requires an exemption for the delegate Invoke() method,
+                // but it is necessary because the developer can't opt out of the implicit annotation with [CanBeNull]:
+                TestValueAnalysis(result, result == null);
+            };
+
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+        }
+
+        [Test]
+        public void SomeAsyncFunctionDelegateWithCanBeNull()
+        {
+            Action act = () =>
+            {
+                DelegatesSample.SomeAsyncFunctionDelegateWithCanBeNull @delegate = DelegatesSample.GetSomeAsyncFunctionDelegateWithCanBeNull();
+                var result = @delegate();
+                TestValueAnalysis(result /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, result == null);
+            };
+
+            act.ShouldNotThrow();
         }
 
         [Test]
@@ -146,7 +190,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
-            act.ShouldNotThrow("because the delegate *method* is an anonymous method");
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -163,7 +207,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 asyncResult.AsyncWaitHandle.WaitOne();
             };
 
-            act.ShouldNotThrow();
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -188,11 +232,22 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 var result = @delegate.Invoke();
                 TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
 
-                var endInvokeResult = @delegate.EndInvoke(@delegate.BeginInvoke(null, null));
+                var asyncResult = @delegate.BeginInvoke(null, null);
+                var endInvokeResult = @delegate.EndInvoke(asyncResult);
                 TestValueAnalysis(endInvokeResult, endInvokeResult == null);
             };
 
-            act.ShouldNotThrow();
+            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+        }
+
+        [Test]
+        public void SomeFunctionDelegateWithEndInvokeWithNullArgument()
+        {
+            var @delegate = DelegatesSample.GetSomeFunctionDelegate();
+
+            Action act = () => @delegate.EndInvoke(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
+
+            act.ShouldThrow<RemotingException>("because the IAsyncResult argument is null");
         }
     }
 }

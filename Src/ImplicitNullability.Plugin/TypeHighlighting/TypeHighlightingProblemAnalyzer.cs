@@ -48,8 +48,7 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
             var methodDeclaration = declaration as IMethodDeclaration;
             if (methodDeclaration?.DeclaredElement != null)
             {
-                var method = methodDeclaration.DeclaredElement;
-                HandleMethod(consumer, methodDeclaration, method);
+                HandleMethod(consumer, methodDeclaration, methodDeclaration.DeclaredElement);
             }
 
             if (declaration is IOperatorDeclaration operatorDeclaration)
@@ -57,9 +56,10 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
                 HandleElement(consumer, operatorDeclaration.DeclaredElement, operatorDeclaration.TypeUsage);
             }
 
-            if (declaration is IDelegateDeclaration delegateDeclaration)
+            var delegateDeclaration = declaration as IDelegateDeclaration;
+            if (delegateDeclaration?.DeclaredElement != null)
             {
-                HandleElement(consumer, delegateDeclaration.DeclaredElement, delegateDeclaration.TypeUsage);
+                HandleDelegate(consumer, delegateDeclaration, delegateDeclaration.DeclaredElement);
             }
 
             if (declaration is IFieldDeclaration fieldDeclaration)
@@ -82,13 +82,8 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
         {
             if (method.ReturnType.IsGenericTask())
             {
-                var userTypeUsage = (IUserTypeUsage) methodDeclaration.TypeUsage;
-
-                var typeIdentifier = userTypeUsage.ScalarTypeName.NameIdentifier;
-                var innerTypeUsage = userTypeUsage.ScalarTypeName.TypeArgumentList.TypeArgumentNodes.FirstOrDefault();
-
-                HandleElement(consumer, method, typeIdentifier);
-                HandleContainerElement(consumer, method, innerTypeUsage);
+                var typeUsageOfTask = (IUserTypeUsage) methodDeclaration.TypeUsage;
+                HandleGenericTaskTypes(consumer, method, typeUsageOfTask);
             }
             else
             {
@@ -98,6 +93,28 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
                     HandleElement(consumer, method, methodDeclaration.TypeUsage);
                 }
             }
+        }
+
+        private void HandleDelegate(IHighlightingConsumer consumer, IDelegateDeclaration delegateDeclaration, IDelegate @delegate)
+        {
+            if (@delegate.InvokeMethod.ReturnType.IsGenericTask())
+            {
+                var typeUsageOfTask = (IUserTypeUsage) delegateDeclaration.TypeUsage;
+                HandleGenericTaskTypes(consumer, @delegate, typeUsageOfTask);
+            }
+            else
+            {
+                HandleElement(consumer, @delegate, delegateDeclaration.TypeUsage);
+            }
+        }
+
+        private void HandleGenericTaskTypes(IHighlightingConsumer consumer, ITypeMember @delegate, IUserTypeUsage typeUsageOfTask)
+        {
+            var typeIdentifier = typeUsageOfTask.ScalarTypeName.NameIdentifier;
+            var innerTypeUsage = typeUsageOfTask.ScalarTypeName.TypeArgumentList.TypeArgumentNodes.FirstOrDefault();
+
+            HandleElement(consumer, @delegate, typeIdentifier);
+            HandleContainerElement(consumer, @delegate, innerTypeUsage);
         }
 
         private void HandleElement(

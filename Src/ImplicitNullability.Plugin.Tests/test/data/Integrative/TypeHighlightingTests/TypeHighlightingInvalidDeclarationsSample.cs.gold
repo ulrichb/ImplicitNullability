@@ -17,9 +17,13 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         {
             return await Async.NotNullResult("");
         }
+
+        public delegate |Task|(3)< /* missing type triggers null item "type usage" */> AsyncDelegate();
     }
 }
+
 ---------------------------------------------------------
 (0): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (1): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (2): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(3): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]

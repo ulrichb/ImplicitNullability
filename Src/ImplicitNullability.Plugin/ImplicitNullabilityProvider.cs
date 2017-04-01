@@ -54,8 +54,13 @@ namespace ImplicitNullability.Plugin
 
         public CodeAnnotationNullableValue? AnalyzeDeclaredElementContainerElement([CanBeNull] IDeclaredElement declaredElement)
         {
-            if (declaredElement is IMethod method)
-                return AnalyzeMethodContainerElement(method);
+            switch (declaredElement)
+            {
+                case IMethod method:
+                    return AnalyzeFunction(method, useTaskUnderlyingType: true);
+                case IDelegate @delegate:
+                    return AnalyzeDelegate(@delegate, useTaskUnderlyingType: true);
+            }
 
             return null;
         }
@@ -88,7 +93,7 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeFunction(IFunction function)
+        private CodeAnnotationNullableValue? AnalyzeFunction(IFunction function, bool useTaskUnderlyingType = false)
         {
             CodeAnnotationNullableValue? result = null;
 
@@ -98,7 +103,7 @@ namespace ImplicitNullability.Plugin
                 {
                     if (!ContainsContractAnnotationAttribute(function))
                     {
-                        result = GetNullabilityForType(function.ReturnType);
+                        result = GetNullabilityForTypeOrTaskUnderlyingType(function.ReturnType, useTaskUnderlyingType);
                     }
                 }
             }
@@ -106,13 +111,13 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeDelegate(IDelegate @delegate)
+        private CodeAnnotationNullableValue? AnalyzeDelegate(IDelegate @delegate, bool useTaskUnderlyingType = false)
         {
             CodeAnnotationNullableValue? result = null;
 
             if (_configurationEvaluator.EvaluateFor(@delegate.Module).EnableOutParametersAndResult)
             {
-                result = GetNullabilityForType(@delegate.InvokeMethod.ReturnType);
+                result = GetNullabilityForTypeOrTaskUnderlyingType(@delegate.InvokeMethod.ReturnType, useTaskUnderlyingType);
             }
 
             return result;
@@ -135,28 +140,19 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private CodeAnnotationNullableValue? AnalyzeMethodContainerElement(IMethod method)
+        private static CodeAnnotationNullableValue? GetNullabilityForTypeOrTaskUnderlyingType(IType type, bool useTaskUnderlyingType)
         {
-            CodeAnnotationNullableValue? result = null;
-
-            if (_configurationEvaluator.EvaluateFor(method.Module).EnableOutParametersAndResult)
+            if (useTaskUnderlyingType)
             {
-                if (!ContainsContractAnnotationAttribute(method))
-                {
-#if RESHARPER20162 || RESHARPER20163
-                    var taskUnderlyingType = method.ReturnType.GetTaskUnderlyingType();
-#else
-                    // Use "latest" language level because this just includes _more_ types (C# 7 "task-like" types) and the nullability
-                    // value we return here also effects _callers_ (whose C# language level we do not know).
-                    var taskUnderlyingType = method.ReturnType.GetTasklikeUnderlyingType(CSharpLanguageLevel.Latest);
-#endif
+                var taskUnderlyingType = GetTaskUnderlyingType(type);
 
-                    if (taskUnderlyingType != null)
-                        result = GetNullabilityForType(taskUnderlyingType);
-                }
+                if (taskUnderlyingType == null)
+                    return null; // 'type' is not a 'Task<T>' type => no implicit nullability
+
+                return GetNullabilityForType(taskUnderlyingType);
             }
 
-            return result;
+            return GetNullabilityForType(type);
         }
 
         private static CodeAnnotationNullableValue? GetNullabilityForType(IType type)
@@ -176,6 +172,19 @@ namespace ImplicitNullability.Plugin
             }
 
             return null;
+        }
+
+        [CanBeNull]
+        private static IType GetTaskUnderlyingType(IType type)
+        {
+#if RESHARPER20162 || RESHARPER20163
+            return type.GetTaskUnderlyingType();
+#else
+            // Use "latest" language level because this just includes _more_ types (C# 7 "task-like" types) and the nullability
+            // value we return here also effects _callers_ (whose C# language level we do not know).
+
+            return type.GetTasklikeUnderlyingType(CSharpLanguageLevel.Latest);
+#endif
         }
 
         private static bool IsImplicitNullabilityApplicableToParameterOwner([CanBeNull] IParametersOwner parametersOwner)

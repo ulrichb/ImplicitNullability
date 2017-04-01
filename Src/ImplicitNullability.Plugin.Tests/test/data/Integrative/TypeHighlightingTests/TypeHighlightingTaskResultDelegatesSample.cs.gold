@@ -1,0 +1,29 @@
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
+
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
+{
+    public class TypeHighlightingTaskResultDelegatesSample
+    {
+        public delegate |Task|(0)<|string|(1)> AsyncDelegate();
+
+        public delegate |Task|(2) VoidAsyncDelegate();
+
+        [ItemCanBeNull]
+        public delegate |Task|(3)<string> AsyncDelegateWithItemCanBeNull();
+
+        [CanBeNull]
+        public delegate Task<|string|(4)> AsyncDelegateWithCanBeNull();
+
+        [CanBeNull]
+        [ItemCanBeNull]
+        public delegate Task<string> AsyncDelegateWithCanBeNullAndItemCanBeNull();
+    }
+}
+
+---------------------------------------------------------
+(0): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(1): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
+(2): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(3): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
+(4): ReSharperImplicitNullabilityItemTypeHighlighting: Inner type 'string' is (explicitly or implicitly) [ItemNotNull]
