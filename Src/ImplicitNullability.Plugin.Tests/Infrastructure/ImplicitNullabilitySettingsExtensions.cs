@@ -1,4 +1,4 @@
-using ImplicitNullability.Plugin.Settings;
+using ImplicitNullability.Plugin.Configuration;
 using JetBrains.Application.Settings;
 using NUnit.Framework;
 

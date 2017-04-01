@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ImplicitNullability.Plugin.Settings;
+using ImplicitNullability.Plugin.Configuration;
 using JetBrains.Application.Settings;
 using JetBrains.Application.Settings.Store.Implementation;
 using JetBrains.ProjectModel;
@@ -10,7 +10,7 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Plugin.Tests.UnitTests
+namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 {
     [TestFixture]
     [TestNetFramework45 /*necessary for AssemblyMetadataAttribute reference*/]

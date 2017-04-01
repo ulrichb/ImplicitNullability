@@ -1,6 +1,6 @@
 using System.Linq;
+using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Infrastructure;
-using ImplicitNullability.Plugin.Settings;
 using JetBrains.Annotations;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;

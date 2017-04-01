@@ -13,7 +13,7 @@ using JetBrains.UI.Resources;
 using JetBrains.UI.RichText;
 using JetBrains.Util;
 
-namespace ImplicitNullability.Plugin.Settings
+namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 {
     [ExcludeFromCodeCoverage /* options page user interface is tested manually */]
     [OptionsPage(PageId, PageTitle, typeof(CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]

@@ -1,4 +1,4 @@
-using ImplicitNullability.Plugin.Settings;
+using ImplicitNullability.Plugin.Configuration.OptionsPages;
 
 namespace ImplicitNullability.Plugin.Highlighting
 {

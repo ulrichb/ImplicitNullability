@@ -6,7 +6,7 @@ using JetBrains.Metadata.Reader.Impl;
 using JetBrains.ReSharper.Psi;
 using JetBrains.Util;
 
-namespace ImplicitNullability.Plugin
+namespace ImplicitNullability.Plugin.Configuration
 {
     /// <summary>
     /// Translates between <see cref="ImplicitNullabilityConfiguration"/> and its representation as

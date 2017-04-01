@@ -1,5 +1,5 @@
 using System.IO;
-using ImplicitNullability.Plugin.Settings;
+using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using ImplicitNullability.Plugin.TypeHighlighting;
 using JetBrains.Annotations;

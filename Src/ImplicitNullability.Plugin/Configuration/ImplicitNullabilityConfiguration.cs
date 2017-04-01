@@ -1,7 +1,6 @@
-﻿using ImplicitNullability.Plugin.Settings;
-using JetBrains.Util;
+﻿using JetBrains.Util;
 
-namespace ImplicitNullability.Plugin
+namespace ImplicitNullability.Plugin.Configuration
 {
     /// <summary>
     /// Represents the implicit nullability configuration (the chosen options in the settings / in the assembly attributes).

@@ -1,7 +1,8 @@
 ﻿using System;
+using ImplicitNullability.Plugin.Configuration;
 using NUnit.Framework;
 
-namespace ImplicitNullability.Plugin.Tests.UnitTests
+namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 {
     [TestFixture]
     public class AssemblyAttributeConfigurationTranslatorTest

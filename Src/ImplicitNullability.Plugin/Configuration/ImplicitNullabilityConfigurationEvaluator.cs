@@ -1,12 +1,11 @@
 using System;
 using ImplicitNullability.Plugin.Infrastructure;
-using ImplicitNullability.Plugin.Settings;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Tree;
 
-namespace ImplicitNullability.Plugin
+namespace ImplicitNullability.Plugin.Configuration
 {
     /// <summary>
     /// A service for reading / evaluating the <see cref="ImplicitNullabilityConfiguration"/> in a given <see cref="IPsiModule"/>.

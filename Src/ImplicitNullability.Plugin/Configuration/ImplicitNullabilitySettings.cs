@@ -1,7 +1,7 @@
 ﻿using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Resources.Settings;
 
-namespace ImplicitNullability.Plugin.Settings
+namespace ImplicitNullability.Plugin.Configuration
 {
     [SettingsKey(typeof(CodeInspectionSettings), "Implicit Nullability")]
     public class ImplicitNullabilitySettings

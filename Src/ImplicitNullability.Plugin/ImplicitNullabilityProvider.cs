@@ -1,3 +1,4 @@
+using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
