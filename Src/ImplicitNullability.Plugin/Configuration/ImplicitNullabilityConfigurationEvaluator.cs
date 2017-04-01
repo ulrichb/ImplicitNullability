@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.Caches;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Tree;
 
@@ -10,7 +12,7 @@ namespace ImplicitNullability.Plugin.Configuration
     /// <summary>
     /// A service for reading / evaluating the <see cref="ImplicitNullabilityConfiguration"/> in a given <see cref="IPsiModule"/>.
     ///
-    /// The resulting configuration depends on the content of an <see cref="T:System.Reflection.AssemblyMetadataAttribute"/> (if present)
+    /// The resulting configuration depends on the content of declared <see cref="T:System.Reflection.AssemblyMetadataAttribute"/>s (if present)
     /// plus the <see cref="ImplicitNullabilitySettings"/> from the ReSharper settings.
     /// </summary>
     [PsiComponent]
@@ -32,8 +34,13 @@ namespace ImplicitNullability.Plugin.Configuration
 
         public ImplicitNullabilityConfiguration EvaluateFor(IPsiModule psiModule)
         {
-            // IDEA: Implement a PsiModule=>ImplicitNullabilityConfiguration cache (which gets invalidated on module changes)
+            var cache = psiModule.GetPsiServices().Caches.GetPsiCache<ConfigurationCache>();
 
+            return cache.GetOrAdd(psiModule, CalculateConfiguration);
+        }
+
+        private ImplicitNullabilityConfiguration CalculateConfiguration(IPsiModule psiModule)
+        {
             var implicitNullabilitySettings = GetSettings(psiModule);
 
             if (!implicitNullabilitySettings.Enabled)
@@ -63,6 +70,29 @@ namespace ImplicitNullability.Plugin.Configuration
             var moduleAttributes = _psiServices.Value.Symbols.GetModuleAttributes(psiModule);
 
             return AssemblyAttributeConfigurationTranslator.ParseAttributes(moduleAttributes);
+        }
+
+        [PsiComponent]
+        private class ConfigurationCache : InvalidatingPsiCache
+        {
+            private readonly ConcurrentDictionary<IPsiModule, ImplicitNullabilityConfiguration> _dict =
+                new ConcurrentDictionary<IPsiModule, ImplicitNullabilityConfiguration>();
+
+            protected override void InvalidateOnPhysicalChange(PsiChangedElementType elementType)
+            {
+                // Note that this method gets also called on settings changes.
+
+                // Here we clear the complete cache ony _any_ change. This strategy makes cache invalidation easy (least error prone) and
+                // is absolutely sufficient for the overall performance of ImplicitNullabilityConfigurationEvaluator as the calculation
+                // itself is not the problem, only the vast amount of accesses (per module).
+
+                _dict.Clear();
+            }
+
+            public ImplicitNullabilityConfiguration GetOrAdd(IPsiModule psiModule, Func<IPsiModule, ImplicitNullabilityConfiguration> func)
+            {
+                return _dict.GetOrAdd(psiModule, func);
+            }
         }
     }
 }

@@ -63,7 +63,7 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private static int ParseFlags([CanBeNull] string text, IDictionary<string, int> toDict)
         {
-            // Manually implement the parsing because 'Enum.TryParse()' returns 0 if the contains invalid names.
+            // Manually implement the parsing because 'Enum.TryParse()' returns 0 if the input text contains invalid names.
 
             var result = 0;
 
@@ -78,8 +78,6 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private struct AssemblyMetadataAttributeValues
         {
-            // Note: Optimize for performance because attribute parsing happens in every IN provider call
-
             [CanBeNull]
             public readonly string AppliesTo;
 
