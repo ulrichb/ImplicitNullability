@@ -76,7 +76,7 @@ namespace ImplicitNullability.Plugin
             {
                 var configuration = _configurationEvaluator.EvaluateFor(parameter.Module);
 
-                if (parameter.IsInput() && configuration.EnableInputParameters)
+                if (parameter.IsInput() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.InputParameters))
                 {
                     if (IsOptionalArgumentWithNullDefaultValue(parameter))
                         result = CodeAnnotationNullableValue.CAN_BE_NULL;
@@ -84,10 +84,10 @@ namespace ImplicitNullability.Plugin
                         result = GetNullabilityForType(parameter.Type);
                 }
 
-                if (parameter.IsRef() && configuration.EnableRefParameters)
+                if (parameter.IsRef() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.RefParameters))
                     result = GetNullabilityForType(parameter.Type);
 
-                if (parameter.IsOut() && configuration.EnableOutParametersAndResult)
+                if (parameter.IsOut() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
                     result = GetNullabilityForType(parameter.Type);
             }
 
@@ -100,7 +100,9 @@ namespace ImplicitNullability.Plugin
 
             if (!IsDelegateInvokeOrEndInvokeFunction(function))
             {
-                if (_configurationEvaluator.EvaluateFor(function.Module).EnableOutParametersAndResult)
+                var configuration = _configurationEvaluator.EvaluateFor(function.Module);
+
+                if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
                 {
                     if (!ContainsContractAnnotationAttribute(function))
                     {
@@ -116,7 +118,9 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
 
-            if (_configurationEvaluator.EvaluateFor(@delegate.Module).EnableOutParametersAndResult)
+            var configuration = _configurationEvaluator.EvaluateFor(@delegate.Module);
+
+            if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
             {
                 result = GetNullabilityForTypeOrTaskUnderlyingType(@delegate.InvokeMethod.ReturnType, useTaskUnderlyingType);
             }
@@ -132,7 +136,8 @@ namespace ImplicitNullability.Plugin
             {
                 var configuration = _configurationEvaluator.EvaluateFor(field.Module);
 
-                if (configuration.EnableFields && IsFieldMatchingConfigurationOptions(field, configuration))
+                if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields) &&
+                    IsFieldMatchingConfigurationOptions(field, configuration))
                 {
                     result = GetNullabilityForType(field.Type);
                 }
@@ -280,8 +285,8 @@ namespace ImplicitNullability.Plugin
 
         private static bool IsFieldMatchingConfigurationOptions(IField field, ImplicitNullabilityConfiguration configuration)
         {
-            return (!configuration.FieldsRestrictToReadonly || field.IsReadonly) &&
-                   (!configuration.FieldsRestrictToReferenceTypes || field.IsMemberOfReferenceType());
+            return (!configuration.HasFieldOption(ImplicitNullabilityFieldOptions.RestrictToReadonly) || field.IsReadonly) &&
+                   (!configuration.HasFieldOption(ImplicitNullabilityFieldOptions.RestrictToReferenceTypes) || field.IsMemberOfReferenceType());
         }
     }
 }

@@ -17,14 +17,10 @@ namespace ImplicitNullability.Plugin.Configuration
         private static readonly ClrTypeName AssemblyMetadataAttributeTypeName = new ClrTypeName("System.Reflection.AssemblyMetadataAttribute");
 
         private const string AppliesToAttributeKey = "ImplicitNullability.AppliesTo";
-        private const string InputParametersAssemblyAttributeOption = "InputParameters";
-        private const string RefParametersAssemblyAttributeOption = "RefParameters";
-        private const string OutParametersAndResultAssemblyAttributeOption = "OutParametersAndResult";
-        private const string FieldsAssemblyAttributeOption = "Fields";
-
         private const string FieldsAttributeKey = "ImplicitNullability.Fields";
-        private const string FieldsRestrictToReadonlyOption = "RestrictToReadonly";
-        private const string FieldsRestrictToReferenceTypesOption = "RestrictToReferenceTypes";
+
+        private static readonly IDictionary<string, int> AppliesToNamesToValue = CreateNamesToValueDictionary<ImplicitNullabilityAppliesTo>();
+        private static readonly IDictionary<string, int> FieldOptionsNamesToValue = CreateNamesToValueDictionary<ImplicitNullabilityFieldOptions>();
 
         public static ImplicitNullabilityConfiguration? ParseAttributes(IAttributesSet attributes)
         {
@@ -38,61 +34,46 @@ namespace ImplicitNullability.Plugin.Configuration
 
         public static string GenerateAttributeCode(ImplicitNullabilityConfiguration configuration)
         {
-            var appliesToList = new List<string>();
+            var appliesToText = configuration.AppliesTo == ImplicitNullabilityAppliesTo.None ? "" : configuration.AppliesTo.ToString();
 
-            if (configuration.EnableInputParameters)
-                appliesToList.Add(InputParametersAssemblyAttributeOption);
+            string fieldsText = null;
 
-            if (configuration.EnableRefParameters)
-                appliesToList.Add(RefParametersAssemblyAttributeOption);
-
-            if (configuration.EnableOutParametersAndResult)
-                appliesToList.Add(OutParametersAndResultAssemblyAttributeOption);
-
-            if (configuration.EnableFields)
-                appliesToList.Add(FieldsAssemblyAttributeOption);
-
-            var fieldsList = new List<string>();
-
-            if (configuration.EnableFields)
+            if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields))
             {
-                if (configuration.FieldsRestrictToReadonly)
-                    fieldsList.Add(FieldsRestrictToReadonlyOption);
-
-                if (configuration.FieldsRestrictToReferenceTypes)
-                    fieldsList.Add(FieldsRestrictToReferenceTypesOption);
+                if (configuration.FieldOptions != ImplicitNullabilityFieldOptions.None)
+                    fieldsText = configuration.FieldOptions.ToString();
             }
 
-            var fields = !fieldsList.Any() ? null : JoinParts(fieldsList);
-
-            return new AssemblyMetadataAttributeValues(JoinParts(appliesToList), fields).GenerateAttributeCode();
+            return new AssemblyMetadataAttributeValues(appliesToText, fieldsText).GenerateAttributeCode();
         }
 
         private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(AssemblyMetadataAttributeValues attributeValues)
         {
-            var appliesToParts = SplitParts(attributeValues.AppliesTo);
-            var fieldsParts = SplitParts(attributeValues.Fields);
+            var appliesTo = (ImplicitNullabilityAppliesTo) ParseFlags(attributeValues.AppliesTo, AppliesToNamesToValue);
+            var fieldOptions = (ImplicitNullabilityFieldOptions) ParseFlags(attributeValues.Fields, FieldOptionsNamesToValue);
 
-            return new ImplicitNullabilityConfiguration(
-                appliesToParts.Contains(InputParametersAssemblyAttributeOption),
-                appliesToParts.Contains(RefParametersAssemblyAttributeOption),
-                appliesToParts.Contains(OutParametersAndResultAssemblyAttributeOption),
-                appliesToParts.Contains(FieldsAssemblyAttributeOption),
-                fieldsParts.Contains(FieldsRestrictToReadonlyOption),
-                fieldsParts.Contains(FieldsRestrictToReferenceTypesOption));
+            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions);
         }
 
-        private static IList<string> SplitParts([CanBeNull] string text)
+        private static Dictionary<string, int> CreateNamesToValueDictionary<T>()
         {
-            if (text == null)
-                return EmptyList<string>.InstanceList;
-
-            return text.Split(',').Select(x => x.Trim()).ToList();
+            var enumType = typeof(T);
+            return Enum.GetValues(enumType).Cast<int>().ToDictionary(x => enumType.GetEnumName(x), x => x);
         }
 
-        private static string JoinParts(IEnumerable<string> parts)
+        private static int ParseFlags([CanBeNull] string text, IDictionary<string, int> toDict)
         {
-            return parts.Join(", ");
+            // Manually implement the parsing because 'Enum.TryParse()' returns 0 if the contains invalid names.
+
+            var result = 0;
+
+            if (text != null)
+            {
+                foreach (var part in text.Split(','))
+                    result |= toDict.TryGetValue(part.Trim());
+            }
+
+            return result;
         }
 
         private struct AssemblyMetadataAttributeValues

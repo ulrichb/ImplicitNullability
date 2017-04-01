@@ -20,27 +20,40 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         private const bool Ena = true; // enable
         private const bool Dnc = false; // don't care
 
+        const ImplicitNullabilityAppliesTo AppliesToNone = ImplicitNullabilityAppliesTo.None;
+
+        const ImplicitNullabilityAppliesTo AppliesToInputAndFields = ImplicitNullabilityAppliesTo.InputParameters |
+                                                                     ImplicitNullabilityAppliesTo.Fields;
+
+        const ImplicitNullabilityAppliesTo AppliesToInputAndOutput = ImplicitNullabilityAppliesTo.InputParameters |
+                                                                     ImplicitNullabilityAppliesTo.OutParametersAndResult;
+
+        const ImplicitNullabilityAppliesTo AppliesToAll = ImplicitNullabilityAppliesTo.InputParameters |
+                                                          ImplicitNullabilityAppliesTo.RefParameters |
+                                                          ImplicitNullabilityAppliesTo.OutParametersAndResult |
+                                                          ImplicitNullabilityAppliesTo.Fields;
+
         [Test]
         // 1. Enabled=false in the settings overrules everything:
-        [TestCase( /*solution:*/ Dis, /*project:*/ Dis, /*options:*/ Ena, "AttributeWithAllOptions", /*expected:*/ Dis)]
+        [TestCase( /*solution:*/ Dis, /*project:*/ Dis, /*options:*/ Ena, "AttributeWithAllOptions", /*expected:*/ AppliesToNone)]
         //
         // 2. Project settings overrule solution settings:
-        [TestCase( /*solution:*/ Dis, /*project:*/ Ena, /*options:*/ Dnc, "AttributeWithAllOptions", /*expected:*/ Ena)]
-        [TestCase( /*solution:*/ Ena, /*project:*/ Dis, /*options:*/ Dnc, "AttributeWithAllOptions", /*expected:*/ Dis)]
+        [TestCase( /*solution:*/ Dis, /*project:*/ Ena, /*options:*/ Dnc, "AttributeWithAllOptions", /*expected:*/ AppliesToAll)]
+        [TestCase( /*solution:*/ Ena, /*project:*/ Dis, /*options:*/ Dnc, "AttributeWithAllOptions", /*expected:*/ AppliesToNone)]
         //
         // 3. Attributes overrule individual options in the settings:
-        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "AttributeWithAllOptions", /*expected:*/ Ena)]
-        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "AttributeWithNoOption", /*expected:*/ Dis)]
+        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "AttributeWithAllOptions", /*expected:*/ AppliesToAll)]
+        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "AttributeWithNoOption", /*expected:*/ AppliesToNone)]
         //
         // 4. No attribute configuration => take the individual options in the settings:
-        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "NoConfigurationAttribute", /*expected:*/ Ena)]
-        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Dis, "NoConfigurationAttribute", /*expected:*/ Dis)]
+        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "NoConfigurationAttribute", /*expected:*/ AppliesToAll)]
+        [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Dis, "NoConfigurationAttribute", /*expected:*/ AppliesToNone)]
         public void TestInheritanceRules(
             bool enabledInSolution,
             bool enabledInProject,
             bool enableOptionInProject,
             string testInput,
-            bool expectedEnableOption)
+            ImplicitNullabilityAppliesTo expectedAppliesTo)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInSolution);
@@ -60,38 +73,27 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             //
 
-            AssertImplicitNullabilityConfiguration(
-                configuration,
-                expectedEnableOption,
-                expectedEnableOption,
-                expectedEnableOption,
-                expectedEnableOption);
+            Assert.That(configuration.AppliesTo, Is.EqualTo(expectedAppliesTo));
         }
 
         [Test]
         // The following attributes override the settings:
-        [TestCase("AttributeWithAllOptions", /*expected:*/ Ena, Ena, Ena, Ena)]
-        [TestCase("AttributeWithOnlyInputParametersOption", /*expected:*/ Ena, Dis, Dis, Dis)]
-        [TestCase("AttributeWithNoOption", /*expected:*/ Dis, Dis, Dis, Dis)]
-        [TestCase("AttributeWithInvalidValue", /*expected:*/ Dis, Dis, Dis, Dis)]
-        [TestCase("AttributeWithValueContainingInvalidOption", /*expected:*/ Ena, Dis, Dis, Ena)]
-        [TestCase("MultipleAttributes", /*expected:*/ Ena, Ena, Ena, Ena)]
+        [TestCase("AttributeWithAllOptions", /*expected:*/ AppliesToAll)]
+        [TestCase("AttributeWithOnlyInputParametersOption", /*expected:*/ ImplicitNullabilityAppliesTo.InputParameters)]
+        [TestCase("AttributeWithNoOption", /*expected:*/ AppliesToNone)]
+        [TestCase("AttributeWithInvalidValue", /*expected:*/ AppliesToNone)]
+        [TestCase("AttributeWithValueContainingInvalidOption", /*expected:*/ AppliesToInputAndFields)]
+        [TestCase("MultipleAttributes", /*expected:*/ AppliesToAll)]
         //
         // The following non-existing / invalid attributes are overridden by the settings:
-        [TestCase("NoConfigurationAttribute", /*expected:*/ Ena, Dis, Ena, Dis)]
-        [TestCase("AttributeWithNullKey", /*expected:*/ Ena, Dis, Ena, Dis)]
-        [TestCase("AttributeWithNullValue", /*expected:*/ Ena, Dis, Ena, Dis)]
-        [TestCase("NonCompilingAttribute1", /*expected:*/ Ena, Dis, Ena, Dis)]
-        [TestCase("NonCompilingAttribute2", /*expected:*/ Ena, Dis, Ena, Dis)]
-        [TestCase("NonCompilingAttribute3", /*expected:*/ Ena, Dis, Ena, Dis)]
-        [TestCase("NonCompilingAttribute4", /*expected:*/ Ena, Dis, Ena, Dis)]
-        public void TestAssemblyMetadataAttributeConfiguration(
-            string testInput,
-            bool expectedEnableInputParameters,
-            bool expectedEnableRefParameters,
-            bool expectedEnableOutParametersAndResult,
-            bool expectedEnableFields
-        )
+        [TestCase("NoConfigurationAttribute", /*expected:*/ AppliesToInputAndOutput)]
+        [TestCase("AttributeWithNullKey", /*expected:*/ AppliesToInputAndOutput)]
+        [TestCase("AttributeWithNullValue", /*expected:*/ AppliesToInputAndOutput)]
+        [TestCase("NonCompilingAttribute1", /*expected:*/ AppliesToInputAndOutput)]
+        [TestCase("NonCompilingAttribute2", /*expected:*/ AppliesToInputAndOutput)]
+        [TestCase("NonCompilingAttribute3", /*expected:*/ AppliesToInputAndOutput)]
+        [TestCase("NonCompilingAttribute4", /*expected:*/ AppliesToInputAndOutput)]
+        public void TestAssemblyMetadataAttributeConfiguration(string testInput, ImplicitNullabilityAppliesTo expectedAppliesTo)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
             {
@@ -104,20 +106,16 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
-            AssertImplicitNullabilityConfiguration(
-                configuration,
-                expectedEnableInputParameters,
-                expectedEnableRefParameters,
-                expectedEnableOutParametersAndResult,
-                expectedEnableFields);
+            Assert.That(configuration.AppliesTo, Is.EqualTo(expectedAppliesTo));
         }
 
         [Test]
-        [TestCase("AttributeWithFieldsWithNullValue", Dis)]
-        [TestCase("AttributeWithFieldsWithNoOption", Dis)]
-        [TestCase("AttributeWithFieldsWithInvalidValue", Dis)]
-        [TestCase("AttributeWithFieldsWithAllOptions", Ena)]
-        public void TestAssemblyMetadataAttributeFieldsConfiguration(string testInput, bool expectedOptionValue)
+        [TestCase("AttributeWithFieldsWithNullValue", ImplicitNullabilityFieldOptions.None)]
+        [TestCase("AttributeWithFieldsWithNoOption", ImplicitNullabilityFieldOptions.None)]
+        [TestCase("AttributeWithFieldsWithInvalidValue", ImplicitNullabilityFieldOptions.None)]
+        [TestCase("AttributeWithFieldsWithAllOptions", ImplicitNullabilityFieldOptions.RestrictToReadonly |
+                                                       ImplicitNullabilityFieldOptions.RestrictToReferenceTypes)]
+        public void TestAssemblyMetadataAttributeFieldsConfiguration(string testInput, ImplicitNullabilityFieldOptions expected)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
             {
@@ -127,9 +125,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
-            Assert.That(configuration.EnableFields, Is.EqualTo(true));
-            Assert.That(configuration.FieldsRestrictToReadonly, Is.EqualTo(expectedOptionValue));
-            Assert.That(configuration.FieldsRestrictToReferenceTypes, Is.EqualTo(expectedOptionValue));
+            Assert.That(configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields));
+            Assert.That(configuration.FieldOptions, Is.EqualTo(expected));
         }
 
         private ImplicitNullabilityConfiguration GetImplicitNullabilityConfigurationFor(
@@ -164,28 +161,6 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             RunGuarded(() => CloseSolution());
 
             return result.NotNull();
-        }
-
-        private static void AssertImplicitNullabilityConfiguration(
-            ImplicitNullabilityConfiguration actual,
-            bool expectedEnableInputParameters,
-            bool expectedEnableRefParameters,
-            bool expectedEnableOutParametersAndResult,
-            bool expectedEnableFields)
-        {
-            Assert.That(new
-            {
-                actual.EnableInputParameters,
-                actual.EnableRefParameters,
-                actual.EnableOutParametersAndResult,
-                actual.EnableFields
-            }, Is.EqualTo(new
-            {
-                EnableInputParameters = expectedEnableInputParameters,
-                EnableRefParameters = expectedEnableRefParameters,
-                EnableOutParametersAndResult = expectedEnableOutParametersAndResult,
-                EnableFields = expectedEnableFields
-            }));
         }
     }
 }

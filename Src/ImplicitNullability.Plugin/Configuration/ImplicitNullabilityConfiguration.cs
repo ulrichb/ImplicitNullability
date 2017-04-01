@@ -8,47 +8,35 @@ namespace ImplicitNullability.Plugin.Configuration
     public struct ImplicitNullabilityConfiguration
     {
         public static readonly ImplicitNullabilityConfiguration AllDisabled =
-            new ImplicitNullabilityConfiguration(false, false, false, false, false, false);
+            new ImplicitNullabilityConfiguration(ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.None);
 
         public static ImplicitNullabilityConfiguration CreateFromSettings(ImplicitNullabilitySettings implicitNullabilitySettings)
         {
             Assertion.Assert(implicitNullabilitySettings.Enabled, "implicitNullabilitySettings.Enabled");
 
             return new ImplicitNullabilityConfiguration(
-                implicitNullabilitySettings.EnableInputParameters,
-                implicitNullabilitySettings.EnableRefParameters,
-                implicitNullabilitySettings.EnableOutParametersAndResult,
-                implicitNullabilitySettings.EnableFields,
-                implicitNullabilitySettings.FieldsRestrictToReadonly,
-                implicitNullabilitySettings.FieldsRestrictToReferenceTypes);
+                (implicitNullabilitySettings.EnableInputParameters ? ImplicitNullabilityAppliesTo.InputParameters : 0) |
+                (implicitNullabilitySettings.EnableRefParameters ? ImplicitNullabilityAppliesTo.RefParameters : 0) |
+                (implicitNullabilitySettings.EnableOutParametersAndResult ? ImplicitNullabilityAppliesTo.OutParametersAndResult : 0) |
+                (implicitNullabilitySettings.EnableFields ? ImplicitNullabilityAppliesTo.Fields : 0),
+                (implicitNullabilitySettings.FieldsRestrictToReadonly ? ImplicitNullabilityFieldOptions.RestrictToReadonly : 0) |
+                (implicitNullabilitySettings.FieldsRestrictToReferenceTypes ? ImplicitNullabilityFieldOptions.RestrictToReferenceTypes : 0));
         }
 
         public ImplicitNullabilityConfiguration(
-            bool enableInputParameters,
-            bool enableRefParameters,
-            bool enableOutParametersAndResult,
-            bool enableFields,
-            bool fieldsRestrictToReadonly,
-            bool fieldsRestrictToReferenceTypes)
+            ImplicitNullabilityAppliesTo appliesTo,
+            ImplicitNullabilityFieldOptions fieldOptions)
         {
-            EnableInputParameters = enableInputParameters;
-            EnableRefParameters = enableRefParameters;
-            EnableOutParametersAndResult = enableOutParametersAndResult;
-            EnableFields = enableFields;
-            FieldsRestrictToReadonly = fieldsRestrictToReadonly;
-            FieldsRestrictToReferenceTypes = fieldsRestrictToReferenceTypes;
+            AppliesTo = appliesTo;
+            FieldOptions = fieldOptions;
         }
 
-        public bool EnableInputParameters { get; }
+        public ImplicitNullabilityAppliesTo AppliesTo { get; }
 
-        public bool EnableRefParameters { get; }
+        public ImplicitNullabilityFieldOptions FieldOptions { get; }
 
-        public bool EnableOutParametersAndResult { get; }
+        public bool HasAppliesTo(ImplicitNullabilityAppliesTo flag) => (AppliesTo & flag) > 0;
 
-        public bool EnableFields { get; }
-
-        public bool FieldsRestrictToReadonly { get; }
-
-        public bool FieldsRestrictToReferenceTypes { get; }
+        public bool HasFieldOption(ImplicitNullabilityFieldOptions flag) => (FieldOptions & flag) > 0;
     }
 }

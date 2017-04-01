@@ -10,6 +10,9 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         // This fixture specifically tests GenerateAttributeCode(), the remaining stuff is tested in
         // ImplicitNullabilityConfigurationEvaluatorTest.
 
+        private static readonly ImplicitNullabilityFieldOptions AllFieldOptions =
+            ImplicitNullabilityFieldOptions.RestrictToReadonly | ImplicitNullabilityFieldOptions.RestrictToReferenceTypes;
+
         [Test]
         public void GenerateAttributeCode_WithAllOptionsDisabled()
         {
@@ -23,7 +26,12 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [Test]
         public void GenerateAttributeCode_WithAllOptionsEnabled()
         {
-            var configuration = new ImplicitNullabilityConfiguration(true, true, true, true, true, true);
+            var configuration = new ImplicitNullabilityConfiguration(
+                ImplicitNullabilityAppliesTo.InputParameters |
+                ImplicitNullabilityAppliesTo.RefParameters |
+                ImplicitNullabilityAppliesTo.OutParametersAndResult |
+                ImplicitNullabilityAppliesTo.Fields,
+                AllFieldOptions);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
@@ -38,8 +46,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         public void GenerateAttributeCode_WithFieldsSettingsButAppliesToFieldsDisabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(
-                true, false, false,
-                enableFields: false, fieldsRestrictToReadonly: true, fieldsRestrictToReferenceTypes: true);
+                ImplicitNullabilityAppliesTo.InputParameters, AllFieldOptions);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
@@ -53,8 +60,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         public void GenerateAttributeCode_WithoutFieldsSettingsButAppliesToFieldsEnabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(
-                true, false, false,
-                enableFields: true, fieldsRestrictToReadonly: false, fieldsRestrictToReferenceTypes: false);
+                ImplicitNullabilityAppliesTo.InputParameters | ImplicitNullabilityAppliesTo.Fields, ImplicitNullabilityFieldOptions.None);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 

@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq.Expressions;
+using JetBrains.Application.Settings;
 using JetBrains.Application.UI.Commands;
 using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
@@ -24,18 +25,17 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 
         private static readonly TextStyle Italic = new TextStyle(FontStyle.Italic);
 
+        private readonly ISettingsOptimization _settingsOptimization;
         private readonly Clipboard _clipboard;
 
-        private readonly BoolOptionViewModel _enableInputParametersOption;
-        private readonly BoolOptionViewModel _enableRefParametersOption;
-        private readonly BoolOptionViewModel _enableOutParametersAndResultOption;
-        private readonly BoolOptionViewModel _enableFieldsOption;
-        private readonly BoolOptionViewModel _fieldsRestrictToReadonlyOption;
-        private readonly BoolOptionViewModel _fieldsRestrictToReferenceTypes;
-
-        public ImplicitNullabilityOptionsPage(Lifetime lifetime, OptionsSettingsSmartContext optionsSettingsSmartContext, Clipboard clipboard)
+        public ImplicitNullabilityOptionsPage(
+            Lifetime lifetime,
+            OptionsSettingsSmartContext optionsSettingsSmartContext,
+            ISettingsOptimization settingsOptimization,
+            Clipboard clipboard)
             : base(lifetime, optionsSettingsSmartContext)
         {
+            _settingsOptimization = settingsOptimization;
             _clipboard = clipboard;
 
             var enabledOption = AddBoolOption((ImplicitNullabilitySettings s) => s.Enabled, "Enabled");
@@ -53,31 +53,31 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
             SetIndent(AddText(infoText), 1);
 
 
-            _enableInputParametersOption = AddNullabilityBoolOption(
+            AddNullabilityBoolOption(
                 s => s.EnableInputParameters,
                 "Input parameters of methods, delegates, and indexers",
                 enabledOption,
                 indent: 2);
 
-            _enableRefParametersOption = AddNullabilityBoolOption(
+            AddNullabilityBoolOption(
                 s => s.EnableRefParameters,
                 "Ref parameters of methods and delegates",
                 enabledOption,
                 indent: 2);
 
-            _enableOutParametersAndResultOption = AddNullabilityBoolOption(
+            AddNullabilityBoolOption(
                 s => s.EnableOutParametersAndResult,
                 "Return values and out parameters of methods and delegates",
                 enabledOption,
                 indent: 2);
 
-            _enableFieldsOption = AddNullabilityBoolOption(
+            AddNullabilityBoolOption(
                 s => s.EnableFields,
                 "Fields",
                 enabledOption,
                 indent: 2);
 
-            _fieldsRestrictToReadonlyOption = AddNullabilityBoolOption(
+            AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReadonly,
                 new RichText("Restrict to ") +
                 new RichText("readonly", Italic) +
@@ -87,7 +87,7 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 enabledOption,
                 indent: 3);
 
-            _fieldsRestrictToReferenceTypes = AddNullabilityBoolOption(
+            AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReferenceTypes,
                 new RichText("Restrict to fields contained in reference types (because ") +
                 new RichText("struct", Italic) +
@@ -127,38 +127,33 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 "(to adapt the color, look for \"Implicit Nullability\" in Visual Studio's \"Fonts and Colors\" options)");
         }
 
-        private BoolOptionViewModel AddNullabilityBoolOption(
+        private void AddNullabilityBoolOption(
             Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
             string text,
             BoolOptionViewModel enabledOption,
             int indent)
         {
-            return AddNullabilityBoolOption(settingsExpression, new RichText(text), enabledOption, indent);
+            AddNullabilityBoolOption(settingsExpression, new RichText(text), enabledOption, indent);
         }
 
-        private BoolOptionViewModel AddNullabilityBoolOption(
+        private void AddNullabilityBoolOption(
             Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
             RichText richText,
             BoolOptionViewModel enabledOption,
             int indent)
         {
-            var result = AddBoolOption(settingsExpression, richText);
-            enabledOption.CheckedProperty.FlowInto(myLifetime, result.GetIsEnabledProperty());
-            SetIndent(result, indent);
-
-            return result;
+            var boolOption = AddBoolOption(settingsExpression, richText);
+            enabledOption.CheckedProperty.FlowInto(myLifetime, boolOption.GetIsEnabledProperty());
+            SetIndent(boolOption, indent);
         }
 
         private void CopyAssemblyAttributeCode()
         {
+            var currentImplicitNullabilitySettings =
+                OptionsSettingsSmartContext.GetKey<ImplicitNullabilitySettings>(_settingsOptimization);
+
             var assemblyMetadataCode = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(
-                new ImplicitNullabilityConfiguration(
-                    _enableInputParametersOption.CheckedProperty.Value,
-                    _enableRefParametersOption.CheckedProperty.Value,
-                    _enableOutParametersAndResultOption.CheckedProperty.Value,
-                    _enableFieldsOption.CheckedProperty.Value,
-                    _fieldsRestrictToReadonlyOption.CheckedProperty.Value,
-                    _fieldsRestrictToReferenceTypes.CheckedProperty.Value));
+                ImplicitNullabilityConfiguration.CreateFromSettings(currentImplicitNullabilitySettings));
 
             _clipboard.SetText(assemblyMetadataCode);
             MessageBox.ShowInfo("The following code has been copied to your clipboard:\n\n\n" + assemblyMetadataCode);
