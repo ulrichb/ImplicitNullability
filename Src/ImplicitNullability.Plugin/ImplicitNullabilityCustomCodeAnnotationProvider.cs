@@ -63,6 +63,7 @@ namespace ImplicitNullability.Plugin
         }
 
 #if DEBUG
+
         private static void LogResult(
             string messagePrefix,
             [CanBeNull] IDeclaredElement element,
@@ -73,6 +74,7 @@ namespace ImplicitNullability.Plugin
             var message = messagePrefix + DebugUtility.FormatIncludingContext(element) + " => " + resultText;
             Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
         }
+
 #endif
     }
 }
