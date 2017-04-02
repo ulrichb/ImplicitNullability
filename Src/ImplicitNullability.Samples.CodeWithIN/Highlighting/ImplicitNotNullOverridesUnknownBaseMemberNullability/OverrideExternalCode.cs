@@ -39,18 +39,10 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             }
 
             [CanBeNull]
-            public override string Function()
-            {
-                var baseValue = base.Function();
-                return baseValue;
-            }
+            public override string Function() => base.Function();
 
             [ItemCanBeNull]
-            public override async Task<string> AsyncFunction()
-            {
-                var baseValue = await base.AsyncFunction();
-                return baseValue;
-            }
+            public override async Task<string> AsyncFunction() => await base.AsyncFunction();
         }
 
         public class DerivedClassInOwnCodeWithExplicitNotNull : External.Class
@@ -62,18 +54,10 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             }
 
             [NotNull]
-            public override string Function()
-            {
-                var baseValue = base.Function();
-                return baseValue;
-            }
+            public override string Function() => base.Function();
 
             [ItemNotNull]
-            public override async Task<string> AsyncFunction()
-            {
-                var baseValue = await base.AsyncFunction();
-                return baseValue;
-            }
+            public override async Task<string> AsyncFunction() => await base.AsyncFunction();
         }
 
         public class OverrideWithDefaultValue : External.IInterfaceWithMethod<string>
@@ -89,10 +73,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
             }
 
-            public DateTime Function()
-            {
-                return default(DateTime);
-            }
+            public DateTime Function() => default(DateTime);
         }
 
         // In contrast:
@@ -102,15 +83,9 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
             }
 
-            public string Function()
-            {
-                return "";
-            }
+            public string Function() => "";
 
-            public async Task<string> AsyncFunction()
-            {
-                return await Async.NotNullResult("");
-            }
+            public async Task<string> AsyncFunction() => await Async.NotNullResult("");
         }
     }
 }
