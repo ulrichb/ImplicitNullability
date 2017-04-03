@@ -19,14 +19,14 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             Test(changeSettings: x => x.EnableImplicitNullability(enableInputParameters: true),
                 definedExpectedWarningSymbols: new[] { "MIn" },
                 //
-                assert: issueFilePaths =>
+                assert: issueFiles =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSample.cs"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsInputSample.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
 
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("AspxSample.aspx"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("RazorSample.cshtml"));
                 });
         }
 
@@ -36,10 +36,10 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             Test(changeSettings: x => x.EnableImplicitNullability(enableRefParameters: true),
                 definedExpectedWarningSymbols: new[] { "MRef" },
                 //
-                assert: issueFilePaths =>
+                assert: issueFiles =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsRefParameterSample.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsRefParameterSample.cs"));
                 });
         }
 
@@ -49,14 +49,14 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             Test(changeSettings: x => x.EnableImplicitNullability(enableOutParametersAndResult: true),
                 definedExpectedWarningSymbols: new[] { "MOut" },
                 //
-                assert: issueFilePaths =>
+                assert: issueFiles =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSample.cs"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsOutputSample.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
 
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("AspxSample.aspx"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("RazorSample.cshtml"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("AspxSample.aspx"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("RazorSample.cshtml"));
                 });
         }
 
@@ -66,11 +66,11 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             Test(changeSettings: x => x.EnableImplicitNullability(enableFields: true),
                 definedExpectedWarningSymbols: new[] { "Flds" },
                 //
-                assert: issueFilePaths =>
+                assert: issueFiles =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("FieldsSample.cs"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("FieldsSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("FieldsSample.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("FieldsSampleTests.cs"));
                 });
         }
 
@@ -104,13 +104,13 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 // as configured in ImplicitNullabilityAssemblyMetadata.cs:
                 definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut", "Flds", "RtRo", "RtRT" },
                 //
-                assert: issueFilePaths =>
+                assert: issueFiles =>
                 {
                     // Fixation of selected files
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("DelegatesSampleTests.cs"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
-                    Assert.That(issueFilePaths, Has.Some.EqualTo("FieldsSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("DelegatesSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsInputSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("MethodsOutputSampleTests.cs"));
+                    Assert.That(issueFiles, Has.Some.EqualTo("FieldsSampleTests.cs"));
                 });
         }
 
