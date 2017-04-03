@@ -43,8 +43,8 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                  {
                      ExpectedWarningId = expectedWarningId,
                      File = sourceFile,
+                     Coords = documentRange.Document.GetCoordsByOffset(documentRange.TextRange.StartOffset),
                      Range = documentRange.TextRange,
-                     Coords = documentRange.Document.GetCoordsByOffset(documentRange.TextRange.StartOffset)
                  }).ToList();
 
             var issues = RunInspections(solution, sourceFilesToAnalyze);
@@ -56,7 +56,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 .ToHashSet();
             var actualIssues = issues.Where(x => highlightingConfigurableSeverityIds.Contains(x.IssueType.ConfigurableSeverityId)).ToList();
 
-            var actualIssuesThatMatchExpected = actualIssues.Select(
+            var actualIssuesAndMatches = actualIssues.Select(
                 issue => new
                 {
                     // Info for the assertion message:
@@ -64,8 +64,8 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                     {
                         issue.Message,
                         File = issue.GetSourceFile(),
+                        Coords = issue.File.File.Document.GetCoordsByOffset(issue.Range.NotNull().StartOffset),
                         issue.Range,
-                        Coords = issue.File.File.Document.GetCoordsByOffset(issue.Range.NotNull().StartOffset)
                     },
                     Match = expectedWarningComments.SingleOrDefault(
                         x => x.ExpectedWarningId == issue.IssueType.ConfigurableSeverityId &&
@@ -75,10 +75,15 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
             Assert.That(issues.Where(x => x.GetSeverity() >= Severity.ERROR), Is.Empty, "no errors should happen during analysis");
 
-            Assert.That(actualIssuesThatMatchExpected.Where(x => x.Match == null), Is.Empty, "there should be no unexpected issues");
+            var unexpectedIssues = actualIssuesAndMatches.Where(x => x.Match == null).ToList();
+            var unmatchedExpectedWarningComments = expectedWarningComments.Except(actualIssuesAndMatches.Select(x => x.Match)).ToList();
 
-            var unmatchedExpectedWarningComments = expectedWarningComments.Except(actualIssuesThatMatchExpected.Select(x => x.Match));
-            Assert.That(unmatchedExpectedWarningComments, Is.Empty, "there should not exist any unmatched expected warnings");
+            var newLine = Environment.NewLine;
+            Assert.That(
+                unexpectedIssues.Count + unmatchedExpectedWarningComments.Count,
+                Is.EqualTo(0),
+                "# Unexpected issues #" + newLine + string.Join(newLine, unexpectedIssues) + newLine + newLine +
+                "# Unmatched expected warnings #" + newLine + string.Join(newLine, unmatchedExpectedWarningComments) + newLine);
 
             Console.WriteLine("totalIssuesCount: " + actualIssues.Count);
             return actualIssues;
