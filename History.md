@@ -1,4 +1,4 @@
-### vNext ###
+### 3.6.0 ###
 - Changed "overrides unknown base member" warnings to include also non-external (solution) code with unknown nullability (=> new highlighting IDs for ImplicitNotNullOverridesUnknownBaseMemberNullability and ImplicitNotNullResultOverridesUnknownBaseMemberNullability)
 - Added support for named delegates with (async) Task<T> results
 - Added cache for configuration (attribute) parsing (performance improvement)
