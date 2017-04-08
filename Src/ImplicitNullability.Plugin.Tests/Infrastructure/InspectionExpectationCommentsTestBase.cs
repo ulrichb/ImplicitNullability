@@ -29,25 +29,30 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             IEnumerable<Type> highlightingTypesToAnalyze,
             params string[] definedExpectedWarningSymbols)
         {
-            var sourceFilesToAnalyze = projectFilesToAnalyze.Select(x => x.ToSourceFiles().Single()).ToList();
-            Assert.That(sourceFilesToAnalyze, Is.Not.Empty);
+            var filesToAnalyze =
+                (from projectFile in projectFilesToAnalyze
+                 let sourceFile = projectFile.ToSourceFiles().Single()
+                 let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
+                 where !IsExcludedByComment(rootNode)
+                 select (SourceFile: sourceFile, RootNode: rootNode)).ToList();
+
+            Assert.That(filesToAnalyze, Is.Not.Empty);
 
             var expectedWarningComments =
-                (from sourceFile in sourceFilesToAnalyze
-                 let rootNode = sourceFile.GetPsiFiles<CSharpLanguage>().Single()
-                 from commentNode in rootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
+                (from fileToAnalyze in filesToAnalyze
+                 from commentNode in fileToAnalyze.RootNode.ThisAndDescendants().OfType<IComment>().ToEnumerable()
                  let expectedWarningId = ExtractExpectedWarningId(commentNode.CommentText, definedExpectedWarningSymbols)
                  where expectedWarningId != null
                  let documentRange = FindPreviousNonWhiteSpaceNode(commentNode).NotNull().GetDocumentRange()
                  select new
                  {
                      ExpectedWarningId = expectedWarningId,
-                     File = sourceFile,
+                     File = fileToAnalyze.SourceFile,
                      Coords = documentRange.Document.GetCoordsByOffset(documentRange.TextRange.StartOffset),
                      Range = documentRange.TextRange,
                  }).ToList();
 
-            var issues = RunInspections(solution, sourceFilesToAnalyze);
+            var issues = RunInspections(solution, filesToAnalyze.Select(x => x.SourceFile));
 
             // Assert
 
@@ -89,28 +94,55 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             return actualIssues;
         }
 
-        [CanBeNull]
-        private string ExtractExpectedWarningId(string commentText, string[] definedExpectedWarningSymbols)
+        private static bool IsExcludedByComment(IFile fileNode)
         {
-            var match = Regex.Match(commentText, @"^\s*Expect:(?<Id>.+?)(\[(?<Condition>[^\]]+)*\])?$");
+            var firstComment = fileNode.FirstChild as IComment;
+
+            if (firstComment != null)
+            {
+                var match = Regex.Match(firstComment.CommentText, @"^\s*Exclude" + ConditionRegex + @"\s*$");
+
+                return EvaluateConditionExpression(match, additionalSymbols: new string[0], conditionIsPresent: out var _);
+            }
+
+            return false;
+        }
+
+        [CanBeNull]
+        private static string ExtractExpectedWarningId(string commentText, string[] definedExpectedWarningSymbols)
+        {
+            var match = Regex.Match(commentText, @"^\s*Expect:(?<Id>.+?)(" + ConditionRegex + @")?$");
 
             if (!match.Success)
                 return null;
 
-            if (match.Groups["Condition"].Success)
+            var conditionResult = EvaluateConditionExpression(match, definedExpectedWarningSymbols, out var conditionIsPresent);
+
+            if (conditionIsPresent && conditionResult == false)
+                return null;
+
+            return match.Groups["Id"].Value;
+        }
+
+        // language=REGEXP
+        private const string ConditionRegex = @"\[(?<Condition>[^\]]+)*\]";
+
+        private static bool EvaluateConditionExpression(Match match, string[] additionalSymbols, out bool conditionIsPresent)
+        {
+            conditionIsPresent = match.Groups["Condition"].Success;
+            if (conditionIsPresent)
             {
                 var expression = new Expression(match.Groups["Condition"].Value);
 
                 var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
                 expression.Parameters["RS"] = int.Parse(Regex.Match(assemblyName, @"\d+$").Value);
 
-                expression.EvaluateParameter += (name, args) => { args.Result = definedExpectedWarningSymbols.Contains(name); };
+                expression.EvaluateParameter += (name, args) => { args.Result = additionalSymbols.Contains(name); };
 
-                if (false.Equals(expression.Evaluate()))
-                    return null;
+                return (bool) expression.Evaluate();
             }
 
-            return match.Groups["Id"].Value;
+            return false;
         }
 
         [CanBeNull]
@@ -119,7 +151,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             return currentNode.FindPreviousNode(x => x is IWhitespaceNode ? TreeNodeActionType.CONTINUE : TreeNodeActionType.ACCEPT);
         }
 
-        private static IReadOnlyCollection<IIssue> RunInspections(ISolution solution, ICollection<IPsiSourceFile> sourceFiles)
+        private static IReadOnlyCollection<IIssue> RunInspections(ISolution solution, IEnumerable<IPsiSourceFile> sourceFiles)
         {
             var issues = new List<IIssue>();
 
