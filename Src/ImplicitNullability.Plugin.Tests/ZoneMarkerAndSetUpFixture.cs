@@ -1,5 +1,4 @@
-﻿using ImplicitNullability.Plugin.Tests;
-using JetBrains.Application.BuildScript.Application.Zones;
+﻿using JetBrains.Application.BuildScript.Application.Zones;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework;
 using JetBrains.TestFramework.Application.Zones;
@@ -18,10 +17,9 @@ namespace ImplicitNullability.Plugin.Tests
     public class ZoneMarker : IRequire<IImplicitNullabilityTestEnvironmentZone>
     {
     }
-}
 
-// ReSharper disable once CheckNamespace
-[SetUpFixture]
-public class TestEnvironmentSetUpFixture : ExtensionTestEnvironmentAssembly<IImplicitNullabilityTestEnvironmentZone>
-{
+    [SetUpFixture]
+    public class TestEnvironmentSetUpFixture : ExtensionTestEnvironmentAssembly<IImplicitNullabilityTestEnvironmentZone>
+    {
+    }
 }
