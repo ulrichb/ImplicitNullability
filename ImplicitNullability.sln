@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.R20163", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.R20163.csproj", "{1B815C86-2DD2-4B1F-A50A-3BFB7132D99E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.VsFormatDefinitions", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.VsFormatDefinitions", "Src\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.R20171", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R20171.csproj", "{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}"
 EndProject

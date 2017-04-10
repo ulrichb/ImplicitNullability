@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.csproj" />
+    <ProjectReference Include="..\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj" />
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
@@ -48,7 +48,7 @@
     <ReSharperInstallationsDirectoryInstancePart>ExpRS$(ReSharperVersionIdentifier)</ReSharperInstallationsDirectoryInstancePart>
   </PropertyGroup>
   <ItemGroup>
-    <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.Plugin.VsFormatDefinitions.*" />
+    <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.VsFormatDefinitions.*" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\Shared\Build\CopyToReSharperInstallationsDirectory.targets" />
 </Project>

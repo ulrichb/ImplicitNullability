@@ -1,4 +1,4 @@
-using ImplicitNullability.Plugin.VsFormatDefinitions;
+using ImplicitNullability.VsFormatDefinitions;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
