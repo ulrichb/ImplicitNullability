@@ -110,11 +110,11 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         }
 
         [Test]
-        [TestCase("AttributeWithFieldsWithNullValue", ImplicitNullabilityFieldOptions.None)]
-        [TestCase("AttributeWithFieldsWithNoOption", ImplicitNullabilityFieldOptions.None)]
-        [TestCase("AttributeWithFieldsWithInvalidValue", ImplicitNullabilityFieldOptions.None)]
-        [TestCase("AttributeWithFieldsWithAllOptions", ImplicitNullabilityFieldOptions.RestrictToReadonly |
-                                                       ImplicitNullabilityFieldOptions.RestrictToReferenceTypes)]
+        [TestCase("FieldOptions_AttributeWithNullValue", ImplicitNullabilityFieldOptions.None)]
+        [TestCase("FieldOptions_AttributeWithNoOption", ImplicitNullabilityFieldOptions.None)]
+        [TestCase("FieldOptions_AttributeWithInvalidValue", ImplicitNullabilityFieldOptions.None)]
+        [TestCase("FieldOptions_AttributeWithAllOptions", ImplicitNullabilityFieldOptions.RestrictToReadonly |
+                                                          ImplicitNullabilityFieldOptions.RestrictToReferenceTypes)]
         public void TestAssemblyMetadataAttributeFieldsConfiguration(string testInput, ImplicitNullabilityFieldOptions expected)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
