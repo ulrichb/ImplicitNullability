@@ -48,7 +48,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         // 4. No attribute configuration => take the individual options in the settings:
         [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "NoConfigurationAttribute", /*expected:*/ AppliesToAll)]
         [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Dis, "NoConfigurationAttribute", /*expected:*/ AppliesToNone)]
-        public void TestInheritanceRules(
+        public void TestInheritance(
             bool enabledInSolution,
             bool enabledInProject,
             bool enableOptionInProject,
@@ -61,6 +61,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             void ChangeProjectSettings(IContextBoundSettingsStore settingsStore)
             {
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInProject);
+
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableInputParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableRefParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableOutParametersAndResult, enableOptionInProject);
@@ -74,6 +75,27 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             //
 
             Assert.That(configuration.AppliesTo, Is.EqualTo(expectedAppliesTo));
+        }
+
+        [Test]
+        public void TestInheritance_AppliesToAttributeOverridesAlsoOtherOptions()
+        {
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
+            {
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, true);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, true);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.FieldsRestrictToReadonly, true);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.FieldsRestrictToReferenceTypes, true);
+            }
+
+            //
+
+            var configuration = GetImplicitNullabilityConfigurationFor("AttributeWithAllOptions", ChangeSolutionSettings);
+
+            //
+
+            Assert.That(configuration.AppliesTo, Is.EqualTo(AppliesToAll));
+            Assert.That(configuration.FieldOptions, Is.EqualTo(ImplicitNullabilityFieldOptions.None));
         }
 
         [Test]
