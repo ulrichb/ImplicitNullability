@@ -62,7 +62,7 @@
     </Compile>
     <Compile Include="*.cs" />
     <Compile Include="Properties\NullGuardConfiguration.cs" />
-    <Compile Include="Properties\ImplicitNullabilityAssemblyMetadata.cs" />
+    <Compile Include="Properties\ImplicitNullabilityConfigurationAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
