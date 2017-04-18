@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -65,8 +65,8 @@ Global
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADCE94D-EF87-42F6-A68B-69DA6FD90DE6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E84293D7-D774-4BDD-8250-238FB12D51A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
