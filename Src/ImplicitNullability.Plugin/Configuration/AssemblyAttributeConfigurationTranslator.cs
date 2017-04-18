@@ -61,7 +61,7 @@ namespace ImplicitNullability.Plugin.Configuration
             return Enum.GetValues(enumType).Cast<int>().ToDictionary(x => enumType.GetEnumName(x), x => x);
         }
 
-        private static int ParseFlags([CanBeNull] string text, IDictionary<string, int> toDict)
+        private static int ParseFlags([CanBeNull] string text, IDictionary<string, int> namesToValueDictionary)
         {
             // Manually implement the parsing because 'Enum.TryParse()' returns 0 if the input text contains invalid names.
 
@@ -70,7 +70,7 @@ namespace ImplicitNullability.Plugin.Configuration
             if (text != null)
             {
                 foreach (var part in text.Split(','))
-                    result |= toDict.TryGetValue(part.Trim());
+                    result |= namesToValueDictionary.TryGetValue(part.Trim());
             }
 
             return result;
@@ -94,42 +94,34 @@ namespace ImplicitNullability.Plugin.Configuration
             {
                 var assemblyMetadataAttributes = attributes.GetAttributeInstances(AssemblyMetadataAttributeTypeName, false);
 
-                string appliesTo = null;
-                string fields = null;
+                var attributeValuesDictionary = new Dictionary<string, string>();
 
                 foreach (var attributeInstance in assemblyMetadataAttributes)
                 {
                     var key = attributeInstance.PositionParameter(0).ConstantValue.Value as string;
-                    var value = attributeInstance.PositionParameter(1).ConstantValue.Value as string;
 
-                    switch (key)
-                    {
-                        case AppliesToAttributeKey:
-                            appliesTo = value;
-                            break;
-
-                        case FieldsAttributeKey:
-                            fields = value;
-                            break;
-                    }
+                    if (key != null)
+                        attributeValuesDictionary[key] = attributeInstance.PositionParameter(1).ConstantValue.Value as string;
                 }
 
-                return new AssemblyMetadataAttributeValues(appliesTo, fields);
+                return new AssemblyMetadataAttributeValues(
+                    attributeValuesDictionary.TryGetValue(AppliesToAttributeKey),
+                    attributeValuesDictionary.TryGetValue(FieldsAttributeKey));
             }
 
             public string GenerateAttributeCode()
             {
                 var attributeType = AssemblyMetadataAttributeTypeName.FullName;
 
-                var values = new Dictionary<string, string>
+                var attributeValuesDictionary = new Dictionary<string, string>
                 {
                     { AppliesToAttributeKey, AppliesTo },
-                    { FieldsAttributeKey, Fields }
+                    { FieldsAttributeKey, Fields },
                 };
 
                 return string.Join(
                     Environment.NewLine,
-                    values.Where(x => x.Value != null).Select(x => $"[assembly: {attributeType}(\"{x.Key}\", \"{x.Value}\")]"));
+                    attributeValuesDictionary.Where(x => x.Value != null).Select(x => $"[assembly: {attributeType}(\"{x.Key}\", \"{x.Value}\")]"));
             }
         }
     }
