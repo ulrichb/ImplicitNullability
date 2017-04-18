@@ -10,4 +10,18 @@
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8180D39E8F16764B90221B1534307E85/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8180D39E8F16764B90221B1534307E85/RelativePriority/@EntryValue">1</s:Double>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=ConvertClosureToMethodGroup/@EntryIndexedValue">DO_NOT_SHOW</s:String>
+	<s:Boolean x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/DefaultAction/@EntryValue">run</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/Exe/Arguments/@EntryValue">/c "powershell Build\Build.ps1 -Configuration Release &amp; PAUSE"</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/Exe/Executable/@EntryValue">C:\Windows\System32\cmd.exe</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/Name/@EntryValue">Build\Build.ps1 -Configuration Release</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/ProjectGuid/@EntryValue">4DE9DC6A87EFF642A68B69DA6FD90DE6</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=2ABAA791BC405F448A48723281A097EE/Type/@EntryValue">exe</s:String>
+	<s:Boolean x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/DefaultAction/@EntryValue">run</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/Exe/Arguments/@EntryValue">/c "powershell Build\Build.ps1 &amp; PAUSE"</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/Exe/Executable/@EntryValue">C:\Windows\System32\cmd.exe</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/Name/@EntryValue">Build\Build.ps1</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/ProjectGuid/@EntryValue">4DE9DC6A87EFF642A68B69DA6FD90DE6</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=E308DAE5F0AE484693B72CBB2A3445AB/Type/@EntryValue">exe</s:String>
 </wpf:ResourceDictionary>
