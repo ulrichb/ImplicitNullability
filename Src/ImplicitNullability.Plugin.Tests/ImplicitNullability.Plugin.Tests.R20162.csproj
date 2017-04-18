@@ -30,12 +30,10 @@
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="..\ImplicitNullability.Plugin\Properties\ImplicitNullabilityConfiguration.cs" Link="Properties\ImplicitNullabilityConfiguration.cs" />
-    <Compile Include="**\*.cs" Exclude="obj\**;Packages\**;test\data\**" />
+    <Compile Include="**\*.cs" Exclude="obj\**;test\data\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\data\nuget.config" />
-    <None Include="test\data\**\*.cs" />
-    <None Include="test\data\**\*.gold" />
+    <None Include="test\data\**" />
     <None Include="ExternalAnnotations\.NETFramework\System.Web\4.0.0.0.Nullness.Gen.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
