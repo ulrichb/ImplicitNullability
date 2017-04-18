@@ -9,7 +9,7 @@ namespace ImplicitNullability.Plugin.Configuration
     {
         public static readonly ImplicitNullabilityConfiguration AllDisabled =
             new ImplicitNullabilityConfiguration(
-                ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.None, GeneratedCodeOptions.Include);
+                ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.NoOption, GeneratedCodeOptions.Include);
 
         public static ImplicitNullabilityConfiguration CreateFromSettings(ImplicitNullabilitySettings implicitNullabilitySettings)
         {

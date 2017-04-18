@@ -22,7 +22,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
-            Assert.That(result, Is.EqualTo(ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "")));
+            Assert.That(result, Is.EqualTo(ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "None")));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             Assert.That(result, Is.EqualTo(
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters") + NewLine +
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")),
-                "'ImplicitNullability.Fields'-attribute must not be rendered");
+                "'ImplicitNullability.Fields'-attribute should not be rendered");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         {
             var configuration = new ImplicitNullabilityConfiguration(
                 ImplicitNullabilityAppliesTo.InputParameters | ImplicitNullabilityAppliesTo.Fields,
-                ImplicitNullabilityFieldOptions.None,
+                ImplicitNullabilityFieldOptions.NoOption,
                 GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
@@ -73,7 +73,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             Assert.That(result, Is.EqualTo(
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters, Fields") + NewLine +
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")),
-                "'ImplicitNullability.Fields'-attribute must not be rendered");
+                "'ImplicitNullability.Fields'-attribute should not be rendered");
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         {
             var configuration = new ImplicitNullabilityConfiguration(
                 ImplicitNullabilityAppliesTo.InputParameters,
-                ImplicitNullabilityFieldOptions.None,
+                ImplicitNullabilityFieldOptions.NoOption,
                 GeneratedCodeOptions.Include);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);

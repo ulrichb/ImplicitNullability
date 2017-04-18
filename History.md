@@ -1,4 +1,5 @@
 ### vNext ###
+- Changed default of "Restrict to readonly fields" setting to be "on"
 - Added exclusion for generated code, configurable by a new setting (on by default)
 - Added exclusion of "XAML fields" (fixes issue #11)
 

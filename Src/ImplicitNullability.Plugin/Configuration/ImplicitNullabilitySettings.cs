@@ -21,7 +21,7 @@ namespace ImplicitNullability.Plugin.Configuration
         [SettingsEntry(true, "Enable fields")]
         public readonly bool EnableFields;
 
-        [SettingsEntry(false, "Fields: Restrict to readonly")]
+        [SettingsEntry(true, "Fields: Restrict to readonly")]
         public readonly bool FieldsRestrictToReadonly;
 
         [SettingsEntry(false, "Fields: Restrict to reference types")]

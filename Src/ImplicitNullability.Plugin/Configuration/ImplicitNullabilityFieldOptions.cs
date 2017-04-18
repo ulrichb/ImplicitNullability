@@ -8,7 +8,7 @@ namespace ImplicitNullability.Plugin.Configuration
     [Flags]
     public enum ImplicitNullabilityFieldOptions
     {
-        None = 0,
+        NoOption = 0,
         RestrictToReadonly = 1,
         RestrictToReferenceTypes = 2,
     }

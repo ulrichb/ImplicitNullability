@@ -39,13 +39,13 @@ namespace ImplicitNullability.Plugin.Configuration
             AssemblyMetadataAttributeValues GenerateAttributeValues()
             {
                 if (configuration.AppliesTo == ImplicitNullabilityAppliesTo.None)
-                    return new AssemblyMetadataAttributeValues(appliesTo: "", fields: null, generatedCode: null);
+                    return new AssemblyMetadataAttributeValues(configuration.AppliesTo.ToString(), fields: null, generatedCode: null);
 
                 var appliesToText = configuration.AppliesTo.ToString();
 
                 var fieldsText =
                     configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields) &&
-                    configuration.FieldOptions != ImplicitNullabilityFieldOptions.None
+                    configuration.FieldOptions != ImplicitNullabilityFieldOptions.NoOption
                         ? configuration.FieldOptions.ToString()
                         : null;
 
