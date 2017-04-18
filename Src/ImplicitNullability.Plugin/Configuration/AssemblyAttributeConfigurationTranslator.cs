@@ -35,20 +35,25 @@ namespace ImplicitNullability.Plugin.Configuration
 
         public static string GenerateAttributeCode(ImplicitNullabilityConfiguration configuration)
         {
-            var appliesToText = configuration.AppliesTo == ImplicitNullabilityAppliesTo.None ? "" : configuration.AppliesTo.ToString();
-
-            string fieldsText = null;
-
-            if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields))
+            AssemblyMetadataAttributeValues GenerateAttributeValues()
             {
-                if (configuration.FieldOptions != ImplicitNullabilityFieldOptions.None)
-                    fieldsText = configuration.FieldOptions.ToString();
+                if (configuration.AppliesTo == ImplicitNullabilityAppliesTo.None)
+                    return new AssemblyMetadataAttributeValues(appliesTo: "", fields: null, excludeGeneratedCode: null);
+
+                var appliesToText = configuration.AppliesTo.ToString();
+
+                var fieldsText =
+                    configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields) &&
+                    configuration.FieldOptions != ImplicitNullabilityFieldOptions.None
+                        ? configuration.FieldOptions.ToString()
+                        : null;
+
+                var excludeGeneratedCodeText = configuration.ExcludeGeneratedCode.ToString();
+
+                return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, excludeGeneratedCodeText);
             }
 
-            var excludeGeneratedCodeText =
-                configuration.AppliesTo == ImplicitNullabilityAppliesTo.None ? null : configuration.ExcludeGeneratedCode.ToString();
-
-            return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, excludeGeneratedCodeText).GenerateAttributeCode();
+            return GenerateAttributeValues().GenerateAttributeCode();
         }
 
         private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(AssemblyMetadataAttributeValues attributeValues)
