@@ -34,7 +34,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                 ImplicitNullabilityAppliesTo.OutParametersAndResult |
                 ImplicitNullabilityAppliesTo.Fields,
                 AllFieldOptions,
-                excludeGeneratedCode: true);
+                GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
@@ -43,20 +43,20 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                     "ImplicitNullability.AppliesTo",
                     "InputParameters, RefParameters, OutParametersAndResult, Fields") + NewLine +
                 ExpectedAssemblyMetadataAttribute("ImplicitNullability.Fields", "RestrictToReadonly, RestrictToReferenceTypes") + NewLine +
-                ExpectedAssemblyMetadataAttribute("ImplicitNullability.ExcludeGeneratedCode", "True")));
+                ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")));
         }
 
         [Test]
         public void GenerateAttributeCode_WithFieldOptionsButAppliesToFieldsDisabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(
-                ImplicitNullabilityAppliesTo.InputParameters, AllFieldOptions, excludeGeneratedCode: true);
+                ImplicitNullabilityAppliesTo.InputParameters, AllFieldOptions, GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
             Assert.That(result, Is.EqualTo(
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters") + NewLine +
-                    ExpectedAssemblyMetadataAttribute("ImplicitNullability.ExcludeGeneratedCode", "True")),
+                    ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")),
                 "'ImplicitNullability.Fields'-attribute must not be rendered");
         }
 
@@ -66,29 +66,29 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             var configuration = new ImplicitNullabilityConfiguration(
                 ImplicitNullabilityAppliesTo.InputParameters | ImplicitNullabilityAppliesTo.Fields,
                 ImplicitNullabilityFieldOptions.None,
-                excludeGeneratedCode: true);
+                GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
             Assert.That(result, Is.EqualTo(
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters, Fields") + NewLine +
-                    ExpectedAssemblyMetadataAttribute("ImplicitNullability.ExcludeGeneratedCode", "True")),
+                    ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")),
                 "'ImplicitNullability.Fields'-attribute must not be rendered");
         }
 
         [Test]
-        public void GenerateAttributeCode_WithExcludeGeneratedCodeFalse()
+        public void GenerateAttributeCode_WithIncludeGeneratedCode()
         {
             var configuration = new ImplicitNullabilityConfiguration(
                 ImplicitNullabilityAppliesTo.InputParameters,
                 ImplicitNullabilityFieldOptions.None,
-                excludeGeneratedCode: false);
+                GeneratedCodeOptions.Include);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
             Assert.That(result, Is.EqualTo(
                 ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters") + NewLine +
-                ExpectedAssemblyMetadataAttribute("ImplicitNullability.ExcludeGeneratedCode", "False")));
+                ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Include")));
         }
 
         string ExpectedAssemblyMetadataAttribute(string key, string value) =>

@@ -113,8 +113,8 @@ Example:
 ```C#
 [assembly: AssemblyMetadata("ImplicitNullability.AppliesTo",
                             "InputParameters, RefParameters, OutParametersAndResult, Fields")]
-[assembly: AssemblyMetadata("ImplicitNullability.Fields", "RestrictToReadonly, RestrictToReferenceTypes")]
-[assembly: AssemblyMetadata("ImplicitNullability.ExcludeGeneratedCode", "True")]
+[assembly: AssemblyMetadata("ImplicitNullability.Fields", "RestrictToReadonly")]
+[assembly: AssemblyMetadata("ImplicitNullability.GeneratedCode", "Exclude")]
 ```
 
 :warning: After changing the settings (either by code or in the options page), [cleaning the solution cache](https://www.jetbrains.com/help/resharper/Configuring_Caches_Location.html#cleanup) is necessary to update already analyzed code.

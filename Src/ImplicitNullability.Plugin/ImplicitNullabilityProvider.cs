@@ -84,7 +84,7 @@ namespace ImplicitNullability.Plugin
 
                 var configuration = _configurationEvaluator.EvaluateFor(parameter.Module);
 
-                if (!IsGeneratedOrSynthetic(configuration, (ITypeMember) containingParametersOwner))
+                if (!IsExcludedGeneratedCode(configuration, (ITypeMember) containingParametersOwner))
                 {
                     if (parameter.IsInput() && configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.InputParameters))
                     {
@@ -115,7 +115,7 @@ namespace ImplicitNullability.Plugin
 
                 if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
                 {
-                    if (!(ContainsContractAnnotationAttribute(function) || IsGeneratedOrSynthetic(configuration, function)))
+                    if (!(ContainsContractAnnotationAttribute(function) || IsExcludedGeneratedCode(configuration, function)))
                     {
                         result = GetNullabilityForTypeOrTaskUnderlyingType(function.ReturnType, useTaskUnderlyingType);
                     }
@@ -133,7 +133,7 @@ namespace ImplicitNullability.Plugin
 
             if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.OutParametersAndResult))
             {
-                if (!IsGeneratedOrSynthetic(configuration, @delegate))
+                if (!IsExcludedGeneratedCode(configuration, @delegate))
                 {
                     result = GetNullabilityForTypeOrTaskUnderlyingType(@delegate.InvokeMethod.ReturnType, useTaskUnderlyingType);
                 }
@@ -153,7 +153,7 @@ namespace ImplicitNullability.Plugin
                 if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Fields) &&
                     IsFieldMatchingConfigurationOptions(field, configuration))
                 {
-                    if (!IsGeneratedOrSynthetic(configuration, field))
+                    if (!IsExcludedGeneratedCode(configuration, field))
                     {
                         result = GetNullabilityForType(field.Type);
                     }
@@ -163,9 +163,9 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private bool IsGeneratedOrSynthetic(ImplicitNullabilityConfiguration configuration, ITypeMember typeMember)
+        private bool IsExcludedGeneratedCode(ImplicitNullabilityConfiguration configuration, ITypeMember typeMember)
         {
-            if (configuration.ExcludeGeneratedCode)
+            if (configuration.GeneratedCode == GeneratedCodeOptions.Exclude)
                 return _generatedCodeProvider.IsGeneratedOrSynthetic(typeMember);
 
             return false;

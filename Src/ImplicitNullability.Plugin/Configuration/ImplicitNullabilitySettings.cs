@@ -27,8 +27,8 @@ namespace ImplicitNullability.Plugin.Configuration
         [SettingsEntry(false, "Fields: Restrict to reference types")]
         public readonly bool FieldsRestrictToReferenceTypes;
 
-        [SettingsEntry(true, "Exclude generated code")]
-        public readonly bool ExcludeGeneratedCode;
+        [SettingsEntry(GeneratedCodeOptions.Exclude, "Generated code option")]
+        public readonly GeneratedCodeOptions GeneratedCode;
 
         [SettingsEntry(true, "Enable type highlighting")]
         public readonly bool EnableTypeHighlighting;

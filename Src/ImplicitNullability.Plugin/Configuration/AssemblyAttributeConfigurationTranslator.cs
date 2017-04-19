@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -18,10 +19,10 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private const string AppliesToAttributeKey = "ImplicitNullability.AppliesTo";
         private const string FieldsAttributeKey = "ImplicitNullability.Fields";
-        private const string ExcludeGeneratedCodeKey = "ImplicitNullability.ExcludeGeneratedCode";
+        private const string GeneratedCodeKey = "ImplicitNullability.GeneratedCode";
 
-        private static readonly IDictionary<string, int> AppliesToNamesToValue = CreateNamesToValueDictionary<ImplicitNullabilityAppliesTo>();
-        private static readonly IDictionary<string, int> FieldOptionsNamesToValue = CreateNamesToValueDictionary<ImplicitNullabilityFieldOptions>();
+        private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, int>> EnumTypeToValueDictionary =
+            new ConcurrentDictionary<Type, IReadOnlyDictionary<string, int>>();
 
         public static ImplicitNullabilityConfiguration? ParseAttributes(IAttributesSet attributes)
         {
@@ -38,7 +39,7 @@ namespace ImplicitNullability.Plugin.Configuration
             AssemblyMetadataAttributeValues GenerateAttributeValues()
             {
                 if (configuration.AppliesTo == ImplicitNullabilityAppliesTo.None)
-                    return new AssemblyMetadataAttributeValues(appliesTo: "", fields: null, excludeGeneratedCode: null);
+                    return new AssemblyMetadataAttributeValues(appliesTo: "", fields: null, generatedCode: null);
 
                 var appliesToText = configuration.AppliesTo.ToString();
 
@@ -48,9 +49,9 @@ namespace ImplicitNullability.Plugin.Configuration
                         ? configuration.FieldOptions.ToString()
                         : null;
 
-                var excludeGeneratedCodeText = configuration.ExcludeGeneratedCode.ToString();
+                var generatedCodeText = configuration.GeneratedCode.ToString();
 
-                return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, excludeGeneratedCodeText);
+                return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, generatedCodeText);
             }
 
             return GenerateAttributeValues().GenerateAttributeCode();
@@ -58,22 +59,23 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private static ImplicitNullabilityConfiguration ParseFromAssemblyAttributeOptionsText(AssemblyMetadataAttributeValues attributeValues)
         {
-            var appliesTo = (ImplicitNullabilityAppliesTo) ParseFlags(attributeValues.AppliesTo, AppliesToNamesToValue);
-            var fieldOptions = (ImplicitNullabilityFieldOptions) ParseFlags(attributeValues.Fields, FieldOptionsNamesToValue);
+            var appliesTo = ParseFlags<ImplicitNullabilityAppliesTo>(attributeValues.AppliesTo);
+            var fieldOptions = ParseFlags<ImplicitNullabilityFieldOptions>(attributeValues.Fields);
 
-            // Fall back to `false` if `null` (versus default = `true` in the UI) for backwards compatibility with IN <= 3.6.0:
-            var excludeGeneratedCode = ParseBoolean(attributeValues.ExcludeGeneratedCode);
+            // Fall back to `Include` if null/invalid (versus default = `Exclude` in the UI) for backwards compatibility with IN <= 3.6.0:
+            var generatedCode = ParseEnum(attributeValues.GeneratedCode, defaultValue: GeneratedCodeOptions.Include);
 
-            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions, excludeGeneratedCode);
+            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions, generatedCode);
         }
 
-        private static Dictionary<string, int> CreateNamesToValueDictionary<T>()
+        private static IReadOnlyDictionary<string, int> GetValueDictionary<TEnum>() where TEnum : struct
         {
-            var enumType = typeof(T);
-            return Enum.GetValues(enumType).Cast<int>().ToDictionary(x => enumType.GetEnumName(x), x => x);
+            return EnumTypeToValueDictionary.GetOrAdd(
+                typeof(TEnum),
+                enumType => Enum.GetValues(enumType).Cast<int>().ToDictionary(x => Enum.GetName(enumType, x), x => x));
         }
 
-        private static int ParseFlags([CanBeNull] string text, IDictionary<string, int> namesToValueDictionary)
+        private static TEnum ParseFlags<TEnum>([CanBeNull] string text) where TEnum : struct
         {
             // Manually implement the parsing because 'Enum.TryParse()' returns 0 if the input text contains invalid names.
 
@@ -81,14 +83,24 @@ namespace ImplicitNullability.Plugin.Configuration
 
             if (text != null)
             {
+                var valueDictionary = GetValueDictionary<TEnum>();
                 foreach (var part in text.Split(','))
-                    result |= namesToValueDictionary.TryGetValue(part.Trim());
+                {
+                    valueDictionary.TryGetValue(part.Trim(), out int value);
+                    result |= value;
+                }
             }
 
-            return result;
+            return (TEnum) (object) result;
         }
 
-        private static bool ParseBoolean([CanBeNull] string text) => text == "True" || text == "true";
+        private static TEnum ParseEnum<TEnum>([CanBeNull] string text, TEnum defaultValue) where TEnum : struct
+        {
+            if (text == null || !GetValueDictionary<TEnum>().TryGetValue(text, out var result))
+                return defaultValue;
+
+            return (TEnum) (object) result;
+        }
 
         private struct AssemblyMetadataAttributeValues
         {
@@ -99,13 +111,13 @@ namespace ImplicitNullability.Plugin.Configuration
             public readonly string Fields;
 
             [CanBeNull]
-            public readonly string ExcludeGeneratedCode;
+            public readonly string GeneratedCode;
 
-            public AssemblyMetadataAttributeValues([CanBeNull] string appliesTo, [CanBeNull] string fields, [CanBeNull] string excludeGeneratedCode)
+            public AssemblyMetadataAttributeValues([CanBeNull] string appliesTo, [CanBeNull] string fields, [CanBeNull] string generatedCode)
             {
                 AppliesTo = appliesTo;
                 Fields = fields;
-                ExcludeGeneratedCode = excludeGeneratedCode;
+                GeneratedCode = generatedCode;
             }
 
             public static AssemblyMetadataAttributeValues Parse(IAttributesSet attributes)
@@ -125,7 +137,7 @@ namespace ImplicitNullability.Plugin.Configuration
                 return new AssemblyMetadataAttributeValues(
                     attributeValuesDictionary.TryGetValue(AppliesToAttributeKey),
                     attributeValuesDictionary.TryGetValue(FieldsAttributeKey),
-                    attributeValuesDictionary.TryGetValue(ExcludeGeneratedCodeKey));
+                    attributeValuesDictionary.TryGetValue(GeneratedCodeKey));
             }
 
             public string GenerateAttributeCode()
@@ -136,7 +148,7 @@ namespace ImplicitNullability.Plugin.Configuration
                 {
                     { AppliesToAttributeKey, AppliesTo },
                     { FieldsAttributeKey, Fields },
-                    { ExcludeGeneratedCodeKey, ExcludeGeneratedCode },
+                    { GeneratedCodeKey, GeneratedCode },
                 };
 
                 return string.Join(

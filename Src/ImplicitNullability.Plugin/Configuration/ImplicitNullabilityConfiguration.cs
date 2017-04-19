@@ -8,7 +8,8 @@ namespace ImplicitNullability.Plugin.Configuration
     public struct ImplicitNullabilityConfiguration
     {
         public static readonly ImplicitNullabilityConfiguration AllDisabled =
-            new ImplicitNullabilityConfiguration(ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.None, false);
+            new ImplicitNullabilityConfiguration(
+                ImplicitNullabilityAppliesTo.None, ImplicitNullabilityFieldOptions.None, GeneratedCodeOptions.Include);
 
         public static ImplicitNullabilityConfiguration CreateFromSettings(ImplicitNullabilitySettings implicitNullabilitySettings)
         {
@@ -21,24 +22,24 @@ namespace ImplicitNullability.Plugin.Configuration
                 (implicitNullabilitySettings.EnableFields ? ImplicitNullabilityAppliesTo.Fields : 0),
                 (implicitNullabilitySettings.FieldsRestrictToReadonly ? ImplicitNullabilityFieldOptions.RestrictToReadonly : 0) |
                 (implicitNullabilitySettings.FieldsRestrictToReferenceTypes ? ImplicitNullabilityFieldOptions.RestrictToReferenceTypes : 0),
-                implicitNullabilitySettings.ExcludeGeneratedCode);
+                implicitNullabilitySettings.GeneratedCode);
         }
 
         public ImplicitNullabilityConfiguration(
             ImplicitNullabilityAppliesTo appliesTo,
             ImplicitNullabilityFieldOptions fieldOptions,
-            bool excludeGeneratedCode)
+            GeneratedCodeOptions generatedCode)
         {
             AppliesTo = appliesTo;
             FieldOptions = fieldOptions;
-            ExcludeGeneratedCode = excludeGeneratedCode;
+            GeneratedCode = generatedCode;
         }
 
         public ImplicitNullabilityAppliesTo AppliesTo { get; }
 
         public ImplicitNullabilityFieldOptions FieldOptions { get; }
 
-        public bool ExcludeGeneratedCode { get; }
+        public GeneratedCodeOptions GeneratedCode { get; }
 
         public bool HasAppliesTo(ImplicitNullabilityAppliesTo flag) => (AppliesTo & flag) > 0;
 

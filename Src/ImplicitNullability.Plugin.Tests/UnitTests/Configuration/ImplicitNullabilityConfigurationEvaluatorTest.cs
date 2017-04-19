@@ -86,7 +86,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, true);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.FieldsRestrictToReadonly, true);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.FieldsRestrictToReferenceTypes, true);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.ExcludeGeneratedCode, true);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.GeneratedCode, GeneratedCodeOptions.Exclude);
             }
 
             //
@@ -97,7 +97,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             Assert.That(configuration.AppliesTo, Is.EqualTo(AppliesToAll));
             Assert.That(configuration.FieldOptions, Is.EqualTo(ImplicitNullabilityFieldOptions.None));
-            Assert.That(configuration.ExcludeGeneratedCode, Is.EqualTo(false));
+            Assert.That(configuration.GeneratedCode, Is.EqualTo(GeneratedCodeOptions.Include));
         }
 
         [Test]
@@ -107,6 +107,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [TestCase("AttributeWithNoOption", /*expected:*/ AppliesToNone)]
         [TestCase("AttributeWithInvalidValue", /*expected:*/ AppliesToNone)]
         [TestCase("AttributeWithValueContainingInvalidOption", /*expected:*/ AppliesToInputAndFields)]
+        [TestCase("AttributeWithValueMultipleRedundantValues", /*expected:*/ AppliesToInputAndFields)]
         [TestCase("MultipleAttributes", /*expected:*/ AppliesToAll)]
         //
         // The following non-existing / invalid attributes are overridden by the settings:
@@ -154,13 +155,12 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         }
 
         [Test]
-        [TestCase("ExcludeGeneratedCode_NoAttribute", /*expected:*/ false)]
-        [TestCase("ExcludeGeneratedCode_AttributeWithNullValue", /*expected:*/ false)]
-        [TestCase("ExcludeGeneratedCode_AttributeWithFalse", /*expected:*/ false)]
-        [TestCase("ExcludeGeneratedCode_AttributeWitInvalidValue", /*expected:*/ false)]
-        [TestCase("ExcludeGeneratedCode_AttributeWithTrue", /*expected:*/ true)]
-        [TestCase("ExcludeGeneratedCode_AttributeWithTrueLowerCaseT", /*expected:*/ true)]
-        public void TestAssemblyMetadataAttribute_ExcludeGeneratedCode(string testInput, bool expected)
+        [TestCase("GeneratedCode_NoAttribute", /*expected:*/ GeneratedCodeOptions.Include)]
+        [TestCase("GeneratedCode_AttributeWithNullValue", /*expected:*/ GeneratedCodeOptions.Include)]
+        [TestCase("GeneratedCode_AttributeWitInvalidValue", /*expected:*/ GeneratedCodeOptions.Include)]
+        [TestCase("GeneratedCode_AttributeWithInclude", /*expected:*/ GeneratedCodeOptions.Include)]
+        [TestCase("GeneratedCode_AttributeWithExclude", /*expected:*/ GeneratedCodeOptions.Exclude)]
+        public void TestAssemblyMetadataAttribute_GeneratedCode(string testInput, GeneratedCodeOptions expected)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, Ena);
@@ -168,7 +168,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
             Assert.That(configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.InputParameters));
-            Assert.That(configuration.ExcludeGeneratedCode, Is.EqualTo(expected));
+            Assert.That(configuration.GeneratedCode, Is.EqualTo(expected));
         }
 
         private ImplicitNullabilityConfiguration GetImplicitNullabilityConfigurationFor(

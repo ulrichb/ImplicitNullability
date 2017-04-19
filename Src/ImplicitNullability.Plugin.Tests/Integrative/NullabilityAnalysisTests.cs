@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Application.Settings;
 using JetBrains.ProjectModel;
@@ -101,9 +102,9 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         }
 
         [Test]
-        public void WithEnabledImplicitNullabilityAndWithoutExcludeGeneratedCode()
+        public void WithEnabledImplicitNullabilityAndIncludeGeneratedCode()
         {
-            Test(changeSettings: x => x.EnableImplicitNullabilityForAllCodeElements(excludeGeneratedCode: false),
+            Test(changeSettings: x => x.EnableImplicitNullabilityForAllCodeElements(GeneratedCodeOptions.Include),
                 definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut", "Flds", "InclGenCode" },
                 //
                 assert: issueFiles =>

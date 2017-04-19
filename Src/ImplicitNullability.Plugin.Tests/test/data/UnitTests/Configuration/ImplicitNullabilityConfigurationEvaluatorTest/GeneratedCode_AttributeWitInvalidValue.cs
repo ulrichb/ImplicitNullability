@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
 [assembly: AssemblyMetadata("ImplicitNullability.AppliesTo", "InputParameters")]
-[assembly: AssemblyMetadata("ImplicitNullability.ExcludeGeneratedCode", "True")]
+[assembly: AssemblyMetadata("ImplicitNullability.GeneratedCode", "InCLuDe")] // wrong casing => invalid

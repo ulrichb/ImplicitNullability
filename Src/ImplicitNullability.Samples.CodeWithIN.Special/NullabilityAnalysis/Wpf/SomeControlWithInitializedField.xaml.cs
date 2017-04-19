@@ -8,7 +8,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Special.NullabilityAnalysis.Wpf
 
         public Button SomeUserCodeControl;
 
-        // Here would be a /*Expect:NotNullMemberIsNotInitialized[InclGenCode]*/ comment (for the tests with disabled ExcludeGeneratedCode
+        // Here would be a /*Expect:NotNullMemberIsNotInitialized[InclGenCode]*/ comment (for the tests with disabled GeneratedCode = Include
         // setting) if the R# SDK tests would include the Custom Tool-generated .g.i.cs file in the obj-directory. As this doesn't happen
         // (although the file is present in the project system in VS), the expectation comment is not necessary.
 

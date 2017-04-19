@@ -79,28 +79,28 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 
             AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReadonly,
-                new RichText("Restrict to ") +
-                new RichText("readonly", Italic) +
-                new RichText(" fields (because ") +
-                new RichText("readonly", Italic) +
+                new RichText("Restrict to ") + new RichText("readonly", Italic) +
+                new RichText(" fields (because ") + new RichText("readonly", Italic) +
                 new RichText(" fields can be guarded by invariants / constructor checks)"),
                 enabledOption,
                 indent: 3);
 
             AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReferenceTypes,
-                new RichText("Restrict to fields contained in reference types (because ") +
-                new RichText("struct", Italic) +
+                new RichText("Restrict to fields contained in reference types (because ") + new RichText("struct", Italic) +
                 new RichText("s cannot be guarded by invariants due to their implicit default constructor)"),
                 enabledOption,
                 indent: 3);
 
             AddText("");
-            AddNullabilityBoolOption(s => s.ExcludeGeneratedCode,
-                new RichText("Exclude generated code (decorated with ") +
-                new RichText("[GeneratedCode]", Italic) +
+            AddNullabilityBoolOption(
+                s => s.GeneratedCode,
+                GeneratedCodeOptions.Exclude,
+                GeneratedCodeOptions.Include,
+                new RichText("Exclude generated code (decorated with ") + new RichText("[GeneratedCode]", Italic) +
                 new RichText(" attribute or configured on the \"Code Inspection | Generated Code\" options page)"),
-                enabledOption, indent: 2);
+                enabledOption,
+                indent: 2);
 
             var assemblyAttributeInfoText1 =
                 "\n" +
@@ -134,22 +134,31 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 "(to adapt the color, look for \"Implicit Nullability\" in Visual Studio's \"Fonts and Colors\" options)");
         }
 
-        private void AddNullabilityBoolOption(
-            Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
-            string text,
-            BoolOptionViewModel enabledOption,
-            int indent)
-        {
-            AddNullabilityBoolOption(settingsExpression, new RichText(text), enabledOption, indent);
-        }
 
         private void AddNullabilityBoolOption(
-            Expression<Func<ImplicitNullabilitySettings, bool>> settingsExpression,
+            Expression<Func<ImplicitNullabilitySettings, bool>> settingExpression,
             RichText richText,
             BoolOptionViewModel enabledOption,
             int indent)
         {
-            var boolOption = AddBoolOption(settingsExpression, richText);
+            var boolOption = AddBoolOption(settingExpression, richText);
+            SetUpDependentOption(boolOption, enabledOption, indent);
+        }
+
+        private void AddNullabilityBoolOption<TEntryMemberType>(
+            Expression<Func<ImplicitNullabilitySettings, TEntryMemberType>> settingExpression,
+            TEntryMemberType trueValue,
+            TEntryMemberType falseValue,
+            RichText richText,
+            BoolOptionViewModel enabledOption,
+            int indent)
+        {
+            var boolOption = AddBoolOption(settingExpression, trueValue, falseValue, richText);
+            SetUpDependentOption(boolOption, enabledOption, indent);
+        }
+
+        private void SetUpDependentOption(IOptionEntity boolOption, BoolOptionViewModel enabledOption, int indent)
+        {
             enabledOption.CheckedProperty.FlowInto(myLifetime, boolOption.GetIsEnabledProperty());
             SetIndent(boolOption, indent);
         }

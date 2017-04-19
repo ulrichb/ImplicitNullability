@@ -14,7 +14,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             bool enableFields = false,
             bool fieldsRestrictToReadonly = false,
             bool fieldsRestrictToReferenceTypes = false,
-            bool excludeGeneratedCode = true)
+            GeneratedCodeOptions generatedCode = GeneratedCodeOptions.Exclude)
         {
             // Fixate default values:
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.Enabled), Is.False);
@@ -24,7 +24,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableFields), Is.True);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly), Is.False);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes), Is.False);
-            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.ExcludeGeneratedCode), Is.True);
+            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.GeneratedCode), Is.EqualTo(GeneratedCodeOptions.Exclude));
 
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableInputParameters, enableInputParameters);
@@ -33,12 +33,12 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableFields, enableFields);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly, fieldsRestrictToReadonly);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes, fieldsRestrictToReferenceTypes);
-            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.ExcludeGeneratedCode, excludeGeneratedCode);
+            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.GeneratedCode, generatedCode);
         }
 
         public static void EnableImplicitNullabilityForAllCodeElements(
             this IContextBoundSettingsStore settingsStore,
-            bool excludeGeneratedCode = true)
+            GeneratedCodeOptions generatedCode = GeneratedCodeOptions.Exclude)
         {
             EnableImplicitNullability(
                 settingsStore,
@@ -46,7 +46,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 enableRefParameters: true,
                 enableOutParametersAndResult: true,
                 enableFields: true,
-                excludeGeneratedCode: excludeGeneratedCode);
+                generatedCode: generatedCode);
         }
     }
 }
