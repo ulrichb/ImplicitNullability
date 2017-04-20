@@ -1,4 +1,5 @@
-﻿using JetBrains.Application.BuildScript.Application.Zones;
+﻿using ImplicitNullability.Plugin.Tests;
+using JetBrains.Application.BuildScript.Application.Zones;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework;
 using JetBrains.TestFramework.Application.Zones;
@@ -17,9 +18,10 @@ namespace ImplicitNullability.Plugin.Tests
     public class ZoneMarker : IRequire<IImplicitNullabilityTestEnvironmentZone>
     {
     }
+}
 
-    [SetUpFixture]
-    public class TestEnvironmentSetUpFixture : ExtensionTestEnvironmentAssembly<IImplicitNullabilityTestEnvironmentZone>
-    {
-    }
+// Note: Global namespace to workaround (or hide) https://youtrack.jetbrains.com/issue/RSRP-464493.
+[SetUpFixture]
+public class TestEnvironmentSetUpFixture : ExtensionTestEnvironmentAssembly<IImplicitNullabilityTestEnvironmentZone>
+{
 }
