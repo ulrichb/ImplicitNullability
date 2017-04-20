@@ -6,6 +6,7 @@ using JetBrains.Application.Settings;
 using JetBrains.Application.Settings.Store.Implementation;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.DataContext;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
@@ -176,8 +177,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                 (lifetime, solution, project) => RunGuarded(
                     () =>
                     {
-                        var sut = solution.GetComponent<ImplicitNullabilityConfigurationEvaluator>();
-                        var settingsStore = project.GetComponent<SettingsStore>();
+                        var settingsStore = solution.GetComponent<SettingsStore>()
+                            .CreateNestedTransaction(lifetime, "transacted test store");
 
                         changeSolutionSettings.Invoke(
                             settingsStore.BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(solution.ToDataContext())));
@@ -185,12 +186,13 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                         changeProjectSettings?.Invoke(
                             settingsStore.BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(project.ToDataContext())));
 
+                        var sut = new ImplicitNullabilityConfigurationEvaluator(
+                            settingsStore,
+                            solution.GetComponent<ISettingsOptimization>(),
+                            solution.GetComponent<Lazy<IPsiServices>>());
+
                         result = sut.EvaluateFor(project.GetPsiModules().Single());
                     }));
-
-            // Note that instead of using ExecuteWithinSettingsTransaction(), we change the solution/project settings (to be able to test
-            // the usage to the correct DataContext). We close the solution afterwards to isolate the changes (has a small performance hit).
-            RunGuarded(() => CloseSolution());
 
             return result.NotNull();
         }
