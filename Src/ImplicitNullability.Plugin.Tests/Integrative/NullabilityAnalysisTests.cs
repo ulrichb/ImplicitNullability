@@ -141,9 +141,9 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             Func<IProject, bool> projectFilter = null,
             Action<IList<string>> assert = null)
         {
-            UseSampleSolution((solution, solutionSettings) =>
+            UseSampleSolution((solution, settingsStore) =>
             {
-                changeSettings(solutionSettings);
+                changeSettings(settingsStore);
 
                 var projectFilesToAnalyze = solution.GetAllProjects()
                     // By default exclude the "external code consumer" project (which consumes "hard-coded" implicit nullability settings):

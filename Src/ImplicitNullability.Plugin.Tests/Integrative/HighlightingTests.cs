@@ -91,9 +91,9 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
 
         private void TestWithEnabledImplicitNullability(Action<IList<string>> assert)
         {
-            UseSampleSolution((solution, solutionSettings) =>
+            UseSampleSolution((solution, settingsStore) =>
             {
-                solutionSettings.EnableImplicitNullabilityForAllCodeElements();
+                settingsStore.EnableImplicitNullabilityForAllCodeElements();
 
                 var projectFilesToAnalyze = GetProjectFilesToAnalyze(solution);
 

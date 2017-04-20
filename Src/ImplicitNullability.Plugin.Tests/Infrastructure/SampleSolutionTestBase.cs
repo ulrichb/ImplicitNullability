@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using JetBrains.Application.Settings;
-using JetBrains.Application.Settings.Store.Implementation;
 using JetBrains.ProjectModel;
-using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 using JetBrains.ReSharper.Daemon.UsageChecking;
@@ -18,23 +16,19 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         {
             var solutionFilePath = FileSystemPath.Parse(TestDataPathUtility.GetPathRelativeToSolution("ImplicitNullability.Sample.sln"));
 
-            DoTestSolution(solutionFilePath, (lifetime, solution) =>
+            ExecuteWithinSettingsTransaction(settingsStore =>
             {
-                // We need to change the settings here by code, because the settings stored in the .DotSettings files aren't 
-                // evaluated (see https://resharper-support.jetbrains.com/hc/en-us/community/posts/206628865).
+                DoTestSolution(solutionFilePath, (lifetime, solution) =>
+                {
+                    // We need to change the settings by code (via `settingsStore`), because the settings stored in the .DotSettings files aren't
+                    // evaluated (see https://resharper-support.jetbrains.com/hc/en-us/community/posts/206628865).
 
-                var solutionSettings = solution.GetComponent<SettingsStore>()
-                    .BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(solution.ToDataContext()));
-
-                testAction(solution, solutionSettings);
+                    testAction(solution, settingsStore);
+                });
             });
-
-            // Close the solution to isolate all solution-level settings changes (this has a small performance hit because normally the
-            // solution is only "cleaned" at the end of DoTestSolution())
-            RunGuarded(() => CloseSolution());
         }
 
-        protected IEnumerable<Type> GetNullabilityAnalysisHighlightingTypes()
+        protected static IEnumerable<Type> GetNullabilityAnalysisHighlightingTypes()
         {
             var implicitNullabilityProblemAnalyzerHighlightingTypes =
                 typeof(ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(false).HighlightingTypes;
