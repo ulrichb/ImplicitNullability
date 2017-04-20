@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ImplicitNullability.Plugin.Configuration;
+using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Application.Settings;
 using JetBrains.Application.Settings.Store.Implementation;
 using JetBrains.ProjectModel;
@@ -80,14 +81,12 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [Test]
         public void TestInheritance_AppliesToAttributeOverridesAlsoOtherOptions()
         {
-            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
-            {
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, true);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, true);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.FieldsRestrictToReadonly, true);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.FieldsRestrictToReferenceTypes, true);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.GeneratedCode, GeneratedCodeOptions.Exclude);
-            }
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
+                settingsStore.EnableImplicitNullability(
+                    enableFields: true,
+                    fieldsRestrictToReadonly: true,
+                    fieldsRestrictToReferenceTypes: true,
+                    generatedCode: GeneratedCodeOptions.Exclude);
 
             //
 
@@ -120,14 +119,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [TestCase("NonCompilingAttribute4", /*expected:*/ AppliesToInputAndOutput)]
         public void TestAssemblyMetadataAttributeConfiguration(string testInput, ImplicitNullabilityAppliesTo expectedAppliesTo)
         {
-            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
-            {
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, Ena);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableInputParameters, Ena);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableRefParameters, Dis);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableOutParametersAndResult, Ena);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, Dis);
-            }
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
+                settingsStore.EnableImplicitNullability(enableInputParameters: true, enableOutParametersAndResult: true);
 
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
@@ -142,11 +135,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                                                           ImplicitNullabilityFieldOptions.RestrictToReferenceTypes)]
         public void TestAssemblyMetadataAttribute_FieldOptions(string testInput, ImplicitNullabilityFieldOptions expected)
         {
-            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore)
-            {
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, Ena);
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, Dis);
-            }
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
+                settingsStore.EnableImplicitNullability();
 
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
@@ -163,7 +153,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         public void TestAssemblyMetadataAttribute_GeneratedCode(string testInput, GeneratedCodeOptions expected)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, Ena);
+                settingsStore.EnableImplicitNullability();
 
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
