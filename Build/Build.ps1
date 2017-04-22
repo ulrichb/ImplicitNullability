@@ -18,10 +18,10 @@ $AssemblyVersionFilePath = "Src\SharedAssemblyInfo.cs"
 $MSBuildPath = (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\*\MSBuild\15.0\Bin\MSBuild.exe").FullName
 $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
-    "Src\ImplicitNullability.Plugin.Tests\bin\R20162\$Configuration\ImplicitNullability.Plugin.Tests.R20162.dll"
-    "Src\ImplicitNullability.Plugin.Tests\bin\R20163\$Configuration\ImplicitNullability.Plugin.Tests.R20163.dll"
+    #"Src\ImplicitNullability.Plugin.Tests\bin\R20162\$Configuration\ImplicitNullability.Plugin.Tests.R20162.dll"
+    #"Src\ImplicitNullability.Plugin.Tests\bin\R20163\$Configuration\ImplicitNullability.Plugin.Tests.R20163.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\R20171\$Configuration\ImplicitNullability.Plugin.Tests.R20171.dll"
-    "Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
+    #"Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Samples.CodeWithIN.*]* -[ImplicitNullability.Samples.CodeWithoutIN.External]*"
