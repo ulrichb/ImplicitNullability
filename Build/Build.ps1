@@ -2,7 +2,7 @@
 Param(
   [Parameter()] [string] $NugetExecutable = "Shared\.nuget\nuget.exe",
   [Parameter()] [string] $Configuration = "Debug",
-  [Parameter()] [string] $Version = "0.0.1.0-dev",
+  [Parameter()] [string] $Version = "0.0.0.1-local",
   [Parameter()] [string] $BranchName,
   [Parameter()] [string] $CoverageBadgeUploadToken,
   [Parameter()] [string] $NugetPushKey
