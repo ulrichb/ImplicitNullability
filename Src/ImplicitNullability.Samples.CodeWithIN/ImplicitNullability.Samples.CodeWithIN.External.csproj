@@ -46,8 +46,8 @@
     <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
     </Reference>
-    <Reference Include="NullGuard, Version=1.4.6.0, Culture=neutral, PublicKeyToken=1958ac8092168428, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NullGuard.Fody.1.4.6\lib\dotnet\NullGuard.dll</HintPath>
+    <Reference Include="NullGuard, Version=1.5.2.0, Culture=neutral, PublicKeyToken=1958ac8092168428, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NullGuard.Fody.1.5.2\lib\dotnet\NullGuard.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -72,18 +72,18 @@
     <None Include="packages.ImplicitNullability.Samples.CodeWithIN.External.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml">
+    <None Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Fody.2.0.7\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.2.0.7\build\dotnet\Fody.targets'))" />
   </Target>
-  <Import Project="..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
+  <Import Project="..\..\packages\Fody.2.0.7\build\dotnet\Fody.targets" Condition="Exists('..\..\packages\Fody.2.0.7\build\dotnet\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
