@@ -41,7 +41,7 @@
 
   <ItemGroup>
     <PackageReference Include="JetBrains.ReSharper.SDK.Tests" Version="2016.3.20170126.124206" />
-    <PackageReference Include="FakeItEasy" Version="3.1.0" />
+    <PackageReference Include="FakeItEasy" Version="3.3.2" />
     <PackageReference Include="ncalc" Version="1.3.8" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
