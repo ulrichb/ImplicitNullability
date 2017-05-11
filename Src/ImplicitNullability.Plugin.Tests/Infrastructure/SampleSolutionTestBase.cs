@@ -40,7 +40,10 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                     typeof(PossibleNullReferenceExceptionWarning),
                     typeof(PossibleInvalidOperationExceptionWarning),
                     typeof(NotNullMemberIsNotInitializedWarning),
-                    typeof(UnassignedReadonlyFieldWarning)
+                    typeof(UnassignedReadonlyFieldWarning),
+                    typeof(NullCoalescingConditionIsAlwaysNotNullWarning),
+                    typeof(NullCoalescingConditionIsAlwaysNullWarning),
+                    typeof(NullCoalescingRightOperandIsAlwaysNullWarning),
                 }
                 .Concat(implicitNullabilityProblemAnalyzerHighlightingTypes);
         }
