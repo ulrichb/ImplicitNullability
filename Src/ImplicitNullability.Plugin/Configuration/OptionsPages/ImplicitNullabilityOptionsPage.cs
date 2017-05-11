@@ -104,11 +104,11 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 
             var assemblyAttributeInfoText1 =
                 "\n" +
-                "2. Recommended for library authors: By defining an [AssemblyMetadata] attribute in all concerned assemblies. " +
+                "2. Recommended for library authors: By defining [AssemblyMetadata] attributes in all concerned assemblies. " +
                 "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies.";
             SetIndent(AddText(assemblyAttributeInfoText1), 1);
 
-            var copyButtonText = "Copy [AssemblyMetadata] attribute to clipboard (using above options as a template)";
+            var copyButtonText = "Copy [AssemblyMetadata] attributes to clipboard (using above options as a template)";
             var copyButton = AddButton(copyButtonText, new DelegateCommand(CopyAssemblyAttributeCode));
             SetIndent(copyButton, 2);
             enabledOption.CheckedProperty.FlowInto(myLifetime, copyButton.GetIsEnabledProperty());
@@ -117,7 +117,7 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 "Implicit Nullability normally ignores referenced assemblies. " +
                 "It can take referenced libraries into account only if they contain embedded [AssemblyMetadata]-based configuration.\n" +
                 "\n" +
-                "The options in a [AssemblyMetadata] attribute override the options selected above.";
+                "The options in [AssemblyMetadata] attributes override the options selected above.";
             SetIndent(AddText(assemblyAttributeInfoText2), 1);
 
             var cacheInfoText =
