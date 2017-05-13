@@ -35,17 +35,17 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [Test]
         public void IndexerGetterWithNonNullValue()
         {
-            Action act = () => IgnoreValue(_instance[""]);
+            Func<string> act = () => _instance[""];
 
-            act.ShouldNotThrow();
+            act.ToAction().ShouldNotThrow();
         }
 
         [Test]
         public void IndexerGetterWithNullValue()
         {
-            Action act = () => IgnoreValue(_instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/]);
+            Func<string> act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/];
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -59,14 +59,9 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [Test]
         public void IndexerGetterWithNullableParameter()
         {
-            Action act = () => IgnoreValue(_instance[canBeNull: null, nullableInt: null, optional: null]);
+            Func<string> act = () => _instance[canBeNull: null, nullableInt: null, optional: null];
 
-            act.ShouldNotThrow();
-        }
-
-        // ReSharper disable once UnusedParameter.Local
-        private void IgnoreValue(object value)
-        {
+            act.ToAction().ShouldNotThrow();
         }
     }
 }

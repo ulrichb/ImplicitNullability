@@ -61,6 +61,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <!-- Only opt-in, because it seems that the R# Test SDK doesn't support the Exclude attribute: -->
+    <Compile Include="*.cs" />
     <Compile Include="Properties\**\*.cs" />
     <Compile Include="NullabilityAnalysis\**\*.cs" />
   </ItemGroup>
