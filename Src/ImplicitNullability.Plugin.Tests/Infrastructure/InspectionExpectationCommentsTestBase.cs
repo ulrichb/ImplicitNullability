@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using FakeItEasy;
 using JetBrains.Annotations;
 using JetBrains.Application.Progress;
 using JetBrains.DataFlow;
@@ -155,10 +154,16 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             var issues = new List<IIssue>();
 
             using (var lifetime = Lifetimes.Define(solution.GetLifetime()))
+#if RESHARPER20162 || RESHARPER20163
+            using (var nullProgressIndicator = NullProgressIndicator.Instance)
+#else
+            using (var nullProgressIndicator = NullProgressIndicator.Create())
+#endif
             {
-                var collectInspectionResults = new CollectInspectionResults(solution, lifetime, A.Dummy<IProgressIndicator>());
+                var collectInspectionResults = new CollectInspectionResults(solution, lifetime, nullProgressIndicator);
 
-                collectInspectionResults.RunLocalInspections(new Stack<IPsiSourceFile>(sourceFiles),
+                collectInspectionResults.RunLocalInspections(
+                    new Stack<IPsiSourceFile>(sourceFiles),
                     issuePointers => issues.AddRange(issuePointers));
             }
 
