@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
+// ReSharper disable UnusedMember.Global, UnusedParameter.Global
+
 namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
 {
     public abstract class TypeHighlightingMethodsSampleBase

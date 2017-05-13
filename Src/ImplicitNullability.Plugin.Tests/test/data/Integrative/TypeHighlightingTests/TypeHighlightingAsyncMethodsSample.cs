@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 
+// ReSharper disable UnusedMember.Global
+
 namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
 {
     public class TypeHighlightingAsyncMethodsSample

@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
+// ReSharper disable UnusedMember.Global, UnusedParameter.Global
 // ReSharper disable NotNullMemberIsNotInitialized
 
 namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
@@ -26,7 +27,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         public class Fields
         {
             [NotNull]
-            public string SomeNotNullField;
+            public string SomeField;
 
             public readonly string SomeReadonlyField = "";
 
@@ -66,6 +67,23 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 
             [CanBeNull]
             public string this[[CanBeNull] object b] => "";
+        }
+
+        public interface IInterface
+        {
+            string Method(string a);
+
+            [CanBeNull]
+            string MethodWithCanBeNull([CanBeNull] string a);
+
+            [NotNull]
+            string SomeProperty { get; set; }
+
+            [CanBeNull]
+            string SomeCanBeNullProperty { get; set; }
+
+            [NotNull]
+            string SomeGetterOnlyProperty { get; }
         }
     }
 }

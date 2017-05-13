@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
+// ReSharper disable UnusedMember.Global, UnusedParameter.Global
 // ReSharper disable NotNullMemberIsNotInitialized
 
 namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightingTests
@@ -26,7 +27,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         public class Fields
         {
             [NotNull]
-            public |string|(6) SomeNotNullField;
+            public |string|(6) SomeField;
 
             public readonly |string|(7) SomeReadonlyField = "";
 
@@ -67,6 +68,23 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             [CanBeNull]
             public string this[[CanBeNull] object b] => "";
         }
+
+        public interface IInterface
+        {
+            |string|(15) Method(|string|(16) a);
+
+            [CanBeNull]
+            string MethodWithCanBeNull([CanBeNull] string a);
+
+            [NotNull]
+            |string|(17) SomeProperty { get; set; }
+
+            [CanBeNull]
+            string SomeCanBeNullProperty { get; set; }
+
+            [NotNull]
+            |string|(18) SomeGetterOnlyProperty { get; }
+        }
     }
 }
 
@@ -86,3 +104,7 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 (12): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (13): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
 (14): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(15): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(16): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(17): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(18): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
