@@ -3,7 +3,7 @@ using static ImplicitNullability.Samples.CodeWithIN.ReSharper;
 
 namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
-    public class NonPublicMethodsSample
+    public class NonPublicMembersSample
     {
         [UsedImplicitly]
         internal void InternalMethod(string internalMethodParameter)
@@ -23,22 +23,28 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             TestValueAnalysis(privateMethodParameter, privateMethodParameter == null /*Expect:ConditionIsAlwaysTrueOrFalse[MIn]*/);
         }
 
-        [UsedImplicitly]
-        internal string InternalFunction()
-        {
-            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
-        }
+        //
 
         [UsedImplicitly]
-        protected string ProtectedFunction()
-        {
-            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
-        }
+        internal string InternalFunction() => null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
 
         [UsedImplicitly]
-        private string PrivateFunction()
-        {
-            return null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
-        }
+        protected string ProtectedFunction() => null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+
+        [UsedImplicitly]
+        private string PrivateFunction() => null /*Expect:AssignNullToNotNullAttribute[MOut]*/;
+
+        //
+
+        [UsedImplicitly]
+        internal readonly string InternalField = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
+
+        [UsedImplicitly]
+        protected readonly string ProtectedField = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
+
+#pragma warning disable 414
+        [UsedImplicitly]
+        private readonly string _privateField = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
+#pragma warning restore 414
     }
 }

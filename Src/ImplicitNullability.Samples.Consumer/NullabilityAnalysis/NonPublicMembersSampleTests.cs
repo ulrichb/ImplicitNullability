@@ -7,14 +7,14 @@ using NUnit.Framework;
 namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 {
     [TestFixture]
-    public class NonPublicMethodsSampleTests
+    public class NonPublicMembersSampleTests
     {
-        private NonPublicMethodsSample _instance;
+        private NonPublicMembersSample _instance;
 
         [SetUp]
         public void SetUp()
         {
-            _instance = new NonPublicMethodsSample();
+            _instance = new NonPublicMembersSample();
         }
 
         [Test]
@@ -33,18 +33,30 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [TestCase("InternalFunction")]
         [TestCase("ProtectedFunction")]
         [TestCase("PrivateFunction")]
-        public void Function(string methodName)
+        public void Function(string name)
         {
-            Action act = () => GetNonPublicMethod(methodName).Invoke(_instance, new object[0]);
+            Action act = () => GetNonPublicMethod(name).Invoke(_instance, new object[0]);
 
             act.ShouldThrow<TargetInvocationException>()
                 .And.InnerException.Should().BeOfType<InvalidOperationException>()
-                .Which.Message.Should().Match("[NullGuard] Return value of method *" + methodName + "* is null.");
+                .Which.Message.Should().Match("[NullGuard] Return value of method *" + name + "* is null.");
         }
 
-        private MethodInfo GetNonPublicMethod(string name)
+        [Test]
+        [TestCase("InternalField")]
+        [TestCase("ProtectedField")]
+        [TestCase("_privateField")]
+        public void Field(string name)
         {
-            return _instance.GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance);
+            var value = GetNonPublicField(name).GetValue(_instance);
+
+            value.Should().BeNull();
         }
+
+        private MethodInfo GetNonPublicMethod(string name) =>
+            _instance.GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private FieldInfo GetNonPublicField(string name) =>
+            _instance.GetType().GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
     }
 }

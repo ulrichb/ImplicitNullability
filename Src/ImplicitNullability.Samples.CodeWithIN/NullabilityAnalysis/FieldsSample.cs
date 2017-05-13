@@ -23,17 +23,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             [CanBeNull]
             public readonly string NullableReadonlyField = null;
-
-            internal string InternalField = "";
-            protected string ProtectedField = "";
-            private string _privateField = "";
-
-            public void ConsumeNonPublicMembers()
-            {
-                TestValueAnalysis(InternalField, InternalField == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-                TestValueAnalysis(ProtectedField, ProtectedField == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-                TestValueAnalysis(_privateField, _privateField == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-            }
         }
 
         public class StaticFields
@@ -51,17 +40,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             [CanBeNull]
             public static readonly string NullableReadonlyField = null;
-
-            internal static string InternalField = "";
-            protected static string ProtectedField = "";
-            private static string _privateField = "";
-
-            public static void ConsumeNonPublicMembers()
-            {
-                TestValueAnalysis(InternalField, InternalField == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-                TestValueAnalysis(ProtectedField, ProtectedField == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-                TestValueAnalysis(_privateField, _privateField == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-            }
         }
 
         public class MutableClass
