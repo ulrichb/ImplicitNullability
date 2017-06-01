@@ -1,6 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
-    <ReSharperVersionIdentifier>20162</ReSharperVersionIdentifier>
+    <ReSharperVersionIdentifier>20172</ReSharperVersionIdentifier>
 
     <!-- This is a workaround for https://github.com/dotnet/sdk/issues/980: -->
     <BaseIntermediateOutputPath>obj\R$(ReSharperVersionIdentifier)\</BaseIntermediateOutputPath>
@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <RootNamespace>ImplicitNullability.Plugin.Tests</RootNamespace>
+    <RootNamespace>ImplicitNullability.Plugin</RootNamespace>
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -29,30 +29,26 @@
 
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-    <Compile Include="..\ImplicitNullability.Plugin\Properties\ImplicitNullabilityConfigurationAttributes.cs" Link="Properties\ImplicitNullabilityConfigurationAttributes.cs" />
-    <Compile Include="**\*.cs" Exclude="obj\**;test\data\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="test\data\**" />
-    <None Include="ExternalAnnotations\.NETFramework\System.Web\4.0.0.0.Nullness.Gen.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Debugging\DebugUtility.cs" Link="ReSharperExtensionsShared\DebugUtility.cs" />
+    <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Highlighting\SimpleTreeNodeHighlightingBase.cs" Link="ReSharperExtensionsShared\SimpleTreeNodeHighlightingBase.cs" />
+    <Compile Include="**\*.cs" Exclude="obj\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.ReSharper.SDK.Tests" Version="2016.2.20160912.115159" />
-    <PackageReference Include="AsyncBridge.JetBrains" Version="0.1.1">
-      <ExcludeAssets>all</ExcludeAssets>
-    </PackageReference>
-    <PackageReference Include="FakeItEasy" Version="3.3.2" />
-    <PackageReference Include="ncalc" Version="1.3.8" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+    <PackageReference Include="JetBrains.ReSharper.SDK" Version="2017.2.0-eap07" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImplicitNullability.Plugin\ImplicitNullability.Plugin.R$(ReSharperVersionIdentifier).csproj" />
+    <ProjectReference Include="..\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj" />
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
+  <PropertyGroup>
+    <ReSharperInstallationsDirectoryInstancePart>ExpRS$(ReSharperVersionIdentifier)</ReSharperInstallationsDirectoryInstancePart>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.VsFormatDefinitions.*" />
+  </ItemGroup>
+  <Import Project="$(SolutionDir)\Shared\Build\CopyToReSharperInstallationsDirectory.targets" />
 </Project>

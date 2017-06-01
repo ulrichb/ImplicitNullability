@@ -6,13 +6,23 @@ using JetBrains.Application.Settings;
 using JetBrains.Application.UI.Commands;
 using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
+using JetBrains.UI.RichText;
+using JetBrains.Util;
+#if RESHARPER20163 || RESHARPER20171
 using JetBrains.UI;
 using JetBrains.UI.Options;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions.ViewModel;
 using JetBrains.UI.Resources;
-using JetBrains.UI.RichText;
-using JetBrains.Util;
+#else
+using JetBrains.Application.UI.Components;
+using JetBrains.Application.UI.Icons.CommonThemedIcons;
+using JetBrains.Application.UI.Options;
+using JetBrains.Application.UI.Options.OptionsDialog;
+using JetBrains.Application.UI.Options.OptionsDialog.SimpleOptions;
+using JetBrains.Application.UI.Options.OptionsDialog.SimpleOptions.ViewModel;
+
+#endif
 
 namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 {

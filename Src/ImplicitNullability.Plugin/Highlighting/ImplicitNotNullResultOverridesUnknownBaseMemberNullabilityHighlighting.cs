@@ -9,12 +9,8 @@ using ReSharperExtensionsShared.Highlighting;
     Group: HighlightingGroupIds.CodeSmell,
     Title: ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Message,
     Description: ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Description,
-    DefaultSeverity: Severity.HINT
-#if RESHARPER20162
-    , SolutionAnalysisRequired: false
-#endif
-    , AlternativeIDs = "ImplicitNotNullResultOverridesUnknownExternalMember"
-)]
+    DefaultSeverity: Severity.HINT,
+    AlternativeIDs = "ImplicitNotNullResultOverridesUnknownExternalMember")]
 
 namespace ImplicitNullability.Plugin.Highlighting
 {

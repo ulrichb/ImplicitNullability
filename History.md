@@ -1,3 +1,6 @@
+### vNext ###
+- ReSharper 2017.2 support
+
 ### 3.7.0 ###
 - Changed default of "Restrict to readonly fields" setting to "on"
 - Added exclusion of generated code, configurable by a new setting (enabled by default)

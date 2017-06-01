@@ -1,4 +1,4 @@
-﻿#if RESHARPER20162 || RESHARPER20163
+﻿#if RESHARPER20163
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.Tree;

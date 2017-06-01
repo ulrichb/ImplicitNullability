@@ -154,7 +154,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             var issues = new List<IIssue>();
 
             using (var lifetime = Lifetimes.Define(solution.GetLifetime()))
-#if RESHARPER20162 || RESHARPER20163
+#if RESHARPER20163
             using (var nullProgressIndicator = NullProgressIndicator.Instance)
 #else
             using (var nullProgressIndicator = NullProgressIndicator.Create())

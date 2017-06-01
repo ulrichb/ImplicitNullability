@@ -33,14 +33,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void PreconditionExpressionCheck(string a)
             {
-                // REPORTED false positive https://youtrack.jetbrains.com/issue/RSRP-464760
-                a = a ?? throw new ArgumentException(nameof(a)) /*Expect:ConstantNullCoalescingCondition[MIn]*/;
+                a = a ?? throw new ArgumentException(nameof(a)) /*Expect:ConstantNullCoalescingCondition[MIn && RS <= 20171]*/;
                 TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             }
 
             public override void PreconditionExpressionCheckWithNotNullInBase(string a)
             {
-                a = a ?? throw new ArgumentException(nameof(a)) /*Expect:ConstantNullCoalescingCondition*/;
+                a = a ?? throw new ArgumentException(nameof(a)) /*Expect:ConstantNullCoalescingCondition[RS <= 20171]*/;
                 TestValueAnalysis(a, a == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             }
         }

@@ -9,11 +9,7 @@ using ReSharperExtensionsShared.Highlighting;
     Group: HighlightingGroupIds.CodeSmell,
     Title: ImplicitNotNullElementCannotOverrideCanBeNullHighlighting.Message,
     Description: ImplicitNotNullElementCannotOverrideCanBeNullHighlighting.Description,
-    DefaultSeverity: Severity.WARNING
-#if RESHARPER20162
-    , SolutionAnalysisRequired: false
-#endif
-)]
+    DefaultSeverity: Severity.WARNING)]
 
 namespace ImplicitNullability.Plugin.Highlighting
 {

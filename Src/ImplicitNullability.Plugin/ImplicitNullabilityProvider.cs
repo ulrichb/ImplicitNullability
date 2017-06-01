@@ -9,8 +9,7 @@ using JetBrains.ReSharper.Psi.Util;
 using JetBrains.ReSharper.Psi.Xaml.DeclaredElements;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
-
-#if !(RESHARPER20162 || RESHARPER20163)
+#if !RESHARPER20163
 using JetBrains.ReSharper.Psi.CSharp;
 
 #endif
@@ -208,7 +207,7 @@ namespace ImplicitNullability.Plugin
         [CanBeNull]
         private static IType GetTaskUnderlyingType(IType type)
         {
-#if RESHARPER20162 || RESHARPER20163
+#if RESHARPER20163
             return type.GetTaskUnderlyingType();
 #else
             // Use "latest" language level because this just includes _more_ types (C# 7 "task-like" types) and the nullability
