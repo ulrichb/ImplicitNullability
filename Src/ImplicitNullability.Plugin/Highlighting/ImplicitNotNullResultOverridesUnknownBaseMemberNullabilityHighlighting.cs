@@ -5,11 +5,11 @@ using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
     ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.SeverityId,
-    null,
-    HighlightingGroupIds.CodeSmell,
-    ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Message,
-    ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Description,
-    Severity.HINT
+    CompoundItemName: null,
+    Group: HighlightingGroupIds.CodeSmell,
+    Title: ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Message,
+    Description: ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.Description,
+    DefaultSeverity: Severity.HINT
 #if RESHARPER20162
     , SolutionAnalysisRequired: false
 #endif

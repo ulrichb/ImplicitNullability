@@ -31,7 +31,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         protected static IEnumerable<Type> GetNullabilityAnalysisHighlightingTypes()
         {
             var implicitNullabilityProblemAnalyzerHighlightingTypes =
-                typeof(ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(false).HighlightingTypes;
+                typeof(ImplicitNullabilityProblemAnalyzer).GetCustomAttribute<ElementProblemAnalyzerAttribute>(inherit: false).HighlightingTypes;
 
             return new[]
                 {

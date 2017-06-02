@@ -46,7 +46,7 @@ namespace ImplicitNullability.Plugin.Infrastructure
 
         public static bool HasGeneratedCodeAttribute(this IAttributesOwner attributesOwner)
         {
-            return attributesOwner.HasAttributeInstance(PredefinedType.CODEDOM_GENERATED_CODE_ATTRIBUTE_CLASS, false);
+            return attributesOwner.HasAttributeInstance(PredefinedType.CODEDOM_GENERATED_CODE_ATTRIBUTE_CLASS, inherit: false);
         }
     }
 }

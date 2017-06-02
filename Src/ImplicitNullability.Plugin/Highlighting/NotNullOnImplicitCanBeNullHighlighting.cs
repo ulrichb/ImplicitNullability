@@ -5,11 +5,11 @@ using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
     NotNullOnImplicitCanBeNullHighlighting.SeverityId,
-    null,
-    HighlightingGroupIds.CodeSmell,
-    NotNullOnImplicitCanBeNullHighlighting.Message,
-    NotNullOnImplicitCanBeNullHighlighting.Description,
-    Severity.WARNING
+    CompoundItemName: null,
+    Group: HighlightingGroupIds.CodeSmell,
+    Title: NotNullOnImplicitCanBeNullHighlighting.Message,
+    Description: NotNullOnImplicitCanBeNullHighlighting.Description,
+    DefaultSeverity: Severity.WARNING
 #if RESHARPER20162
     , SolutionAnalysisRequired: false
 #endif
