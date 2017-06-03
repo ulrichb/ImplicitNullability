@@ -7,5 +7,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
         void Method(string a);
         string Function();
         Task<string> AsyncFunction();
+        string Property { get; set; }
     }
 }

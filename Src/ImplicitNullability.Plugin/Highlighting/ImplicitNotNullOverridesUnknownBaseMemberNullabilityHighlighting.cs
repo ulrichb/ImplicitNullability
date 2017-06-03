@@ -2,7 +2,6 @@
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
-using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
     ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting.SeverityId,
@@ -19,8 +18,9 @@ namespace ImplicitNullability.Plugin.Highlighting
         SeverityId,
         CSharpLanguage.Name,
         OverlapResolve = OverlapResolveKind.WARNING,
+        OverloadResolvePriority = InputWarningPriority,
         ToolTipFormatString = Message)]
-    public class ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
+    public class ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting : ImplicitNullabilityHighlightingBase
     {
         public const string SeverityId = "ImplicitNotNullOverridesUnknownBaseMemberNullability";
 
@@ -33,7 +33,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "violation exists (e.g. implicit [NotNull] parameter overrides base member with an unannotated " +
             "parameter which actually has [CanBeNull] semantics), we thus encourage the programmer to explicitly " +
             "annotate [NotNull] or [CanBeNull] on those elements after manually checking the nullability of the base member. " +
-            SharedHighlightingTexts.NeedsSettingNoteText;
+            NeedsSettingNoteText;
 
         public ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)

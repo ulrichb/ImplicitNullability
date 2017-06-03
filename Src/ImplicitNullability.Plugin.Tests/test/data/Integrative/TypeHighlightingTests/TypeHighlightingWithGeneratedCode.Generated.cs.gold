@@ -8,8 +8,6 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         // Proves exclusion of (non-implemented) generated code and their type highlighting.
         // See also the other "generated code" samples.
 
-        public string Field;
-
         public void Method(string a) { }
 
         public void MethodExplicit([NotNull] |string|(0) a) { }
@@ -17,6 +15,10 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
         public string Function() => "";
 
         public delegate string SomeDelegate(string a);
+
+        public string Field;
+
+        public string Property { get; set; }
 
         public async |Task|(1)<string> AsyncFunction()
         {

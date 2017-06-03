@@ -28,6 +28,15 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             [ItemCanBeNull]
             Task<string> TaskFunctionWithExplicitCanBeNull();
+
+            [NotNull]
+            string PropertyWithExplicitNotNull { get; }
+
+            [NotNull]
+            string PropertyWithExplicitNotNullInInterfaceAndImplicitNotNullInDerived { get; }
+
+            [CanBeNull]
+            string PropertyWithExplicitCanBeNull { get; }
         }
 
         public class Implementation : IInterface
@@ -77,6 +86,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             {
                 return await Async.CanBeNullResult<string>();
             }
+
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string PropertyWithExplicitNotNull => "";
+
+            public string PropertyWithExplicitNotNullInInterfaceAndImplicitNotNullInDerived => "";
+
+            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string PropertyWithExplicitCanBeNull => null;
         }
     }
 }

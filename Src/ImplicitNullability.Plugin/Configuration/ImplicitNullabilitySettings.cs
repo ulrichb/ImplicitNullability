@@ -27,6 +27,15 @@ namespace ImplicitNullability.Plugin.Configuration
         [SettingsEntry(false, "Fields: Restrict to reference types")]
         public readonly bool FieldsRestrictToReferenceTypes;
 
+        [SettingsEntry(true, "Enable properties")]
+        public readonly bool EnableProperties;
+
+        [SettingsEntry(true, "Properties: Restrict to Getter-only")]
+        public readonly bool PropertiesRestrictToGetterOnly;
+
+        [SettingsEntry(false, "Properties: Restrict to reference types")]
+        public readonly bool PropertiesRestrictToReferenceTypes;
+
         [SettingsEntry(GeneratedCodeOptions.Exclude, "Generated code option")]
         public readonly GeneratedCodeOptions GeneratedCode;
 

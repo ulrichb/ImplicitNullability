@@ -32,7 +32,22 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
 
             public string Field;
 
-            public virtual string this[string a] => null;
+            public virtual string SetterOnlyProperty
+            {
+                // ReSharper disable once ValueParameterNotUsed
+                set { }
+            }
+
+            public virtual string GetterOnlyProperty => null;
+
+            public virtual string Property { get; set; }
+
+            public virtual string this[string a]
+            {
+                get { return null; }
+                // ReSharper disable once ValueParameterNotUsed
+                set { }
+            }
         }
 
         public interface IInterfaceWithMethod<in T>
@@ -50,6 +65,11 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
             Task<T> AsyncFunction();
         }
 
+        public interface IInterfaceWithProperty<T>
+        {
+            T Property { get; set; }
+        }
+
         public abstract class BaseClassWithCanBeNull
         {
             public abstract void Method([CanBeNull] string a);
@@ -59,6 +79,9 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
 
             [ItemCanBeNull]
             public abstract Task<string> AsyncFunction();
+
+            [CanBeNull]
+            public abstract string Property { get; set; }
         }
 
         public abstract class BaseClassWithNotNull
@@ -70,6 +93,9 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
 
             [ItemNotNull]
             public abstract Task<string> AsyncFunction();
+
+            [NotNull]
+            public abstract string Property { get; set; }
         }
 
         public interface IInterfaceWithRefAndOutParameterMethod

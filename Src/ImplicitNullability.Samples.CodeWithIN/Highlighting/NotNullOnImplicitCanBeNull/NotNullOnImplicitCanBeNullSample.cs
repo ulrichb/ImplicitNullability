@@ -65,9 +65,13 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
             [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/);
 
         [NotNull]
-        public readonly int? Field /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ = 42;
+        public readonly int? Field /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ = null /*Expect:AssignNullToNotNullAttribute*/;
 
-        public string this[
+        [NotNull]
+        public int? Property /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ { get; set; } = null /*Expect:AssignNullToNotNullAttribute*/;
+
+        [NotNull]
+        public int? this /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/[
             [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
             // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
             [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/] => null;

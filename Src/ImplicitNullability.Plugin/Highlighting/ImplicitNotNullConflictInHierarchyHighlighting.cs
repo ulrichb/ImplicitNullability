@@ -2,7 +2,6 @@
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
-using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
     ImplicitNotNullConflictInHierarchyHighlighting.SeverityId,
@@ -18,8 +17,9 @@ namespace ImplicitNullability.Plugin.Highlighting
         SeverityId,
         CSharpLanguage.Name,
         OverlapResolve = OverlapResolveKind.WARNING,
+        OverloadResolvePriority = InputWarningPriority,
         ToolTipFormatString = Message)]
-    public class ImplicitNotNullConflictInHierarchyHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
+    public class ImplicitNotNullConflictInHierarchyHighlighting : ImplicitNullabilityHighlightingBase
     {
         public const string SeverityId = "ImplicitNotNullConflictInHierarchy";
         public const string Message = "Implicit NotNull conflicts with nullability in base type";
@@ -28,7 +28,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "Warns about substitutability violations, e.g. implicit [NotNull] input parameter with a corresponding explicit [CanBeNull] " +
             "parameter in the base member. " +
             "This is the equivalent to \"Annotation conflict in hierarchy\" for explicit [NotNull] annotations. " +
-            SharedHighlightingTexts.NeedsSettingNoteText;
+            NeedsSettingNoteText;
 
         public ImplicitNotNullConflictInHierarchyHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)

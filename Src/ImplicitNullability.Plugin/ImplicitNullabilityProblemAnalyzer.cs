@@ -100,6 +100,20 @@ namespace ImplicitNullability.Plugin
                         var fieldName = fieldDeclaration.NameIdentifier;
                         CheckForNotNullOnImplicitCanBeNull(consumer, declaredElement, attributeInstances, fieldName);
                         break;
+
+                    case IPropertyDeclaration propertyDeclaration:
+                        var property = propertyDeclaration.DeclaredElement.NotNull();
+                        var propertyName = propertyDeclaration.NameIdentifier;
+                        CheckForNotNullOnImplicitCanBeNull(consumer, declaredElement, attributeInstances, propertyName);
+                        CheckForPropertySuperMemberConflicts(consumer, property, attributeInstances, propertyName);
+                        break;
+
+                    case IIndexerDeclaration indexerDeclaration:
+                        var indexerProperty = indexerDeclaration.DeclaredElement.NotNull();
+                        var indexerThisKeyword = indexerDeclaration.ThisKeyword;
+                        CheckForNotNullOnImplicitCanBeNull(consumer, declaredElement, attributeInstances, indexerThisKeyword);
+                        CheckForPropertySuperMemberConflicts(consumer, indexerProperty, attributeInstances, indexerThisKeyword);
+                        break;
                 }
 
                 hasOveriddenImplicitNullability |=
@@ -154,6 +168,28 @@ namespace ImplicitNullability.Plugin
 
                 var superMembersNullability = GetImmediateSuperMembersContainerElementNullability(method).ToArray();
                 CheckForOutputElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
+            }
+        }
+
+        private void CheckForPropertySuperMemberConflicts(
+            IHighlightingConsumer consumer,
+            IProperty property,
+            IList<IAttributeInstance> attributeInstances,
+            ITreeNode highlightingNode)
+        {
+            if (IsImplicitlyNotNull(property, attributeInstances))
+            {
+                if (property.Setter != null)
+                {
+                    var superMembersNullability = GetImmediateSuperMembersSetterNullability(property).ToArray();
+                    CheckForInputOrRefElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
+                }
+
+                if (property.Getter != null)
+                {
+                    var superMembersNullability = GetImmediateSuperMembersGetterNullability(property).ToArray();
+                    CheckForOutputElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
+                }
             }
         }
 
@@ -257,12 +293,24 @@ namespace ImplicitNullability.Plugin
             return result;
         }
 
-        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersNullability(IOverridableMember method)
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersNullability(IMethod method)
         {
             return method.GetImmediateSuperMembers().Select(x => _nullnessProvider.GetInfo(x.Member));
         }
 
-        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersContainerElementNullability(IOverridableMember method)
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersSetterNullability(IProperty property)
+        {
+            var immediateSuperMembers = property.GetImmediateSuperMembers();
+            return immediateSuperMembers.Where(x => ((IProperty) x.Member).Setter != null).Select(x => _nullnessProvider.GetInfo(x.Member));
+        }
+
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersGetterNullability(IProperty property)
+        {
+            var immediateSuperMembers = property.GetImmediateSuperMembers();
+            return immediateSuperMembers.Where(x => ((IProperty) x.Member).Getter != null).Select(x => _nullnessProvider.GetInfo(x.Member));
+        }
+
+        private IEnumerable<CodeAnnotationNullableValue?> GetImmediateSuperMembersContainerElementNullability(IMethod method)
         {
             return method.GetImmediateSuperMembers().Select(x => _containerElementNullnessProvider.GetInfo(x.Member));
         }

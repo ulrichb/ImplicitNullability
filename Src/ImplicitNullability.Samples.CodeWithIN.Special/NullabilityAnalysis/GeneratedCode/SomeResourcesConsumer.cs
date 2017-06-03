@@ -4,10 +4,12 @@
     {
         public void Consume()
         {
-            // PROP_SUPPORT: Generated .resx members?
-            ReSharper.TestValueAnalysis(SomeResources.Culture, SomeResources.Culture == null);
-            ReSharper.TestValueAnalysis(SomeResources.ResourceManager, SomeResources.ResourceManager == null);
-            ReSharper.TestValueAnalysis(SomeResources.StringA, SomeResources.StringA == null);
+            ReSharper.TestValueAnalysis(SomeResources.Culture, SomeResources.Culture == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
+
+            var resourceManager = SomeResources.ResourceManager;
+            ReSharper.TestValueAnalysis(resourceManager, resourceManager == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
+
+            ReSharper.TestValueAnalysis(SomeResources.StringA, SomeResources.StringA == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
         }
     }
 }

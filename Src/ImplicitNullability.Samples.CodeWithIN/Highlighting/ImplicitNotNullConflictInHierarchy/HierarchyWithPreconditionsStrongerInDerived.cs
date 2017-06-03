@@ -18,13 +18,19 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             void CanBeNullParameterInInterfaceExplicitNotNullInDerived([CanBeNull] string a);
             void CanBeNullParameterInInterfaceImplicitNotNullInDerived([CanBeNull] string a);
+
+            [CanBeNull]
+            string PropertyWithCanBeNullInInterfaceExplicitNotNullInDerived { set; }
+
+            [CanBeNull]
+            string PropertyWithCanBeNullInInterfaceImplicitNotNullInDerived { set; }
         }
 
         public class Implementation : IInterface
         {
             public string this[
                 string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/,
-                string b /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/] => null;
+                string b /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/] => "";
 
             public void ExplicitCanBeNullParametersInInterfaceExplicitNotNullInDerived(
                 [NotNull] /*Expect:AnnotationConflictInHierarchy*/ int? nullableInt,
@@ -70,8 +76,19 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             public void CanBeNullParameterInInterfaceImplicitNotNullInDerived(string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
             {
-                // Here the inherited explicit CanBeBull "overrides" the implicit NotNull: 
+                // Here the inherited explicit CanBeBull "overrides" the implicit NotNull:
                 ReSharper.TestValueAnalysis(a /*Expect:AssignNullToNotNullAttribute*/, a == null);
+            }
+
+            [NotNull] /*Expect:AnnotationConflictInHierarchy*/
+            public string PropertyWithCanBeNullInInterfaceExplicitNotNullInDerived
+            {
+                set { }
+            }
+
+            public string PropertyWithCanBeNullInInterfaceImplicitNotNullInDerived /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/
+            {
+                set { }
             }
         }
     }

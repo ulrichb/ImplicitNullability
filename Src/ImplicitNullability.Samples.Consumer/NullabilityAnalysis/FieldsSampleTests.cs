@@ -36,17 +36,19 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             TestValueAnalysis(SF.NullableReadonlyField /*Expect:AssignNullToNotNullAttribute*/, SF.NullableReadonlyField == null);
         }
 
+        //
+
         [Test]
-        public void MutableClassWithImplicitNotNull()
+        public void MutableClass()
         {
-            var mutableClass = new FieldsSample.MutableClass { Field = "" /*Expect no warning*/ };
+            var mutableClass = new FieldsSample.MutableClass { Field = "value" };
 
             TestValueAnalysis(mutableClass.Field, mutableClass.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
-            mutableClass.Field.Should().NotBeNull();
+            mutableClass.Field.Should().Be("value");
         }
 
         [Test]
-        public void MutableClassWithImplicitNotNullAndNullAssignment()
+        public void MutableClassWithNullInitialization()
         {
             var mutableClass = new FieldsSample.MutableClass { Field = null /*Expect:AssignNullToNotNullAttribute[Flds && !RtRo]*/ };
 
@@ -55,7 +57,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
-        public void MutableClassWithImplicitNotNullAndInitialState()
+        public void MutableClassWithInitialState()
         {
             // Here the implicit NotNull is wrong, but we have the NotNullMemberIsNotInitialized warning at declaration site.
 
@@ -66,9 +68,9 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
-        public void MutableClassWithImplicitNotNullAndUnknownNullabilityAssignment()
+        public void MutableClassWithUnknownNullabilityInitialization()
         {
-            // Here the implicit NotNull is potentially wrong.
+            // Here the implicit NotNull is wrong, but we have the NotNullMemberIsNotInitialized warning at declaration site.
 
             var mutableClass = new FieldsSample.MutableClass { Field = External.UnknownNullabilityString };
 
@@ -76,51 +78,67 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             mutableClass.Field.Should().BeNull();
         }
 
+        //
+
         [Test]
         public void ImmutableClass()
         {
-            var instance = new FieldsSample.ImmutableClass(value: "field value");
+            var c = new FieldsSample.ImmutableClass(value: "value");
 
-            TestValueAnalysis(instance.Field, instance.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
-            instance.Field.Should().Be("field value");
+            TestValueAnalysis(c.Field, c.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
+            c.Field.Should().Be("value");
 
-            TestValueAnalysis(instance.NullableField /*Expect:AssignNullToNotNullAttribute*/, instance.NullableField == null);
-            instance.NullableField.Should().BeNull();
+            TestValueAnalysis(c.NullableField /*Expect:AssignNullToNotNullAttribute*/, c.NullableField == null);
+            c.NullableField.Should().BeNull();
 
-            // Here the implicit NotNull is wrong, because "UnknownNullabilityString" returns null:
-            TestValueAnalysis(instance.FieldWithUnknownValue, instance.FieldWithUnknownValue == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
+            // Here the implicit NotNull is wrong, because "UnknownNullabilityString" returned null:
+            TestValueAnalysis(c.FieldWithUnknownValue, c.FieldWithUnknownValue == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
+            c.FieldWithUnknownValue.Should().BeNull();
         }
+
+        [Test]
+        public void ImmutableClassWithBadCtor()
+        {
+            var immutableClass = new FieldsSample.ImmutableClass();
+
+            // Here the implicit NotNull is wrong, but we have the NotNullMemberIsNotInitialized warning at the bad c'tor.
+            TestValueAnalysis(immutableClass.Field, immutableClass.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
+            immutableClass.Field.Should().BeNull();
+        }
+
+        //
+
+        [Test]
+        public void MutableStructAndDefaultCtor()
+        {
+            var @struct = new FieldsSample.MutableStruct();
+
+            // For field read accesses in value types, R# doesn't use the NotNull:
+            TestValueAnalysis(@struct.Field, @struct.Field == null);
+
+            @struct.Field = null /*Expect:AssignNullToNotNullAttribute[Flds && !(RtRo || RtRT)]*/;
+        }
+
+        //
 
         [Test]
         public void ImmutableStruct()
         {
-            // For field read accesses in value types, R# doesn't use the NotNull.
+            var @struct = new FieldsSample.ImmutableStruct(field: "value");
 
-            var @struct = new FieldsSample.ImmutableStruct(value: "field value");
-
+            // For field read accesses in value types, R# doesn't use the NotNull:
             TestValueAnalysis(@struct.Field, @struct.Field == null);
-            @struct.Field.Should().Be("field value");
+            @struct.Field.Should().Be("value");
         }
 
         [Test]
         public void ImmutableStructAndDefaultCtor()
         {
-            // For field read accesses in value types, R# doesn't use the NotNull.
-
             var @struct = new FieldsSample.ImmutableStruct();
 
+            // For field read accesses in value types, R# doesn't use the NotNull:
             TestValueAnalysis(@struct.Field, @struct.Field == null);
             @struct.Field.Should().BeNull();
-        }
-
-        [Test]
-        public void MutableStruct()
-        {
-            var @struct = new FieldsSample.MutableStruct();
-
-            TestValueAnalysis(@struct.Field, @struct.Field == null);
-
-            @struct.Field = null /*Expect:AssignNullToNotNullAttribute[Flds && !(RtRo || RtRT)]*/;
         }
     }
 }

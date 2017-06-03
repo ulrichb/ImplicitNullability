@@ -19,6 +19,11 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             Task<string> TaskFunctionWithExplicitNotNullInInterfaceCanBeNullInDerived();
 
             Task<string> TaskFunctionWithImplicitNotNullInInterfaceCanBeNullInDerived();
+
+            [NotNull]
+            string PropertyWithExplicitNotNullInInterfaceCanBeNullInDerived { get; }
+
+            string PropertyWithImplicitNotNullInInterfaceCanBeNullInDerived { get; }
         }
 
         public class Implementation : IInterface
@@ -26,6 +31,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public void ExplicitNotNullOutParameterInInterfaceCanBeNullInDerived(
                 [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/ out string a)
             {
+                // The invalid CanBeNull does not override the NotNull:
                 a = null /*Expect:AssignNullToNotNullAttribute*/;
             }
 
@@ -59,6 +65,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             {
                 return await Async.CanBeNullResult<string>();
             }
+
+            [CanBeNull] /*Expect:AnnotationConflictInHierarchy*/
+            public string PropertyWithExplicitNotNullInInterfaceCanBeNullInDerived => null /*Expect:AssignNullToNotNullAttribute*/;
+
+            [CanBeNull] /*Expect:AnnotationConflictInHierarchy[Implicit]*/
+            public string PropertyWithImplicitNotNullInInterfaceCanBeNullInDerived => null;
         }
     }
 }

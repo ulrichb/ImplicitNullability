@@ -13,5 +13,6 @@ namespace ImplicitNullability.Plugin.Configuration
         RefParameters = 2,
         OutParametersAndResult = 4,
         Fields = 8,
+        Properties = 16,
     }
 }

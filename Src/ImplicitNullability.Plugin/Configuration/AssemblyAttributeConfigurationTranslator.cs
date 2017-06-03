@@ -19,6 +19,7 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private const string AppliesToAttributeKey = "ImplicitNullability.AppliesTo";
         private const string FieldsAttributeKey = "ImplicitNullability.Fields";
+        private const string PropertiesAttributeKey = "ImplicitNullability.Properties";
         private const string GeneratedCodeKey = "ImplicitNullability.GeneratedCode";
 
         private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, int>> EnumTypeToValueDictionary =
@@ -39,7 +40,7 @@ namespace ImplicitNullability.Plugin.Configuration
             AssemblyMetadataAttributeValues GenerateAttributeValues()
             {
                 if (configuration.AppliesTo == ImplicitNullabilityAppliesTo.None)
-                    return new AssemblyMetadataAttributeValues(configuration.AppliesTo.ToString(), fields: null, generatedCode: null);
+                    return new AssemblyMetadataAttributeValues(configuration.AppliesTo.ToString());
 
                 var appliesToText = configuration.AppliesTo.ToString();
 
@@ -49,9 +50,15 @@ namespace ImplicitNullability.Plugin.Configuration
                         ? configuration.FieldOptions.ToString()
                         : null;
 
+                var propertiesText =
+                    configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Properties) &&
+                    configuration.PropertyOptions != ImplicitNullabilityPropertyOptions.NoOption
+                        ? configuration.PropertyOptions.ToString()
+                        : null;
+
                 var generatedCodeText = configuration.GeneratedCode.ToString();
 
-                return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, generatedCodeText);
+                return new AssemblyMetadataAttributeValues(appliesToText, fieldsText, propertiesText, generatedCodeText);
             }
 
             return GenerateAttributeValues().GenerateAttributeCode();
@@ -61,11 +68,12 @@ namespace ImplicitNullability.Plugin.Configuration
         {
             var appliesTo = ParseFlags<ImplicitNullabilityAppliesTo>(attributeValues.AppliesTo);
             var fieldOptions = ParseFlags<ImplicitNullabilityFieldOptions>(attributeValues.Fields);
+            var propertyOptions = ParseFlags<ImplicitNullabilityPropertyOptions>(attributeValues.Properties);
 
             // Fall back to `Include` if null/invalid (versus default = `Exclude` in the UI) for backwards compatibility with IN <= 3.6.0:
             var generatedCode = ParseEnum(attributeValues.GeneratedCode, defaultValue: GeneratedCodeOptions.Include);
 
-            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions, generatedCode);
+            return new ImplicitNullabilityConfiguration(appliesTo, fieldOptions, propertyOptions, generatedCode);
         }
 
         private static IReadOnlyDictionary<string, int> GetValueDictionary<TEnum>() where TEnum : struct
@@ -111,12 +119,20 @@ namespace ImplicitNullability.Plugin.Configuration
             public readonly string Fields;
 
             [CanBeNull]
+            public readonly string Properties;
+
+            [CanBeNull]
             public readonly string GeneratedCode;
 
-            public AssemblyMetadataAttributeValues([CanBeNull] string appliesTo, [CanBeNull] string fields, [CanBeNull] string generatedCode)
+            public AssemblyMetadataAttributeValues(
+                [CanBeNull] string appliesTo,
+                string fields = null,
+                string properties = null,
+                string generatedCode = null)
             {
                 AppliesTo = appliesTo;
                 Fields = fields;
+                Properties = properties;
                 GeneratedCode = generatedCode;
             }
 
@@ -137,6 +153,7 @@ namespace ImplicitNullability.Plugin.Configuration
                 return new AssemblyMetadataAttributeValues(
                     attributeValuesDictionary.TryGetValue(AppliesToAttributeKey),
                     attributeValuesDictionary.TryGetValue(FieldsAttributeKey),
+                    attributeValuesDictionary.TryGetValue(PropertiesAttributeKey),
                     attributeValuesDictionary.TryGetValue(GeneratedCodeKey));
             }
 
@@ -144,16 +161,17 @@ namespace ImplicitNullability.Plugin.Configuration
             {
                 var attributeType = AssemblyMetadataAttributeTypeName.FullName;
 
-                var attributeValuesDictionary = new Dictionary<string, string>
+                var attributeValues = new[]
                 {
-                    { AppliesToAttributeKey, AppliesTo },
-                    { FieldsAttributeKey, Fields },
-                    { GeneratedCodeKey, GeneratedCode },
+                    Pair.Of(AppliesToAttributeKey, AppliesTo),
+                    Pair.Of(FieldsAttributeKey, Fields),
+                    Pair.Of(PropertiesAttributeKey, Properties),
+                    Pair.Of(GeneratedCodeKey, GeneratedCode),
                 };
 
                 return string.Join(
                     Environment.NewLine,
-                    attributeValuesDictionary.Where(x => x.Value != null).Select(x => $"[assembly: {attributeType}(\"{x.Key}\", \"{x.Value}\")]"));
+                    attributeValues.Where(x => x.Second != null).Select(x => $"[assembly: {attributeType}(\"{x.First}\", \"{x.Second}\")]"));
             }
         }
     }

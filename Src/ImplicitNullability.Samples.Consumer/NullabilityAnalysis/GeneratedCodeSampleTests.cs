@@ -19,6 +19,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             sample.MethodExplicit(null /*Expect:AssignNullToNotNullAttribute*/);
             ReSharper.TestValueAnalysis(sample.Function(), sample.Function() == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
             ReSharper.TestValueAnalysis(sample.Field, sample.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
+            ReSharper.TestValueAnalysis(sample.Property, sample.Property == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
 
             GeneratedCodeSample.GeneratedCodeOnType.SomeDelegate someDelegate = x => null /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;
             var someDelegateResult = someDelegate(null /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/);
@@ -37,6 +38,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             sample.MethodExplicit(null /*Expect:AssignNullToNotNullAttribute*/);
             ReSharper.TestValueAnalysis(sample.Function(), sample.Function() == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
             ReSharper.TestValueAnalysis(sample.Field, sample.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
+            ReSharper.TestValueAnalysis(sample.Property, sample.Property == null /*Expect:ConditionIsAlwaysTrueOrFalse[InclGenCode]*/);
 
             GeneratedCodeSample.GeneratedCodeOnType.SomeDelegate someDelegate = x => null /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;
             var someDelegateResult = someDelegate(null /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/);

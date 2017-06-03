@@ -32,13 +32,15 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         const ImplicitNullabilityAppliesTo AppliesToInputAndFields = ImplicitNullabilityAppliesTo.InputParameters |
                                                                      ImplicitNullabilityAppliesTo.Fields;
 
-        const ImplicitNullabilityAppliesTo AppliesToInputAndOutput = ImplicitNullabilityAppliesTo.InputParameters |
-                                                                     ImplicitNullabilityAppliesTo.OutParametersAndResult;
+        const ImplicitNullabilityAppliesTo AppliesToInputOutputAndProperties = ImplicitNullabilityAppliesTo.InputParameters |
+                                                                               ImplicitNullabilityAppliesTo.OutParametersAndResult |
+                                                                               ImplicitNullabilityAppliesTo.Properties;
 
         const ImplicitNullabilityAppliesTo AppliesToAll = ImplicitNullabilityAppliesTo.InputParameters |
                                                           ImplicitNullabilityAppliesTo.RefParameters |
                                                           ImplicitNullabilityAppliesTo.OutParametersAndResult |
-                                                          ImplicitNullabilityAppliesTo.Fields;
+                                                          ImplicitNullabilityAppliesTo.Fields |
+                                                          ImplicitNullabilityAppliesTo.Properties;
 
         [Test]
         // 1. Enabled=false in the settings overrules everything:
@@ -73,6 +75,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableRefParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableOutParametersAndResult, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableFields, enableOptionInProject);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableProperties, enableOptionInProject);
             }
 
             //
@@ -98,6 +101,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             Assert.That(configuration.AppliesTo, Is.EqualTo(AppliesToAll));
             Assert.That(configuration.FieldOptions, Is.EqualTo(ImplicitNullabilityFieldOptions.NoOption));
+            Assert.That(configuration.PropertyOptions, Is.EqualTo(ImplicitNullabilityPropertyOptions.NoOption));
             Assert.That(configuration.GeneratedCode, Is.EqualTo(GeneratedCodeOptions.Include));
         }
 
@@ -113,21 +117,21 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [TestCase("MultipleAttributes", /*expected:*/ AppliesToInputAndFields)]
         //
         // The following non-existing / invalid attributes are overridden by the settings:
-        [TestCase("NoConfigurationAttribute", /*expected:*/ AppliesToInputAndOutput)]
-        [TestCase("AttributeWithNullKey", /*expected:*/ AppliesToInputAndOutput)]
-        [TestCase("AttributeWithNullValue", /*expected:*/ AppliesToInputAndOutput)]
-        [TestCase("NonCompilingAttribute1", /*expected:*/ AppliesToInputAndOutput)]
-        [TestCase("NonCompilingAttribute2", /*expected:*/ AppliesToInputAndOutput)]
-        [TestCase("NonCompilingAttribute3", /*expected:*/ AppliesToInputAndOutput)]
-        [TestCase("NonCompilingAttribute4", /*expected:*/ AppliesToInputAndOutput)]
-        public void TestAssemblyMetadataAttributeConfiguration(string testInput, ImplicitNullabilityAppliesTo expectedAppliesTo)
+        [TestCase("NoConfigurationAttribute", /*expected:*/ AppliesToInputOutputAndProperties)]
+        [TestCase("AttributeWithNullKey", /*expected:*/ AppliesToInputOutputAndProperties)]
+        [TestCase("AttributeWithNullValue", /*expected:*/ AppliesToInputOutputAndProperties)]
+        [TestCase("NonCompilingAttribute1", /*expected:*/ AppliesToInputOutputAndProperties)]
+        [TestCase("NonCompilingAttribute2", /*expected:*/ AppliesToInputOutputAndProperties)]
+        [TestCase("NonCompilingAttribute3", /*expected:*/ AppliesToInputOutputAndProperties)]
+        [TestCase("NonCompilingAttribute4", /*expected:*/ AppliesToInputOutputAndProperties)]
+        public void TestAssemblyMetadataAttributeConfiguration(string testInput, ImplicitNullabilityAppliesTo expected)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
-                settingsStore.EnableImplicitNullability(enableInputParameters: true, enableOutParametersAndResult: true);
+                settingsStore.EnableImplicitNullability(enableInputParameters: true, enableOutParametersAndResult: true, enableProperties: true);
 
             var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
 
-            Assert.That(configuration.AppliesTo, Is.EqualTo(expectedAppliesTo));
+            Assert.That(configuration.AppliesTo, Is.EqualTo(expected));
         }
 
         [Test]
@@ -137,7 +141,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [TestCase("FieldOptions_AttributeWithInvalidValue", /*expected:*/ ImplicitNullabilityFieldOptions.NoOption)]
         [TestCase("FieldOptions_AttributeWithAllOptions", /*expected:*/ ImplicitNullabilityFieldOptions.RestrictToReadonly |
                                                                         ImplicitNullabilityFieldOptions.RestrictToReferenceTypes)]
-        public void TestAssemblyMetadataAttribute_FieldOptions(string testInput, /*expected:*/ ImplicitNullabilityFieldOptions expected)
+        public void TestAssemblyMetadataAttribute_FieldOptions(string testInput, ImplicitNullabilityFieldOptions expected)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
                 settingsStore.EnableImplicitNullability();
@@ -149,9 +153,22 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         }
 
         [Test]
+        [TestCase("PropertyOptions_NoAttribute", /*expected:*/ ImplicitNullabilityPropertyOptions.NoOption)]
+        [TestCase("PropertyOptions_AttributeWithAllOptions", /*expected:*/ ImplicitNullabilityPropertyOptions.RestrictToGetterOnly |
+                                                                           ImplicitNullabilityPropertyOptions.RestrictToReferenceTypes)]
+        public void TestAssemblyMetadataAttribute_PropertyOptions(string testInput, ImplicitNullabilityPropertyOptions expected)
+        {
+            void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
+                settingsStore.EnableImplicitNullability();
+
+            var configuration = GetImplicitNullabilityConfigurationFor(testInput, ChangeSolutionSettings);
+
+            Assert.That(configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Properties));
+            Assert.That(configuration.PropertyOptions, Is.EqualTo(expected));
+        }
+
+        [Test]
         [TestCase("GeneratedCode_NoAttribute", /*expected:*/ GeneratedCodeOptions.Include)]
-        [TestCase("GeneratedCode_AttributeWithNullValue", /*expected:*/ GeneratedCodeOptions.Include)]
-        [TestCase("GeneratedCode_AttributeWitInvalidValue", /*expected:*/ GeneratedCodeOptions.Include)]
         [TestCase("GeneratedCode_AttributeWithInclude", /*expected:*/ GeneratedCodeOptions.Include)]
         [TestCase("GeneratedCode_AttributeWithExclude", /*expected:*/ GeneratedCodeOptions.Exclude)]
         public void TestAssemblyMetadataAttribute_GeneratedCode(string testInput, GeneratedCodeOptions expected)

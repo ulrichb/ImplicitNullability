@@ -32,6 +32,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public string Field;
 
+            public string Property { get; set; }
+
             public async Task<string> AsyncFunction() => await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;
 
             public void Consume()
@@ -74,6 +76,9 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             [GeneratedCode("tool", "version")]
             public string Field;
+
+            [GeneratedCode("tool", "version")]
+            public string Property { get; set; }
 
             [GeneratedCode("tool", "version")]
             public async Task<string> AsyncFunction() => await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;

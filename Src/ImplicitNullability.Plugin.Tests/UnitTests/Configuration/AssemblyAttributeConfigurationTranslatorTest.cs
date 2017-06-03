@@ -15,6 +15,9 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         private static readonly ImplicitNullabilityFieldOptions AllFieldOptions =
             ImplicitNullabilityFieldOptions.RestrictToReadonly | ImplicitNullabilityFieldOptions.RestrictToReferenceTypes;
 
+        private static readonly ImplicitNullabilityPropertyOptions AllPropertyOptions =
+            ImplicitNullabilityPropertyOptions.RestrictToGetterOnly | ImplicitNullabilityPropertyOptions.RestrictToReferenceTypes;
+
         [Test]
         public void GenerateAttributeCode_WithNoAppliesTo()
         {
@@ -32,8 +35,10 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                 ImplicitNullabilityAppliesTo.InputParameters |
                 ImplicitNullabilityAppliesTo.RefParameters |
                 ImplicitNullabilityAppliesTo.OutParametersAndResult |
-                ImplicitNullabilityAppliesTo.Fields,
+                ImplicitNullabilityAppliesTo.Fields |
+                ImplicitNullabilityAppliesTo.Properties,
                 AllFieldOptions,
+                AllPropertyOptions,
                 GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
@@ -41,39 +46,41 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             Assert.That(result, Is.EqualTo(
                 ExpectedAssemblyMetadataAttribute(
                     "ImplicitNullability.AppliesTo",
-                    "InputParameters, RefParameters, OutParametersAndResult, Fields") + NewLine +
+                    "InputParameters, RefParameters, OutParametersAndResult, Fields, Properties") + NewLine +
                 ExpectedAssemblyMetadataAttribute("ImplicitNullability.Fields", "RestrictToReadonly, RestrictToReferenceTypes") + NewLine +
+                ExpectedAssemblyMetadataAttribute("ImplicitNullability.Properties", "RestrictToGetterOnly, RestrictToReferenceTypes") + NewLine +
                 ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")));
         }
 
         [Test]
-        public void GenerateAttributeCode_WithFieldOptionsButAppliesToFieldsDisabled()
+        public void GenerateAttributeCode_WithFieldOrPropertyOptions_ButAppliesToFieldsOrPropertiesDisabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(
-                ImplicitNullabilityAppliesTo.InputParameters, AllFieldOptions, GeneratedCodeOptions.Exclude);
+                ImplicitNullabilityAppliesTo.InputParameters, AllFieldOptions, AllPropertyOptions, GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
             Assert.That(result, Is.EqualTo(
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters") + NewLine +
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")),
-                "'ImplicitNullability.Fields'-attribute should not be rendered");
+                "'options'-attribute should not be rendered");
         }
 
         [Test]
-        public void GenerateAttributeCode_WithoutFieldOptionsButAppliesToFieldsEnabled()
+        public void GenerateAttributeCode_WithoutFieldOrPropertyOptions_ButAppliesToFieldsOrPropertiesEnabled()
         {
             var configuration = new ImplicitNullabilityConfiguration(
-                ImplicitNullabilityAppliesTo.InputParameters | ImplicitNullabilityAppliesTo.Fields,
+                ImplicitNullabilityAppliesTo.InputParameters | ImplicitNullabilityAppliesTo.Fields | ImplicitNullabilityAppliesTo.Properties,
                 ImplicitNullabilityFieldOptions.NoOption,
+                ImplicitNullabilityPropertyOptions.NoOption,
                 GeneratedCodeOptions.Exclude);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);
 
             Assert.That(result, Is.EqualTo(
-                    ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters, Fields") + NewLine +
+                    ExpectedAssemblyMetadataAttribute("ImplicitNullability.AppliesTo", "InputParameters, Fields, Properties") + NewLine +
                     ExpectedAssemblyMetadataAttribute("ImplicitNullability.GeneratedCode", "Exclude")),
-                "'ImplicitNullability.Fields'-attribute should not be rendered");
+                "'options'-attribute should not be rendered");
         }
 
         [Test]
@@ -82,6 +89,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
             var configuration = new ImplicitNullabilityConfiguration(
                 ImplicitNullabilityAppliesTo.InputParameters,
                 ImplicitNullabilityFieldOptions.NoOption,
+                ImplicitNullabilityPropertyOptions.NoOption,
                 GeneratedCodeOptions.Include);
 
             var result = AssemblyAttributeConfigurationTranslator.GenerateAttributeCode(configuration);

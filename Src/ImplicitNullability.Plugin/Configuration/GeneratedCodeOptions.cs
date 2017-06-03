@@ -6,6 +6,6 @@ namespace ImplicitNullability.Plugin.Configuration
     public enum GeneratedCodeOptions
     {
         Exclude,
-        Include
+        Include,
     }
 }

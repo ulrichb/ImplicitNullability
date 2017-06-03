@@ -94,6 +94,34 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         }
 
         [Test]
+        public void WithEnabledProperties()
+        {
+            Test(changeSettings: x => x.EnableImplicitNullability(enableProperties: true),
+                definedExpectedWarningSymbols: new[] { "Prps" },
+                //
+                assert: issueFilePaths =>
+                {
+                    // Fixation of selected files
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("PropertiesSample.cs"));
+                    Assert.That(issueFilePaths, Has.Some.EqualTo("PropertiesSampleTests.cs"));
+                });
+        }
+
+        [Test]
+        public void WithEnabledPropertiesAndRestrictToGetterOnly()
+        {
+            Test(changeSettings: x => x.EnableImplicitNullability(enableProperties: true, propertiesRestrictToGetterOnly: true),
+                definedExpectedWarningSymbols: new[] { "Prps", "RtGo" });
+        }
+
+        [Test]
+        public void WithEnabledPropertiesAndRestrictToReferenceTypes()
+        {
+            Test(changeSettings: x => x.EnableImplicitNullability(enableProperties: true, propertiesRestrictToReferenceTypes: true),
+                definedExpectedWarningSymbols: new[] { "Prps", "RtRT" });
+        }
+
+        [Test]
         public void WithoutEnabledImplicitNullabilityOptions()
         {
             // Ensures that when the implicit nullability settings are disabled, the conditional expected warnings are *not* present.
@@ -105,7 +133,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         public void WithEnabledImplicitNullabilityAndIncludeGeneratedCode()
         {
             Test(changeSettings: x => x.EnableImplicitNullabilityForAllCodeElements(GeneratedCodeOptions.Include),
-                definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut", "Flds", "InclGenCode" },
+                definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut", "Flds", "Prps", "InclGenCode" },
                 //
                 assert: issueFiles =>
                 {
@@ -121,8 +149,8 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         {
             Test(changeSettings: x => x.EnableImplicitNullability( /* no options*/),
                 projectFilter: x => x.Name == ExternalCodeConsumerProjectName,
-                // as configured in ImplicitNullabilityAssemblyMetadata.cs:
-                definedExpectedWarningSymbols: new[] { "MIn", "MRef", "MOut", "Flds", "RtRo", "RtRT" },
+                // as configured in ImplicitNullabilityConfigurationAttributes.cs:
+                definedExpectedWarningSymbols: new[] { "External", "MIn", "MRef", "MOut", "Flds", "Prps", "RtRo", "RtGo", "RtRT" },
                 //
                 assert: issueFiles =>
                 {

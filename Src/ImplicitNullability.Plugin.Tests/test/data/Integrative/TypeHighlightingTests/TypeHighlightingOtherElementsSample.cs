@@ -26,7 +26,6 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 
         public class Fields
         {
-            [NotNull]
             public string SomeField;
 
             public readonly string SomeReadonlyField = "";
@@ -41,20 +40,15 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             public abstract string VirtualPropertyWithExplicitNullabilityInBase { get; set; }
         }
 
-        // Atm. IN doesn't support properties/indexers
-
         public class Properties : PropertiesBase
         {
-            [NotNull]
             public string SomeProperty { get; set; }
 
             [CanBeNull]
             public string SomeCanBeNullProperty { get; set; }
 
-            [NotNull]
             public string SomeExpresssionBodyProperty => "";
 
-            [NotNull]
             public string SomeGetterOnlyProperty { get; } = "";
 
             public override string VirtualPropertyWithExplicitNullabilityInBase { get; set; }
@@ -62,7 +56,6 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 
         public class Indexers
         {
-            [NotNull]
             public string this[string a] => "";
 
             [CanBeNull]
@@ -76,13 +69,11 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
             [CanBeNull]
             string MethodWithCanBeNull([CanBeNull] string a);
 
-            [NotNull]
             string SomeProperty { get; set; }
 
             [CanBeNull]
             string SomeCanBeNullProperty { get; set; }
 
-            [NotNull]
             string SomeGetterOnlyProperty { get; }
         }
     }

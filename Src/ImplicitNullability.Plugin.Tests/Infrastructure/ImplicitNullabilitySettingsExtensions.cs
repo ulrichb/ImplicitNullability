@@ -14,6 +14,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             bool enableFields = false,
             bool fieldsRestrictToReadonly = false,
             bool fieldsRestrictToReferenceTypes = false,
+            bool enableProperties = false,
+            bool propertiesRestrictToGetterOnly = false,
+            bool propertiesRestrictToReferenceTypes = false,
             GeneratedCodeOptions generatedCode = GeneratedCodeOptions.Exclude)
         {
             // Fixate default values:
@@ -24,6 +27,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableFields), Is.True);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly), Is.True);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes), Is.False);
+            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.EnableProperties), Is.True);
+            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.PropertiesRestrictToGetterOnly), Is.True);
+            Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.PropertiesRestrictToReferenceTypes), Is.False);
             Assert.That(settingsStore.GetValue((ImplicitNullabilitySettings s) => s.GeneratedCode), Is.EqualTo(GeneratedCodeOptions.Exclude));
 
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.Enabled, true);
@@ -33,6 +39,9 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableFields, enableFields);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReadonly, fieldsRestrictToReadonly);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.FieldsRestrictToReferenceTypes, fieldsRestrictToReferenceTypes);
+            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.EnableProperties, enableProperties);
+            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.PropertiesRestrictToGetterOnly, propertiesRestrictToGetterOnly);
+            settingsStore.SetValue((ImplicitNullabilitySettings s) => s.PropertiesRestrictToReferenceTypes, propertiesRestrictToReferenceTypes);
             settingsStore.SetValue((ImplicitNullabilitySettings s) => s.GeneratedCode, generatedCode);
         }
 
@@ -46,6 +55,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                 enableRefParameters: true,
                 enableOutParametersAndResult: true,
                 enableFields: true,
+                enableProperties: true,
                 generatedCode: generatedCode);
         }
     }

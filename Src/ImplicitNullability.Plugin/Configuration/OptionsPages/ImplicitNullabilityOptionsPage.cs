@@ -14,6 +14,7 @@ using JetBrains.UI.Options;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions.ViewModel;
 using JetBrains.UI.Resources;
+
 #else
 using JetBrains.Application.UI.Components;
 using JetBrains.Application.UI.Icons.CommonThemedIcons;
@@ -97,9 +98,28 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 
             AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReferenceTypes,
-                new RichText("Restrict to fields contained in reference types (because ") + new RichText("struct", Italic) +
-                new RichText("s cannot be guarded by invariants due to their implicit default constructor)"),
+                new RichText("Restrict to fields contained in reference types (because due to the implicit default constructor ") +
+                new RichText("struct", Italic) + new RichText("s cannot guarantee non-null initialized fields)"),
                 parentOption: enableFieldsOption,
+                indent: 3);
+
+            var enablePropertiesOption = AddNullabilityBoolOption(
+                s => s.EnableProperties,
+                "Properties",
+                parentOption: enabledOption,
+                indent: 2);
+
+            AddNullabilityBoolOption(
+                s => s.PropertiesRestrictToGetterOnly,
+                new RichText("Restrict to getter-only properties (including C# 6+ readonly auto-properties)"),
+                parentOption: enablePropertiesOption,
+                indent: 3);
+
+            AddNullabilityBoolOption(
+                s => s.PropertiesRestrictToReferenceTypes,
+                new RichText("Restrict to properties contained in reference types (because due to the implicit default constructor ") +
+                new RichText("struct", Italic) + new RichText("s cannot guarantee non-null initialized auto-properties)"),
+                parentOption: enablePropertiesOption,
                 indent: 3);
 
             AddText("");
@@ -118,7 +138,7 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies.";
             SetIndent(AddText(assemblyAttributeInfoText1), 1);
 
-            var copyButtonText = "Copy [AssemblyMetadata] attributes to clipboard (using above options as a template)";
+            var copyButtonText = "Copy [AssemblyMetadata] attributes to clipboard (corresponding to the options above)";
             var copyButton = AddButton(copyButtonText, new DelegateCommand(CopyAssemblyAttributeCode));
             SetIndent(copyButton, 2);
             enabledOption.CheckedProperty.FlowInto(myLifetime, copyButton.GetIsEnabledProperty());

@@ -21,6 +21,12 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             [ItemCanBeNull]
             Task<string> TaskFunctionWithCanBeNullInInterfaceImplicitNotNullInDerived();
+
+            [CanBeNull]
+            string PropertyWithCanBeNullInInterfaceExplicitNotNullInDerived { get; }
+
+            [CanBeNull]
+            string PropertyWithCanBeNullInInterfaceImplicitNotNullInDerived { get; }
         }
 
         public class Implementation : IInterface
@@ -46,7 +52,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public string FunctionWithCanBeNullInInterfaceImplicitNotNullInDerived
                 /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                return "";
+                return null;
             }
 
             [ItemNotNull]
@@ -58,8 +64,14 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public async Task<string> TaskFunctionWithCanBeNullInInterfaceImplicitNotNullInDerived
                 /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
             {
-                return await Async.NotNullResult("");
+                return await Async.CanBeNullResult<string>();
             }
+
+            [NotNull]
+            public string PropertyWithCanBeNullInInterfaceExplicitNotNullInDerived => "";
+
+            public string PropertyWithCanBeNullInInterfaceImplicitNotNullInDerived
+                /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/ => null;
         }
     }
 }

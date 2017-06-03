@@ -29,7 +29,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [Test]
         public void IndexerSetterInvocation_WithNullValue()
         {
-            Action act = () => _indexersSample[null /* no warning because dynamic invocations are excluded */] = null;
+            Action act = () => _indexersSample[null /* no warning because dynamic invocations are excluded */] = "some value";
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }

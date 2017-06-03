@@ -53,10 +53,26 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             value.Should().BeNull();
         }
 
+        [Test]
+        [TestCase("InternalProperty")]
+        [TestCase("ProtectedProperty")]
+        [TestCase("PrivateProperty")]
+        public void Property(string name)
+        {
+            Action act = () => GetNonPublicProperty(name).GetValue(_instance);
+
+            act.ShouldThrow<TargetInvocationException>()
+                .And.InnerException.Should().BeOfType<InvalidOperationException>()
+                .Which.Message.Should().Match("[NullGuard] Return value of property *" + name + "* is null.");
+        }
+
         private MethodInfo GetNonPublicMethod(string name) =>
             _instance.GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance);
 
         private FieldInfo GetNonPublicField(string name) =>
             _instance.GetType().GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private PropertyInfo GetNonPublicProperty(string name) =>
+            _instance.GetType().GetProperty(name, BindingFlags.NonPublic | BindingFlags.Instance);
     }
 }

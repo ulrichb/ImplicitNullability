@@ -13,6 +13,17 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             void ExplicitCanBeNull([CanBeNull] string canBeNull);
             void ExplicitCanBeNullInInterfaceAndImplicitCanBeNullInDerived([CanBeNull] int? nullableInt, [CanBeNull] string optional = null);
             void ImplicitCanBeNullInInterfaceAndExplicitCanBeNullInDerived(int? nullableInt, string optional = null);
+
+            [NotNull]
+            string PropertyWithExplicitNotNull { set; }
+
+            [NotNull]
+            string PropertyWithNotNullInInterfaceAndImplicitNotNullInDerived { set; }
+
+            string PropertyWithImplicitNotNullInInterfaceAndExplicitNotNullInDerived { set; }
+
+            [CanBeNull]
+            string PropertyWithExplicitCanBeNull { set; }
         }
 
         public class Implementation : IInterface
@@ -39,6 +50,29 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             public void ImplicitCanBeNullInInterfaceAndExplicitCanBeNullInDerived([CanBeNull] int? nullableInt, [CanBeNull] string optional = null)
             {
+            }
+
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string PropertyWithExplicitNotNull
+            {
+                set { }
+            }
+
+            public string PropertyWithNotNullInInterfaceAndImplicitNotNullInDerived
+            {
+                set { }
+            }
+
+            [NotNull]
+            public string PropertyWithImplicitNotNullInInterfaceAndExplicitNotNullInDerived
+            {
+                set { }
+            }
+
+            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string PropertyWithExplicitCanBeNull
+            {
+                set { }
             }
         }
     }

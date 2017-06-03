@@ -1,4 +1,5 @@
 ### vNext ###
+- Added support for properties => Implicit Nullability now finally supports all members where ReSharper provides nullability analysis :)
 - ReSharper 2017.2 support
 
 ### 3.7.0 ###

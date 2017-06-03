@@ -20,6 +20,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
                 return await Async.CanBeNullResult<string>();
             }
+
+            public override string Property /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/ { get; set; }
         }
 
         public class ExternalNotNull : External.BaseClassWithNotNull
@@ -37,6 +39,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
                 return await Async.NotNullResult("");
             }
+
+            public override string Property /*Expect no warning*/ { get; set; }
         }
 
         public class AllBaseTypesNotNull :
@@ -58,13 +62,18 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
                 return await Async.NotNullResult("");
             }
+
+            public override string Property { get; set; } = "";
         }
 
         public class OneOfThreeBaseTypesIsUnknownExternalCode :
             // OK because of the NotNull annotation:
             External.BaseClassWithNotNull,
             // The bad ones:
-            External.IInterfaceWithMethod<string>, External.IInterfaceWithFunction<string>, External.IInterfaceWithAsyncFunction<string>,
+            External.IInterfaceWithMethod<string>,
+            External.IInterfaceWithFunction<string>,
+            External.IInterfaceWithAsyncFunction<string>,
+            External.IInterfaceWithProperty<string>,
             // OK because implicitly NotNull:
             IImplicitlyNullableInterface
         {
@@ -81,6 +90,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
                 return await Async.NotNullResult("");
             }
+
+            public override string Property /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/ { get; set; }
         }
     }
 }

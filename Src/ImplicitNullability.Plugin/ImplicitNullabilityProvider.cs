@@ -47,6 +47,8 @@ namespace ImplicitNullability.Plugin
                     return AnalyzeDelegate(@delegate);
                 case IField field:
                     return AnalyzeField(field);
+                case IProperty property:
+                    return AnalyzeProperty(property);
             }
 
             return null;
@@ -152,6 +154,24 @@ namespace ImplicitNullability.Plugin
                     {
                         result = GetNullabilityForType(field.Type);
                     }
+                }
+            }
+
+            return result;
+        }
+
+        private CodeAnnotationNullableValue? AnalyzeProperty(IProperty property)
+        {
+            CodeAnnotationNullableValue? result = null;
+
+            var configuration = _configurationEvaluator.EvaluateFor(property.Module);
+
+            if (configuration.HasAppliesTo(ImplicitNullabilityAppliesTo.Properties) &&
+                IsPropertyMatchingConfigurationOptions(property, configuration))
+            {
+                if (!IsExcludedGeneratedCode(configuration, property))
+                {
+                    result = GetNullabilityForType(property.Type);
                 }
             }
 
@@ -300,8 +320,17 @@ namespace ImplicitNullability.Plugin
 
         private static bool IsFieldMatchingConfigurationOptions(IField field, ImplicitNullabilityConfiguration configuration)
         {
-            return (!configuration.HasFieldOption(ImplicitNullabilityFieldOptions.RestrictToReadonly) || field.IsReadonly) &&
-                   (!configuration.HasFieldOption(ImplicitNullabilityFieldOptions.RestrictToReferenceTypes) || field.IsMemberOfReferenceType());
+            return
+                (!configuration.HasFieldOption(ImplicitNullabilityFieldOptions.RestrictToReadonly) || field.IsReadonly) &&
+                (!configuration.HasFieldOption(ImplicitNullabilityFieldOptions.RestrictToReferenceTypes) || field.IsMemberOfReferenceType());
+        }
+
+        private static bool IsPropertyMatchingConfigurationOptions(IProperty property, ImplicitNullabilityConfiguration configuration)
+        {
+            return
+                // Note that `IsWritable` also searches for "polymorphic setters" (see `PartiallyOveriddenProperties` test data)
+                (!configuration.HasPropertyOption(ImplicitNullabilityPropertyOptions.RestrictToGetterOnly) || !property.IsWritable) &&
+                (!configuration.HasPropertyOption(ImplicitNullabilityPropertyOptions.RestrictToReferenceTypes) || property.IsMemberOfReferenceType());
         }
     }
 }

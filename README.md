@@ -84,14 +84,13 @@ Another goal of this extension is to bring ReSharper's static analysis in sync w
 
 ### Differences to ReSharper's "Implicit [NotNull] Value Analysis Mode"
 
-Since version 2016.1 ReSharper supports a comparable feature (see *Code Inspection | Settings*) with the following differences.
+Since version 2016.1 ReSharper supports (in the "internal mode") a comparable feature (see *Code Inspection | Settings*) with the following differences.
 
 _Implicit Nullability_ ...
 * ... rules can be enabled / disabled for _specific_ code elements like parameters or (readonly) fields.
 * ... supports (project specific) [configuration by code](#code-configuration).
 * ... adds additional [warnings](#code-inspection-warnings).
 * ... adds [type highlighting](#type-highlighting) for explicit or implicit `[NotNull]` elements.
-* ... does not support properties at the moment.
 
 ## Type highlighting
 
@@ -112,8 +111,9 @@ _Implicit Nullability_ can also be configured by code using an [`AssemblyMetadat
 Example:
 ```C#
 [assembly: AssemblyMetadata("ImplicitNullability.AppliesTo",
-                            "InputParameters, RefParameters, OutParametersAndResult, Fields")]
+                            "InputParameters, RefParameters, OutParametersAndResult, Fields, Properties")]
 [assembly: AssemblyMetadata("ImplicitNullability.Fields", "RestrictToReadonly")]
+[assembly: AssemblyMetadata("ImplicitNullability.Properties", "RestrictToGetterOnly")]
 [assembly: AssemblyMetadata("ImplicitNullability.GeneratedCode", "Exclude")]
 ```
 

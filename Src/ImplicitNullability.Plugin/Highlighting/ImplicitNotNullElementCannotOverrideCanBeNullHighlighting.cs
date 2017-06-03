@@ -2,7 +2,6 @@
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
-using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
     ImplicitNotNullElementCannotOverrideCanBeNullHighlighting.SeverityId,
@@ -18,8 +17,9 @@ namespace ImplicitNullability.Plugin.Highlighting
         SeverityId,
         CSharpLanguage.Name,
         OverlapResolve = OverlapResolveKind.WARNING,
+        OverloadResolvePriority = OutputWarningPriority,
         ToolTipFormatString = Message)]
-    public class ImplicitNotNullElementCannotOverrideCanBeNullHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
+    public class ImplicitNotNullElementCannotOverrideCanBeNullHighlighting : ImplicitNullabilityHighlightingBase
     {
         public const string SeverityId = "ImplicitNotNullElementCannotOverrideCanBeNull";
 
@@ -29,7 +29,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "Warns about implicit [NotNull] results or out parameters with a corresponding [CanBeNull] element in a base member. " +
             "It's better to explicitly annotate these occurrences with [NotNull] or [CanBeNull] " +
             "because the implicit [NotNull] doesn't have any effect (ReSharper inherits the base's [CanBeNull]). " +
-            SharedHighlightingTexts.NeedsSettingNoteText;
+            NeedsSettingNoteText;
 
         public ImplicitNotNullElementCannotOverrideCanBeNullHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)

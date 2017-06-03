@@ -86,23 +86,31 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
         public interface IOtherElementsBase
         {
             [CanBeNull]
-            string Property { get; set; }
+            string ExplicitCanBeNullInBaseAndDerived { get; }
+
+            [NotNull]
+            string ExplicitNotNullInBaseAndDerived { get; }
 
             [CanBeNull]
-            string this[string a] { get; set; }
+            string this[[CanBeNull] string a] { get; }
+
+            [NotNull]
+            object this[[NotNull] object a] { get; }
         }
 
         public class OtherElementsBase : IOtherElementsBase
         {
-            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy*/
-            public string Property { get; set; }
+            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string ExplicitCanBeNullInBaseAndDerived => null;
 
-            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy*/
-            public string this[string a]
-            {
-                get { return null; }
-                set { }
-            }
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string ExplicitNotNullInBaseAndDerived => "";
+
+            [CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public string this[[CanBeNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/ string a] => null;
+
+            [NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/
+            public object this[[NotNull] /*Expect:AnnotationRedundancyInHierarchy[not Implicit]*/ object a] => new object();
         }
     }
 }

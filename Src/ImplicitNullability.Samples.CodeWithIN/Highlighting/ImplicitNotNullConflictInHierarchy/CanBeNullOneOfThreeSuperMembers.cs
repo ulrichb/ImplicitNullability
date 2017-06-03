@@ -10,6 +10,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             void Method(string a);
             string Function();
             Task<string> AsyncFunction();
+            string Property { get; set; }
         }
 
         private interface IInterface2
@@ -21,6 +22,9 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             [ItemCanBeNull]
             Task<string> AsyncFunction();
+
+            [CanBeNull]
+            string Property { get; set; }
         }
 
         private interface IInterface3
@@ -28,6 +32,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             void Method(string a);
             string Function();
             Task<string> AsyncFunction();
+            string Property { get; set; }
         }
 
         public class Implementation : IInterface1, IInterface2, IInterface3
@@ -45,6 +50,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             {
                 return await Async.CanBeNullResult<string>();
             }
+
+            public string Property /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/ { get; set; } = null;
         }
     }
 }

@@ -1,3 +1,3 @@
 ﻿using NullGuard;
 
-[assembly: NullGuard(ValidationFlags.Methods | ValidationFlags.NonPublic)]
+[assembly: NullGuard(ValidationFlags.Methods | ValidationFlags.Properties | ValidationFlags.NonPublic)]

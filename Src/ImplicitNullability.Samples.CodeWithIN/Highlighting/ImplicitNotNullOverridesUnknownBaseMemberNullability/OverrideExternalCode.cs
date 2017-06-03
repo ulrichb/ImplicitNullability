@@ -27,7 +27,34 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
                 return baseValue;
             }
 
-            public override string this[string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/] => null;
+            public override string SetterOnlyProperty /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/
+            {
+                set { }
+            }
+
+            public override string GetterOnlyProperty /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/
+            {
+                get
+                {
+                    var baseValue = base.GetterOnlyProperty;
+                    // Here we convert an unknown (possibly CanBeNull) value to an implicitly NotNull return value:
+                    return baseValue;
+                }
+            }
+
+            public override string Property /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/ { get; set; }
+
+            public override string this /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/[
+                string a /*Expect:ImplicitNotNullOverridesUnknownBaseMemberNullability[Implicit]*/]
+            {
+                get
+                {
+                    var baseValue = base[a];
+                    // Here we convert an unknown (possibly CanBeNull) value to an implicitly NotNull return value:
+                    return baseValue;
+                }
+                set { }
+            }
         }
 
         public class DerivedClassInOwnCodeWithExplicitCanBeNull : External.Class
@@ -42,7 +69,15 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             [ItemCanBeNull]
             public override async Task<string> AsyncFunction() => await base.AsyncFunction();
 
-            public override string this[[CanBeNull] string a] => null;
+            [CanBeNull]
+            public override string Property { get; set; }
+
+            [CanBeNull]
+            public override string this[[CanBeNull] string a]
+            {
+                get { return base[a]; }
+                set { }
+            }
         }
 
         public class DerivedClassInOwnCodeWithExplicitNotNull : External.Class
@@ -57,7 +92,15 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             [ItemNotNull]
             public override async Task<string> AsyncFunction() => await base.AsyncFunction();
 
-            public override string this[[NotNull] string a] => null;
+            [NotNull]
+            public override string Property { get; set; }
+
+            [NotNull]
+            public override string this[[NotNull] string a]
+            {
+                get { return base[a]; }
+                set { }
+            }
         }
 
         public class OverrideWithDefaultValue : External.IInterfaceWithMethod<string>
@@ -76,6 +119,26 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             public DateTime Function() => default(DateTime);
         }
 
+        public class SuppressedInputWarningOnPropertyOrIndexer : External.Class
+        {
+            // Prove that both warning are emitted (and ImplicitNotNullOverridesUnknownBaseMemberNullability is prioritized):
+
+            // ReSharper disable ImplicitNotNullOverridesUnknownBaseMemberNullability
+            public override string Property
+                /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/ { get; set; }
+            // ReSharper restore ImplicitNotNullOverridesUnknownBaseMemberNullability
+
+            // ReSharper disable ImplicitNotNullOverridesUnknownBaseMemberNullability
+            public override string this
+                /*Expect:ImplicitNotNullResultOverridesUnknownBaseMemberNullability[Implicit]*/
+                // ReSharper restore ImplicitNotNullOverridesUnknownBaseMemberNullability
+                [[CanBeNull] string a]
+            {
+                get { return base[a]; }
+                set { }
+            }
+        }
+
         // Counter-example
         public class DerivedFromImplicitlyNullableCode : IImplicitlyNullableInterface
         {
@@ -86,6 +149,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             public string Function() => "";
 
             public async Task<string> AsyncFunction() => await Async.NotNullResult("");
+
+            public string Property { get; set; } = "";
         }
     }
 }

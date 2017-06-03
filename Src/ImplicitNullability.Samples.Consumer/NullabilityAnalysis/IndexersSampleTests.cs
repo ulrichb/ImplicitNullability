@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using ImplicitNullability.Samples.CodeWithIN;
 using ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis;
 using NUnit.Framework;
 
@@ -19,37 +20,59 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [Test]
         public void IndexerSetterWithNonNullValue()
         {
-            Action act = () => _instance[""] = null;
+            Action act = () => _instance[""] = "";
 
             act.ShouldNotThrow();
         }
 
         [Test]
-        public void IndexerSetterWithNullValue()
+        public void IndexerSetterWithNullParameter()
         {
-            Action act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/] = null;
+            Action act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/] = "";
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
-        public void IndexerGetterWithNonNullValue()
+        public void IndexerSetterWithNullValue()
         {
-            Func<string> act = () => _instance[""];
+            Action act = () => _instance[""] = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo && RS > 20171]*/;
 
-            act.ToAction().ShouldNotThrow();
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 
         [Test]
-        public void IndexerGetterWithNullValue()
+        public void IndexerGetterWithNonNullParameterAndResult()
         {
-            Func<string> act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/];
+            Action act = () =>
+            {
+                var value = _instance[""];
+                ReSharper.TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
+            };
+
+            act.ShouldNotThrow();
+        }
+
+        [Test]
+        public void IndexerGetterWithNullParameter()
+        {
+            Func<object> act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/];
 
             act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
-        public void IndexerSetterWithNullableParameter()
+        public void IndexerGetterWithNullResult()
+        {
+            Func<object> act = () => _instance["<return null>"];
+
+            act.ToAction().ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value *Item* is null.");
+        }
+
+        //
+
+        [Test]
+        public void IndexerSetterWithNullableParameters()
         {
             Action act = () => _instance[canBeNull: null, nullableInt: null, optional: null] = null;
 
@@ -57,11 +80,15 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         }
 
         [Test]
-        public void IndexerGetterWithNullableParameter()
+        public void IndexerGetterWithNullableParametersAndResult()
         {
-            Func<string> act = () => _instance[canBeNull: null, nullableInt: null, optional: null];
+            Action act = () =>
+            {
+                var value = _instance[canBeNull: null, nullableInt: null, optional: null];
+                ReSharper.TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
+            };
 
-            act.ToAction().ShouldNotThrow();
+            act.ShouldNotThrow();
         }
     }
 }

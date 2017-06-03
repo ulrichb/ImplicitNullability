@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ImplicitNullability.Plugin": {
+    "Plugin (in VS)": {
       "commandName": "Executable",
       "executablePath": "$(DevEnvDir)devenv.exe",
       "commandLineArgs": "/RootSuffix ExpRS$(ReSharperVersionIdentifier) /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln"

@@ -50,7 +50,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         public class ImmutableClass
         {
             public readonly string Field;
-            public readonly string Field2;
 
             [CanBeNull]
             public readonly string NullableField;
@@ -60,35 +59,43 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             public ImmutableClass(string value, string nullableValue = null)
             {
                 Field = value;
-                Field2 = nullableValue /*Expect:AssignNullToNotNullAttribute[Flds]*/;
                 NullableField = nullableValue;
                 FieldWithUnknownValue = External.UnknownNullabilityString;
             }
 
+            // Bad c'tor:
             public ImmutableClass /*Expect:NotNullMemberIsNotInitialized[Flds]*/()
             {
-                // REPORTED (https://youtrack.jetbrains.com/issue/RSRP-460405): The NotNull is used before the first assignment.
-                TestValueAnalysis(Field, Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
-
-                Field2 = "";
             }
         }
 
-        public struct ImmutableStruct
+        public class ImmutableClassWithUseBeforeAssignment
         {
             public readonly string Field;
-            public readonly string Field2;
 
-            public ImmutableStruct(string value, string nullableValue = null)
+            public ImmutableClassWithUseBeforeAssignment /*Expect:NotNullMemberIsNotInitialized[Flds]*/()
             {
-                Field = value;
-                Field2 = nullableValue /*Expect:AssignNullToNotNullAttribute[Flds && !RtRT]*/;
+                // This is wrong, but R# instead emits the NotNullMemberIsNotInitialized on the c'tor, which is good enough:
+                // REPORTED: https://youtrack.jetbrains.com/issue/RSRP-460405
+                TestValueAnalysis(Field, Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
+
+                Field = "";
+            }
+        }
+
+        public class ImmutableClassWithUseAfterAssignment
+        {
+            public readonly string Field;
+
+            public ImmutableClassWithUseAfterAssignment()
+            {
+                Field = "";
+                TestValueAnalysis(Field, Field == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-464147 */);
             }
 
-            public void ConsumeWithinStruct()
+            public void Consume()
             {
-                // REPORTED false positive https://youtrack.jetbrains.com/issue/RSRP-462952
-                TestValueAnalysis(Field, Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRT]*/);
+                TestValueAnalysis(Field, Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds]*/);
             }
         }
 
@@ -96,9 +103,32 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             public string Field;
 
-            public MutableStruct(string nullableValue = null)
+            public MutableStruct(string field)
             {
-                Field = nullableValue /*Expect:AssignNullToNotNullAttribute[Flds && !(RtRo || RtRT)]*/;
+                Field = field;
+            }
+        }
+
+        public struct ImmutableStruct
+        {
+            public readonly string Field;
+
+            public ImmutableStruct(string field)
+            {
+                Field = field;
+            }
+
+            public ImmutableStruct(int i)
+            {
+                SuppressUnusedWarning(i);
+
+                Field = null /*Expect:AssignNullToNotNullAttribute[Flds && !RtRT]*/;
+            }
+
+            public void ConsumeWithinStruct()
+            {
+                // REPORTED false positive https://youtrack.jetbrains.com/issue/RSRP-462952
+                TestValueAnalysis(Field, Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRT]*/);
             }
         }
 

@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullConflictInHierarchy
+// ReSharper disable ArrangeAccessorOwnerBody
+
+namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 {
-    public class NullabilityInheritanceBehavior
+    public class InheritanceBehavior
     {
         public interface IInterface
         {
@@ -26,8 +28,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 return null /*Expect:AssignNullToNotNullAttribute*/;
             }
 
-            public string ExplicitCanBeNullInBase /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/(
-                string a /*Expect:ImplicitNotNullConflictInHierarchy[Implicit]*/)
+            public string ExplicitCanBeNullInBase /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[MOut]*/(
+                string a /*Expect:ImplicitNotNullConflictInHierarchy[MIn]*/)
             {
                 // Here ReSharper inherits the [CanBeNull] from the base member.
                 // Note that this is one of the reasons for the ImplicitNotNullElementCannotOverrideCanBeNull warning.
@@ -65,7 +67,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
                 return await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute*/;
             }
 
-            public async Task<string> ExplicitCanBeNullInBase /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[Implicit]*/()
+            public async Task<string> ExplicitCanBeNullInBase /*Expect:ImplicitNotNullElementCannotOverrideCanBeNull[MOut]*/()
             {
                 return await Async.CanBeNullResult<string>();
             }
@@ -74,6 +76,33 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
             public async Task<string> OverriddenNullabilityInDerived()
             {
                 return await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute*/;
+            }
+        }
+
+        public class PartiallyOveriddenPropertiesBase
+        {
+            public virtual string PropertyWithOveriddenGetter { get; set; }
+            public virtual string PropertyWithOveriddenSetter { get; set; }
+        }
+
+        public class PartiallyOveriddenProperties : PartiallyOveriddenPropertiesBase
+        {
+            public override string PropertyWithOveriddenGetter
+            {
+                get => null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
+                // here we have a "polymorhpic" setter
+            }
+
+            public override string PropertyWithOveriddenSetter
+            {
+                // here we have a "polymorhpic" getter
+                set => ReSharper.TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
+            }
+
+            public void Consume()
+            {
+                PropertyWithOveriddenGetter = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
+                PropertyWithOveriddenSetter = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
             }
         }
     }

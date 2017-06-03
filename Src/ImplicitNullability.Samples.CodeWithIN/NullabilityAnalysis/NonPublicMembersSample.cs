@@ -48,5 +48,16 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         private readonly string _privateField = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
 #pragma warning restore 414
         // ReSharper restore RedundantDefaultMemberInitializer
+
+        //
+
+        [UsedImplicitly]
+        internal string InternalProperty => null /*Expect:AssignNullToNotNullAttribute[Prps]*/;
+
+        [UsedImplicitly]
+        protected string ProtectedProperty => null /*Expect:AssignNullToNotNullAttribute[Prps]*/;
+
+        [UsedImplicitly]
+        private string PrivateProperty => null /*Expect:AssignNullToNotNullAttribute[Prps]*/;
     }
 }

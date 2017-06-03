@@ -15,6 +15,11 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             void ExplicitNotNullParameterInInterfaceCanBeNullInDerived([NotNull] string a);
             void ImplicitNotNullParameterInInterfaceCanBeNullInDerived(string a);
+
+            [NotNull]
+            string PropertyWithExplicitNotNullInInterfaceCanBeNullInDerived { set; }
+
+            string PropertyWithImplicitNotNullInInterfaceCanBeNullInDerived { set; }
         }
 
         public class Implementation : IInterface
@@ -33,6 +38,18 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullCon
 
             public void ImplicitNotNullParameterInInterfaceCanBeNullInDerived([CanBeNull] string a)
             {
+            }
+
+            [CanBeNull]
+            public string PropertyWithExplicitNotNullInInterfaceCanBeNullInDerived
+            {
+                set { }
+            }
+
+            [CanBeNull]
+            public string PropertyWithImplicitNotNullInInterfaceCanBeNullInDerived
+            {
+                set { }
             }
         }
     }

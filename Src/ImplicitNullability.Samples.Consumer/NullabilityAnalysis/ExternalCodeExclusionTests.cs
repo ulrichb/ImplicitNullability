@@ -10,7 +10,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
     [TestFixture]
     public class ExternalCodeExclusionTests
     {
-        // Tests that external code is excluded from implicit nullability
+        // Proves that external code is not implicitly NotNull
 
         private External.Class _externalClass;
 
@@ -70,6 +70,15 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         public void Field()
         {
             var value = _externalClass.Field;
+
+            ReSharper.TestValueAnalysis(value, value == null /*Expect no warning*/);
+            value.Should().BeNull();
+        }
+
+        [Test]
+        public void Property()
+        {
+            var value = _externalClass.Property;
 
             ReSharper.TestValueAnalysis(value, value == null /*Expect no warning*/);
             value.Should().BeNull();

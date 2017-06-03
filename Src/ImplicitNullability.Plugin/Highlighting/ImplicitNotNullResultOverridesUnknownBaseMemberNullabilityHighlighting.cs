@@ -2,7 +2,6 @@
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
-using ReSharperExtensionsShared.Highlighting;
 
 [assembly: RegisterConfigurableSeverity(
     ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting.SeverityId,
@@ -19,8 +18,9 @@ namespace ImplicitNullability.Plugin.Highlighting
         SeverityId,
         CSharpLanguage.Name,
         OverlapResolve = OverlapResolveKind.WARNING,
+        OverloadResolvePriority = OutputWarningPriority,
         ToolTipFormatString = Message)]
-    public class ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
+    public class ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting : ImplicitNullabilityHighlightingBase
     {
         public const string SeverityId = "ImplicitNotNullResultOverridesUnknownBaseMemberNullability";
 
@@ -34,7 +34,7 @@ namespace ImplicitNullability.Plugin.Highlighting
             "the base calls' return value is returned. " +
             "It's better to explicitly annotate these occurrences with [NotNull] or [CanBeNull] after manually checking " +
             "the nullability of the base member. " +
-            SharedHighlightingTexts.NeedsSettingNoteText;
+            NeedsSettingNoteText;
 
         public ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting(ITreeNode treeNode)
             : base(treeNode, Message)
