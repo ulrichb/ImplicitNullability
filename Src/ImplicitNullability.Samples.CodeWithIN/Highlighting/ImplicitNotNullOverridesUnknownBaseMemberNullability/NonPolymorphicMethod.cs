@@ -10,10 +10,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             {
             }
 
-            public new string Function /*Expect no warning*/()
-            {
-                return base.Function();
-            }
+            public new string Function /*Expect no warning*/() => "";
         }
     }
 }

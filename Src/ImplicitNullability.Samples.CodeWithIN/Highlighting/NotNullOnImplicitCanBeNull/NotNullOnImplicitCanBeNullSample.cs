@@ -5,9 +5,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
 {
     public class NotNullOnImplicitCanBeNullSample
     {
-        [NotNull]
-        public readonly int? Field /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ = 42;
-
         public void MethodWithNullableInt([NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
         {
             // R# ignores the [NotNull] here, but respects it at the call site.
@@ -24,13 +21,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
 
             ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
         }
-
-        public string this[
-            [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
-            // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
-            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/] => null;
-
-        // ReSharper restore AssignNullToNotNullAttribute
 
         public void MethodWithNullableIntRefAndOutParameterMethod(
             [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
@@ -54,12 +44,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
             return await Async.CanBeNullResult<int?>() /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
         }
 
-        [NotNull]
-        public delegate int? Delegate /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/(
-            [NotNull] int? a /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
-            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
-            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/);
-
         public class Operator
         {
             public static explicit operator Operator([NotNull] int? value /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
@@ -73,5 +57,20 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
                 return null /*Expect:AssignNullToNotNullAttribute*/; // This warning results from the explicit NotNull
             }
         }
+
+        [NotNull]
+        public delegate int? Delegate /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/(
+            [NotNull] int? a /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
+            [NotNull] ref int? refParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
+            [NotNull] out int? outParam /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/);
+
+        [NotNull]
+        public readonly int? Field /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/ = 42;
+
+        public string this[
+            [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
+            // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
+            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/] => null;
+        // ReSharper restore AssignNullToNotNullAttribute
     }
 }

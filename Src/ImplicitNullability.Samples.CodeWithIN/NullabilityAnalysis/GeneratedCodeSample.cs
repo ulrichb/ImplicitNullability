@@ -16,8 +16,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
                 ReSharper.SuppressUnusedWarning(a);
             }
 
-            public string Field;
-
             public void Method(string a)
             {
             }
@@ -31,6 +29,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             public string Function() => null /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;
 
             public delegate string SomeDelegate(string s);
+
+            public string Field;
 
             public async Task<string> AsyncFunction() => await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;
 
@@ -52,9 +52,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             }
 
             [GeneratedCode("tool", "version")]
-            public string Field;
-
-            [GeneratedCode("tool", "version")]
             public void Method(string a)
             {
             }
@@ -74,6 +71,9 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             [GeneratedCode("tool", "version")]
             public delegate string SomeDelegate(string s);
+
+            [GeneratedCode("tool", "version")]
+            public string Field;
 
             [GeneratedCode("tool", "version")]
             public async Task<string> AsyncFunction() => await Async.CanBeNullResult<string>() /*Expect:AssignNullToNotNullAttribute[InclGenCode]*/;

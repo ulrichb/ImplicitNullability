@@ -15,10 +15,6 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
 
         public class Class
         {
-            public string Field;
-
-            public virtual string this[string a] => null;
-
             public virtual void Method(string a)
             {
             }
@@ -33,6 +29,10 @@ namespace ImplicitNullability.Samples.CodeWithoutIN
                 await Task.Delay(0);
                 return null;
             }
+
+            public string Field;
+
+            public virtual string this[string a] => null;
         }
 
         public interface IInterfaceWithMethod<in T>
