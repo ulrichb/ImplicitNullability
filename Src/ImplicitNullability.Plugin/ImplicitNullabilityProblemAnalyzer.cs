@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ImplicitNullability.Plugin.Highlighting;
 using ImplicitNullability.Plugin.Infrastructure;
@@ -13,7 +12,6 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
-using ReSharperExtensionsShared.Debugging;
 
 namespace ImplicitNullability.Plugin
 {
@@ -67,16 +65,10 @@ namespace ImplicitNullability.Plugin
 
         protected override void Run(IDeclaration declaration, ElementProblemAnalyzerData data, IHighlightingConsumer consumer)
         {
-#if DEBUG
-            var stopwatch = Stopwatch.StartNew();
-#endif
-
             var declaredElement = declaration.DeclaredElement;
             var attributesSet = declaredElement as IAttributesSet;
 
             var hasOveriddenImplicitNullability = false;
-
-            var highlightingList = new List<IHighlighting>();
 
             if (attributesSet != null)
             {
@@ -88,33 +80,31 @@ namespace ImplicitNullability.Plugin
                 {
                     case IParameterDeclaration parameterDeclaration:
                         var parameter = parameterDeclaration.DeclaredElement.NotNull();
-                        CheckForNotNullOnImplicitCanBeNull(parameter, attributeInstances, declaration, highlightingList);
-                        CheckForParameterSuperMemberConflicts(parameter, attributeInstances, declaration, highlightingList);
+                        CheckForNotNullOnImplicitCanBeNull(consumer, parameter, attributeInstances, declaration);
+                        CheckForParameterSuperMemberConflicts(consumer, parameter, attributeInstances, declaration);
                         break;
 
                     case IMethodDeclaration methodDeclaration:
                         var method = methodDeclaration.DeclaredElement.NotNull();
-                        CheckForNotNullOnImplicitCanBeNull(method, attributeInstances, methodDeclaration.NameIdentifier, highlightingList);
-                        CheckForMethodSuperMemberConflicts(method, attributeInstances, methodDeclaration.NameIdentifier, highlightingList);
+                        CheckForNotNullOnImplicitCanBeNull(consumer, method, attributeInstances, methodDeclaration.NameIdentifier);
+                        CheckForMethodSuperMemberConflicts(consumer, method, attributeInstances, methodDeclaration.NameIdentifier);
                         break;
 
                     case IOperatorDeclaration operatorDeclaration:
                         var operatorKeyword = operatorDeclaration.OperatorKeyword;
-                        CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, operatorKeyword, highlightingList);
+                        CheckForNotNullOnImplicitCanBeNull(consumer, declaredElement, attributeInstances, operatorKeyword);
                         break;
 
                     case IDelegateDeclaration delegateDeclaration:
                         var delegateName = delegateDeclaration.NameIdentifier;
-                        CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, delegateName, highlightingList);
+                        CheckForNotNullOnImplicitCanBeNull(consumer, declaredElement, attributeInstances, delegateName);
                         break;
 
                     case IFieldDeclaration fieldDeclaration:
                         var fieldName = fieldDeclaration.NameIdentifier;
-                        CheckForNotNullOnImplicitCanBeNull(declaredElement, attributeInstances, fieldName, highlightingList);
+                        CheckForNotNullOnImplicitCanBeNull(consumer, declaredElement, attributeInstances, fieldName);
                         break;
                 }
-
-                highlightingList.ForEach(x => consumer.AddHighlighting(x));
 
                 hasOveriddenImplicitNullability |=
                     _annotationAttributesChecker.ContainsAnyExplicitNullabilityAttributes(attributeInstances) &&
@@ -125,39 +115,32 @@ namespace ImplicitNullability.Plugin
                     _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(declaredElement) != null;
             }
 
-#if DEBUG
-            var message = DebugUtility.FormatIncludingContext(declaredElement) +
-                          " => [" + string.Join(", ", highlightingList.Select(x => x.GetType().Name)) + "]";
-
-            Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
-#endif
-
             DelegateToIncorrectNullableAttributeUsageAnalyzer(declaration, data, consumer, hasOveriddenImplicitNullability);
         }
 
         private void CheckForParameterSuperMemberConflicts(
+            IHighlightingConsumer consumer,
             IParameter parameter,
             IList<IAttributeInstance> attributeInstances,
-            ITreeNode highlightingNode,
-            ICollection<IHighlighting> highlightingList)
+            ITreeNode highlightingNode)
         {
             if (IsImplicitlyNotNull(parameter, attributeInstances))
             {
                 var superMembersNullability = GetImmediateSuperMembersNullability(parameter).ToArray();
 
                 if (parameter.IsInput() || parameter.IsRef())
-                    CheckForInputOrRefElementSuperMemberConflicts(superMembersNullability, highlightingNode, highlightingList);
+                    CheckForInputOrRefElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
 
                 if (parameter.IsOut())
-                    CheckForOutputElementSuperMemberConflicts(superMembersNullability, highlightingNode, highlightingList);
+                    CheckForOutputElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
             }
         }
 
         private void CheckForMethodSuperMemberConflicts(
+            IHighlightingConsumer consumer,
             IMethod method,
             IList<IAttributeInstance> attributeInstances,
-            ITreeNode highlightingNode,
-            ICollection<IHighlighting> highlightingList)
+            ITreeNode highlightingNode)
         {
             // Handle async methods like explicit [NotNull] methods to avoid unnecessary false positives.
             // See Derived.CanBeNull_WithOverridingAsyncMethod() test case.
@@ -165,7 +148,7 @@ namespace ImplicitNullability.Plugin
             if (IsImplicitlyNotNull(method, attributeInstances) && !method.IsAsync)
             {
                 var superMembersNullability = GetImmediateSuperMembersNullability(method).ToArray();
-                CheckForOutputElementSuperMemberConflicts(superMembersNullability, highlightingNode, highlightingList);
+                CheckForOutputElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
             }
 
 
@@ -174,32 +157,32 @@ namespace ImplicitNullability.Plugin
                 // Implicitly nullable Task<T> / async methods
 
                 var superMembersNullability = GetImmediateSuperMembersContainerElementNullability(method).ToArray();
-                CheckForOutputElementSuperMemberConflicts(superMembersNullability, highlightingNode, highlightingList);
+                CheckForOutputElementSuperMemberConflicts(consumer, superMembersNullability, highlightingNode);
             }
         }
 
         private static void CheckForInputOrRefElementSuperMemberConflicts(
+            IHighlightingConsumer consumer,
             CodeAnnotationNullableValue?[] superMembersNullability,
-            ITreeNode highlightingNode,
-            ICollection<IHighlighting> highlightingList)
+            ITreeNode highlightingNode)
         {
             if (ContainsCanBeNull(superMembersNullability))
-                highlightingList.Add(new ImplicitNotNullConflictInHierarchyHighlighting(highlightingNode));
+                consumer.AddHighlighting(new ImplicitNotNullConflictInHierarchyHighlighting(highlightingNode));
 
             if (ContainsUnknownNullability(superMembersNullability))
-                highlightingList.Add(new ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting(highlightingNode));
+                consumer.AddHighlighting(new ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting(highlightingNode));
         }
 
         private static void CheckForOutputElementSuperMemberConflicts(
+            IHighlightingConsumer consumer,
             CodeAnnotationNullableValue?[] superMembersNullability,
-            ITreeNode highlightingNode,
-            ICollection<IHighlighting> highlightingList)
+            ITreeNode highlightingNode)
         {
             if (ContainsCanBeNull(superMembersNullability))
-                highlightingList.Add(new ImplicitNotNullElementCannotOverrideCanBeNullHighlighting(highlightingNode));
+                consumer.AddHighlighting(new ImplicitNotNullElementCannotOverrideCanBeNullHighlighting(highlightingNode));
 
             if (ContainsUnknownNullability(superMembersNullability))
-                highlightingList.Add(new ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting(highlightingNode));
+                consumer.AddHighlighting(new ImplicitNotNullResultOverridesUnknownBaseMemberNullabilityHighlighting(highlightingNode));
         }
 
         private bool IsImplicitlyNotNull(IDeclaredElement declaredElement, IEnumerable<IAttributeInstance> attributeInstances)
@@ -225,21 +208,21 @@ namespace ImplicitNullability.Plugin
         }
 
         private void CheckForNotNullOnImplicitCanBeNull(
+            IHighlightingConsumer consumer,
             IDeclaredElement element,
             IList<IAttributeInstance> attributeInstances,
-            ITreeNode highlightingNode,
-            ICollection<IHighlighting> highlightingList)
+            ITreeNode highlightingNode)
         {
             if (_annotationAttributesChecker.ContainsExplicitNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
-                highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
+                consumer.AddHighlighting(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
             }
 
             if (_annotationAttributesChecker.ContainsExplicitItemNotNullNullabilityAttribute(attributeInstances) &&
                 _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element) == CodeAnnotationNullableValue.CAN_BE_NULL)
             {
-                highlightingList.Add(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
+                consumer.AddHighlighting(new NotNullOnImplicitCanBeNullHighlighting(highlightingNode));
             }
         }
 
