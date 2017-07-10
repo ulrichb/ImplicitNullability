@@ -36,6 +36,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         //
 
+        // ReSharper disable RedundantDefaultMemberInitializer
         [UsedImplicitly]
         internal readonly string InternalField = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
 
@@ -46,5 +47,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         [UsedImplicitly]
         private readonly string _privateField = null /*Expect:AssignNullToNotNullAttribute[Flds]*/;
 #pragma warning restore 414
+        // ReSharper restore RedundantDefaultMemberInitializer
     }
 }
