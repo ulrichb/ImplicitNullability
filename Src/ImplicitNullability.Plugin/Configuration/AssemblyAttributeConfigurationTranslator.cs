@@ -122,7 +122,7 @@ namespace ImplicitNullability.Plugin.Configuration
 
             public static AssemblyMetadataAttributeValues Parse(IAttributesSet attributes)
             {
-                var assemblyMetadataAttributes = attributes.GetAttributeInstances(AssemblyMetadataAttributeTypeName, false);
+                var assemblyMetadataAttributes = attributes.GetAttributeInstances(AssemblyMetadataAttributeTypeName, inherit: false);
 
                 var attributeValuesDictionary = new Dictionary<string, string>();
 
