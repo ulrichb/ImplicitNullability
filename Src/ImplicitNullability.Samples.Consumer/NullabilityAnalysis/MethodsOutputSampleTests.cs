@@ -79,6 +79,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [Test]
         public void MethodWithCanBeNullOutParameterWithNullValue()
         {
+            // ReSharper disable once NotAccessedVariable
             string outParam;
             Action act = () => _instance.MethodWithCanBeNullOutParameter(out outParam);
 

@@ -50,7 +50,8 @@
 
 <%= SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/) %>
 <%= SomeNullableMethod(null, null, optional: null) %>
-<% string outParam; %><%= SomeFunction(out outParam) %>
+<% // ReSharper disable once NotAccessedVariable
+    string outParam;%><%= SomeFunction(out outParam) %>
 
 <%-- Data binding --%>
 <%# null %>

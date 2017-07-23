@@ -43,6 +43,7 @@
 @SomeMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/)
 @SomeNullableMethod(null, null, optional: null)
 @{
+    // ReSharper disable once NotAccessedVariable
     string outParam;
 }
 @SomeFunction(out outParam)
