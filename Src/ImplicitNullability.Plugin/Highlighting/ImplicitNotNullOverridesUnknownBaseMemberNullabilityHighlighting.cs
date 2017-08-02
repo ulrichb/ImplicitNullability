@@ -1,5 +1,6 @@
 ﻿using ImplicitNullability.Plugin.Highlighting;
 using JetBrains.ReSharper.Feature.Services.Daemon;
+using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
 using ReSharperExtensionsShared.Highlighting;
 
@@ -16,7 +17,7 @@ namespace ImplicitNullability.Plugin.Highlighting
 {
     [ConfigurableSeverityHighlighting(
         SeverityId,
-        "CSHARP",
+        CSharpLanguage.Name,
         OverlapResolve = OverlapResolveKind.WARNING,
         ToolTipFormatString = Message)]
     public class ImplicitNotNullOverridesUnknownBaseMemberNullabilityHighlighting : SimpleTreeNodeHighlightingBase<ITreeNode>
