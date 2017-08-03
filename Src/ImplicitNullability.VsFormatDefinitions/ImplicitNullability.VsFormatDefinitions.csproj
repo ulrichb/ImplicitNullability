@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <Deterministic>true</Deterministic>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>full</DebugType> <!-- necessary for OpenCover -->
   </PropertyGroup>

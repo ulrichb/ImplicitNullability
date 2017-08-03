@@ -3,8 +3,6 @@ using System.Reflection;
 [assembly: AssemblyTitle(AssemblyConsts.Title)]
 [assembly: AssemblyDescription(AssemblyConsts.Description)]
 
-//
-
 // ReSharper disable once CheckNamespace
 internal static class AssemblyConsts
 {

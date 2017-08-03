@@ -2,7 +2,7 @@
 Param(
   [Parameter()] [string] $NugetExecutable = "Shared\.nuget\nuget.exe",
   [Parameter()] [string] $Configuration = "Debug",
-  [Parameter()] [string] $Version = "0.0.0.1-local",
+  [Parameter()] [string] $Version = "0.0.0.1",
   [Parameter()] [string] $BranchName,
   [Parameter()] [string] $CoverageBadgeUploadToken,
   [Parameter()] [string] $NugetPushKey
@@ -15,7 +15,6 @@ trap { $error[0] | Format-List -Force; $host.SetShouldExit(1) }
 
 $BuildOutputPath = "Build\Output"
 $SolutionFilePath = "ImplicitNullability.sln"
-$AssemblyVersionFilePath = "Src\SharedAssemblyInfo.cs"
 $MSBuildPath = (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\*\MSBuild\15.0\Bin\MSBuild.exe").FullName
 $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
