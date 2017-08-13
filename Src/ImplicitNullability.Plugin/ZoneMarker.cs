@@ -10,8 +10,7 @@ namespace ImplicitNullability.Plugin
     [ZoneDefinitionConfigurableFeature(AssemblyConsts.Title, AssemblyConsts.Description, IsInProductSection: false)]
     public interface IImplicitNullabilityZone : IPsiLanguageZone,
         IRequire<ILanguageCSharpZone>,
-        IRequire<DaemonZone>,
-        IRequire<ILanguageAspZone /* for AspImplicitTypeMember */>
+        IRequire<DaemonZone>
     {
     }
 

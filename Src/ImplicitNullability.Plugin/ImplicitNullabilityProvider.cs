@@ -2,7 +2,6 @@ using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.Asp.Impl.Html;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Util;
 using JetBrains.ReSharper.Psi.Util;
@@ -220,7 +219,7 @@ namespace ImplicitNullability.Plugin
         private static bool IsImplicitNullabilityApplicableToParameterOwner([CanBeNull] IParametersOwner parametersOwner)
         {
             // IFunction includes methods, constructors, operator overloads, delegate (methods), but also implicitly
-            // defined ASP.NET methods, e.g. Bind(), which we want to exclude because the developer cannot
+            // defined ("synthetic") methods, which we want to exclude because the developer cannot
             // override the implicit annotation.
             // IProperty includes indexer parameters.
 
@@ -228,7 +227,6 @@ namespace ImplicitNullability.Plugin
             {
                 case IFunction function:
                     return !IsDelegateBeginInvokeFunction(function) &&
-                           !(parametersOwner is AspImplicitTypeMember) &&
                            IsParametersOwnerNotSynthetic(parametersOwner);
                 case IProperty _:
                     return true;

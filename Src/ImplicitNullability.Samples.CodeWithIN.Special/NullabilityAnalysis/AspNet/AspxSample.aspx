@@ -53,10 +53,13 @@
 <% // ReSharper disable once NotAccessedVariable
     string outParam;%><%= SomeFunction(out outParam) %>
 
-<%-- Data binding --%>
 <%# null %>
-<%# Bind(null) %> <%-- this handled specially by R# (AspBindMethod declared element)--%>
-<%# Bind(null, null) %> <%-- this handled specially by R# (AspBindMethod declared element)--%>
+
+<%-- The "Bind" elements are treated as "external code" because they have no declaration (they are represented by the special
+     'AspBindMethod: AspImplicitTypeMember' PSI element). Atm it's OK to avoid making an exemption here. --%>
+<%# Bind(null /*Expect:AssignNullToNotNullAttribute[MIn && InclGenCode]*/) %>
+<%# Bind(null /*Expect:AssignNullToNotNullAttribute[MIn && InclGenCode]*/,
+        null /*Expect:AssignNullToNotNullAttribute[MIn && InclGenCode]*/) %>
 
 <%-- Note that the following warnings need external annotations for TemplateControl.Eval() --%>
 <%# Eval(null /*Expect:AssignNullToNotNullAttribute*/) %>
