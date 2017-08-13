@@ -50,9 +50,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ReSharper.cs" />
-    <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx">
-      <SubType>ASPXCodeBehind</SubType>
+    <None Include="NullabilityAnalysis\AspNet\web.config">
+      <SubType>Designer</SubType>
     </None>
+    <None Include="NullabilityAnalysis\AspNet\AspxSample.aspx" />
     <None Include="NullabilityAnalysis\AspNet\RazorSample.cshtml" />
     <EmbeddedResource Include="NullabilityAnalysis\GeneratedCode\SomeResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
