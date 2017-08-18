@@ -34,6 +34,6 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 }
 
 ---------------------------------------------------------
-(0): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
-(1): ReSharperImplicitNullabilityTypeHighlighting: 'Task' is (explicitly or implicitly) [NotNull]
-(2): ReSharperImplicitNullabilityTypeHighlighting: 'string' is (explicitly or implicitly) [NotNull]
+(0): ReSharperImplicitNullabilityTypeHighlighting: Info: 'string' is (explicitly or implicitly) [NotNull]
+(1): ReSharperImplicitNullabilityTypeHighlighting: Info: 'Task' is (explicitly or implicitly) [NotNull]
+(2): ReSharperImplicitNullabilityTypeHighlighting: Info: 'string' is (explicitly or implicitly) [NotNull]

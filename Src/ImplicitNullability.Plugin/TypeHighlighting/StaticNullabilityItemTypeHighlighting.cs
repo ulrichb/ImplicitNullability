@@ -20,7 +20,7 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
         ToolTipFormatString = Message)]
     public class StaticNullabilityItemTypeHighlighting : StaticNullabilityTypeHighlightingBase
     {
-        private const string Message = "Inner type '{0}' is (explicitly or implicitly) {1}";
+        private const string Message = "Info: Inner type '{0}' is (explicitly or implicitly) {1}";
 
         public StaticNullabilityItemTypeHighlighting(ITreeNode typeNode, string nullabilityKind)
             : base(typeNode, string.Format(Message, typeNode.GetText(), nullabilityKind))
