@@ -10,7 +10,6 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <RootNamespace>ImplicitNullability.Plugin</RootNamespace>
-    <EnableDefaultItems>false</EnableDefaultItems>
     <AssemblyVersion>0.0.0.1</AssemblyVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
@@ -30,10 +29,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Debugging\DebugUtility.cs" Link="ReSharperExtensionsShared\DebugUtility.cs" />
     <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Highlighting\SimpleTreeNodeHighlightingBase.cs" Link="ReSharperExtensionsShared\SimpleTreeNodeHighlightingBase.cs" />
-    <Compile Include="**\*.cs" Exclude="obj\**" />
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+    <Compile Remove="obj\**" />
+    <None Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>

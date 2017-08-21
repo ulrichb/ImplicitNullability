@@ -10,7 +10,6 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <RootNamespace>ImplicitNullability.Plugin.Tests</RootNamespace>
-    <EnableDefaultItems>false</EnableDefaultItems>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <DebugType>full</DebugType> <!-- necessary for OpenCover -->
@@ -29,11 +28,10 @@
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="..\ImplicitNullability.Plugin\Properties\ImplicitNullabilityConfigurationAttributes.cs" Link="Properties\ImplicitNullabilityConfigurationAttributes.cs" />
-    <Compile Include="**\*.cs" Exclude="obj\**;test\data\**" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Remove="obj\**;test\data\**" />
+    <None Remove="obj\**" />
     <None Include="test\data\**" />
-    <None Include="ExternalAnnotations\.NETFramework\System.Web\4.0.0.0.Nullness.Gen.xml">
+    <None Include="ExternalAnnotations\**\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

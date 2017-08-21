@@ -10,7 +10,6 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <RootNamespace>ImplicitNullability.Plugin.Tests</RootNamespace>
-    <EnableDefaultItems>false</EnableDefaultItems>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <DebugType>full</DebugType> <!-- necessary for OpenCover -->
@@ -29,17 +28,16 @@
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="..\ImplicitNullability.Plugin\Properties\ImplicitNullabilityConfigurationAttributes.cs" Link="Properties\ImplicitNullabilityConfigurationAttributes.cs" />
-    <Compile Include="**\*.cs" Exclude="obj\**;test\data\**" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Remove="obj\**;test\data\**" />
+    <None Remove="obj\**" />
     <None Include="test\data\**" />
-    <None Include="ExternalAnnotations\.NETFramework\System.Web\4.0.0.0.Nullness.Gen.xml">
+    <None Include="ExternalAnnotations\**\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.ReSharper.SDK.Tests" Version="2017.1.20170613.162448" />
+    <PackageReference Include="JetBrains.ReSharper.SDK.Tests" Version="2017.1.*" />
     <PackageReference Include="FakeItEasy" Version="4.0.0" />
     <PackageReference Include="ncalc" Version="1.3.8" />
     <PackageReference Include="System.ValueTuple" Version="4.3.1" />
