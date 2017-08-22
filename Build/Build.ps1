@@ -25,7 +25,7 @@ $NUnitTestAssemblyPaths = @(
 )
 $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Samples.CodeWithIN.*]* -[ImplicitNullability.Samples.CodeWithoutIN.External]*"
-$NuspecPath = "Src\ImplicitNullability.nuspec"
+$NuspecPath = "Src\ImplicitNullability.Plugin\ImplicitNullability.nuspec"
 $NugetPackProperties = @(
     "Version=$(CalcNuGetPackageVersion 20163);Configuration=$Configuration;DependencyVer=[7.0];BinDirInclude=bin\R20163"
     "Version=$(CalcNuGetPackageVersion 20171);Configuration=$Configuration;DependencyVer=[8.0];BinDirInclude=bin\R20171"

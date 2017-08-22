@@ -16,6 +16,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ImplicitNullability.Plugin\$BinDirInclude$\$Configuration$\ImplicitNullability.*" target="dotFiles" />
+    <file src="$BinDirInclude$\$Configuration$\ImplicitNullability.*" target="dotFiles" />
   </files>
 </package>
