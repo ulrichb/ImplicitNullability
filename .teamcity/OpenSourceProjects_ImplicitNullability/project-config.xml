@@ -25,6 +25,6 @@
     </extension>
   </project-extensions>
   <cleanup />
-  <buildTypesOrder order="OpenSourceProjects_ImplicitNullability_BuildCounter,OpenSourceProjects_ImplicitNullability_Ci,OpenSourceProjects_ImplicitNullability_Release" />
+  <buildTypesOrder order="OpenSourceProjects_ImplicitNullability_BuildVersion,OpenSourceProjects_ImplicitNullability_Ci,OpenSourceProjects_ImplicitNullability_Release" />
 </project>
 

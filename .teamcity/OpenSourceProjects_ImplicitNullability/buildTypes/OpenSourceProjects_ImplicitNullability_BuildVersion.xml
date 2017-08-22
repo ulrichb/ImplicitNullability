@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="3dd804d4-c778-4f5a-8e86-4490ac21f193" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
-  <name>BuildCounter</name>
+  <name>BuildVersion</name>
   <description />
   <settings>
-    <parameters />
+    <options>
+      <option name="buildNumberPattern" value="%Version%.%build.counter%" />
+    </options>
+    <parameters>
+      <param name="Version" value="3.7.0" />
+    </parameters>
     <build-runners />
     <vcs-settings />
     <requirements />

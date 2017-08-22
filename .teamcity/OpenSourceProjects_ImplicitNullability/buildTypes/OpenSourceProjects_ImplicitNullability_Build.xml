@@ -5,7 +5,7 @@
     <options>
       <option name="allowExternalStatus" value="true" />
       <option name="artifactRules" value="Build\Output\*.nupkg&#xA;Build\Output\TestCoverage\**\* =&gt; coverage.zip" />
-      <option name="buildNumberPattern" value="%dep.OpenSourceProjects_ImplicitNullability_BuildCounter.build.counter%" />
+      <option name="buildNumberPattern" value="%dep.OpenSourceProjects_ImplicitNullability_BuildVersion.build.number%" />
       <option name="executionTimeoutMin" value="30" />
     </options>
     <parameters>
@@ -18,7 +18,7 @@
         <parameters>
           <param name="jetbrains_powershell_execution" value="PS1" />
           <param name="jetbrains_powershell_scriptArguments"><![CDATA[-Configuration %Configuration%
--Version "0.0.1.%build.number%"
+-Version "%build.number%"
 -BranchName "%teamcity.build.branch%"
 -CoverageBadgeUploadToken "%CoverageBadgeUploadToken%"
 -NugetPushKey "%NugetPushKey%"]]></param>
@@ -49,7 +49,7 @@
       </extension>
     </build-extensions>
     <dependencies>
-      <depend-on sourceBuildTypeId="OpenSourceProjects_ImplicitNullability_BuildCounter">
+      <depend-on sourceBuildTypeId="OpenSourceProjects_ImplicitNullability_BuildVersion">
         <options>
           <option name="run-build-if-dependency-failed" value="RUN_ADD_PROBLEM" />
         </options>
