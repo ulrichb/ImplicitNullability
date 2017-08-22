@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="OpenSourceProjects" uuid="1d134ead-b002-49bc-bba0-d4524caebc05" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
+  <name>ReSharper Implicit Nullability</name>
+  <description>https://github.com/ulrichb/ImplicitNullability/</description>
+  <parameters>
+    <param name="BranchSpecification" value="+:refs/heads/*" />
+    <param name="teamcity.activeBuildBranch.age.hours" value="672" spec="text display='hidden' validationMode='any'" />
+  </parameters>
+  <project-extensions>
+    <extension id="PROJECT_EXT_152" type="versionedSettings">
+      <parameters>
+        <param name="buildSettings" value="ALWAYS_USE_CURRENT" />
+        <param name="credentialsStorageType" value="credentialsJSON" />
+        <param name="enabled" value="true" />
+        <param name="rootId" value="OpenSourceProjects_ImplicitNullability_HttpsGithubComUlrichbImplicitNullability" />
+        <param name="showChanges" value="true" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_72" type="ReportTab">
+      <parameters>
+        <param name="startPage" value="coverage.zip!index.htm" />
+        <param name="title" value="Code Coverage" />
+        <param name="type" value="BuildReportTab" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+  <buildTypesOrder order="OpenSourceProjects_ImplicitNullability_BuildCounter,OpenSourceProjects_ImplicitNullability_Ci,OpenSourceProjects_ImplicitNullability_Release" />
+</project>
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="62b4c9c5-f235-49a8-bd37-a17724e35a37" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
+  <name>Build</name>
+  <settings>
+    <options>
+      <option name="allowExternalStatus" value="true" />
+      <option name="artifactRules" value="Build\Output\*.nupkg&#xA;Build\Output\TestCoverage\**\* =&gt; coverage.zip" />
+      <option name="buildNumberPattern" value="%dep.OpenSourceProjects_ImplicitNullability_BuildCounter.build.counter%" />
+      <option name="executionTimeoutMin" value="30" />
+    </options>
+    <parameters>
+      <param name="Configuration" value="" spec="select data_1='Debug' data_2='Release'" />
+      <param name="CoverageBadgeUploadToken" value="credentialsJSON:7f08c5e7-ed45-4767-b103-5802c98c1d6c" spec="password display='normal'" />
+      <param name="NugetPushKey" value="credentialsJSON:7f08c5e7-ed45-4767-b103-5802c98c1d6c" spec="password display='normal'" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_1394" name="Build.ps1" type="jetbrains_powershell">
+        <parameters>
+          <param name="jetbrains_powershell_execution" value="PS1" />
+          <param name="jetbrains_powershell_scriptArguments"><![CDATA[-Configuration %Configuration%
+-Version "0.0.1.%build.number%"
+-BranchName "%teamcity.build.branch%"
+-CoverageBadgeUploadToken "%CoverageBadgeUploadToken%"
+-NugetPushKey "%NugetPushKey%"]]></param>
+          <param name="jetbrains_powershell_script_file" value="Build/Build.ps1" />
+          <param name="jetbrains_powershell_script_mode" value="FILE" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="OpenSourceProjects_ImplicitNullability_HttpsGithubComUlrichbImplicitNullability" />
+    </vcs-settings>
+    <requirements>
+      <exists id="RQ_340" name="MSBuildTools15.0_x86_Path" />
+    </requirements>
+    <build-triggers />
+    <build-extensions>
+      <extension id="perfmon" type="perfmon">
+        <parameters />
+      </extension>
+      <extension id="BUILD_EXT_130" type="commit-status-publisher">
+        <parameters>
+          <param name="github_authentication_type" value="token" />
+          <param name="github_host" value="https://api.github.com" />
+          <param name="publisherId" value="githubStatusPublisher" />
+          <param name="secure:github_access_token" value="credentialsJSON:0431ebdc-9dee-4d94-a66d-a72de49ce26f" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <dependencies>
+      <depend-on sourceBuildTypeId="OpenSourceProjects_ImplicitNullability_BuildCounter">
+        <options>
+          <option name="run-build-if-dependency-failed" value="RUN_ADD_PROBLEM" />
+        </options>
+      </depend-on>
+    </dependencies>
+    <cleanup />
+  </settings>
+</template>
+

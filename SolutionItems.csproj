@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <None Include="*" Exclude="*.csproj*" />
+    <None Include=".teamcity\**\*" />
     <None Include="Build\*" />
     <None Include="Doc\**\*" />
     <None Include="Shared\Build\**\*" />
