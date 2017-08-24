@@ -17,7 +17,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
         // Use the ReSharper SDK's gold-file approach instead of InspectionExpectationCommentsTestBase because
         // atm. it doesn't support "static highlightings" or VISIBLE_DOCUMENT-only highlightings.
 
-        protected override string RelativeTestDataPath => Path.Combine(base.RelativeTestDataPath, "..", "TypeHighlightingTests");
+        protected override string RelativeTestDataPath => Path.Combine(base.RelativeTestDataPath, "..", nameof(TypeHighlightingTests));
 
         public class TypeHighlightingTestsDefault : TypeHighlightingTests
         {
