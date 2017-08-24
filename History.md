@@ -1,3 +1,6 @@
+### vNext ###
+- Fixed unnecessary nullability attribute generation in c'tor generation and "Check parameter for null" actions [ReSharper 2017.2.2+]
+
 ### 4.0.0 ###
 - Added support for properties (by default configured for getter-only properties) => Implicit Nullability now finally supports all members where ReSharper provides nullability analysis :)
 - ReSharper 2017.2 support

@@ -1,0 +1,13 @@
+﻿using System;
+using JetBrains.Annotations;
+
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.AnnotationCopyingTests
+{
+    public class Sample
+    {
+        public void Method([NotNull] string{caret} a)
+        {
+          if (a == null) throw new ArgumentNullException(nameof(a));
+        }
+    }
+}

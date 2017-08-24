@@ -1,0 +1,12 @@
+﻿using System;
+
+namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.AnnotationCopyingTests
+{
+    public class Sample
+    {
+        public void Method(string{caret} a)
+        {
+          if (a == null) throw new ArgumentNullException(nameof(a));
+        }
+    }
+}
