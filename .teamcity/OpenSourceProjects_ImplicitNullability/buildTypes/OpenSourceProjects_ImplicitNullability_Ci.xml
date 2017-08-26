@@ -14,8 +14,6 @@
       <build-trigger id="vcsTrigger" type="vcsTrigger">
         <parameters>
           <param name="branchFilter" value="+:*" />
-          <param name="enableQueueOptimization" value="" />
-          <param name="perCheckinTriggering" value="true" />
           <param name="quietPeriodMode" value="DO_NOT_USE" />
         </parameters>
       </build-trigger>
