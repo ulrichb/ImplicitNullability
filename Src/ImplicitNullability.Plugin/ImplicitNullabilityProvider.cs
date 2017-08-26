@@ -3,15 +3,12 @@ using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
+using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Util;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.ReSharper.Psi.Xaml.DeclaredElements;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
-#if !RESHARPER20163
-using JetBrains.ReSharper.Psi.CSharp;
-
-#endif
 
 namespace ImplicitNullability.Plugin
 {
@@ -206,14 +203,10 @@ namespace ImplicitNullability.Plugin
         [CanBeNull]
         private static IType GetTaskUnderlyingType(IType type)
         {
-#if RESHARPER20163
-            return type.GetTaskUnderlyingType();
-#else
             // Use "latest" language level because this just includes _more_ types (C# 7 "task-like" types) and the nullability
             // value we return here also effects _callers_ (whose C# language level we do not know).
 
             return type.GetTasklikeUnderlyingType(CSharpLanguageLevel.Latest);
-#endif
         }
 
         private static bool IsImplicitNullabilityApplicableToParameterOwner([CanBeNull] IParametersOwner parametersOwner)

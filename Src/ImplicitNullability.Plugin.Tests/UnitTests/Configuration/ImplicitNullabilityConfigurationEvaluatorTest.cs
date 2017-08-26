@@ -10,7 +10,7 @@ using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NUnit.Framework;
-#if RESHARPER20163 || RESHARPER20171
+#if RESHARPER20171
 using JetBrains.Application.Settings.Store.Implementation;
 #else
 using JetBrains.Application.Settings.Implementation;
