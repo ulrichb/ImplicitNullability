@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
-using ReSharperExtensionsShared.Debugging;
 
 namespace ImplicitNullability.Plugin
 {
@@ -30,51 +27,17 @@ namespace ImplicitNullability.Plugin
 
         public CodeAnnotationNullableValue? GetNullableAttribute([CanBeNull] IDeclaredElement element)
         {
-#if DEBUG
-            var stopwatch = Stopwatch.StartNew();
-#endif
-
-            var result = _implicitNullabilityProvider.AnalyzeDeclaredElement(element);
-
-#if DEBUG
-            LogResult("Attribute for ", element, stopwatch, result);
-#endif
-            return result;
+            return _implicitNullabilityProvider.AnalyzeDeclaredElement(element);
         }
 
         public CodeAnnotationNullableValue? GetContainerElementNullableAttribute([CanBeNull] IDeclaredElement element)
         {
-#if DEBUG
-            var stopwatch = Stopwatch.StartNew();
-#endif
-
-            var result = _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element);
-
-#if DEBUG
-            LogResult("Elem attr for ", element, stopwatch, result);
-#endif
-
-            return result;
+            return _implicitNullabilityProvider.AnalyzeDeclaredElementContainerElement(element);
         }
 
         public ICollection<IAttributeInstance> GetSpecialAttributeInstances([CanBeNull] IClrDeclaredElement element)
         {
             return EmptyList<IAttributeInstance>.InstanceList;
         }
-
-#if DEBUG
-
-        private static void LogResult(
-            string messagePrefix,
-            [CanBeNull] IDeclaredElement element,
-            Stopwatch stopwatch,
-            CodeAnnotationNullableValue? result)
-        {
-            var resultText = result.IsUnknown() ? "UNKNOWN" : result.ToString();
-            var message = messagePrefix + DebugUtility.FormatIncludingContext(element) + " => " + resultText;
-            Logger.Verbose(DebugUtility.FormatWithElapsed(message, stopwatch));
-        }
-
-#endif
     }
 }

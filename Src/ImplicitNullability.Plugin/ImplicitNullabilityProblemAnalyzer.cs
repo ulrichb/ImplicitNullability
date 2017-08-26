@@ -40,8 +40,6 @@ namespace ImplicitNullability.Plugin
     public class ImplicitNullabilityProblemAnalyzer : ElementProblemAnalyzer<IDeclaration>,
         IHideImplementation<IncorrectNullableAttributeUsageAnalyzer>
     {
-        private static readonly ILogger Logger = JetBrains.Util.Logging.Logger.GetLogger(typeof(ImplicitNullabilityProblemAnalyzer));
-
         private readonly CodeAnnotationAttributesChecker _annotationAttributesChecker;
         private readonly NullnessProvider _nullnessProvider;
         private readonly ContainerElementNullnessProvider _containerElementNullnessProvider;
@@ -53,8 +51,6 @@ namespace ImplicitNullability.Plugin
             CodeAnnotationsCache codeAnnotationsCache,
             ImplicitNullabilityProvider implicitNullabilityProvider)
         {
-            Logger.Verbose(".ctor");
-
             _annotationAttributesChecker = annotationAttributesChecker;
             _nullnessProvider = codeAnnotationsCache.GetProvider<NullnessProvider>();
             _containerElementNullnessProvider = codeAnnotationsCache.GetProvider<ContainerElementNullnessProvider>();
