@@ -12,7 +12,6 @@
     <RootNamespace>ImplicitNullability.Plugin</RootNamespace>
     <AssemblyVersion>0.0.0.1</AssemblyVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <DebugType>full</DebugType> <!-- necessary for OpenCover -->
