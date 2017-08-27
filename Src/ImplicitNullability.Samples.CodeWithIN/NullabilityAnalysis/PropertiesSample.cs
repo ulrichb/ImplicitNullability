@@ -190,6 +190,33 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
             }
         }
 
+        public interface IMutableClassImplementingImmutableInterface
+        {
+            string Property { get; }
+
+            [NotNull]
+            string PropertyWithNotNullInBase { get; }
+
+            string MutableProperty { get; set; }
+        }
+
+        public class MutableClassImplementingImmutableInterface : IMutableClassImplementingImmutableInterface
+        {
+            // TODO: "Override warning" here?
+            public string Property { get; set; }
+
+            public string PropertyWithNotNullInBase { get; set; }
+
+            public string MutableProperty { get; set; }
+
+            public void Consume()
+            {
+                TestValueAnalysis(Property, Property == null /*TODO: Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo] ?? */);
+                TestValueAnalysis(PropertyWithNotNullInBase, PropertyWithNotNullInBase == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps]*/);
+                TestValueAnalysis(MutableProperty, MutableProperty == null);
+            }
+        }
+
         public static class PropertiesInClassWithCtor
         {
             // Regression samples for issue #10 (exclusion for backing fields)
