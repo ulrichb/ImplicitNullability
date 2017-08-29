@@ -1,5 +1,5 @@
 ### 4.0.0 ###
-- Added support for properties => Implicit Nullability now finally supports all members where ReSharper provides nullability analysis :)
+- Added support for properties (by default configured for getter-only properties) => Implicit Nullability now finally supports all members where ReSharper provides nullability analysis :)
 - ReSharper 2017.2 support
 
 ### 3.7.0 ###
