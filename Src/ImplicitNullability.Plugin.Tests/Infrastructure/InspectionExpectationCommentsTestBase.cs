@@ -34,6 +34,11 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                  where !IsExcludedByComment(rootNode)
                  select (SourceFile: sourceFile, RootNode: rootNode)).ToList();
 
+
+            Console.WriteLine("filesToAnalyze:");
+            Console.WriteLine(string.Join("\r\n", filesToAnalyze.Select(x => x.SourceFile.DisplayName)));
+            
+
             Assert.That(filesToAnalyze, Is.Not.Empty);
 
             var expectedWarningComments =
@@ -81,7 +86,12 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                     )
                 }).ToList();
 
-            Assert.That(issues.Where(x => x.GetSeverity() >= Severity.ERROR), Is.Empty, "no errors should happen during analysis");
+            var errors = issues.Where(x => x.GetSeverity() >= Severity.ERROR).ToList();
+
+            Console.WriteLine("errors:");
+            Console.WriteLine(string.Join("\r\n", errors.Select(x => x.File.File.DisplayName + ": " + x.Message)));
+
+            Assert.That(errors, Is.Empty, "no errors should happen during analysis");
 
             var unexpectedIssues = actualIssuesAndMatches.Where(x => x.Match == null).ToList();
             var unmatchedExpectedWarningComments = expectedWarningComments.Except(actualIssuesAndMatches.Select(x => x.Match)).ToList();

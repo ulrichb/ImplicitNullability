@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
 	EndProjectSection
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples
 		{9001EFB4-358F-4C98-AF13-F374E831A06E} = {9001EFB4-358F-4C98-AF13-F374E831A06E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.External", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.External.csproj", "{9001EFB4-358F-4C98-AF13-F374E831A06E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Samples.CodeWithIN.External", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.External.csproj", "{9001EFB4-358F-4C98-AF13-F374E831A06E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C98DF2CD-3BB5-4213-9D90-08241ED5B74F} = {C98DF2CD-3BB5-4213-9D90-08241ED5B74F}
 	EndProjectSection
