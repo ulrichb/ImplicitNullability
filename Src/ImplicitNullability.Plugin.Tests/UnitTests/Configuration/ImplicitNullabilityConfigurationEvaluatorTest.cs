@@ -8,6 +8,7 @@ using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.TestFramework;
+using JetBrains.TestFramework.Utils;
 using JetBrains.Util;
 using NUnit.Framework;
 #if RESHARPER20171
@@ -25,7 +26,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
     {
         private const bool Dis = false; // disable
         private const bool Ena = true; // enable
-        private const bool Dnc = false; // don't care
+        private const object Dnc = null; // don't care
 
         const ImplicitNullabilityAppliesTo AppliesToNone = ImplicitNullabilityAppliesTo.None;
 
@@ -41,6 +42,8 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                                                           ImplicitNullabilityAppliesTo.OutParametersAndResult |
                                                           ImplicitNullabilityAppliesTo.Fields |
                                                           ImplicitNullabilityAppliesTo.Properties;
+
+        private static readonly TestRandom TestRandom = TestRandom.CreateWithRandomSeed();
 
         [Test]
         // 1. Enabled=false in the settings overrules everything:
@@ -58,19 +61,20 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Ena, "NoConfigurationAttribute", /*expected:*/ AppliesToAll)]
         [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Dis, "NoConfigurationAttribute", /*expected:*/ AppliesToNone)]
         public void TestInheritance(
-            bool enabledInSolution,
-            bool enabledInProject,
-            bool enableOptionInProject,
+            bool? enabledInSolution,
+            bool? enabledInProject,
+            bool? enableOptionInProject,
             string testInput,
             ImplicitNullabilityAppliesTo expectedAppliesTo)
         {
             void ChangeSolutionSettings(IContextBoundSettingsStore settingsStore) =>
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInSolution);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInSolution ?? TestRandom.NextBool());
 
             void ChangeProjectSettings(IContextBoundSettingsStore settingsStore)
             {
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInProject);
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInProject ?? TestRandom.NextBool());
 
+                enableOptionInProject = enableOptionInProject ?? TestRandom.NextBool();
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableInputParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableRefParameters, enableOptionInProject);
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableOutParametersAndResult, enableOptionInProject);
