@@ -62,7 +62,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
         [TestCase( /*solution:*/ Dnc, /*project:*/ Ena, /*options:*/ Dis, "NoConfigurationAttribute", /*expected:*/ AppliesToNone)]
         public void TestInheritance(
             bool? enabledInSolution,
-            bool? enabledInProject,
+            bool enabledInProject,
             bool? enableOptionInProject,
             string testInput,
             ImplicitNullabilityAppliesTo expectedAppliesTo)
@@ -72,7 +72,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 
             void ChangeProjectSettings(IContextBoundSettingsStore settingsStore)
             {
-                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInProject ?? TestRandom.NextBool());
+                settingsStore.SetValue((ImplicitNullabilitySettings x) => x.Enabled, enabledInProject);
 
                 enableOptionInProject = enableOptionInProject ?? TestRandom.NextBool();
                 settingsStore.SetValue((ImplicitNullabilitySettings x) => x.EnableInputParameters, enableOptionInProject);
