@@ -1,4 +1,4 @@
-### vNext ###
+### 4.0.1 ###
 - Fixed unnecessary nullability attribute generation in c'tor generation and "Check parameter for null" actions [ReSharper 2017.2.2+]
 
 ### 4.0.0 ###
