@@ -54,8 +54,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () =>
             {
-                int? outParam;
-                var result = _instance.FunctionWithNullableInt(returnValue: null, outParam: out outParam);
+                var result = _instance.FunctionWithNullableInt(returnValue: null, outParam: out int? outParam);
                 ReSharper.TestValueAnalysis(outParam /*Expect:AssignNullToNotNullAttribute*/, outParam == null);
                 ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute*/, result == null);
             };
@@ -68,8 +67,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () =>
             {
-                string outParam;
-                _instance.MethodWithOutParameter(out outParam);
+                _instance.MethodWithOutParameter(out string outParam);
                 ReSharper.TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 

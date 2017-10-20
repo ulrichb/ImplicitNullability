@@ -182,9 +182,8 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Action act = () =>
             {
                 string refParam = null;
-                string outParam;
 
-                DelegatesSample.GetSomeDelegateWithRefAndOut()(ref refParam, out outParam);
+                DelegatesSample.GetSomeDelegateWithRefAndOut()(ref refParam, out var outParam);
 
                 TestValueAnalysis(refParam, refParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MRef]*/);
                 TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
