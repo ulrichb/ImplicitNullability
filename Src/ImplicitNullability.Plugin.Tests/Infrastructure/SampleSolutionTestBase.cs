@@ -4,9 +4,14 @@ using System.Reflection;
 using JetBrains.Application.Settings;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
-using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 using JetBrains.ReSharper.Daemon.UsageChecking;
 using JetBrains.Util;
+
+#if RS20172 || RD20172
+using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
+#else
+using JetBrains.ReSharper.Feature.Services.Daemon;
+#endif
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {

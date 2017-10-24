@@ -3,7 +3,7 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace ImplicitNullability.VsFormatDefinitions
+namespace ImplicitNullability.Plugin.VsFormatDefinitions
 {
     [ClassificationType(ClassificationTypeNames = HighlightingId)]
     [Order(After = "Formal Language Priority", Before = "Natural Language Priority")]
@@ -11,15 +11,15 @@ namespace ImplicitNullability.VsFormatDefinitions
     [Name(HighlightingId)]
     [System.ComponentModel.DisplayName(DisplayNameText)]
     [UserVisible(true)]
-    public class NullabilityItemTypeHighlightingClassificationFormatDefinition : ClassificationFormatDefinition
+    public class NullabilityTypeHighlightingClassificationFormatDefinition : ClassificationFormatDefinition
     {
-        private const string HighlightingId = "ReSharperImplicitNullabilityItemTypeHighlighting"; // = StaticNullabilityItemTypeHighlighting.HighlightingId
-        private const string DisplayNameText = "Implicit Nullability Item Type Highlighting";
+        private const string HighlightingId = "ReSharperImplicitNullabilityTypeHighlighting"; // = StaticNullabilityTypeHighlighting.HighlightingId
+        private const string DisplayNameText = "Implicit Nullability Type Highlighting";
 
-        public NullabilityItemTypeHighlightingClassificationFormatDefinition()
+        public NullabilityTypeHighlightingClassificationFormatDefinition()
         {
             DisplayName = DisplayNameText;
-            ForegroundColor = Color.FromRgb(255, 124, 227); // = 'EffectColor' of the corresponding [RegisterHighlighter]
+            ForegroundColor = Color.FromRgb(229, 61, 255); // = 'EffectColor' of the corresponding [RegisterHighlighter]
         }
 
 #pragma warning disable 0649

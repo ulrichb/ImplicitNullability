@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using FakeItEasy;
-using JetBrains.Application.Settings;
 using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using NUnit.Framework;
+#if RS20172
+using JetBrains.Application.Settings;
+
+#endif
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
@@ -41,6 +44,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             A.CallTo(_decorated).MustNotHaveHappened();
         }
 
+#if RS20172
         [Test]
         public void Process_ShouldPassCall()
         {
@@ -93,6 +97,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
 
             Assert.That(result, Is.SameAs(decoratedValue));
         }
+#endif
 
         [Test]
         public void Highlightings_ShouldPassCall()

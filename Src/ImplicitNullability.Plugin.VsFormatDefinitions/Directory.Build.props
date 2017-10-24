@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <_ProjectNameRegex>(.*)(?:\.(R.?\d{5}))</_ProjectNameRegex>
+    <ProjectNameWithoutVersion>$([System.Text.RegularExpressions.Regex]::Match($(MSBuildProjectName), $(_ProjectNameRegex)).Groups[1].Value)</ProjectNameWithoutVersion>
+    <ReSharperVersionIdentifier>$([System.Text.RegularExpressions.Regex]::Match($(MSBuildProjectName), $(_ProjectNameRegex)).Groups[2].Value)</ReSharperVersionIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\$(ReSharperVersionIdentifier)\</BaseIntermediateOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj\**</DefaultItemExcludes>
+    <RootNamespace>$(ProjectNameWithoutVersion)</RootNamespace>
+    <OutputPath>bin\$(ReSharperVersionIdentifier)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);$(ReSharperVersionIdentifier)</DefineConstants>
+    <DefineConstants Condition="$(ReSharperVersionIdentifier.StartsWith('RS'))">$(DefineConstants);RESHARPER</DefineConstants>
+    <DefineConstants Condition="$(ReSharperVersionIdentifier.StartsWith('RD'))">$(DefineConstants);RIDER</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)'=='Debug'">$(DefineConstants);JET_MODE_ASSERT</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);test\data\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+</Project>

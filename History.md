@@ -1,3 +1,6 @@
+### vNext ###
+- ReSharper 2017.3 support
+
 ### 4.1.0 ###
 - Added support for Rider 2017.2
 

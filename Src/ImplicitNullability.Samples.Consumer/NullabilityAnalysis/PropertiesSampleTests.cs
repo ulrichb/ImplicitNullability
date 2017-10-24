@@ -210,7 +210,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             c.Property.Should().Be("value");
 
             TestValueAnalysis(c.AutoPropertyWithPrivateSetter, c.AutoPropertyWithPrivateSetter == null
-                /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && (!RtGo || (External && RS <= 20171))]*/);
+                /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
             c.AutoPropertyWithPrivateSetter.Should().Be("value");
 
             TestValueAnalysis(c.DelegatingProperty, c.DelegatingProperty == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps]*/);

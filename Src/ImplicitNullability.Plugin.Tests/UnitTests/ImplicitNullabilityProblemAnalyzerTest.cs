@@ -2,7 +2,6 @@
 using ImplicitNullability.Plugin.Highlighting;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.CSharp.Stages.Analysis;
-using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
@@ -10,6 +9,10 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NuGet;
 using NUnit.Framework;
+
+#if RS20172 || RD20172
+using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
+#endif
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests
 {

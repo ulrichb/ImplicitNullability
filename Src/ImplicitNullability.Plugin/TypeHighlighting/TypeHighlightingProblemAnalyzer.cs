@@ -34,7 +34,13 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
 
         protected override void Run(IDeclaration declaration, ElementProblemAnalyzerData data, IHighlightingConsumer consumer)
         {
-            if (data.ProcessKind == DaemonProcessKind.VISIBLE_DOCUMENT && IsTypeHighlightingEnabled(data.SettingsStore))
+#if RS20172 || RD20172
+            var processKind = data.ProcessKind;
+#else
+            var processKind = data.GetDaemonProcessKind();
+#endif
+
+            if (processKind == DaemonProcessKind.VISIBLE_DOCUMENT && IsTypeHighlightingEnabled(data.SettingsStore))
                 RunForVisibleDocument(declaration, consumer);
         }
 

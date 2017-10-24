@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Feature.Services.Daemon;
+#if RS20172 || RD20172
+using JetBrains.Application.Settings;
+
+#endif
 
 namespace ImplicitNullability.Plugin
 {
@@ -22,6 +25,7 @@ namespace ImplicitNullability.Plugin
             }
         }
 
+#if RS20172 || RD20172
         public IDaemonStageProcess Process => _decorated.Process;
 
         public bool IsNonUserFile => _decorated.IsNonUserFile;
@@ -31,6 +35,7 @@ namespace ImplicitNullability.Plugin
         public IHighlightingSettingsManager HighlightingSettingsManager => _decorated.HighlightingSettingsManager;
 
         public IContextBoundSettingsStore SettingsStore => _decorated.SettingsStore;
+#endif
 
         public IList<HighlightingInfo> Highlightings => _decorated.Highlightings;
     }

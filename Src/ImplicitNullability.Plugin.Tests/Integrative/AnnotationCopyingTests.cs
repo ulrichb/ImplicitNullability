@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.ReSharper.FeaturesTestFramework.Intentions;
 using JetBrains.ReSharper.Intentions.CSharp.ContextActions;
 using JetBrains.ReSharper.Intentions.CSharp.QuickFixes;
 using JetBrains.ReSharper.TestFramework;
-using NUnit.Framework;
-#if !RS20171
-using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.TestFramework;
-
-#endif
+using NUnit.Framework;
 
 namespace ImplicitNullability.Plugin.Tests.Integrative
 {
@@ -32,10 +29,8 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             [Test]
             public void CheckParamNullAction() => DoNamedTest();
 
-#if !RS20171
             [Test]
             public void CheckParamNullActionWithEnabledImplicitNullability() => WithEnabledImplicitNullability(this, () => DoNamedTest());
-#endif
         }
 
         [TestFixture]
@@ -47,13 +42,10 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             [Test]
             public void GenerateConstructor() => DoNamedTest();
 
-#if !RS20171
             [Test]
             public void GenerateConstructorWithEnabledImplicitNullability() => WithEnabledImplicitNullability(this, () => DoNamedTest());
-#endif
         }
 
-#if !RS20171
         private static void WithEnabledImplicitNullability(BaseTest baseTest, Action action)
         {
             baseTest.ExecuteWithinSettingsTransaction(settings =>
@@ -63,6 +55,5 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
                 action();
             });
         }
-#endif
     }
 }

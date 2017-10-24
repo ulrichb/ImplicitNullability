@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -30,11 +30,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RS20172", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RS20172.csproj", "{B2619CD9-295A-4436-A83A-26E7AE540FB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.VsFormatDefinitions", "Src\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.VsFormatDefinitions.RS20172", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.RS20172.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RS20171", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RS20171.csproj", "{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.VsFormatDefinitions.RS20173", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.RS20173.csproj", "{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RS20171", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RS20171.csproj", "{1C93B659-62A2-4539-815D-D20BABB47451}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RS20173", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RS20173.csproj", "{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RS20173", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RS20173.csproj", "{1C93B659-62A2-4539-815D-D20BABB47451}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Special", "Src\ImplicitNullability.Samples.CodeWithIN.Special\ImplicitNullability.Samples.CodeWithIN.Special.csproj", "{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}"
 EndProject
@@ -84,6 +86,10 @@ Global
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +123,7 @@ Global
 		{AB1C2F7C-E1AD-40B4-B2C2-8E5CA55B462F} = {67859B65-179D-40D0-80DB-003011824913}
 		{B2619CD9-295A-4436-A83A-26E7AE540FB8} = {67859B65-179D-40D0-80DB-003011824913}
 		{06B8BCDD-6F91-42C7-A474-C50CD24C397E} = {67859B65-179D-40D0-80DB-003011824913}
+		{69D96DC8-E1A0-4412-AD54-BAEC0B43520E} = {67859B65-179D-40D0-80DB-003011824913}
 		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A} = {67859B65-179D-40D0-80DB-003011824913}
 		{1C93B659-62A2-4539-815D-D20BABB47451} = {67859B65-179D-40D0-80DB-003011824913}
 		{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD} = {67859B65-179D-40D0-80DB-003011824913}

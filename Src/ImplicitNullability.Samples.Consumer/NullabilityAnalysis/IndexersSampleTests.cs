@@ -36,7 +36,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         [Test]
         public void IndexerSetterWithNullValue()
         {
-            Action act = () => _instance[""] = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo && RS > 20171]*/;
+            Action act = () => _instance[""] = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
