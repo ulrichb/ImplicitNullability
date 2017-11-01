@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <_ProjectNameRegex>(.*)(?:\.R(\d{5}))</_ProjectNameRegex>
+    <ProjectNameWithoutVersion>$([System.Text.RegularExpressions.Regex]::Match($(MSBuildProjectName), $(_ProjectNameRegex)).Groups[1].Value)</ProjectNameWithoutVersion>
+    <ReSharperVersionIdentifier>$([System.Text.RegularExpressions.Regex]::Match($(MSBuildProjectName), $(_ProjectNameRegex)).Groups[2].Value)</ReSharperVersionIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\R$(ReSharperVersionIdentifier)\</BaseIntermediateOutputPath>
+    <RootNamespace>$(ProjectNameWithoutVersion)</RootNamespace>
+    <OutputPath>bin\R$(ReSharperVersionIdentifier)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);RESHARPER$(ReSharperVersionIdentifier)</DefineConstants>
+  </PropertyGroup>
+
+</Project>

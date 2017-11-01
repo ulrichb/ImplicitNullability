@@ -1,29 +1,11 @@
-﻿<Project>
-  <PropertyGroup>
-    <ReSharperVersionIdentifier>20172</ReSharperVersionIdentifier>
-
-    <!-- This is a workaround for https://github.com/dotnet/sdk/issues/980: -->
-    <BaseIntermediateOutputPath>obj\R$(ReSharperVersionIdentifier)\</BaseIntermediateOutputPath>
-  </PropertyGroup>
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <RootNamespace>ImplicitNullability.Plugin</RootNamespace>
     <AssemblyVersion>0.0.0.1</AssemblyVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <DebugType>full</DebugType> <!-- necessary for OpenCover -->
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NET45;JET_MODE_ASSERT;RESHARPER$(ReSharperVersionIdentifier)</DefineConstants>
-    <OutputPath>bin\R$(ReSharperVersionIdentifier)\Debug\</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NET45;RESHARPER$(ReSharperVersionIdentifier)</DefineConstants>
-    <OutputPath>bin\R$(ReSharperVersionIdentifier)\Release\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,14 +23,8 @@
     <ProjectReference Include="..\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj" />
   </ItemGroup>
 
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-
-  <PropertyGroup>
-    <ReSharperInstallationsDirectoryInstancePart>ExpRS$(ReSharperVersionIdentifier)</ReSharperInstallationsDirectoryInstancePart>
-  </PropertyGroup>
   <ItemGroup>
     <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.VsFormatDefinitions.*" />
   </ItemGroup>
-  <Import Project="$(SolutionDir)\Shared\Build\CopyToReSharperInstallationsDirectory.targets" />
 
 </Project>
