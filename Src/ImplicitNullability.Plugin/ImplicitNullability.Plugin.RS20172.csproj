@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj" />
   </ItemGroup>
 

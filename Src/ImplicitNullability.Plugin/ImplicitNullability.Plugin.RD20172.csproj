@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net451</TargetFramework>
     <AssemblyVersion>0.0.0.1</AssemblyVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
@@ -14,19 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.ReSharper.SDK" Version="2017.1.*" />
+    <PackageReference Include="JetBrains.Rider.SDK" Version="2017.2.*" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ImplicitNullability.VsFormatDefinitions\ImplicitNullability.VsFormatDefinitions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.VsFormatDefinitions.*" />
   </ItemGroup>
 
 </Project>

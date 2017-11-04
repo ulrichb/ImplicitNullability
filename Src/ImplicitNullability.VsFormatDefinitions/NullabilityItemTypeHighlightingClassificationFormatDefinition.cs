@@ -13,13 +13,13 @@ namespace ImplicitNullability.VsFormatDefinitions
     [UserVisible(true)]
     public class NullabilityItemTypeHighlightingClassificationFormatDefinition : ClassificationFormatDefinition
     {
-        public const string HighlightingId = "ReSharperImplicitNullabilityItemTypeHighlighting";
+        private const string HighlightingId = "ReSharperImplicitNullabilityItemTypeHighlighting"; // = StaticNullabilityItemTypeHighlighting.HighlightingId
         private const string DisplayNameText = "Implicit Nullability Item Type Highlighting";
 
         public NullabilityItemTypeHighlightingClassificationFormatDefinition()
         {
             DisplayName = DisplayNameText;
-            ForegroundColor = Color.FromRgb(255, 124, 227);
+            ForegroundColor = Color.FromRgb(255, 124, 227); // = 'EffectColor' of the corresponding [RegisterHighlighter]
         }
 
 #pragma warning disable 0649

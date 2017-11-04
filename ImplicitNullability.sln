@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -37,6 +37,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RS20171", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RS20171.csproj", "{1C93B659-62A2-4539-815D-D20BABB47451}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Special", "Src\ImplicitNullability.Samples.CodeWithIN.Special\ImplicitNullability.Samples.CodeWithIN.Special.csproj", "{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RD20172", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RD20172.csproj", "{4ECAB56A-44C9-4A46-B401-FBD782634AA0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RD20172", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RD20172.csproj", "{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +96,14 @@ Global
 		{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ECAB56A-44C9-4A46-B401-FBD782634AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ECAB56A-44C9-4A46-B401-FBD782634AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ECAB56A-44C9-4A46-B401-FBD782634AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ECAB56A-44C9-4A46-B401-FBD782634AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +120,8 @@ Global
 		{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A} = {67859B65-179D-40D0-80DB-003011824913}
 		{1C93B659-62A2-4539-815D-D20BABB47451} = {67859B65-179D-40D0-80DB-003011824913}
 		{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD} = {67859B65-179D-40D0-80DB-003011824913}
+		{4ECAB56A-44C9-4A46-B401-FBD782634AA0} = {67859B65-179D-40D0-80DB-003011824913}
+		{2E9FE56E-2507-42FC-8146-2F4F9BA4397D} = {67859B65-179D-40D0-80DB-003011824913}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FF51D4C-B501-47FC-943D-395AEB7D3978}

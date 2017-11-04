@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.1.51'
+    id 'org.jetbrains.intellij' version '0.2.17'
+}
+
+version = version != 'unspecified' ? version : '0.0.0.1'
+
+if (!project.hasProperty('configuration')) ext.configuration = 'Debug'
+
+intellij {
+    type = 'RD'
+    // https://www.jetbrains.com/intellij-repository/releases
+    version = '172.4144.1459'
+    downloadSources = false
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileKotlin {
+    kotlinOptions { jvmTarget = "1.8" }
+}
+
+prepareSandbox {
+    from("$projectDir/../ImplicitNullability.Plugin/bin/RD20172/$configuration", {
+        into "$intellij.pluginName/dotnet"
+        include 'ImplicitNullability.Plugin*'
+    })
+}
+
+patchPluginXml {
+    def historyText = file("$projectDir/../../History.md").text
+    def historyMatches = historyText =~ /(?s)###(.+?)###(.+?)(?=###|$)/
+
+    changeNotes = historyMatches.collect {
+        def versionTitle = it[1]
+        def versionText = it[2].replaceAll(/(?s)\r?\n/, "<br />\n")
+        "<b>$versionTitle</b>$versionText"
+    }.take(10).join('')
+
+    //sinceBuild = "172.*"
+}
+
+runIde {
+    configDirectory = System.properties['user.home'] + '/.RiderPluginDev/config'
+    systemDirectory = System.properties['user.home'] + '/.RiderPluginDev/system'
+}

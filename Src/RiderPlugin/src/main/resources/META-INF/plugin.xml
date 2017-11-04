@@ -1,0 +1,23 @@
+<idea-plugin url="https://github.com/ulrichb/ImplicitNullability#readme">
+  <id>ImplicitNullability</id>
+  <name>Implicit Nullability</name>
+  <description><![CDATA[
+<p>Extends the static analysis by changing specific, configurable elements to be [NotNull] by default.</p>
+
+<p><i>In Rider there is a small limitation in the options page at the moment: The "Copy [AssemblyMetadata] attributes to clipboard" button is not available.</i></p>
+
+<p>Tags: rider c# nullability analysis implicit annotation default notnull canbenull</p>
+]]></description>
+  <change-notes>REPLACE ME</change-notes>
+  <vendor>ulrichb</vendor>
+
+  <depends>com.intellij.modules.rider</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable
+      parentId="CodeInspectionSettingsId"
+      instance="com.jetbrains.rider.settings.ImplicitNullabilityOptionsPage"
+      id="preferences.ImplicitNullabilityOptions"/>
+  </extensions>
+
+</idea-plugin>

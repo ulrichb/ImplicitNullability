@@ -4,7 +4,7 @@
   <settings>
     <options>
       <option name="allowExternalStatus" value="true" />
-      <option name="artifactRules" value="Build\Output\*.nupkg&#xA;Build\Output\TestCoverage\**\* =&gt; coverage.zip" />
+      <option name="artifactRules" value="Build\Output\*.nupkg&#xA;Build\Output\*.zip&#xA;Build\Output\TestCoverage\**\* =&gt; coverage.zip" />
       <option name="buildNumberPattern" value="%dep.OpenSourceProjects_ImplicitNullability_BuildVersion.build.number%" />
       <option name="executionTimeoutMin" value="30" />
     </options>

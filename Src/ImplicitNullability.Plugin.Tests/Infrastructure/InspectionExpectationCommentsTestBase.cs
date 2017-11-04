@@ -56,7 +56,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
             var highlightingConfigurableSeverityIds = highlightingTypesToAnalyze
                 .Select(x => x.GetCustomAttribute<ConfigurableSeverityHighlightingAttribute>(inherit: false).ConfigurableSeverityId)
-                .ToHashSet();
+                .ToSet();
             var actualIssues = issues.Where(x => highlightingConfigurableSeverityIds.Contains(x.IssueType.ConfigurableSeverityId)).ToList();
 
             var actualIssuesAndMatches = actualIssues.Select(

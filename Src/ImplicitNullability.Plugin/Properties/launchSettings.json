@@ -4,6 +4,12 @@
       "commandName": "Executable",
       "executablePath": "$(DevEnvDir)devenv.exe",
       "commandLineArgs": "/RootSuffix Exp$(ReSharperVersionIdentifier) /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln"
+    },
+    "Plugin (in Rider)": {
+      "commandName": "Executable",
+      "executablePath": "$(ComSpec)",
+      "commandLineArgs": "/c gradlew runIde",
+      "workingDirectory": "$(SolutionDir)Src\\RiderPlugin"
     }
   }
 }

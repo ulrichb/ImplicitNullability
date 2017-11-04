@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq.Expressions;
+using JetBrains.Annotations;
 using JetBrains.Application.Settings;
 using JetBrains.Application.UI.Commands;
 using JetBrains.DataFlow;
@@ -69,58 +70,66 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
             AddNullabilityBoolOption(
                 s => s.EnableInputParameters,
                 "Input parameters of methods, delegates, and indexers",
+                additionalText: null,
                 parentOption: enabledOption,
                 indent: 2);
 
             AddNullabilityBoolOption(
                 s => s.EnableRefParameters,
                 "Ref parameters of methods and delegates",
+                additionalText: null,
                 parentOption: enabledOption,
                 indent: 2);
 
             AddNullabilityBoolOption(
                 s => s.EnableOutParametersAndResult,
                 "Return values and out parameters of methods and delegates",
+                additionalText: null,
                 parentOption: enabledOption,
                 indent: 2);
 
             var enableFieldsOption = AddNullabilityBoolOption(
                 s => s.EnableFields,
                 "Fields",
+                additionalText: null,
                 parentOption: enabledOption,
                 indent: 2);
 
             AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReadonly,
                 new RichText("Restrict to ") + new RichText("readonly", Italic) +
-                new RichText(" fields (because ") + new RichText("readonly", Italic) +
-                new RichText(" fields can be guarded by invariants / constructor checks)"),
+                new RichText(" fields (because ") + new RichText("readonly", Italic) + new RichText(" fields can be guarded "),
+                new RichText("by invariants / constructor checks)"),
                 parentOption: enableFieldsOption,
                 indent: 3);
 
             AddNullabilityBoolOption(
                 s => s.FieldsRestrictToReferenceTypes,
-                new RichText("Restrict to fields contained in reference types (because due to the implicit default constructor ") +
-                new RichText("struct", Italic) + new RichText("s cannot guarantee non-null initialized fields)"),
+                new RichText("Restrict to fields contained in reference types (because due to the implicit default "),
+                new RichText("constructor ") + new RichText("struct", Italic) +
+                new RichText("s cannot guarantee non-null initialized fields)"),
                 parentOption: enableFieldsOption,
                 indent: 3);
 
             var enablePropertiesOption = AddNullabilityBoolOption(
                 s => s.EnableProperties,
                 "Properties",
+                additionalText: null,
                 parentOption: enabledOption,
                 indent: 2);
 
             AddNullabilityBoolOption(
                 s => s.PropertiesRestrictToGetterOnly,
-                new RichText("Restrict to getter-only properties (including C# 6+ readonly auto-properties)"),
+                "Restrict to getter-only properties (including C# 6+ readonly auto-properties)",
+                additionalText: null,
                 parentOption: enablePropertiesOption,
                 indent: 3);
 
             AddNullabilityBoolOption(
                 s => s.PropertiesRestrictToReferenceTypes,
-                new RichText("Restrict to properties contained in reference types (because due to the implicit default constructor ") +
-                new RichText("struct", Italic) + new RichText("s cannot guarantee non-null initialized auto-properties)"),
+                new RichText("Restrict to properties contained in reference types (because due to the implicit default "),
+                new RichText("constructor ") + new RichText("struct", Italic) +
+                new RichText("s cannot guarantee non-null initialized auto-properties)"),
                 parentOption: enablePropertiesOption,
                 indent: 3);
 
@@ -129,26 +138,38 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 s => s.GeneratedCode,
                 GeneratedCodeOptions.Exclude,
                 GeneratedCodeOptions.Include,
-                new RichText("Exclude generated code (decorated with ") + new RichText("[GeneratedCode]", Italic) +
+                new RichText("Exclude generated code (decorated with ") + new RichText("[GeneratedCode]", Italic),
                 new RichText(" attribute or configured on the \"Code Inspection | Generated Code\" options page)"),
                 parentOption: enabledOption,
                 indent: 2);
 
             AddEmptyLine();
-            SetIndent(AddText(
-                "2. Recommended for library authors: By defining [AssemblyMetadata] attributes in all concerned assemblies. " +
-                "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies."), 1);
+            SetIndent(AddRichText(
+                    new RichText("2. Recommended for library authors: By defining ") + new RichText("[AssemblyMetadata]", Italic) +
+                    new RichText(" attributes in all concerned assemblies. " +
+                                 "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies.")),
+                indent: 1);
 
             var copyButtonText = "Copy [AssemblyMetadata] attributes to clipboard (corresponding to the options above)";
             var copyButton = AddButton(copyButtonText, new DelegateCommand(CopyAssemblyAttributeCode));
+#if RIDER
+            AddEmptyLine();
+            SetIndent(AddText("TODO: Add 'Copy [AssemblyMetadata] attributes to clipboard' button here"), 1); // TODO UB RiderSupport Button
+            AddEmptyLine();
+#endif
             SetIndent(copyButton, 2);
             enabledOption.CheckedProperty.FlowInto(myLifetime, copyButton.GetIsEnabledProperty());
 
-            SetIndent(AddText(
-                "Implicit Nullability normally ignores referenced assemblies. " +
-                "It can take referenced libraries into account only if they contain embedded [AssemblyMetadata]-based configuration."), 1);
+            SetIndent(AddRichText(
+                    new RichText("Implicit Nullability normally ignores referenced assemblies. " +
+                                 "It can take referenced libraries into account only if they contain embedded ") +
+                    new RichText("[AssemblyMetadata]", Italic) + new RichText(" -based configuration.")),
+                indent: 1);
             AddEmptyLine();
-            SetIndent(AddText("The options in [AssemblyMetadata] attributes override the options selected above."), 1);
+            SetIndent(AddRichText(
+                    new RichText("The options in ") + new RichText("[AssemblyMetadata]", Italic) +
+                    new RichText(" attributes override the options selected above.")),
+                indent: 1);
 
             AddEmptyLine();
             AddRichText(
@@ -159,42 +180,92 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
             AddEmptyLine();
             AddBoolOption(
                 (ImplicitNullabilitySettings s) => s.EnableTypeHighlighting,
-                "Enable type highlighting of explicit or implicit [NotNull] elements " +
-                "(to adapt the color, look for \"Implicit Nullability\" in Visual Studio's \"Fonts and Colors\" options)");
+                "Enable type highlighting of explicit or implicit [NotNull] elements (to adapt the color, look ",
+                "for \"Implicit Nullability\" in Visual Studio's \"Fonts and Colors\" options)",
+                indent: 0);
         }
 
         private BoolOptionViewModel AddNullabilityBoolOption(
             Expression<Func<ImplicitNullabilitySettings, bool>> settingExpression,
-            RichText richText,
+            RichText text,
+            [CanBeNull] RichText additionalText,
             BoolOptionViewModel parentOption,
             int indent)
         {
-            var boolOption = AddBoolOption(settingExpression, richText);
-            SetUpDependentOption(boolOption, parentOption, indent);
-            return boolOption;
+            var result = AddBoolOption(settingExpression, text, additionalText, indent);
+            SetUpDependentOption(result, parentOption);
+            return result;
         }
 
         private void AddNullabilityBoolOption<TEntryMemberType>(
             Expression<Func<ImplicitNullabilitySettings, TEntryMemberType>> settingExpression,
             TEntryMemberType trueValue,
             TEntryMemberType falseValue,
-            RichText richText,
+            RichText text,
+            [CanBeNull] RichText additionalText,
             BoolOptionViewModel parentOption,
             int indent)
         {
-            var boolOption = AddBoolOption(settingExpression, trueValue, falseValue, richText);
-            SetUpDependentOption(boolOption, parentOption, indent);
+            var result = AddBoolOption(settingExpression, trueValue, falseValue, text, additionalText, indent);
+            SetUpDependentOption(result, parentOption);
         }
 
-        private void SetUpDependentOption(IOptionEntity option, BoolOptionViewModel parentOption, int indent)
+        private void SetUpDependentOption(IOptionEntity option, BoolOptionViewModel parentOption)
         {
             // Note: The `Compose(parentOption.IsEnabledProperty)` starts to become important at the second "level".
             parentOption.CheckedProperty.Compose(myLifetime, parentOption.IsEnabledProperty)
                 .Select(myLifetime, "checked and enabled", pair => pair.First && pair.Second)
                 .FlowInto(myLifetime, option.GetIsEnabledProperty());
-
-            SetIndent(option, indent);
         }
+
+        private BoolOptionViewModel AddBoolOption<T>(
+            Expression<Func<T, bool>> settingExpression,
+            RichText text,
+            [CanBeNull] RichText additionalText,
+            int indent)
+        {
+            // Rider doesn't support line-wrapping for check boxes atm.
+
+#if RESHARPER
+            var boolOption = AddBoolOption(settingExpression, text + additionalText);
+#else // RIDER
+            var boolOption = AddBoolOption(settingExpression, text);
+
+            if (additionalText != null)
+                AddAdditionalText(boolOption, additionalText, indent);
+#endif
+            SetIndent(boolOption, indent);
+            return boolOption;
+        }
+
+        private IOptionEntity AddBoolOption<T>(
+            Expression<Func<ImplicitNullabilitySettings, T>> settingExpression,
+            T trueValue,
+            T falseValue,
+            RichText text,
+            [CanBeNull] RichText additionalText,
+            int indent)
+        {
+#if RESHARPER
+            var boolOption = AddBoolOption(settingExpression, trueValue, falseValue, text + additionalText);
+#else // RIDER
+            var boolOption = AddBoolOption(settingExpression, trueValue, falseValue, text);
+
+            if (additionalText != null)
+                AddAdditionalText(boolOption, additionalText, indent);
+#endif
+            SetIndent(boolOption, indent);
+            return boolOption;
+        }
+
+#if RIDER
+        private void AddAdditionalText(BoolOptionViewModel boolOption, RichText additionalText, int indent)
+        {
+            var textOptionEntity = AddText(additionalText);
+            boolOption.IsEnabledProperty.FlowInto(myLifetime, textOptionEntity.GetIsEnabledProperty());
+            SetIndent(textOptionEntity, indent + 1);
+        }
+#endif
 
         private void CopyAssemblyAttributeCode()
         {
