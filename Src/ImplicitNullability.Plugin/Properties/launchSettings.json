@@ -3,7 +3,7 @@
     "Plugin (in VS)": {
       "commandName": "Executable",
       "executablePath": "$(DevEnvDir)devenv.exe",
-      "commandLineArgs": "/RootSuffix ExpRS$(ReSharperVersionIdentifier) /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln"
+      "commandLineArgs": "/RootSuffix Exp$(ReSharperVersionIdentifier) /ReSharper.Internal $(SolutionDir)ImplicitNullability.Sample.sln"
     }
   }
 }

@@ -6,7 +6,7 @@ using JetBrains.ReSharper.Intentions.CSharp.ContextActions;
 using JetBrains.ReSharper.Intentions.CSharp.QuickFixes;
 using JetBrains.ReSharper.TestFramework;
 using NUnit.Framework;
-#if !RESHARPER20171
+#if !RS20171
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.TestFramework;
 
@@ -32,7 +32,7 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             [Test]
             public void CheckParamNullAction() => DoNamedTest();
 
-#if !RESHARPER20171
+#if !RS20171
             [Test]
             public void CheckParamNullActionWithEnabledImplicitNullability() => WithEnabledImplicitNullability(this, () => DoNamedTest());
 #endif
@@ -47,13 +47,13 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             [Test]
             public void GenerateConstructor() => DoNamedTest();
 
-#if !RESHARPER20171
+#if !RS20171
             [Test]
             public void GenerateConstructorWithEnabledImplicitNullability() => WithEnabledImplicitNullability(this, () => DoNamedTest());
 #endif
         }
 
-#if !RESHARPER20171
+#if !RS20171
         private static void WithEnabledImplicitNullability(BaseTest baseTest, Action action)
         {
             baseTest.ExecuteWithinSettingsTransaction(settings =>

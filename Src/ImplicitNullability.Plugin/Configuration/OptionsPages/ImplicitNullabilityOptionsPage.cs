@@ -8,7 +8,7 @@ using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
 using JetBrains.UI.RichText;
 using JetBrains.Util;
-#if RESHARPER20171
+#if RS20171
 using JetBrains.UI;
 using JetBrains.UI.Options;
 using JetBrains.UI.Options.OptionsDialog2.SimpleOptions;

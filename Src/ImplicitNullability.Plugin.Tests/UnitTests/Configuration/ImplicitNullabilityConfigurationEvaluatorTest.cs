@@ -11,7 +11,7 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework.Utils;
 using JetBrains.Util;
 using NUnit.Framework;
-#if RESHARPER20171
+#if RS20171
 using JetBrains.Application.Settings.Store.Implementation;
 #else
 using JetBrains.Application.Settings.Implementation;

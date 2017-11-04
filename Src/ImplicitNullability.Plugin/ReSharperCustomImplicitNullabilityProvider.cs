@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.Util;
-#if RESHARPER20171
+#if RS20171
 using ICustomImplicitNullabilityProvider = JetBrains.ReSharper.Psi.CodeAnnotations.ICustomCodeAnnotationProvider;
 
 #endif
