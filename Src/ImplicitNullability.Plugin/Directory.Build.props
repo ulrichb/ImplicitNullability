@@ -13,6 +13,7 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);$(ReSharperVersionIdentifier)</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)'=='Debug'">$(DefineConstants);JET_MODE_ASSERT</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
