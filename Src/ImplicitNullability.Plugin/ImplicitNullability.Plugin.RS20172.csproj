@@ -11,8 +11,6 @@
   <ItemGroup>
     <Compile Include="..\..\Shared\Src\ReSharperExtensionsShared\Highlighting\SimpleTreeNodeHighlightingBase.cs" Link="ReSharperExtensionsShared\SimpleTreeNodeHighlightingBase.cs" />
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-    <Compile Remove="obj\**" />
-    <None Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>

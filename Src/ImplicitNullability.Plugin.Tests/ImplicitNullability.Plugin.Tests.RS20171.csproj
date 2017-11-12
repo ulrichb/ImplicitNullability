@@ -10,8 +10,7 @@
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="..\ImplicitNullability.Plugin\Properties\ImplicitNullabilityConfigurationAttributes.cs" Link="Properties\ImplicitNullabilityConfigurationAttributes.cs" />
-    <Compile Remove="obj\**;test\data\**" />
-    <None Remove="obj\**" />
+    <Compile Remove="test\data\**" />
     <None Include="test\data\**" />
     <None Include="ExternalAnnotations\**\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
