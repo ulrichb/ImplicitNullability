@@ -20,16 +20,13 @@ namespace ImplicitNullability.Plugin.Configuration
     {
         private readonly ISettingsStore _settingsStore;
         private readonly ISettingsOptimization _settingsOptimization;
-        private readonly Lazy<IPsiServices> _psiServices;
 
         public ImplicitNullabilityConfigurationEvaluator(
             ISettingsStore settingsStore,
-            ISettingsOptimization settingsOptimization,
-            Lazy<IPsiServices> psiServices /* Must be lazy because of the circular dependency (CodeAnnotationsCache) */)
+            ISettingsOptimization settingsOptimization)
         {
             _settingsStore = settingsStore;
             _settingsOptimization = settingsOptimization;
-            _psiServices = psiServices;
         }
 
         public ImplicitNullabilityConfiguration EvaluateFor(IPsiModule psiModule)
@@ -67,7 +64,8 @@ namespace ImplicitNullability.Plugin.Configuration
 
         private ImplicitNullabilityConfiguration? ParseConfigurationFromAssemblyAttribute(IPsiModule psiModule)
         {
-            var moduleAttributes = _psiServices.Value.Symbols.GetModuleAttributes(psiModule);
+            var psiServices = psiModule.GetPsiServices(); // do not c'tor inject to avoid circular dependency
+            var moduleAttributes = psiServices.Symbols.GetModuleAttributes(psiModule);
 
             return AssemblyAttributeConfigurationTranslator.ParseAttributes(moduleAttributes);
         }

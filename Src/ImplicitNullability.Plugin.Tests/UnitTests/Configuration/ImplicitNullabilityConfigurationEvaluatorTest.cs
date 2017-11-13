@@ -5,7 +5,6 @@ using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Application.Settings;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.DataContext;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework.Utils;
@@ -210,10 +209,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
                         changeProjectSettings?.Invoke(
                             settingsStore.BindToContextTransient(ContextRange.ManuallyRestrictWritesToOneContext(project.ToDataContext())));
 
-                        var sut = new ImplicitNullabilityConfigurationEvaluator(
-                            settingsStore,
-                            solution.GetComponent<ISettingsOptimization>(),
-                            solution.GetComponent<Lazy<IPsiServices>>());
+                        var sut = new ImplicitNullabilityConfigurationEvaluator(settingsStore, solution.GetComponent<ISettingsOptimization>());
 
                         result = sut.EvaluateFor(project.GetPsiModules().Single());
                     }));
