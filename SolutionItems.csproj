@@ -7,10 +7,12 @@
 
   <ItemGroup>
     <None Include="*" Exclude="*.csproj*" />
-    <None Include=".teamcity\**\*" />
+    <None Include=".teamcity\**" />
     <None Include="Build\*" />
-    <None Include="Doc\**\*" />
-    <None Include="Shared\Build\**\*" />
+    <None Include="Doc\**" />
+    <None Include="Src\RiderPlugin\*" />
+    <None Include="Src\RiderPlugin\src\**" />
+    <None Include="Shared\Build\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +20,7 @@
     <PackageReference Include="NUnit.Extension.NUnitV2Driver" Version="3.7.0" />
     <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.2" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="ReportGenerator" Version="2.5.10" />
+    <PackageReference Include="ReportGenerator" Version="3.0.2" />
   </ItemGroup>
 
 </Project>
