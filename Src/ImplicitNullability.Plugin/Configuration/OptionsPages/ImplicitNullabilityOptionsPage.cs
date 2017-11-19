@@ -34,6 +34,7 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
         public const string PageTitle = "Implicit Nullability";
         private const string PageId = "ImplicitNullabilityOptions";
 
+        private static readonly TextStyle Bold = new TextStyle(FontStyle.Bold);
         private static readonly TextStyle Italic = new TextStyle(FontStyle.Italic);
 
         private readonly ISettingsOptimization _settingsOptimization;
@@ -52,16 +53,17 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
             var enabledOption = AddBoolOption((ImplicitNullabilitySettings s) => s.Enabled, "Enabled");
 
             // Note: Text duplicated in README
-            var infoText =
+            SetIndent(AddText(
                 "With enabled Implicit Nullability, reference types are by default implicitly [NotNull] for " +
                 "specific, configurable elements (see below). " +
                 "Their nullability can be overridden with an explicit [CanBeNull] attribute. " +
-                "Optional method parameters with a null default value are implicitly [CanBeNull].\n" +
-                "\n" +
-                "Code elements which should be affected by Implicit Nullability can be configured in two ways.\n" +
-                "\n" +
-                "1. Recommended for application authors: Using the following settings.";
-            SetIndent(AddText(infoText), 1);
+                "Optional method parameters with a null default value are implicitly [CanBeNull]."), 1);
+            AddEmptyLine();
+            SetIndent(AddText(
+                "Code elements which should be affected by Implicit Nullability can be configured in two ways."), 1);
+            AddEmptyLine();
+            SetIndent(AddText(
+                "1. Recommended for application authors: Using the following settings."), 1);
 
 
             AddNullabilityBoolOption(
@@ -132,37 +134,34 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
                 parentOption: enabledOption,
                 indent: 2);
 
-            var assemblyAttributeInfoText1 =
-                "\n" +
+            AddEmptyLine();
+            SetIndent(AddText(
                 "2. Recommended for library authors: By defining [AssemblyMetadata] attributes in all concerned assemblies. " +
-                "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies.";
-            SetIndent(AddText(assemblyAttributeInfoText1), 1);
+                "This has the advantage of the Implicit Nullability configuration also getting compiled into the assemblies."), 1);
 
             var copyButtonText = "Copy [AssemblyMetadata] attributes to clipboard (corresponding to the options above)";
             var copyButton = AddButton(copyButtonText, new DelegateCommand(CopyAssemblyAttributeCode));
             SetIndent(copyButton, 2);
             enabledOption.CheckedProperty.FlowInto(myLifetime, copyButton.GetIsEnabledProperty());
 
-            var assemblyAttributeInfoText2 =
+            SetIndent(AddText(
                 "Implicit Nullability normally ignores referenced assemblies. " +
-                "It can take referenced libraries into account only if they contain embedded [AssemblyMetadata]-based configuration.\n" +
-                "\n" +
-                "The options in [AssemblyMetadata] attributes override the options selected above.";
-            SetIndent(AddText(assemblyAttributeInfoText2), 1);
+                "It can take referenced libraries into account only if they contain embedded [AssemblyMetadata]-based configuration."), 1);
+            AddEmptyLine();
+            SetIndent(AddText("The options in [AssemblyMetadata] attributes override the options selected above."), 1);
 
-            var cacheInfoText =
-                "Warning: After changing these settings respectively changing the [AssemblyMetadata] attribute value, " +
-                "cleaning the solution cache (see \"General\" options page) " +
-                "is necessary to update already analyzed code.";
-            AddText(cacheInfoText);
+            AddEmptyLine();
+            AddRichText(
+                new RichText("Warning: ", Bold) + new RichText("After changing these settings respectively changing ") +
+                new RichText("the [AssemblyMetadata] attribute value, cleaning the solution cache (see \"General\" options page) " +
+                             "is necessary to update already analyzed code."));
 
-            AddText("\n");
+            AddEmptyLine();
             AddBoolOption(
                 (ImplicitNullabilitySettings s) => s.EnableTypeHighlighting,
                 "Enable type highlighting of explicit or implicit [NotNull] elements " +
                 "(to adapt the color, look for \"Implicit Nullability\" in Visual Studio's \"Fonts and Colors\" options)");
         }
-
 
         private BoolOptionViewModel AddNullabilityBoolOption(
             Expression<Func<ImplicitNullabilitySettings, bool>> settingExpression,
