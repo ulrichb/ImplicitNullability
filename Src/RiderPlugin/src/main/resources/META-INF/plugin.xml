@@ -2,8 +2,8 @@
   <id>ImplicitNullability</id>
   <name>Implicit Nullability</name>
   <description><![CDATA[
-<p>Extends the static analysis by changing specific, configurable elements to be [NotNull] by default.</p>
-
+<p>Extends Rider's static nullability analysis by changing specific, configurable elements to be [NotNull] by default</p>
+<p></p>
 <p><i>In Rider there is a small limitation in the options page at the moment: The "Copy [AssemblyMetadata] attributes to clipboard" button is not available.</i></p>
 
 <p>Tags: rider c# nullability analysis implicit annotation default notnull canbenull</p>

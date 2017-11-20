@@ -8,7 +8,7 @@
     <licenseUrl>https://github.com/ulrichb/ImplicitNullability/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/ulrichb/ImplicitNullability#readme</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Extends the static analysis by changing specific, configurable elements to be [NotNull] by default.</description>
+    <description>Extends ReSharper's static nullability analysis by changing specific, configurable elements to be [NotNull] by default</description>
     <releaseNotes>$ReleaseNotes$</releaseNotes>
     <tags>nullability analysis implicit annotation default notnull canbenull</tags>
     <dependencies>

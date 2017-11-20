@@ -16,7 +16,7 @@ namespace ImplicitNullability.Plugin
 
         // Note: Text is duplicated in the nuspec.
         public const string Description =
-            "Extends ReSharper's static analysis by changing specific, configurable elements to be [NotNull] by default";
+            "Extends ReSharper's static nullability analysis by changing specific, configurable elements to be [NotNull] by default";
     }
 
 
