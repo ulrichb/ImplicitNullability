@@ -1,4 +1,4 @@
-### vNext ###
+### 4.1.0 ###
 - Added support for Rider 2017.2
 
 ### 4.0.1 ###
