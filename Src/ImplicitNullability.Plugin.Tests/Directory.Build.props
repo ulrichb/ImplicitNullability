@@ -19,8 +19,4 @@
     <DefineConstants Condition="'$(Configuration)'=='Debug'">$(DefineConstants);JET_MODE_ASSERT</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);test\data\**</DefaultItemExcludes>
-  </PropertyGroup>
-
 </Project>
