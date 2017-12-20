@@ -21,7 +21,7 @@ $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
     "Src\ImplicitNullability.Plugin.Tests\bin\RS20172\$Configuration\ImplicitNullability.Plugin.Tests.RS20172.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\RS20173\$Configuration\ImplicitNullability.Plugin.Tests.RS20173.dll"
-    "Src\ImplicitNullability.Plugin.Tests\bin\RD20172\$Configuration\ImplicitNullability.Plugin.Tests.RD20172.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\RD20173\$Configuration\ImplicitNullability.Plugin.Tests.RD20173.dll"
     "Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"

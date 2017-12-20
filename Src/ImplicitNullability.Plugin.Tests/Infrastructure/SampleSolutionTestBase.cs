@@ -7,7 +7,7 @@ using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.UsageChecking;
 using JetBrains.Util;
 
-#if RS20172 || RD20172
+#if RS20172
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 #else
 using JetBrains.ReSharper.Feature.Services.Daemon;

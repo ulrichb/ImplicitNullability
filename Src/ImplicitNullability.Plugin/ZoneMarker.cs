@@ -19,7 +19,6 @@ namespace ImplicitNullability.Plugin
             "Extends ReSharper's static nullability analysis by changing specific, configurable elements to be [NotNull] by default";
     }
 
-
     [ZoneDefinition]
     [ZoneDefinitionConfigurableFeature(PluginConsts.Title, PluginConsts.Description, IsInProductSection: false)]
     public interface IImplicitNullabilityZone : IPsiLanguageZone,

@@ -143,7 +143,7 @@ namespace ImplicitNullability.Plugin
         {
             CodeAnnotationNullableValue? result = null;
             if (
-#if RS20172 || RD20172
+#if RS20172
                 !field.IsAutoPropertyBackingField() &&
 #endif
                 !(field is IXamlField))

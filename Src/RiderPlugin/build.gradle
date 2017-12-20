@@ -11,7 +11,8 @@ if (!project.hasProperty('configuration')) ext.configuration = 'Debug'
 intellij {
     type = 'RD'
     // https://www.jetbrains.com/intellij-repository/releases
-    version = '172.4144.1459'
+    // version = '173-SNAPSHOT'
+    version = '173.3994.1125'
     downloadSources = false
 }
 
@@ -23,9 +24,9 @@ compileKotlin {
 }
 
 prepareSandbox {
-    from("$projectDir/../ImplicitNullability.Plugin/bin/RD20172/$configuration", {
+    from("$projectDir/../$gradle.resharperPluginProjectName/bin/RD20173/$configuration", {
         into "$intellij.pluginName/dotnet"
-        include 'ImplicitNullability.Plugin*'
+        include "$gradle.resharperPluginProjectName*"
     })
 }
 
@@ -39,7 +40,7 @@ patchPluginXml {
         "<b>$versionTitle</b>$versionText"
     }.take(10).join('')
 
-    //sinceBuild = "172.*"
+    //sinceBuild = "1xx.*"
 }
 
 runIde {

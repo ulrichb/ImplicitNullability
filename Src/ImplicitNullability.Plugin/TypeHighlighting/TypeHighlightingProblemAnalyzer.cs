@@ -34,7 +34,7 @@ namespace ImplicitNullability.Plugin.TypeHighlighting
 
         protected override void Run(IDeclaration declaration, ElementProblemAnalyzerData data, IHighlightingConsumer consumer)
         {
-#if RS20172 || RD20172
+#if RS20172
             var processKind = data.ProcessKind;
 #else
             var processKind = data.GetDaemonProcessKind();

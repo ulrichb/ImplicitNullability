@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Internal", "Src\ImplicitNullability.Samples.CodeWithIN\ImplicitNullability.Samples.CodeWithIN.Internal.csproj", "{4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -40,9 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Special", "Src\ImplicitNullability.Samples.CodeWithIN.Special\ImplicitNullability.Samples.CodeWithIN.Special.csproj", "{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RD20172", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RD20172.csproj", "{4ECAB56A-44C9-4A46-B401-FBD782634AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RD20173", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RD20173.csproj", "{4ECAB56A-44C9-4A46-B401-FBD782634AA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RD20172", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RD20172.csproj", "{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RD20173", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RD20173.csproj", "{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,7 +10,7 @@ using JetBrains.Util;
 using NuGet;
 using NUnit.Framework;
 
-#if RS20172 || RD20172
+#if RS20172
 using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
 #endif
 
