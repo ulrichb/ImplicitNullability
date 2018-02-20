@@ -82,6 +82,29 @@ In the example above _Implicit Nullability_ forces the programmer to fix the mis
 
 Another goal of this extension is to bring ReSharper's static analysis in sync with the implicit null checks of [Fody NullGuard](https://github.com/Fody/NullGuard#readme). For example, this [Fody](https://github.com/Fody/Fody#readme) weaver injects `throw new ArgumentNullException​(/*...*/)` statements for method parameters into method bodies using the same rules as _Implicit Nullability_. In other words this weaver adds _runtime checks_ for nullability to ReSharper's _static_ analysis.
 
+### C# Nullable reference types
+
+There is a C# 8 proposal named ["Nullable reference types"](https://github.com/dotnet/csharplang/blob/master/proposals/nullable-reference-types.md) which brings option types into the C# language. This matches the semantics of _Implicit Nullability_ and goes even further because it extends it to locals, generic parameters, ... because the nullability annotation works on type level.
+
+```C#
+[CanBeNull]
+string Bar([CanBeNull] string a, string b)
+{
+    string result = a;
+    return result;
+}
+```
+... then corresponds to ...
+```C#
+string? Bar(string? a, string b)
+{
+    string? result = a;
+    return result;
+}
+```
+
+This will make _Implicit Nullability_ unnecessary in the future and at the same time a perfect "upgrade path" because a good `[CanBeNull]`-annotated code base will be easily portable to C# 8.
+
 ### Differences to ReSharper's "Implicit [NotNull] Value Analysis Mode"
 
 Since version 2016.1 ReSharper supports (in the "internal mode") a comparable feature (see *Code Inspection | Settings*) with the following differences.
