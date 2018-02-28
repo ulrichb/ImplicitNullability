@@ -73,7 +73,12 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                     Match = expectedWarningComments.SingleOrDefault(
                         x => x.ExpectedWarningId == issue.IssueType.ConfigurableSeverityId &&
                              issue.GetSourceFile().Equals(x.File) &&
-                             issue.Range.NotNull().Intersects(x.Range))
+#if RS20173 || RD20173
+                             issue.Range.NotNull().Intersects(x.Range)
+#else
+                             issue.Range.NotNull().IntersectsOrContacts(x.Range)
+#endif
+                    )
                 }).ToList();
 
             Assert.That(issues.Where(x => x.GetSeverity() >= Severity.ERROR), Is.Empty, "no errors should happen during analysis");

@@ -13,9 +13,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
         }
 
         public void MethodWithOptionalParameter(
-                // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
-                [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/)
-            // ReSharper restore AssignNullToNotNullAttribute
+            // In R# 9+ AssignNullToNotNullAttribute hides NotNullOnImplicitCanBeNull, which is OK:
+            [NotNull] string optional = null /*Expect:AssignNullToNotNullAttribute*/)
         {
             // R# ignores the [NotNull] here, but respects it at the call site.
 
@@ -73,8 +72,8 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
         [NotNull]
         public int? this /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/[
             [NotNull] int? nullableInt /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/,
-            // ReSharper disable AssignNullToNotNullAttribute - because in R# 9+ this hides NotNullOnImplicitCanBeNull
-            [NotNull] string optional = null /*Expect:NotNullOnImplicitCanBeNull[Implicit]*/] => null;
-        // ReSharper restore AssignNullToNotNullAttribute
+            //
+            // In R# 9+ AssignNullToNotNullAttribute hides NotNullOnImplicitCanBeNull, which is OK:
+            [NotNull] string optional = null /*Expect:AssignNullToNotNullAttribute*/] => null /*Expect:AssignNullToNotNullAttribute*/;
     }
 }

@@ -4,10 +4,7 @@ using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Feature.Services.Daemon;
 using NUnit.Framework;
-#if RS20172
-using JetBrains.Application.Settings;
-
-#endif
+using A_ = FakeItEasy.A; // Fix the conflict with the "A" namespace in "JetBrains.ReSharper.Diagramming.Features"
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
@@ -20,90 +17,35 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _decorated = A.Fake<IHighlightingConsumer>();
+            _decorated = A_.Fake<IHighlightingConsumer>();
             _sut = new AnnotationRedundancyInHierarchyWarningFilteringDecorator(_decorated);
         }
 
         [Test]
         public void ConsumeHighlighting_WithSomeHighlighting_ShouldPassCall()
         {
-            var highlightingInfo = CreateHighlightingInfo(A.Dummy<IHighlighting>());
+            var highlightingInfo = CreateHighlightingInfo(A_.Dummy<IHighlighting>());
 
             _sut.ConsumeHighlighting(highlightingInfo);
 
-            A.CallTo(() => _decorated.ConsumeHighlighting(highlightingInfo)).MustHaveHappened();
+            A_.CallTo(() => _decorated.ConsumeHighlighting(highlightingInfo)).MustHaveHappened();
         }
 
         [Test]
         public void ConsumeHighlighting_WithAnnotationRedundancyInHierarchyWarning_ShouldSwallow()
         {
-            var highlightingInfo = CreateHighlightingInfo(A.Dummy<AnnotationRedundancyInHierarchyWarning>());
+            var highlightingInfo = CreateHighlightingInfo(A_.Dummy<AnnotationRedundancyInHierarchyWarning>());
 
             _sut.ConsumeHighlighting(highlightingInfo);
 
-            A.CallTo(_decorated).MustNotHaveHappened();
+            A_.CallTo(_decorated).MustNotHaveHappened();
         }
-
-#if RS20172
-        [Test]
-        public void Process_ShouldPassCall()
-        {
-            var decoratedValue = A.Fake<IDaemonStageProcess>();
-            A.CallTo(() => _decorated.Process).Returns(decoratedValue);
-
-            var result = _sut.Process;
-
-            Assert.That(result, Is.SameAs(decoratedValue));
-        }
-
-        [Test]
-        public void IsNonUserFile_ShouldPassCall()
-        {
-            A.CallTo(() => _decorated.IsNonUserFile).Returns(true);
-
-            var result = _sut.IsNonUserFile;
-
-            Assert.That(result, Is.EqualTo(true));
-        }
-
-        [Test]
-        public void IsGeneratedFile_ShouldPassCall()
-        {
-            A.CallTo(() => _decorated.IsGeneratedFile).Returns(true);
-
-            var result = _sut.IsGeneratedFile;
-
-            Assert.That(result, Is.EqualTo(true));
-        }
-
-        [Test]
-        public void HighlightingSettingsManager_ShouldPassCall()
-        {
-            var decoratedValue = A.Fake<IHighlightingSettingsManager>();
-            A.CallTo(() => _decorated.HighlightingSettingsManager).Returns(decoratedValue);
-
-            var result = _sut.HighlightingSettingsManager;
-
-            Assert.That(result, Is.SameAs(decoratedValue));
-        }
-
-        [Test]
-        public void SettingsStore_ShouldPassCall()
-        {
-            var decoratedValue = A.Fake<IContextBoundSettingsStore>();
-            A.CallTo(() => _decorated.SettingsStore).Returns(decoratedValue);
-
-            var result = _sut.SettingsStore;
-
-            Assert.That(result, Is.SameAs(decoratedValue));
-        }
-#endif
 
         [Test]
         public void Highlightings_ShouldPassCall()
         {
             var decoratedValue = new List<HighlightingInfo>();
-            A.CallTo(() => _decorated.Highlightings).Returns(decoratedValue);
+            A_.CallTo(() => _decorated.Highlightings).Returns(decoratedValue);
 
             var result = _sut.Highlightings;
 
@@ -112,7 +54,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
 
         private static HighlightingInfo CreateHighlightingInfo(IHighlighting highlighting)
         {
-            var documentRange = new DocumentRange(A.Fake<IDocument>(), offset: 0);
+            var documentRange = new DocumentRange(A_.Fake<IDocument>(), offset: 0);
             return new HighlightingInfo(documentRange, highlighting);
         }
     }

@@ -1,5 +1,4 @@
-﻿#if !RS20172
-using JetBrains.Application.BuildScript.Application.Zones;
+﻿using JetBrains.Application.BuildScript.Application.Zones;
 using JetBrains.Platform.VisualStudio.SinceVs10.Shell.Zones;
 
 namespace ImplicitNullability.Plugin.VsFormatDefinitions
@@ -9,4 +8,3 @@ namespace ImplicitNullability.Plugin.VsFormatDefinitions
     {
     }
 }
-#endif

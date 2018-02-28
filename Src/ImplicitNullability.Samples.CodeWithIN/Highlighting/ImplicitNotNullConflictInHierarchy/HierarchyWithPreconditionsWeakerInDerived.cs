@@ -1,7 +1,8 @@
 ﻿using JetBrains.Annotations;
 
-// ReSharper disable AssignNullToNotNullAttribute - because not relevant for this test case
-// ReSharper disable NotNullOnImplicitCanBeNull - because not relevant for this test case
+// Because not relevant for this test case:
+// ReSharper disable AssignNullToNotNullAttribute
+// ReSharper disable NotNullOnImplicitCanBeNull
 
 namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullConflictInHierarchy
 {

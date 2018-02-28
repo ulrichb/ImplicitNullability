@@ -5,13 +5,8 @@ using JetBrains.Application.Settings;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.UsageChecking;
-using JetBrains.Util;
-
-#if RS20172
-using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
-#else
 using JetBrains.ReSharper.Feature.Services.Daemon;
-#endif
+using JetBrains.Util;
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {

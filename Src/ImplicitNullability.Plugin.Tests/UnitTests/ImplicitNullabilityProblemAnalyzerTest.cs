@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using System.Reflection;
+using FakeItEasy;
 using ImplicitNullability.Plugin.Highlighting;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.CSharp.Stages.Analysis;
@@ -7,12 +8,8 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
-using NuGet;
 using NUnit.Framework;
-
-#if RS20172
-using JetBrains.ReSharper.Daemon.Stages.Dispatcher;
-#endif
+using A_ = FakeItEasy.A; // Fix the conflict with the "A" namespace in "JetBrains.ReSharper.Diagramming.Features"
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests
 {
@@ -51,18 +48,18 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
             {
                 var implicitNullabilityProblemAnalyzer = (IElementProblemAnalyzer) solution.GetComponent<ImplicitNullabilityProblemAnalyzer>();
 
-                var declaration = A.Fake<IDeclaration>();
-                A.CallTo(() => declaration.DeclaredElement).Returns(null);
+                var declaration = A_.Fake<IDeclaration>();
+                A_.CallTo(() => declaration.DeclaredElement).Returns(null);
 
-                var highlightingConsumer = A.Fake<IHighlightingConsumer>();
-
-                //
-
-                implicitNullabilityProblemAnalyzer.Run(declaration, A.Dummy<ElementProblemAnalyzerData>(), highlightingConsumer);
+                var highlightingConsumer = A_.Fake<IHighlightingConsumer>();
 
                 //
 
-                A.CallTo(highlightingConsumer).MustNotHaveHappened();
+                implicitNullabilityProblemAnalyzer.Run(declaration, A_.Dummy<ElementProblemAnalyzerData>(), highlightingConsumer);
+
+                //
+
+                A_.CallTo(highlightingConsumer).MustNotHaveHappened();
             });
         }
     }
