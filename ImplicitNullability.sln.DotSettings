@@ -1,5 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=3C27B37B_002D9889_002D48E9_002DA61D_002DD129CB14D527_002Fd_003ACSS/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=6ADCE94D_002DEF87_002D42F6_002DA68B_002D69DA6FD90DE6_002Fd_003ADoc/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=456A6456_002D5F34_002D4B64_002D9751_002D135686CE3A8F/@EntryIndexedValue">456A6456-5F34-4B64-9751-135686CE3A8F</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=4979B806_002DEB66_002D4C3F_002D8BB0_002D7AF284AEB0BD/@EntryIndexedValue">4979B806-EB66-4C3F-8BB0-7AF284AEB0BD</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=4AF4FFEC_002D2FAC_002D426A_002DB8B2_002D06F4D9F52392/@EntryIndexedValue">4AF4FFEC-2FAC-426A-B8B2-06F4D9F52392</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=9001EFB4_002D358F_002D4C98_002DAF13_002DF374E831A06E/@EntryIndexedValue">9001EFB4-358F-4C98-AF13-F374E831A06E</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=E84293D7_002DD774_002D4BDD_002D8250_002D238FB12D51A4/@EntryIndexedValue">E84293D7-D774-4BDD-8250-238FB12D51A4</s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/Enabled/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/EnableFields/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/EnableInputParameters/@EntryValue">False</s:Boolean>
