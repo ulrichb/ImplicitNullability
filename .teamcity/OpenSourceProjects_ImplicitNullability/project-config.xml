@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="OpenSourceProjects" uuid="1d134ead-b002-49bc-bba0-d4524caebc05" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2017.2/project-config.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="OpenSourceProjects" uuid="1d134ead-b002-49bc-bba0-d4524caebc05" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
   <name>ReSharper Implicit Nullability</name>
   <description>https://github.com/ulrichb/ImplicitNullability/</description>
   <parameters>
