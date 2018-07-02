@@ -32,17 +32,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.VsFormatDefinitions.RS20181", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.RS20181.csproj", "{06B8BCDD-6F91-42C7-A474-C50CD24C397E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.VsFormatDefinitions.RS20173", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.RS20173.csproj", "{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.VsFormatDefinitions.RS20182", "Src\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.RS20182.csproj", "{69D96DC8-E1A0-4412-AD54-BAEC0B43520E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RS20173", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RS20173.csproj", "{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RS20182", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RS20182.csproj", "{2F246B16-414A-4FDF-9DE2-3EC8E51D1B9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RS20173", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RS20173.csproj", "{1C93B659-62A2-4539-815D-D20BABB47451}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RS20182", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RS20182.csproj", "{1C93B659-62A2-4539-815D-D20BABB47451}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImplicitNullability.Samples.CodeWithIN.Special", "Src\ImplicitNullability.Samples.CodeWithIN.Special\ImplicitNullability.Samples.CodeWithIN.Special.csproj", "{4979B806-EB66-4C3F-8BB0-7AF284AEB0BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RD20181", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RD20181.csproj", "{4ECAB56A-44C9-4A46-B401-FBD782634AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.RD20182", "Src\ImplicitNullability.Plugin\ImplicitNullability.Plugin.RD20182.csproj", "{4ECAB56A-44C9-4A46-B401-FBD782634AA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RD20181", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RD20181.csproj", "{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitNullability.Plugin.Tests.RD20182", "Src\ImplicitNullability.Plugin.Tests\ImplicitNullability.Plugin.Tests.RD20182.csproj", "{2E9FE56E-2507-42FC-8146-2F4F9BA4397D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

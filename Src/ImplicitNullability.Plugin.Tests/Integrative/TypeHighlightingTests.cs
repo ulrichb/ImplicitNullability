@@ -62,12 +62,28 @@ namespace ImplicitNullability.Plugin.Tests.Integrative
             [Test]
             public void TestTypeHighlightingInvalidDeclarationsSample() => DoNamedTest2("Async.cs");
 
-            protected override bool HighlightingPredicate(IHighlighting highlighting, [CanBeNull] IPsiSourceFile sourceFile) =>
-                highlighting is StaticNullabilityTypeHighlightingBase; // Do not render errors
+            protected override bool HighlightingPredicate(
+                IHighlighting highlighting,
+                [CanBeNull] IPsiSourceFile sourceFile
+#if !RS20181
+                ,
+                [CanBeNull] IContextBoundSettingsStore _
+#endif
+            ) => highlighting is StaticNullabilityTypeHighlightingBase; // Do not render errors
         }
 
-        protected override bool HighlightingPredicate([NotNull] IHighlighting highlighting, [CanBeNull] IPsiSourceFile sourceFile) =>
-            highlighting is StaticNullabilityTypeHighlightingBase || base.HighlightingPredicate(highlighting, sourceFile);
+        protected override bool HighlightingPredicate(
+            [NotNull] IHighlighting highlighting,
+            [CanBeNull] IPsiSourceFile sourceFile
+#if !RS20181
+            ,
+            [CanBeNull] IContextBoundSettingsStore settingsStore
+#endif
+        ) => highlighting is StaticNullabilityTypeHighlightingBase || base.HighlightingPredicate(highlighting, sourceFile
+#if !RS20181
+                 , settingsStore
+#endif
+             );
 
         protected override void DoTestSolution([NotNull] params string[] fileSet)
         {

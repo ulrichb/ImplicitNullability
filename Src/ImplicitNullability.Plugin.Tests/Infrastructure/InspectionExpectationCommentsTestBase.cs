@@ -73,11 +73,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
                     Match = expectedWarningComments.SingleOrDefault(
                         x => x.ExpectedWarningId == issue.IssueType.ConfigurableSeverityId &&
                              issue.GetSourceFile().Equals(x.File) &&
-#if RS20173 || RD20173
-                             issue.Range.NotNull().Intersects(x.Range)
-#else
                              issue.Range.NotNull().IntersectsOrContacts(x.Range)
-#endif
                     )
                 }).ToList();
 
@@ -99,9 +95,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
 
         private static bool IsExcludedByComment(IFile fileNode)
         {
-            var firstComment = fileNode.FirstChild as IComment;
-
-            if (firstComment != null)
+            if (fileNode.FirstChild is IComment firstComment)
             {
                 var match = Regex.Match(firstComment.CommentText, @"^\s*Exclude" + ConditionRegex + @"\s*$");
 

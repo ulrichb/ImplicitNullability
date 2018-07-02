@@ -20,7 +20,10 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 {
     [ExcludeFromCodeCoverage /* options page user interface is tested manually */]
     [OptionsPage(PageId, PageTitle, typeof(CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]
+#pragma warning disable 618
+    // TODO after dropping 20181 support: Refactor to BeSimpleOptionsPage
     public class ImplicitNullabilityOptionsPage : SimpleOptionsPage
+#pragma warning restore 618
     {
         public const string PageTitle = "Implicit Nullability";
         private const string PageId = "ImplicitNullabilityOptions";

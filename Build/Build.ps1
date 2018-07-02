@@ -19,17 +19,17 @@ $MSBuildPath = (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio\
 $MSBuildAdditionalArgs = "/nowarn:MSB3277"
 $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
-    "Src\ImplicitNullability.Plugin.Tests\bin\RD20181\$Configuration\ImplicitNullability.Plugin.Tests.RD20181.dll"
-    "Src\ImplicitNullability.Plugin.Tests\bin\RS20173\$Configuration\ImplicitNullability.Plugin.Tests.RS20173.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\RD20182\$Configuration\ImplicitNullability.Plugin.Tests.RD20182.dll"
     "Src\ImplicitNullability.Plugin.Tests\bin\RS20181\$Configuration\ImplicitNullability.Plugin.Tests.RS20181.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\RS20182\$Configuration\ImplicitNullability.Plugin.Tests.RS20182.dll"
     "Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Samples.CodeWithIN.*]* -[ImplicitNullability.Samples.CodeWithoutIN.External]*"
 $NuspecPath = "Src\ImplicitNullability.Plugin\ImplicitNullability.nuspec"
 $NugetPackProperties = @(
-    "Version=$(CalcNuGetPackageVersion 20173);Configuration=$Configuration;DependencyVer=[11.0];BinDirInclude=bin\RS20173"
     "Version=$(CalcNuGetPackageVersion 20181);Configuration=$Configuration;DependencyVer=[12.0];BinDirInclude=bin\RS20181"
+    "Version=$(CalcNuGetPackageVersion 20182);Configuration=$Configuration;DependencyVer=[182.0];BinDirInclude=bin\RS20182"
 )
 $RiderPluginProject = "Src\RiderPlugin"
 $NugetPushServer = "https://www.myget.org/F/ulrichb/api/v2/package"

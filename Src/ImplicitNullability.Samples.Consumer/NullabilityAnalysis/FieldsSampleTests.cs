@@ -52,7 +52,10 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             var mutableClass = new FieldsSample.MutableClass { Field = null /*Expect:AssignNullToNotNullAttribute[Flds && !RtRo]*/ };
 
-            TestValueAnalysis(mutableClass.Field, mutableClass.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
+            // The null assignment above overwrites the implicit NotNull with 'NULL' (since R# 2018.2):
+            TestValueAnalysis(
+                mutableClass.Field /*Expect:AssignNullToNotNullAttribute[RS > 20181]*/,
+                mutableClass.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
             mutableClass.Field.Should().BeNull();
         }
 
@@ -74,7 +77,8 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             var mutableClass = new FieldsSample.MutableClass { Field = External.UnknownNullabilityString };
 
-            TestValueAnalysis(mutableClass.Field, mutableClass.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo]*/);
+            // The assignment above overwrites the implicit NotNull with 'UNKNOWN' (since R# 2018.2):
+            TestValueAnalysis(mutableClass.Field, mutableClass.Field == null /*Expect:ConditionIsAlwaysTrueOrFalse[Flds && !RtRo && RS <= 20181]*/);
             mutableClass.Field.Should().BeNull();
         }
 

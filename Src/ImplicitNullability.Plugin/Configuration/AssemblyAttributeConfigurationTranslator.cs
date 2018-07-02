@@ -144,9 +144,7 @@ namespace ImplicitNullability.Plugin.Configuration
 
                 foreach (var attributeInstance in assemblyMetadataAttributes)
                 {
-                    var key = attributeInstance.PositionParameter(0).ConstantValue.Value as string;
-
-                    if (key != null)
+                    if (attributeInstance.PositionParameter(0).ConstantValue.Value is string key)
                         attributeValuesDictionary[key] = attributeInstance.PositionParameter(1).ConstantValue.Value as string;
                 }
 

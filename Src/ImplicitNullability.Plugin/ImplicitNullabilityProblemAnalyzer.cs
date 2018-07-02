@@ -29,6 +29,9 @@ namespace ImplicitNullability.Plugin
                 typeof(AnnotationRedundancyAtValueTypeWarning),
                 typeof(ContainerAnnotationRedundancyWarning),
                 typeof(MultipleNullableAttributesUsageWarning),
+#if !RS20181
+                typeof(NotObservableAnnotationRedundancyWarning),
+#endif
                 // The own ones:
                 typeof(NotNullOnImplicitCanBeNullHighlighting),
                 typeof(ImplicitNotNullConflictInHierarchyHighlighting),

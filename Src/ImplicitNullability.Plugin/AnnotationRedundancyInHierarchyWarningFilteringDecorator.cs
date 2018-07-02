@@ -21,11 +21,7 @@ namespace ImplicitNullability.Plugin
             }
         }
 
-#if RS20173
-        public IList<HighlightingInfo>Highlightings =>
-#else
         public IReadOnlyCollection<HighlightingInfo> Highlightings =>
-#endif
             _decorated.Highlightings;
     }
 }
