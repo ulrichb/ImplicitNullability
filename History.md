@@ -1,4 +1,4 @@
-### vNext ###
+### 4.5.0 ###
 - ReSharper and Rider 2018.2 support
 
 ### 4.4.0 ###
