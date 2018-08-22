@@ -75,7 +75,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             [CanBeNull]
             public override string this[[CanBeNull] string a]
             {
-                get { return base[a]; }
+                get => base[a];
                 set { }
             }
         }
@@ -98,7 +98,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
             [NotNull]
             public override string this[[NotNull] string a]
             {
-                get { return base[a]; }
+                get => base[a];
                 set { }
             }
         }
@@ -134,7 +134,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
                 // ReSharper restore ImplicitNotNullOverridesUnknownBaseMemberNullability
                 [[CanBeNull] string a]
             {
-                get { return base[a]; }
+                get => base[a];
                 set { }
             }
         }

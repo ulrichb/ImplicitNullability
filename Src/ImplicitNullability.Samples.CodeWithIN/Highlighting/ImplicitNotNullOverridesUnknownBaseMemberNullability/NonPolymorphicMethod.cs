@@ -16,7 +16,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.ImplicitNotNullOve
 
             public new string this /*Expect no warning*/[string a]
             {
-                get { return ""; }
+                get => "";
                 // ReSharper disable once ValueParameterNotUsed
                 set { }
             }
