@@ -1,17 +1,18 @@
 ﻿using System.ComponentModel.Composition;
 using System.Windows.Media;
+using JetBrains.Platform.VisualStudio.SinceVs10.TextControl.Markup.FormatDefinitions;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
 namespace ImplicitNullability.Plugin.VsFormatDefinitions
 {
     [ClassificationType(ClassificationTypeNames = HighlightingId)]
-    [Order(After = "Formal Language Priority", Before = "Natural Language Priority")]
+    [Order(After = VsSyntaxPriorityClassificationDefinition.Name, Before = VsAnalysisPriorityClassificationDefinition.Name)]
     [Export(typeof(EditorFormatDefinition))]
     [Name(HighlightingId)]
     [System.ComponentModel.DisplayName(DisplayNameText)]
     [UserVisible(true)]
-    public class NullabilityItemTypeHighlightingClassificationFormatDefinition : ClassificationFormatDefinition
+    internal class NullabilityItemTypeHighlightingClassificationFormatDefinition : ClassificationFormatDefinition
     {
         private const string HighlightingId = "ReSharperImplicitNullabilityItemTypeHighlighting"; // = StaticNullabilityItemTypeHighlighting.HighlightingId
         private const string DisplayNameText = "Implicit Nullability Item Type Highlighting";
