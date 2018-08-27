@@ -4,7 +4,7 @@
   <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
   <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
   <param name="authMethod" value="PASSWORD" />
-  <param name="branch" value="refs/heads/dev" />
+  <param name="branch" value="%DefaultBranch%" />
   <param name="ignoreKnownHosts" value="true" />
   <param name="secure:password" value="credentialsJSON:0431ebdc-9dee-4d94-a66d-a72de49ce26f" />
   <param name="submoduleCheckout" value="CHECKOUT" />
