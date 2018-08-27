@@ -4,6 +4,7 @@
   <description>https://github.com/ulrichb/ImplicitNullability/</description>
   <parameters>
     <param name="BranchSpecification" value="+:refs/heads/*" />
+    <param name="DefaultBranch" value="refs/heads/dev" />
     <param name="teamcity.activeBuildBranch.age.hours" value="672" spec="text display='hidden' validationMode='any'" />
   </parameters>
   <project-extensions>
