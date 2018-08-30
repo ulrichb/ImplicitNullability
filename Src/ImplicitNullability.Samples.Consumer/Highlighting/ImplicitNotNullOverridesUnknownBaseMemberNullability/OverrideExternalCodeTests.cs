@@ -27,7 +27,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
         {
             Action act = () => _externalClass.Method(null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
         {
             Action act = () => _derivedClassInOwnCodeAsExternalClass.Method(null /* no warning */);
 
-            act.ShouldThrow<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
+            act.Should().Throw<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -44,7 +44,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
         {
             Action act = () => _derivedClassInOwnCode.Method(null /*Expect:AssignNullToNotNullAttribute[Implicit]*/);
 
-            act.ShouldThrow<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
+            act.Should().Throw<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -59,7 +59,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 ReSharper.TestValueAnalysis(result, result == null); // unknown nullability
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 ReSharper.TestValueAnalysis(result, result == null); // unknown nullability
             };
 
-            act.ShouldThrow<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
+            act.Should().Throw<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
                 .WithMessage("[NullGuard] Return value * is null.");
         }
 
@@ -84,7 +84,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[Implicit]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
+            act.Should().Throw<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
                 .WithMessage("[NullGuard] Return value * is null.");
         }
 
@@ -95,7 +95,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
         {
             Action act = () => _externalClass.SetterOnlyProperty = null;
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
         {
             Action act = () => _derivedClassInOwnCodeAsExternalClass.SetterOnlyProperty = null /* no warning */;
 
-            act.ShouldThrow<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
+            act.Should().Throw<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
                 .And.ParamName.Should().Be("value");
         }
 
@@ -112,7 +112,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
         {
             Action act = () => _derivedClassInOwnCode.SetterOnlyProperty = null /*Expect:AssignNullToNotNullAttribute[Implicit]*/;
 
-            act.ShouldThrow<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
+            act.Should().Throw<ArgumentNullException>("derived method has been rewritten altough external base method is (unannotated) nullable")
                 .And.ParamName.Should().Be("value");
         }
 
@@ -127,7 +127,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 ReSharper.TestValueAnalysis(result, result == null); // unknown nullability
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 ReSharper.TestValueAnalysis(result, result == null); // unknown nullability
             };
 
-            act.ShouldThrow<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
+            act.Should().Throw<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
                 .WithMessage("[NullGuard] Return value * is null.");
         }
 
@@ -152,7 +152,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullOverr
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[Implicit]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
+            act.Should().Throw<InvalidOperationException>("derived method has been rewritten although external base method is (unannotated) nullable")
                 .WithMessage("[NullGuard] Return value * is null.");
         }
     }

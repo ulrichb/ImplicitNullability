@@ -16,7 +16,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Method(default(DateTime));
 
-            act.ShouldNotThrow("the argument check should not perform a 'param == default(T)' comparison");
+            act.Should().NotThrow("the argument check should not perform a 'param == default(T)' comparison");
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Function(returnValue: default(DateTime));
 
-            act.ShouldNotThrow("the return value check should not perform a 'param == default(T)' comparison");
+            act.Should().NotThrow("the return value check should not perform a 'param == default(T)' comparison");
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>(
+            act.Should().Throw<ArgumentNullException>(
                     "known issue for generics without constraint (it's a trade-off between this false positive and a false-negative if T is a reference type")
                 .And.ParamName.Should().Be("a");
         }
@@ -48,7 +48,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Function(returnValue: null);
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage(
+            act.Should().Throw<InvalidOperationException>().WithMessage(
                 "[NullGuard] Return value * is null.",
                 "known issue for generics without constraint (it's a trade-off between this false positive and a false-negative if T is a reference type");
         }
@@ -60,7 +60,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.Method(0);
 
-            act.ShouldNotThrow("the argument check should not perform a 'param == default(T)' comparison");
+            act.Should().NotThrow("the argument check should not perform a 'param == default(T)' comparison");
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => instance.MethodWithNullableParameter(null);
 
-            act.ShouldNotThrow("nullable value type parameters should not throw");
+            act.Should().NotThrow("nullable value type parameters should not throw");
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => GenericsSample.GenericMethods.MethodWithoutConstraint((string) null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
     }
 }

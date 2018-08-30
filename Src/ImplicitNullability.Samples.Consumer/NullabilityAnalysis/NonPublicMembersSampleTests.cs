@@ -25,7 +25,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => GetNonPublicMethod(methodName).Invoke(_instance, new object[] { null });
 
-            act.ShouldThrow<TargetInvocationException>()
+            act.Should().Throw<TargetInvocationException>()
                 .And.InnerException.Should().BeOfType<ArgumentNullException>().Which.ParamName.Should().Be(parameterName);
         }
 
@@ -37,7 +37,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => GetNonPublicMethod(name).Invoke(_instance, new object[0]);
 
-            act.ShouldThrow<TargetInvocationException>()
+            act.Should().Throw<TargetInvocationException>()
                 .And.InnerException.Should().BeOfType<InvalidOperationException>()
                 .Which.Message.Should().Match("[NullGuard] Return value of method *" + name + "* is null.");
         }
@@ -61,7 +61,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => GetNonPublicProperty(name).GetValue(_instance);
 
-            act.ShouldThrow<TargetInvocationException>()
+            act.Should().Throw<TargetInvocationException>()
                 .And.InnerException.Should().BeOfType<InvalidOperationException>()
                 .Which.Message.Should().Match("[NullGuard] Return value of property *" + name + "* is null.");
         }

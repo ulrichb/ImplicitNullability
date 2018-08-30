@@ -20,7 +20,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(instance, instance == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => new ConstructorsSample(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => new ConstructorsSample("s", optional: "overridden default");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                     null /*Expect:AssignNullToNotNullAttribute[MIn]*/,
                     optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a", "the evaluation of the arguments should start from left");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a", "the evaluation of the arguments should start from left");
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => new ConstructorsSample("", optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => new ConstructorsSample(canBeNull: null, nullableInt: null, optional: null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
     }
 }

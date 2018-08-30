@@ -25,7 +25,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _externalClass.Method(null /*Expect no warning*/);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect no warning*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]

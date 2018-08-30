@@ -21,7 +21,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.PreconditionIfCheck("");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.PreconditionIfCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.PreconditionExpressionCheck("");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.PreconditionExpressionCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
     }
 }

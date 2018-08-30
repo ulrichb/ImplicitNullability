@@ -26,7 +26,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 _instance.MethodWithRefParameter(ref refParam);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 _instance.MethodWithRefParameter(ref refParam /* REPORT? constant null value to NotNull parameter */);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("refParam");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("refParam");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 _instance.MethodWithExplicitNotNullRefParameter(ref refParam);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 _instance.MethodWithExplicitNotNullRefParameter(ref refParam /* REPORT? constant null value to NotNull parameter */);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("refParam");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("refParam");
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 _instance.MethodWithCanBeNullRefParameter(ref refParam);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
     }
 }

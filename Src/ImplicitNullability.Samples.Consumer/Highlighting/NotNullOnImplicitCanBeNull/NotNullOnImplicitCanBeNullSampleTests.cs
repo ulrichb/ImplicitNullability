@@ -21,7 +21,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.NotNullOnImplicitCan
         {
             Action act = () => _instance.MethodWithNullableInt(null /*Expect:AssignNullToNotNullAttribute*/);
 
-            act.ShouldNotThrow("the [NotNull] won't be respected by NullGuard => warning");
+            act.Should().NotThrow("the [NotNull] won't be respected by NullGuard => warning");
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.NotNullOnImplicitCan
         {
             Action act = () => _instance.MethodWithOptionalParameter(optional: null /*Expect:AssignNullToNotNullAttribute*/);
 
-            act.ShouldNotThrow("the [NotNull] won't be respected by NullGuard => warning");
+            act.Should().NotThrow("the [NotNull] won't be respected by NullGuard => warning");
         }
     }
 }

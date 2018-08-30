@@ -23,7 +23,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _methodsSample.Method(null /* no warning because dynamic invocations are excluded */);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _indexersSample[null /* no warning because dynamic invocations are excluded */] = "some value";
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
     }
 }

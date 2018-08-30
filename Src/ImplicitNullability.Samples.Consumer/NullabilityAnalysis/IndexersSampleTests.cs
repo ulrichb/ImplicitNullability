@@ -22,7 +22,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance[""] = "";
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/] = "";
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance[""] = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => _instance[null /*Expect:AssignNullToNotNullAttribute[MIn]*/];
 
-            act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.ToAction().Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => _instance["<return null>"];
 
-            act.ToAction().ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value *Item* is null.");
+            act.ToAction().Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value *Item* is null.");
         }
 
         //
@@ -76,7 +76,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance[canBeNull: null, nullableInt: null, optional: null] = null;
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.AutoProperty = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.AutoProperty = "";
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-464147 */);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.AutoPropertyWithCanBeNull = null /*Expect no warning*/;
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         //
@@ -111,7 +111,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => SP.AutoProperty = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/;
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => SP.AutoProperty = "";
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => SP.AutoPropertyWithCanBeNull = null /*Expect no warning*/;
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value /*Expect:AssignNullToNotNullAttribute*/, value == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         //
@@ -179,7 +179,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => new PropertiesSample.MutableClass { Property = null /*Expect:AssignNullToNotNullAttribute[Prps && !RtGo]*/ };
 
-            act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
+            act.ToAction().Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtGo]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         //
@@ -222,7 +222,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             // Here the implicit NotNull is wrong, because "UnknownNullabilityString" returns null:
             c.Invoking(x => TestValueAnalysis(
                     x.PropertyWithUnknownValue, x.PropertyWithUnknownValue == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps]*/))
-                .ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+                .Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         //
@@ -255,7 +255,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 var value = immutableClass.Property;
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps]*/);
             };
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         //
@@ -272,7 +272,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !(RtGo || RtRT)]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         //
@@ -298,7 +298,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(value, value == null /*Expect:ConditionIsAlwaysTrueOrFalse[Prps && !RtRT]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
     }
 }

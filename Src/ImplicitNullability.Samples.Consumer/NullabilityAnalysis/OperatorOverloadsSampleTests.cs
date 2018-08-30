@@ -16,7 +16,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => null + new OperatorOverloadsSample.Simple();
 
-            act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("left");
+            act.ToAction().Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("left");
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => new OperatorOverloadsSample.Simple() + null;
 
-            act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("right");
+            act.ToAction().Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("right");
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => null + new OperatorOverloadsSample.CanBeNull();
 
-            act.ToAction().ShouldNotThrow();
+            act.ToAction().Should().NotThrow();
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<object> act = () => new OperatorOverloadsSample.CanBeNull() + null;
 
-            act.ToAction().ShouldNotThrow();
+            act.ToAction().Should().NotThrow();
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Func<object> act = () => value++;
 
-            act.ToAction().ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
+            act.ToAction().Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Func<object> act = () => value++;
 
-            act.ToAction().ShouldNotThrow();
+            act.ToAction().Should().NotThrow();
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Func<object> act = () => value++;
 
-            act.ToAction().ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value of *op_Increment* is null.");
+            act.ToAction().Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value of *op_Increment* is null.");
         }
     }
 }

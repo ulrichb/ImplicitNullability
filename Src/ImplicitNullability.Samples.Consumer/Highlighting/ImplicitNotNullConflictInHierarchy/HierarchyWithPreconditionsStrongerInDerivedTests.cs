@@ -21,7 +21,7 @@ namespace ImplicitNullability.Samples.Consumer.Highlighting.ImplicitNotNullConfl
         {
             Action act = () => _interface.CanBeNullParameterInInterfaceExplicitNotNullInDerived(null);
 
-            act.ShouldThrow<ArgumentNullException>(
+            act.Should().Throw<ArgumentNullException>(
                     "this throws although the base interface has a CanBeNull-annotation (but the implementation does not)")
                 .And.ParamName.Should().Be("a");
         }

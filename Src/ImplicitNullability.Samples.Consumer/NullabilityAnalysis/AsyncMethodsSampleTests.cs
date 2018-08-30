@@ -23,7 +23,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<Task> act = async () => await _instance.Method("");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Action act = () => _instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 #pragma warning restore CS4014
 
-            act.ShouldThrow<ArgumentNullException>("not an AggregateException because the outermost (rewritten) async method throwed")
+            act.Should().Throw<ArgumentNullException>("not an AggregateException because the outermost (rewritten) async method throwed")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -43,7 +43,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<Task> act = async () => await _instance.MethodWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<AggregateException>("the outermost (non rewritten) method throws *within* the async state machine")
+            act.Should().Throw<AggregateException>("the outermost (non rewritten) method throws *within* the async state machine")
                 .And.InnerException.Should().BeOfType<ArgumentNullException>()
                 .Which.ParamName.Should().Be("a");
         }
@@ -53,7 +53,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<Task> act = async () => await _instance.CallMethodWithNullArgument();
 
-            act.ShouldThrow<AggregateException>()
+            act.Should().Throw<AggregateException>()
                 .And.InnerException.Should().BeOfType<ArgumentNullException>()
                 .Which.ParamName.Should().Be("a");
         }
@@ -83,7 +83,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<Task> act = async () => await _instance.Function(returnValue: null);
 
-            act.ShouldThrow<AggregateException>()
+            act.Should().Throw<AggregateException>()
                 .And.InnerException.Should().BeOfType<InvalidOperationException>()
                 .Which.Message.Should().Match("[NullGuard] Return value * is null.");
         }
@@ -113,7 +113,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<Task> act = async () => await _instance.FunctionWithItemCanBeNull(returnValue: null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute[MOut]*/, result == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]

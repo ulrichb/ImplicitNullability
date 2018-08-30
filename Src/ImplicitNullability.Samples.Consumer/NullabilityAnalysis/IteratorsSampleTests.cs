@@ -24,7 +24,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<IEnumerable<object>> act = () => _instance.SomeIterator("");
 
-            act.Enumerating().ShouldNotThrow();
+            act.Enumerating().Should().NotThrow();
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => ReSharper.SuppressUnusedWarning(_instance.SomeIterator(null /*Expect:AssignNullToNotNullAttribute[MIn]*/));
 
-            act.ShouldThrow<ArgumentNullException>("throws immediately => no ForceIteration needed")
+            act.Should().Throw<ArgumentNullException>("throws immediately => no ForceIteration needed")
                 .And.ParamName.Should().Be("str");
         }
 
@@ -42,7 +42,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Action act =
                 () => ReSharper.SuppressUnusedWarning(_instance.SomeIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/));
 
-            act.ShouldNotThrow("no iteration");
+            act.Should().NotThrow("no iteration");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Func<IEnumerable<object>> act = () => _instance.SomeIteratorWithManualNullCheck(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.Enumerating().ShouldThrow<ArgumentNullException>()
+            act.Enumerating().Should().Throw<ArgumentNullException>()
                 .And.ParamName.Should().Be("str");
         }
 

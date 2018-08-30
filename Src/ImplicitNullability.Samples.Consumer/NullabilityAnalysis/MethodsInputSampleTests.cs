@@ -21,7 +21,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.Method("");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.Method(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithExplicitCanBeNull(null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithImplicitCanBeNullParameters(nullableInt: null, optional: null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNullDefaultOfStringDefaultArgument(optional: null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNullDefaultArgumentFromConst(optional: null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNullDefaultArgumentFromDefaultOfStringConst(optional: null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNonNullDefaultArgument(optional: "overridden default");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNonNullDefaultArgument(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNonNullDefaultArgumentFromConst(optional: "overridden default");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithNonNullDefaultArgumentFromConst(optional: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("optional");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("optional");
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithParams("1", "2", "3");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.MethodWithParams(a: null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => MethodsInputSample.StaticMethod("");
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => MethodsInputSample.StaticMethod(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
     }
 }

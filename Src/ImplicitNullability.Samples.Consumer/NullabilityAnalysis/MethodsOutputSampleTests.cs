@@ -26,7 +26,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result, result == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => _instance.Function(returnValue: null);
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Return value * is null.");
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute*/, result == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute*/, result == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 ReSharper.TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
-            act.ShouldThrow<InvalidOperationException>().WithMessage("[NullGuard] Out parameter 'outParam' is null.");
+            act.Should().Throw<InvalidOperationException>().WithMessage("[NullGuard] Out parameter 'outParam' is null.");
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             string outParam;
             Action act = () => _instance.MethodWithCanBeNullOutParameter(out outParam);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
     }
 }

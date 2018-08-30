@@ -17,7 +17,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeAction()(null);
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeActionWithClosedValues()(null);
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous + " (implemented using a display class)");
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous + " (implemented using a display class)");
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeActionToAnonymousMethod()(null);
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegate()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateToNamedMethod()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<ArgumentNullException>("because the delegate *method* parameter is implicitly NotNull")
+            act.Should().Throw<ArgumentNullException>("because the delegate *method* parameter is implicitly NotNull")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -58,7 +58,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateToNamedMethodWithCanBeNull()(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateWithCanBeNullToNamedMethod()(null);
 
-            act.ShouldThrow<ArgumentNullException>("because the delegate *method* parameter is (implicitly) NotNull")
+            act.Should().Throw<ArgumentNullException>("because the delegate *method* parameter is (implicitly) NotNull")
                 .And.ParamName.Should().Be("a");
         }
 
@@ -75,7 +75,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateWithCanBeNullToNamedMethodWithCanBeNull()(null);
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result, result == null);
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, result == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeNotNullDelegateOfExternalCode()(null /*Expect:AssignNullToNotNullAttribute*/);
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
         {
             Action act = () => DelegatesSample.GetSomeDelegateOfExternalCode()(null /* no warning because the delegate is external */);
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result, result == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result, result == null);
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(result /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */, result == null);
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(outParam, outParam == null /*Expect:ConditionIsAlwaysTrueOrFalse[MOut]*/);
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -206,7 +206,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 asyncResult.AsyncWaitHandle.WaitOne();
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -219,7 +219,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 someDelegate.BeginInvoke(null, null, null).AsyncWaitHandle.WaitOne();
             };
 
-            act.ShouldNotThrow();
+            act.Should().NotThrow();
         }
 
         [Test]
@@ -236,7 +236,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
                 TestValueAnalysis(endInvokeResult, endInvokeResult == null);
             };
 
-            act.ShouldNotThrow(BecauseDelegateMethodIsAnonymous);
+            act.Should().NotThrow(BecauseDelegateMethodIsAnonymous);
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
 
             Action act = () => @delegate.EndInvoke(null /*Expect:AssignNullToNotNullAttribute[MIn]*/);
 
-            act.ShouldThrow<RemotingException>("because the IAsyncResult argument is null");
+            act.Should().Throw<RemotingException>("because the IAsyncResult argument is null");
         }
     }
 }
