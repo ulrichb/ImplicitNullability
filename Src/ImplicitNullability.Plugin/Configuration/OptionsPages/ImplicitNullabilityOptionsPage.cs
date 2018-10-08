@@ -21,12 +21,12 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
     [ExcludeFromCodeCoverage /* options page user interface is tested manually */]
     [OptionsPage(PageId, PageTitle, typeof(CommonThemedIcons.Bulb), ParentId = CodeInspectionPage.PID)]
 #pragma warning disable 618
-    // TODO after dropping 20181 support: Refactor to BeSimpleOptionsPage
+    // TODO: Refactor to BeSimpleOptionsPage
     public class ImplicitNullabilityOptionsPage : SimpleOptionsPage
 #pragma warning restore 618
     {
         public const string PageTitle = "Implicit Nullability";
-        private const string PageId = "ImplicitNullabilityOptions";
+        private const string PageId = nameof(ImplicitNullabilityOptionsPage);
 
         private static readonly TextStyle Bold = new TextStyle(FontStyle.Bold);
         private static readonly TextStyle Italic = new TextStyle(FontStyle.Italic);
@@ -147,7 +147,7 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
             var copyButton = AddButton(copyButtonText, new DelegateCommand(CopyAssemblyAttributeCode));
 #if RIDER
             AddEmptyLine();
-            SetIndent(AddText("TODO: Add 'Copy [AssemblyMetadata] attributes to clipboard' button here"), 1); // TODO UB RiderSupport Button
+            SetIndent(AddText("TODO: Add 'Copy [AssemblyMetadata] attributes to clipboard' button here"), 1); // TODO RiderSupport: Button
             AddEmptyLine();
 #endif
             SetIndent(copyButton, 2);

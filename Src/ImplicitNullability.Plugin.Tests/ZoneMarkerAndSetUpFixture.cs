@@ -2,12 +2,8 @@
 using JetBrains.Application.BuildScript.Application.Zones;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework;
-using NUnit.Framework;
-#if RS20181
-using ITestsEnvZone = JetBrains.TestFramework.Application.Zones.ITestsZone;
-#else
 using JetBrains.TestFramework.Application.Zones;
-#endif
+using NUnit.Framework;
 
 [assembly: RequiresSTA]
 

@@ -33,7 +33,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.IncorrectNullableA
             [NotNull, CanBeNull]
             public string MultipleAnnotations /*Expect:MultipleNullableAttributesUsage*/() => "";
 
-            [NotNull] /*Expect:NotObservableAnnotationRedundancy[RS > 20181 && !Implicit]*/
+            [NotNull] /*Expect:NotObservableAnnotationRedundancy[!Implicit]*/
             // In case of enabled IN, the (suppressed) AnnotationRedundancyInHierarchy hides the NotObservableAnnotationRedundancy
             // ReSharper disable once NotNullMemberIsNotInitialized - it's not about this warning
             string IInterface.Property { get; set; }

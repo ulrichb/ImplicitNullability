@@ -17,7 +17,7 @@
     <applicationConfigurable
       parentId="CodeInspectionSettingsId"
       instance="com.jetbrains.rider.settings.ImplicitNullabilityOptionsPage"
-      id="preferences.ImplicitNullabilityOptions"/>
+      id="preferences.ImplicitNullabilityOptionsPage"/>
   </extensions>
 
 </idea-plugin>
