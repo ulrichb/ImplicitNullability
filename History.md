@@ -1,3 +1,6 @@
+### 4.6.0 ###
+- ReSharper and Rider 2018.3 support
+
 ### 4.5.1 ###
 - Fixed broken "Color Identifiers" feature (issue #24)
 
