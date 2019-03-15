@@ -9,8 +9,13 @@ using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework.Utils;
-using JetBrains.Util;
 using NUnit.Framework;
+#if RS20183
+using JetBrains.Util;
+#else
+using JetBrains.Diagnostics;
+
+#endif
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 {
