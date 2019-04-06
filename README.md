@@ -1,3 +1,5 @@
+:warning: **End-of-life note:** C# 8, supported by VS 2019+, will get [_nullable reference types_](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/nullable-reference-types) which [supersede](#c-nullable-reference-types) - and perfectly align with - _Implicit Nullability_. Therefore ReSharper/Rider < 2020.1 will be the latest version supported by _Implicit Nullability_.
+
 ## Implicit Nullability ReSharper Extension
 
 [![Build status](https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:OpenSourceProjects_ImplicitNullability_Ci),branch:master,running:any/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_ImplicitNullability_Ci)
@@ -84,7 +86,7 @@ Another goal of this extension is to bring ReSharper's static analysis in sync w
 
 ### C# Nullable reference types
 
-There is a C# 8 proposal named ["Nullable reference types"](https://github.com/dotnet/csharplang/blob/master/proposals/nullable-reference-types.md) which brings option types into the C# language. This matches the semantics of _Implicit Nullability_ and goes even further because it extends it to locals, generic parameters, ... because the nullability annotation works on type level.
+C# 8 will get [_Nullable reference types_](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/nullable-reference-types) which brings option types into the C# language. This matches the semantics of _Implicit Nullability_ and goes even further because it extends it to locals, generic parameters, ... because the nullability annotation works on type level.
 
 ```C#
 [CanBeNull]
