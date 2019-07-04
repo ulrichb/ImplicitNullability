@@ -4,18 +4,13 @@ using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Tests.Infrastructure;
 using JetBrains.Application.Settings;
 using JetBrains.Application.Settings.Implementation;
+using JetBrains.Diagnostics;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.DataContext;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.TestFramework;
 using JetBrains.TestFramework.Utils;
 using NUnit.Framework;
-#if RS20183
-using JetBrains.Util;
-#else
-using JetBrains.Diagnostics;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Tests.UnitTests.Configuration
 {

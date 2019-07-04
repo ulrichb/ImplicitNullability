@@ -1,12 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-#if RS20183
-using JetBrains.Util;
-#else
 using JetBrains.Diagnostics;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {

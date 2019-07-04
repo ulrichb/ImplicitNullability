@@ -3,6 +3,7 @@ using System.Linq;
 using ImplicitNullability.Plugin.Highlighting;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Application.Components;
+using JetBrains.Diagnostics;
 using JetBrains.ReSharper.Daemon.CSharp.Errors;
 using JetBrains.ReSharper.Daemon.CSharp.Stages.Analysis;
 using JetBrains.ReSharper.Feature.Services.Daemon;
@@ -11,10 +12,6 @@ using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
-#if !RS20183
-using JetBrains.Diagnostics;
-
-#endif
 
 namespace ImplicitNullability.Plugin
 {

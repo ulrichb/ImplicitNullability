@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using JetBrains.Application.Progress;
+using JetBrains.Diagnostics;
+using JetBrains.Lifetimes;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon.SolutionAnalysis;
 using JetBrains.ReSharper.Feature.Services.Daemon;
@@ -15,11 +17,6 @@ using JetBrains.ReSharper.TestFramework;
 using JetBrains.Util;
 using NCalc;
 using NUnit.Framework;
-#if !RS20183
-using JetBrains.Lifetimes;
-using JetBrains.Diagnostics;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Tests.Infrastructure
 {
@@ -156,11 +153,7 @@ namespace ImplicitNullability.Plugin.Tests.Infrastructure
         {
             var issues = new List<IIssue>();
 
-#if RS20183
-            using (var lifetime = JetBrains.DataFlow.Lifetimes.Define(solution.GetLifetime()))
-#else
             using (var lifetime = Lifetime.Define(solution.GetLifetime()))
-#endif
             using (var nullProgressIndicator = NullProgressIndicator.Create())
             {
                 var collectInspectionResults = new CollectInspectionResults(solution, lifetime, nullProgressIndicator);

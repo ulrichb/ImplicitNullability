@@ -15,10 +15,7 @@ using JetBrains.DataFlow;
 using JetBrains.ReSharper.Feature.Services.Daemon.OptionPages;
 using JetBrains.UI.RichText;
 using JetBrains.Util;
-#if !RS20183
 using JetBrains.Lifetimes;
-
-#endif
 
 namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 {

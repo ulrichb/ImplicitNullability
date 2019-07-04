@@ -1,8 +1,4 @@
-﻿#if RS20183
-using JetBrains.Util;
-#else
-using JetBrains.Diagnostics;
-#endif
+﻿using JetBrains.Diagnostics;
 
 namespace ImplicitNullability.Plugin.Configuration
 {

@@ -1,6 +1,7 @@
 using ImplicitNullability.Plugin.Configuration;
 using ImplicitNullability.Plugin.Infrastructure;
 using JetBrains.Annotations;
+using JetBrains.Diagnostics;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CodeAnnotations;
 using JetBrains.ReSharper.Psi.CSharp;
@@ -9,10 +10,6 @@ using JetBrains.ReSharper.Psi.Util;
 using JetBrains.ReSharper.Psi.Xaml.DeclaredElements;
 using JetBrains.Util;
 using static JetBrains.ReSharper.Psi.DeclaredElementConstants;
-#if !RS20183
-using JetBrains.Diagnostics;
-
-#endif
 
 namespace ImplicitNullability.Plugin
 {
