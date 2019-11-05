@@ -53,7 +53,6 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
             public void Method(T a)
             {
-                TestValueAnalysis(a, ReferenceEquals(a, null) /*Expect:ConditionIsAlwaysTrueOrFalse*/);
             }
 
             public void MethodWithNullableParameter(T? a)

@@ -255,7 +255,7 @@ namespace ImplicitNullability.Plugin.Configuration.OptionsPages
 #if RIDER
         private void AddAdditionalText(BoolOptionViewModel boolOption, RichText additionalText, int indent)
         {
-            var textOptionEntity = AddText(additionalText);
+            var textOptionEntity = AddRichText(additionalText);
             boolOption.IsEnabledProperty.FlowInto(myLifetime, textOptionEntity.GetIsEnabledProperty());
             SetIndent(textOptionEntity, indent + 1);
         }

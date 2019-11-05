@@ -18,7 +18,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.Highlighting.NotNullOnImplicitC
         {
             // R# ignores the [NotNull] here, but respects it at the call site.
 
-            ReSharper.TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+            ReSharper.TestValueAnalysis(optional /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-476854 */, optional == null);
         }
 
         public void MethodWithNullableIntRefAndOutParameterMethod(

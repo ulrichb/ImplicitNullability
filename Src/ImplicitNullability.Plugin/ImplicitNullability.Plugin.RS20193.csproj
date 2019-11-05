@@ -14,11 +14,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Rider.SDK" Version="2019.2.*" />
+    <PackageReference Include="JetBrains.ReSharper.SDK" Version="2019.3.*" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="WindowsBase" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImplicitNullability.Plugin.VsFormatDefinitions\ImplicitNullability.Plugin.VsFormatDefinitions.$(ReSharperVersionIdentifier).csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFilesForReSharperInstallationsDirectory Include="$(OutDir)ImplicitNullability.Plugin.VsFormatDefinitions.*" />
   </ItemGroup>
 
 </Project>

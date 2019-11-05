@@ -21,7 +21,7 @@ namespace ImplicitNullability.Plugin
             }
         }
 
-        public IReadOnlyCollection<HighlightingInfo> Highlightings =>
+        public IReadOnlyList<HighlightingInfo> Highlightings =>
             _decorated.Highlightings;
     }
 }

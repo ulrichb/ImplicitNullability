@@ -21,7 +21,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public void MethodWithCanBeNullRefParameter([CanBeNull] ref string refParam)
         {
-            TestValueAnalysis(refParam /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-427414 */, refParam == null);
+            TestValueAnalysis(refParam /*Expect:AssignNullToNotNullAttribute*/, refParam == null);
             refParam = null;
         }
     }

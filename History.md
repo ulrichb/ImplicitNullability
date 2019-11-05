@@ -1,8 +1,12 @@
+### 4.9.0 ###
+- (!) End-of-life note: Please switch to C# 8 Nullable Reference Types
+- ReSharper and Rider 2019.3 support
+
 ### 4.8.0 ###
-- Add ReSharper and Rider 2019.2 support
+- ReSharper and Rider 2019.2 support
 
 ### 4.7.0 ###
-- Add ReSharper and Rider 2019.1 support
+- ReSharper and Rider 2019.1 support
 
 ### 4.6.0 ###
 - ReSharper and Rider 2018.3 support

@@ -1,4 +1,4 @@
-:warning: **End-of-life note:** C# 8, supported by VS 2019+, will get [_nullable reference types_](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/nullable-reference-types) which [supersede](#c-nullable-reference-types) - and perfectly align with - _Implicit Nullability_. Therefore ReSharper/Rider < 2020.1 will be the latest version supported by _Implicit Nullability_.
+:warning: **End-of-life note:** C# 8 (VS 2019+) supports [_nullable reference types_](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/nullable-reference-types) which [supersedes](#c-nullable-reference-types) - and perfectly align with - _Implicit Nullability_. Therefore ReSharper/Rider 2019.3 is the latest version supported by _Implicit Nullability_.
 
 ## Implicit Nullability ReSharper Extension
 

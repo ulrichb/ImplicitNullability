@@ -19,15 +19,15 @@ $MSBuildPath = (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio\
 $MSBuildAdditionalArgs = "/nowarn:MSB3277"
 $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
-    "Src\ImplicitNullability.Plugin.Tests\bin\RD20192\$Configuration\ImplicitNullability.Plugin.Tests.RD20192.dll"
-    "Src\ImplicitNullability.Plugin.Tests\bin\RS20192\$Configuration\ImplicitNullability.Plugin.Tests.RS20192.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\RD20193\$Configuration\ImplicitNullability.Plugin.Tests.RD20193.dll"
+    "Src\ImplicitNullability.Plugin.Tests\bin\RS20193\$Configuration\ImplicitNullability.Plugin.Tests.RS20193.dll"
     "Src\ImplicitNullability.Samples.Consumer\bin\OfInternalCodeWithIN\$Configuration\ImplicitNullability.Samples.Consumer.OfInternalCodeWithIN.dll"
 )
 $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Samples.CodeWithIN.*]* -[ImplicitNullability.Samples.CodeWithoutIN.External]*"
 $NuspecPath = "Src\ImplicitNullability.Plugin\ImplicitNullability.nuspec"
 $NugetPackProperties = @(
-    "Version=$(CalcNuGetPackageVersion 20192);Configuration=$Configuration;DependencyVer=[192.0];BinDirInclude=bin\RS20192"
+    "Version=$(CalcNuGetPackageVersion 20193);Configuration=$Configuration;DependencyVer=[193.0];BinDirInclude=bin\RS20193"
 )
 $RiderPluginProject = "Src\RiderPlugin"
 $NugetPushServer = "https://www.myget.org/F/ulrichb/api/v2/package"

@@ -21,22 +21,22 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         public void MethodWithImplicitCanBeNullParameters(int? nullableInt, string optional = null)
         {
             TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
-            TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+            TestValueAnalysis(optional /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-476854 */, optional == null);
         }
 
         public void MethodWithNullDefaultOfStringDefaultArgument(string optional = default(string))
         {
-            TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+            TestValueAnalysis(optional /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-476854 */, optional == null);
         }
 
         public void MethodWithNullDefaultArgumentFromConst(string optional = NullStringConst)
         {
-            TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+            TestValueAnalysis(optional /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-476854 */, optional == null);
         }
 
         public void MethodWithNullDefaultArgumentFromDefaultOfStringConst(string optional = DefaultOfStringConst)
         {
-            TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
+            TestValueAnalysis(optional /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-476854 */, optional == null);
         }
 
         public void MethodWithNonNullDefaultArgument(string optional = "default")
