@@ -122,7 +122,7 @@ namespace ImplicitNullability.Samples.Consumer.NullabilityAnalysis
             Func<Task> act = async () =>
             {
                 var result = await _instance.FunctionWithNullableInt(returnValue: null);
-                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute[MOut]*/, result == null);
+                ReSharper.TestValueAnalysis(result /*Expect:AssignNullToNotNullAttribute*/, result == null);
             };
 
             act.Should().NotThrow();

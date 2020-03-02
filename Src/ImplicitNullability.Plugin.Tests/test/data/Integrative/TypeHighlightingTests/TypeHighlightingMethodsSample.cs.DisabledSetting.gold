@@ -68,5 +68,5 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 
 ---------------------------------------------------------
 (0): ReSharper Warning: Expression is always false
-(1): ReSharper Warning: Possible 'null' assignment to entity marked with 'NotNull' attribute
-(2): ReSharper Warning: Possible 'null' assignment to entity marked with 'NotNull' attribute
+(1): ReSharper Warning: Possible 'null' assignment to non-nullable entity
+(2): ReSharper Warning: Possible 'null' assignment to non-nullable entity

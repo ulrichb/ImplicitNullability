@@ -7,7 +7,7 @@
       <option name="buildNumberPattern" value="%Version%.%build.counter%" />
     </options>
     <parameters>
-      <param name="Version" value="4.9.0" />
+      <param name="Version" value="4.10.0" />
     </parameters>
     <build-runners />
     <vcs-settings />

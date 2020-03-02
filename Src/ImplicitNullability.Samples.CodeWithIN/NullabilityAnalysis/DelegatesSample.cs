@@ -100,7 +100,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
 
         public static External.SomeNotNullDelegate GetSomeNotNullDelegateOfExternalCode()
         {
-            return s => TestValueAnalysis(s, s == null);
+            return s => TestValueAnalysis(s, s == null /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-446852 */);
         }
 
         public static External.SomeDelegate GetSomeDelegateOfExternalCode()

@@ -77,8 +77,8 @@ namespace ImplicitNullability.Plugin.Tests.test.data.Integrative.TypeHighlightin
 (7): ReSharperImplicitNullabilityTypeHighlighting: Info: 'string' is (explicitly or implicitly) [NotNull]
 (8): ReSharperImplicitNullabilityTypeHighlighting: Info: 'object[]' is (explicitly or implicitly) [NotNull]
 (9): ReSharper Warning: Expression is always false
-(10): ReSharper Warning: Possible 'null' assignment to entity marked with 'NotNull' attribute
-(11): ReSharper Warning: Possible 'null' assignment to entity marked with 'NotNull' attribute
+(10): ReSharper Warning: Possible 'null' assignment to non-nullable entity
+(11): ReSharper Warning: Possible 'null' assignment to non-nullable entity
 (12): ReSharperImplicitNullabilityTypeHighlighting: Info: 'string' is (explicitly or implicitly) [NotNull]
 (13): ReSharperImplicitNullabilityTypeHighlighting: Info: 'string' is (explicitly or implicitly) [NotNull]
 (14): ReSharperImplicitNullabilityTypeHighlighting: Info: 'TypeHighlightingMethodsSample' is (explicitly or implicitly) [NotNull]
