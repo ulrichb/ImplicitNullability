@@ -15,7 +15,7 @@ namespace ImplicitNullability.Samples.CodeWithIN.NullabilityAnalysis
         {
             SuppressUnusedWarning(canBeNull);
             TestValueAnalysis(nullableInt /*Expect:AssignNullToNotNullAttribute*/, nullableInt == null);
-            TestValueAnalysis(optional /* REPORTED false negative https://youtrack.jetbrains.com/issue/RSRP-476854 */, optional == null);
+            TestValueAnalysis(optional /*Expect:AssignNullToNotNullAttribute*/, optional == null);
         }
     }
 }
