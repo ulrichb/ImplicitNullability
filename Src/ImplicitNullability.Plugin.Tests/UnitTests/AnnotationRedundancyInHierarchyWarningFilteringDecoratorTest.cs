@@ -28,7 +28,7 @@ namespace ImplicitNullability.Plugin.Tests.UnitTests
 
             _sut.ConsumeHighlighting(highlightingInfo);
 
-            A_.CallTo(() => _decorated.ConsumeHighlighting(highlightingInfo)).MustHaveHappened();
+            A_.CallTo(() => _decorated.ConsumeHighlighting(highlightingInfo, null, null)).MustHaveHappened();
         }
 
         [Test]
