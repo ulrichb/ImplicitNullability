@@ -32,7 +32,7 @@
       <vcs-entry-ref root-id="OpenSourceProjects_ImplicitNullability_HttpsGithubComUlrichbImplicitNullability" />
     </vcs-settings>
     <requirements>
-      <exists id="RQ_340" name="MSBuildTools15.0_x86_Path" />
+      <equals id="RQ_340" name="env.OS" value="Windows_NT" />
     </requirements>
     <build-triggers />
     <build-extensions>
