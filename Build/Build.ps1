@@ -15,7 +15,7 @@ trap { $error[0] | Format-List -Force; $host.SetShouldExit(1) }
 
 $BuildOutputPath = "Build\Output"
 $SolutionFilePath = "ImplicitNullability.sln"
-$MSBuildPath = (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\*\MSBuild\15.0\Bin\MSBuild.exe").FullName
+$MSBuildPath = (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\*\MSBuild\16.0\Bin\MSBuild.exe").FullName
 $MSBuildAdditionalArgs = "/nowarn:MSB3277"
 $NUnitAdditionalArgs = "--x86 --labels=All --agents=1"
 $NUnitTestAssemblyPaths = @(
