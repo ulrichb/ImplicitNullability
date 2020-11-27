@@ -27,7 +27,7 @@ $NUnitFrameworkVersion = "net-4.5"
 $TestCoverageFilter = "+[ImplicitNullability*]* -[ImplicitNullability*]ReSharperExtensionsShared.* -[ImplicitNullability.Samples.CodeWithIN.*]* -[ImplicitNullability.Samples.CodeWithoutIN.External]*"
 $NuspecPath = "Src\ImplicitNullability.Plugin\ImplicitNullability.nuspec"
 $NugetPackProperties = @(
-    "Version=$(CalcNuGetPackageVersion 20202);Configuration=$Configuration;DependencyVer=[201.0];BinDirInclude=bin\RS20202"
+    "Version=$(CalcNuGetPackageVersion 20202);Configuration=$Configuration;DependencyVer=[202.0];BinDirInclude=bin\RS20202"
 )
 $RiderPluginProject = "Src\RiderPlugin"
 $NugetPushServer = "https://www.myget.org/F/ulrichb/api/v2/package"
