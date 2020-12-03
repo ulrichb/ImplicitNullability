@@ -1,18 +1,16 @@
-﻿using ImplicitNullability.Plugin.Highlighting;
-using JetBrains.ReSharper.Feature.Services.Daemon;
+﻿using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.Tree;
 
-[assembly: RegisterConfigurableSeverity(
-    NotNullOnImplicitCanBeNullHighlighting.SeverityId,
-    CompoundItemName: null,
-    Group: HighlightingGroupIds.CodeSmell,
-    Title: NotNullOnImplicitCanBeNullHighlighting.Message,
-    Description: NotNullOnImplicitCanBeNullHighlighting.Description,
-    DefaultSeverity: Severity.WARNING)]
-
 namespace ImplicitNullability.Plugin.Highlighting
 {
+    [RegisterConfigurableSeverity(
+        SeverityId,
+        CompoundItemName: null,
+        Group: HighlightingGroupIds.CodeSmell,
+        Title: Message,
+        Description: Description,
+        DefaultSeverity: Severity.WARNING)]
     [ConfigurableSeverityHighlighting(
         SeverityId,
         CSharpLanguage.Name,
